@@ -1013,80 +1013,93 @@
     /* 請求書プレビュー */
     .invoice-preview {
       background: #fff;
-      border: 1px solid #e5e5e5;
       padding: 40px;
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #333;
+      font-family: 'Noto Sans JP', sans-serif;
     }
     
-    .invoice-header {
+    .invoice-title-section {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     
-    .invoice-title {
+    .invoice-main-title {
       font-size: 28px;
       font-weight: 700;
-      letter-spacing: 8px;
-      margin-bottom: 8px;
+      letter-spacing: 12px;
+      margin: 0;
     }
     
-    .invoice-number {
-      font-size: 14px;
-      color: #666;
-    }
-    
-    .invoice-parties {
+    .invoice-header-section {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 40px;
+      gap: 40px;
+      margin-bottom: 24px;
     }
     
-    .invoice-to, .invoice-from {
+    .invoice-to-section {
       flex: 1;
     }
     
-    .invoice-to {
-      border-bottom: 1px solid #333;
-      padding-bottom: 8px;
-    }
-    
     .invoice-to-name {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
     }
     
-    .invoice-to-suffix {
-      font-size: 14px;
-      color: #666;
+    .invoice-to-sama {
+      font-size: 16px;
+      font-weight: 400;
+      margin-left: 16px;
     }
     
-    .invoice-from {
-      text-align: right;
+    .invoice-to-underline {
+      border-bottom: 1px solid #333;
+      margin: 8px 0 20px 0;
+      width: 200px;
     }
     
-    .invoice-from-name {
+    .invoice-notice {
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .invoice-subject {
+      margin-top: 16px;
+    }
+    
+    .invoice-subject-label {
+      font-size: 12px;
+    }
+    
+    .invoice-subject-value {
       font-size: 16px;
       font-weight: 600;
-      margin-bottom: 4px;
     }
     
-    .invoice-from-detail {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.6;
+    .invoice-subject-underline {
+      border-bottom: 1px solid #333;
+      margin-top: 8px;
+      width: 280px;
     }
     
-    .invoice-meta {
-      margin-bottom: 30px;
+    .invoice-from-section {
+      width: 280px;
+    }
+    
+    .invoice-meta-box {
+      margin-bottom: 16px;
     }
     
     .invoice-meta-row {
       display: flex;
-      margin-bottom: 8px;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 4px;
     }
     
     .invoice-meta-label {
-      width: 100px;
       color: #666;
     }
     
@@ -1094,92 +1107,214 @@
       font-weight: 500;
     }
     
-    .invoice-total-box {
-      background: var(--primary-light);
-      border: 2px solid var(--primary);
-      padding: 20px;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .invoice-total-label {
-      font-size: 16px;
-      font-weight: 600;
-    }
-    
-    .invoice-total-amount {
-      font-size: 28px;
-      font-weight: 700;
-    }
-    
-    .invoice-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    
-    .invoice-table th {
-      background: #333;
-      color: #fff;
-      padding: 12px;
-      text-align: left;
-      font-weight: 500;
-    }
-    
-    .invoice-table th:last-child {
-      text-align: right;
-    }
-    
-    .invoice-table td {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .invoice-table td:last-child {
-      text-align: right;
-      font-weight: 500;
-    }
-    
-    .invoice-table tr.subtotal td,
-    .invoice-table tr.discount td,
-    .invoice-table tr.total td {
-      border-top: 2px solid #333;
-      font-weight: 600;
-    }
-    
-    .invoice-table tr.total td {
-      font-size: 16px;
-      background: #f5f5f5;
-    }
-    
-    .invoice-payment {
-      background: #f5f5f5;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .invoice-payment-title {
-      font-weight: 600;
+    .invoice-company {
       margin-bottom: 12px;
     }
     
-    .invoice-payment-row {
+    .invoice-company-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    
+    .invoice-company-dept {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .invoice-company-details {
+      font-size: 10px;
+      color: #555;
+      line-height: 1.5;
+    }
+    
+    .invoice-company-details p {
+      margin: 0;
+    }
+    
+    .invoice-stamps {
+      margin-top: 12px;
+      text-align: right;
+    }
+    
+    .invoice-stamp {
+      width: 80px;
+      height: auto;
+    }
+    
+    .invoice-summary-section {
+      margin-bottom: 20px;
+    }
+    
+    .invoice-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .invoice-summary-table th {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .invoice-summary-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .invoice-total-cell {
+      font-size: 22px !important;
+      font-weight: 700;
+    }
+    
+    .invoice-payment-section {
       display: flex;
-      margin-bottom: 6px;
+      gap: 0;
+      margin-bottom: 24px;
+      border: 1px solid #ddd;
+    }
+    
+    .invoice-payment-date {
+      width: 120px;
+      border-right: 1px solid #ddd;
+    }
+    
+    .invoice-payment-date-label {
+      background: #f5f5f5;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .invoice-payment-date-value {
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .invoice-payment-bank {
+      flex: 1;
+      border-right: 1px solid #ddd;
+    }
+    
+    .invoice-payment-bank-label {
+      background: #f5f5f5;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .invoice-payment-bank-details {
+      padding: 12px;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    
+    .invoice-payment-bank-details p {
+      margin: 0;
+    }
+    
+    .invoice-payment-note {
+      margin-top: 8px !important;
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .invoice-logo-section {
+      width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    
+    .invoice-logo {
+      max-width: 100px;
+      height: auto;
+    }
+    
+    .invoice-detail-section {
+      margin-bottom: 20px;
+    }
+    
+    .invoice-detail-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .invoice-detail-table th {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .invoice-detail-table td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+    
+    .invoice-detail-table .col-desc {
+      width: 50%;
+    }
+    
+    .invoice-detail-table .col-qty,
+    .invoice-detail-table .col-unit,
+    .invoice-detail-table .col-amount {
+      width: 16.66%;
+      text-align: right;
+    }
+    
+    .invoice-detail-table .text-right {
+      text-align: right;
+    }
+    
+    .invoice-breakdown-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      padding-right: 20px;
+    }
+    
+    .invoice-breakdown-row {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 8px;
       font-size: 13px;
     }
     
-    .invoice-payment-label {
-      width: 120px;
+    .invoice-breakdown-label {
       color: #666;
     }
     
-    .invoice-note {
-      font-size: 12px;
+    .invoice-breakdown-value {
+      font-weight: 600;
+      min-width: 100px;
+      text-align: right;
+    }
+    
+    .invoice-remarks-section {
+      border-top: 1px solid #ddd;
+      padding-top: 16px;
+    }
+    
+    .invoice-remarks-label {
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    .invoice-remarks-content {
+      font-size: 11px;
       color: #666;
-      line-height: 1.8;
     }
     
     /* トースト */
@@ -1214,6 +1349,10 @@
     
     .toast.error {
       background: var(--danger);
+    }
+    
+    .toast.info {
+      background: #6366f1;
     }
     
     /* Empty State */
@@ -1512,6 +1651,12 @@
   <script>
     // ===== 設定 =====
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec'; // ここにGASのウェブアプリURLを設定
+    
+    // 請求書用画像URL（GitHubにアップロード後に設定）
+    const INVOICE_IMAGES = {
+      stamp: 'https://raw.githubusercontent.com/eqao-dev/eqao-staff-portal/main/stamp.png',
+      logo: 'https://raw.githubusercontent.com/eqao-dev/eqao-staff-portal/main/logo.png'
+    };
     
     // ===== 状態管理 =====
     let students = [];
@@ -2049,141 +2194,232 @@
       if (!currentStudent) return;
       
       const today = new Date();
-      const invoiceDate = formatDate(today);
-      const dueDate = formatDate(new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)); // 2週間後
-      const invoiceNumber = `INV-${currentStudent.studentId}-${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}`;
+      const invoiceDate = formatDateSlash(today);
+      const dueDate = formatDateSlash(new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)); // 2週間後
+      const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
       
-      const initialFee = parseInt(currentStudent.initialFee) || 0;
-      const courseFee = parseInt(currentStudent.courseFee) || 0;
-      const englishFee = parseInt(currentStudent.englishFee) || 0;
-      const discount = parseInt(currentStudent.discount) || 0;
-      const total = parseInt(currentStudent.total) || 0;
+      // 料金計算
+      const breakdown = calculateInvoiceBreakdown(currentStudent);
       
       document.getElementById('invoice-content').innerHTML = `
         <div class="invoice-preview" id="invoice-pdf">
-          <div class="invoice-header">
-            <div class="invoice-title">請 求 書</div>
-            <div class="invoice-number">No. ${invoiceNumber}</div>
+          <!-- タイトル -->
+          <div class="invoice-title-section">
+            <h1 class="invoice-main-title">請求書</h1>
           </div>
           
-          <div class="invoice-parties">
-            <div class="invoice-to">
-              <span class="invoice-to-name">${currentStudent.parentName || currentStudent.studentName}</span>
-              <span class="invoice-to-suffix"> 様</span>
+          <!-- ヘッダー情報 -->
+          <div class="invoice-header-section">
+            <!-- 左：宛先 -->
+            <div class="invoice-to-section">
+              <div class="invoice-to-name">${currentStudent.parentName || currentStudent.studentName}<span class="invoice-to-sama">様</span></div>
+              <div class="invoice-to-underline"></div>
+              <p class="invoice-notice">下記の通りご請求申し上げます。</p>
+              <div class="invoice-subject">
+                <span class="invoice-subject-label">件名：</span>
+                <span class="invoice-subject-value">${breakdown.subject}</span>
+                <div class="invoice-subject-underline"></div>
+              </div>
             </div>
-            <div class="invoice-from">
-              <div class="invoice-from-name">EQAO</div>
-              <div class="invoice-from-detail">
-                〒xxx-xxxx<br>
-                東京都○○区○○ x-x-x<br>
-                TEL: xxx-xxxx-xxxx<br>
-                Email: info@eqao.jp
+            
+            <!-- 右：請求情報 -->
+            <div class="invoice-from-section">
+              <div class="invoice-meta-box">
+                <div class="invoice-meta-row">
+                  <span class="invoice-meta-label">請求日：</span>
+                  <span class="invoice-meta-value">${invoiceDate}</span>
+                </div>
+                <div class="invoice-meta-row">
+                  <span class="invoice-meta-label">請求書番号：</span>
+                  <span class="invoice-meta-value">${invoiceNumber}</span>
+                </div>
+              </div>
+              <div class="invoice-company">
+                <div class="invoice-company-name">株式会社EQAO教育グループ</div>
+                <div class="invoice-company-dept">経理</div>
+              </div>
+              <div class="invoice-company-details">
+                <p>株式会社EQAO教育グループ</p>
+                <p>総合型選抜入試専門塾EQAO</p>
+                <p>代表者：玉村ナオ</p>
+                <p>住所：東京都港区芝大門2-8-9 芝大門KSビル3階</p>
+                <p>　　　東京都港区芝大門2-7-10 中島ナカヤビル3階</p>
+                <p>TEL：090-5241-7068</p>
+                <p>Mail：globalsight.official@gmail.com</p>
+              </div>
+              <div class="invoice-stamps">
+                <img src="${INVOICE_IMAGES.stamp}" alt="社印" class="invoice-stamp" onerror="this.style.display='none'">
               </div>
             </div>
           </div>
           
-          <div class="invoice-meta">
-            <div class="invoice-meta-row">
-              <span class="invoice-meta-label">発行日</span>
-              <span class="invoice-meta-value">${invoiceDate}</span>
+          <!-- 金額サマリー -->
+          <div class="invoice-summary-section">
+            <table class="invoice-summary-table">
+              <thead>
+                <tr>
+                  <th>小計</th>
+                  <th>消費税</th>
+                  <th>請求金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${breakdown.subtotal.toLocaleString()}円</td>
+                  <td>${breakdown.tax.toLocaleString()}円</td>
+                  <td class="invoice-total-cell">${breakdown.total.toLocaleString()}円</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 入金情報 -->
+          <div class="invoice-payment-section">
+            <div class="invoice-payment-date">
+              <div class="invoice-payment-date-label">入金期日</div>
+              <div class="invoice-payment-date-value">${dueDate}</div>
             </div>
-            <div class="invoice-meta-row">
-              <span class="invoice-meta-label">お支払期限</span>
-              <span class="invoice-meta-value">${dueDate}</span>
+            <div class="invoice-payment-bank">
+              <div class="invoice-payment-bank-label">振込先</div>
+              <div class="invoice-payment-bank-details">
+                <p>【銀行名】GMOあおぞらネット銀行</p>
+                <p>【支店コード】101</p>
+                <p>【支店名】法人営業部</p>
+                <p>【種別】普通</p>
+                <p>【口座番号】1571513</p>
+                <p>【名義】カ)エカオキョウイクグループ</p>
+                <p class="invoice-payment-note">※恐れ入りますが、振込手数料はお客様<br>のご負担でお願いいたします。</p>
+              </div>
             </div>
-            <div class="invoice-meta-row">
-              <span class="invoice-meta-label">生徒番号</span>
-              <span class="invoice-meta-value">${currentStudent.studentId}</span>
-            </div>
-            <div class="invoice-meta-row">
-              <span class="invoice-meta-label">生徒氏名</span>
-              <span class="invoice-meta-value">${currentStudent.studentName}</span>
+            <div class="invoice-logo-section">
+              <img src="${INVOICE_IMAGES.logo}" alt="EQAO" class="invoice-logo" onerror="this.style.display='none'">
             </div>
           </div>
           
-          <div class="invoice-total-box">
-            <span class="invoice-total-label">ご請求金額（税込）</span>
-            <span class="invoice-total-amount">¥${total.toLocaleString()}</span>
+          <!-- 明細テーブル -->
+          <div class="invoice-detail-section">
+            <table class="invoice-detail-table">
+              <thead>
+                <tr>
+                  <th class="col-desc">摘要</th>
+                  <th class="col-qty">数量</th>
+                  <th class="col-unit">単価</th>
+                  <th class="col-amount">明細金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${breakdown.items.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td class="text-right">${item.qty}</td>
+                    <td class="text-right">${item.unit.toLocaleString()}</td>
+                    <td class="text-right">${item.amount.toLocaleString()}</td>
+                  </tr>
+                `).join('')}
+                ${Array(Math.max(0, 8 - breakdown.items.length)).fill('<tr><td></td><td></td><td></td><td class="text-right">0</td></tr>').join('')}
+              </tbody>
+            </table>
           </div>
           
-          <table class="invoice-table">
-            <thead>
-              <tr>
-                <th>項目</th>
-                <th>金額</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${initialFee > 0 ? `
-              <tr>
-                <td>
-                  <strong>初回費用</strong><br>
-                  <small style="color:#666;">入塾金・教材費・アカウント設定費</small>
-                </td>
-                <td>¥${initialFee.toLocaleString()}</td>
-              </tr>
-              ` : ''}
-              ${courseFee > 0 ? `
-              <tr>
-                <td>
-                  <strong>総合型選抜コース</strong><br>
-                  <small style="color:#666;">${currentStudent.course || ''} / ${currentStudent.monthlyLessons || ''}コマ×${currentStudent.paymentMonth || ''}ヶ月</small>
-                </td>
-                <td>¥${courseFee.toLocaleString()}</td>
-              </tr>
-              ` : ''}
-              ${englishFee > 0 ? `
-              <tr>
-                <td>
-                  <strong>ENGLISHコース</strong><br>
-                  <small style="color:#666;">${currentStudent.englishLessons || ''}コマ×${currentStudent.englishPayment || ''}ヶ月</small>
-                </td>
-                <td>¥${englishFee.toLocaleString()}</td>
-              </tr>
-              ` : ''}
-              ${discount > 0 ? `
-              <tr class="discount">
-                <td>割引</td>
-                <td style="color:#ef4444;">-¥${discount.toLocaleString()}</td>
-              </tr>
-              ` : ''}
-              <tr class="total">
-                <td>合計</td>
-                <td>¥${total.toLocaleString()}</td>
-              </tr>
-            </tbody>
-          </table>
-          
-          <div class="invoice-payment">
-            <div class="invoice-payment-title">お支払い方法</div>
-            <div class="invoice-payment-row">
-              <span class="invoice-payment-label">銀行名</span>
-              <span>○○銀行 ○○支店</span>
+          <!-- 内訳 -->
+          <div class="invoice-breakdown-section">
+            <div class="invoice-breakdown-row">
+              <span class="invoice-breakdown-label">内訳　10%対象(税抜)</span>
+              <span class="invoice-breakdown-value">${breakdown.subtotal.toLocaleString()}円</span>
             </div>
-            <div class="invoice-payment-row">
-              <span class="invoice-payment-label">口座種別</span>
-              <span>普通</span>
-            </div>
-            <div class="invoice-payment-row">
-              <span class="invoice-payment-label">口座番号</span>
-              <span>1234567</span>
-            </div>
-            <div class="invoice-payment-row">
-              <span class="invoice-payment-label">口座名義</span>
-              <span>カ）イーキューエーオー</span>
+            <div class="invoice-breakdown-row">
+              <span class="invoice-breakdown-label">10%消費税</span>
+              <span class="invoice-breakdown-value">${breakdown.tax.toLocaleString()}円</span>
             </div>
           </div>
           
-          <div class="invoice-note">
-            ※ お振込手数料はお客様ご負担となります。<br>
-            ※ お振込の際は、生徒番号をご入力ください。<br>
-            ※ ご不明点がございましたら、info@eqao.jp までお問い合わせください。
+          <!-- 備考 -->
+          <div class="invoice-remarks-section">
+            <div class="invoice-remarks-label">備考</div>
+            <div class="invoice-remarks-content">生徒番号：${currentStudent.studentId}　生徒氏名：${currentStudent.studentName}</div>
           </div>
         </div>
       `;
       
       document.getElementById('invoice-modal').classList.add('show');
       lucide.createIcons();
+    }
+    
+    // ===== 請求書用の料金計算 =====
+    function calculateInvoiceBreakdown(student) {
+      const items = [];
+      let subtotal = 0;
+      
+      const monthlyLessons = parseInt(student.monthlyLessons) || 0;
+      const paymentMonths = parseInt(student.paymentMonth) || 0;
+      const englishLessons = parseInt(student.englishLessons) || 0;
+      const englishMonths = parseInt(student.englishPayment) || 0;
+      const courseType = student.course || '';
+      const hasVideo = student.videoMaterial === '購入する';
+      const isRenewal = student.billingType === '継続';
+      
+      // 件名を生成
+      let subject = '';
+      if (isRenewal) {
+        subject = `総合型選抜対策 授業料`;
+      } else {
+        subject = `総合型選抜対策 入塾金・授業料`;
+      }
+      
+      // 新規の場合は入塾金・教材費
+      if (!isRenewal) {
+        items.push({ name: '入塾金', qty: 1, unit: 39800, amount: 39800 });
+        items.push({ name: '教材費', qty: 1, unit: 19800, amount: 19800 });
+        subtotal += 39800 + 19800;
+      }
+      
+      // 在籍基本料
+      if (paymentMonths > 0) {
+        const basicAmount = PRICES.BASIC_FEE * paymentMonths;
+        items.push({ name: '在籍基本料', qty: paymentMonths, unit: PRICES.BASIC_FEE, amount: basicAmount });
+        subtotal += basicAmount;
+        
+        // システムサーバー費
+        const systemAmount = PRICES.SYSTEM_FEE * paymentMonths;
+        items.push({ name: 'システムサーバー費', qty: paymentMonths, unit: PRICES.SYSTEM_FEE, amount: systemAmount });
+        subtotal += systemAmount;
+      }
+      
+      // 授業料
+      if (monthlyLessons > 0 && paymentMonths > 0) {
+        const coursePrice = PRICES.COURSE[courseType] || 12800;
+        const totalLessons = monthlyLessons * paymentMonths;
+        const lessonAmount = coursePrice * totalLessons;
+        items.push({ name: `授業料(${courseType || 'コース'})`, qty: totalLessons, unit: coursePrice, amount: lessonAmount });
+        subtotal += lessonAmount;
+      }
+      
+      // ENGLISH
+      if (englishLessons > 0 && englishMonths > 0) {
+        const totalEnglish = englishLessons * englishMonths;
+        const englishAmount = PRICES.ENGLISH * totalEnglish;
+        items.push({ name: '英語資格対策授業料', qty: totalEnglish, unit: PRICES.ENGLISH, amount: englishAmount });
+        subtotal += englishAmount;
+      }
+      
+      // 動画教材
+      if (hasVideo && !isRenewal) {
+        items.push({ name: '過去動画教材', qty: 1, unit: 11000, amount: 11000 });
+        subtotal += 11000;
+      }
+      
+      const tax = Math.floor(subtotal * 0.1);
+      const total = subtotal + tax;
+      
+      return { items, subtotal, tax, total, subject };
+    }
+    
+    // ===== 日付フォーマット（スラッシュ区切り） =====
+    function formatDateSlash(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}/${m}/${d}`;
     }
     
     // ===== モーダルを閉じる =====
