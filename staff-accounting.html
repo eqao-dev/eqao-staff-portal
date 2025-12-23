@@ -1073,15 +1073,20 @@
       font-size: 12px;
     }
     
-    .invoice-subject-value {
+    .invoice-subject-input {
       font-size: 16px;
       font-weight: 600;
+      border: none;
+      border-bottom: 1px solid #333;
+      background: transparent;
+      padding: 4px 0;
+      width: 280px;
+      outline: none;
+      font-family: inherit;
     }
     
-    .invoice-subject-underline {
-      border-bottom: 1px solid #333;
-      margin-top: 8px;
-      width: 280px;
+    .invoice-subject-input:focus {
+      border-bottom-color: var(--primary);
     }
     
     .invoice-from-section {
@@ -1132,12 +1137,12 @@
     }
     
     .invoice-stamps {
-      margin-top: 12px;
+      margin-top: 16px;
       text-align: right;
     }
     
     .invoice-stamp {
-      width: 80px;
+      width: 120px;
       height: auto;
     }
     
@@ -1174,12 +1179,14 @@
       display: flex;
       gap: 0;
       margin-bottom: 24px;
-      border: 1px solid #ddd;
     }
     
     .invoice-payment-date {
       width: 120px;
-      border-right: 1px solid #ddd;
+      border: 1px solid #ddd;
+      border-right: none;
+      display: flex;
+      flex-direction: column;
     }
     
     .invoice-payment-date-label {
@@ -1188,17 +1195,22 @@
       font-size: 11px;
       font-weight: 500;
       border-bottom: 1px solid #ddd;
+      text-align: center;
     }
     
     .invoice-payment-date-value {
       padding: 12px;
       font-size: 13px;
       font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .invoice-payment-bank {
       flex: 1;
-      border-right: 1px solid #ddd;
+      border: 1px solid #ddd;
     }
     
     .invoice-payment-bank-label {
@@ -1312,9 +1324,24 @@
       margin-bottom: 8px;
     }
     
-    .invoice-remarks-content {
+    .invoice-remarks-input {
+      width: 100%;
+      min-height: 60px;
+      padding: 10px;
       font-size: 11px;
-      color: #666;
+      font-family: inherit;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .invoice-remarks-input:focus {
+      border-color: var(--primary);
+    }
+    
+    .invoice-remarks-input::placeholder {
+      color: #aaa;
     }
     
     /* トースト */
@@ -1650,7 +1677,7 @@
 
   <script>
     // ===== 設定 =====
-    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec'; // ここにGASのウェブアプリURLを設定
+    const GAS_API_URL = 'YOUR_GAS_WEB_APP_URL'; // ここにGASのウェブアプリURLを設定
     
     // 請求書用画像URL（GitHubにアップロード後に設定）
     const INVOICE_IMAGES = {
@@ -2198,8 +2225,14 @@
       const dueDate = formatDateSlash(new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000)); // 2週間後
       const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
       
-      // 料金計算
+      // 料金計算（詳細表示と同じ計算を使用）
       const breakdown = calculateInvoiceBreakdown(currentStudent);
+      
+      // デフォルトの件名
+      const isRenewal = currentStudent.billingType === '継続';
+      const defaultSubject = isRenewal 
+        ? `総合型選抜対策 授業料` 
+        : `総合型選抜対策 入塾金・授業料`;
       
       document.getElementById('invoice-content').innerHTML = `
         <div class="invoice-preview" id="invoice-pdf">
@@ -2212,13 +2245,12 @@
           <div class="invoice-header-section">
             <!-- 左：宛先 -->
             <div class="invoice-to-section">
-              <div class="invoice-to-name">${currentStudent.parentName || currentStudent.studentName}<span class="invoice-to-sama">様</span></div>
+              <div class="invoice-to-name">${currentStudent.studentName || ''}<span class="invoice-to-sama">様</span></div>
               <div class="invoice-to-underline"></div>
               <p class="invoice-notice">下記の通りご請求申し上げます。</p>
               <div class="invoice-subject">
                 <span class="invoice-subject-label">件名：</span>
-                <span class="invoice-subject-value">${breakdown.subject}</span>
-                <div class="invoice-subject-underline"></div>
+                <input type="text" class="invoice-subject-input" id="invoice-subject" value="${defaultSubject}">
               </div>
             </div>
             
@@ -2336,7 +2368,7 @@
           <!-- 備考 -->
           <div class="invoice-remarks-section">
             <div class="invoice-remarks-label">備考</div>
-            <div class="invoice-remarks-content">生徒番号：${currentStudent.studentId}　生徒氏名：${currentStudent.studentName}</div>
+            <textarea class="invoice-remarks-input" id="invoice-remarks" placeholder="備考を入力...">生徒番号：${currentStudent.studentId}　生徒氏名：${currentStudent.studentName}</textarea>
           </div>
         </div>
       `;
@@ -2345,7 +2377,7 @@
       lucide.createIcons();
     }
     
-    // ===== 請求書用の料金計算 =====
+    // ===== 請求書用の料金計算（詳細表示と統一） =====
     function calculateInvoiceBreakdown(student) {
       const items = [];
       let subtotal = 0;
@@ -2358,19 +2390,25 @@
       const hasVideo = student.videoMaterial === '購入する';
       const isRenewal = student.billingType === '継続';
       
-      // 件名を生成
-      let subject = '';
-      if (isRenewal) {
-        subject = `総合型選抜対策 授業料`;
-      } else {
-        subject = `総合型選抜対策 入塾金・授業料`;
-      }
-      
-      // 新規の場合は入塾金・教材費
+      // 新規の場合は初期費用
       if (!isRenewal) {
-        items.push({ name: '入塾金', qty: 1, unit: 39800, amount: 39800 });
-        items.push({ name: '教材費', qty: 1, unit: 19800, amount: 19800 });
-        subtotal += 39800 + 19800;
+        // 入塾金
+        items.push({ name: '入塾金', qty: 1, unit: PRICES.ENROLLMENT_FEE, amount: PRICES.ENROLLMENT_FEE });
+        subtotal += PRICES.ENROLLMENT_FEE;
+        
+        // 教材費
+        items.push({ name: '教材費', qty: 1, unit: PRICES.MATERIAL_FEE, amount: PRICES.MATERIAL_FEE });
+        subtotal += PRICES.MATERIAL_FEE;
+        
+        // アカウント設定費
+        items.push({ name: 'アカウント設定費', qty: 1, unit: PRICES.ACCOUNT_FEE, amount: PRICES.ACCOUNT_FEE });
+        subtotal += PRICES.ACCOUNT_FEE;
+        
+        // 動画教材（入塾時購入）
+        if (hasVideo) {
+          items.push({ name: '過去動画教材費', qty: 1, unit: PRICES.VIDEO_FEE, amount: PRICES.VIDEO_FEE });
+          subtotal += PRICES.VIDEO_FEE;
+        }
       }
       
       // 在籍基本料
@@ -2394,6 +2432,13 @@
         subtotal += lessonAmount;
       }
       
+      // まとめ払い割引
+      if (paymentMonths > 0 && PRICES.BULK_DISCOUNT[paymentMonths]) {
+        const discountAmount = PRICES.BULK_DISCOUNT[paymentMonths];
+        items.push({ name: `まとめ払い割引(${paymentMonths}ヶ月)`, qty: 1, unit: -discountAmount, amount: -discountAmount });
+        subtotal -= discountAmount;
+      }
+      
       // ENGLISH
       if (englishLessons > 0 && englishMonths > 0) {
         const totalEnglish = englishLessons * englishMonths;
@@ -2402,16 +2447,10 @@
         subtotal += englishAmount;
       }
       
-      // 動画教材
-      if (hasVideo && !isRenewal) {
-        items.push({ name: '過去動画教材', qty: 1, unit: 11000, amount: 11000 });
-        subtotal += 11000;
-      }
-      
       const tax = Math.floor(subtotal * 0.1);
       const total = subtotal + tax;
       
-      return { items, subtotal, tax, total, subject };
+      return { items, subtotal, tax, total };
     }
     
     // ===== 日付フォーマット（スラッシュ区切り） =====
