@@ -3431,7 +3431,7 @@ ${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}ご請求金額：¥
 ━━━━━━━━━━━━━━━━━━━━━━━━
 
 ご不明点がございましたら、EQAO公式LINEまでお気軽にお問い合わせください。
-https://lin.ee/xxxxxxx
+https://lin.ee/Zu2Gb05
 
 今後ともよろしくお願いいたします。
 
@@ -3536,7 +3536,7 @@ Email: globalsight.official@gmail.com`;
           // GASに送信（設定データも含む）
           const response = await fetch(GAS_API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({
               action: 'sendInvoice',
               studentId: currentStudent.studentId,
@@ -3599,7 +3599,7 @@ Email: globalsight.official@gmail.com`;
         
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({
             action: 'updateStatus',
             studentId: studentId,
