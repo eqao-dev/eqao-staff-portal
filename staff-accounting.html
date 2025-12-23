@@ -1676,7 +1676,7 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 100;
+      z-index: 1000;
       min-width: 120px;
       display: none;
     }
@@ -3402,7 +3402,7 @@
     function generateEmailBody(student, breakdown, paymentMonths, invoiceSubject) {
       const monthsDisplay = paymentMonths > 1 ? `（${paymentMonths}ヶ月分）` : '';
       
-      return `${student.parentName || student.studentName} 様
+      return `${student.studentName} 様
 
 いつもお世話になっております。
 EQAOでございます。
@@ -3517,17 +3517,25 @@ Email: globalsight.official@gmail.com`;
       
       try {
         showToast('請求書を送信中...', 'info');
-        closeEmailModal();
         
+        // PDF生成（モーダルを閉じる前に実行）
         const pdfBlob = await html2pdf()
           .set({
             margin: 10,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
+            html2canvas: { 
+              scale: 2,
+              useCORS: true,
+              allowTaint: true,
+              logging: false
+            },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
           })
           .from(element)
           .outputPdf('blob');
+        
+        // PDF生成後にモーダルを閉じる
+        closeEmailModal();
         
         // Base64に変換
         const reader = new FileReader();
