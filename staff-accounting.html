@@ -1069,9 +1069,8 @@
     }
     
     .invoice-to-name-wrapper {
-      display: flex;
+      display: inline-flex;
       align-items: baseline;
-      justify-content: center;
       margin-bottom: 8px;
       border-bottom: 1px solid #333;
       padding-bottom: 8px;
@@ -1082,8 +1081,8 @@
       font-weight: 600;
       border: none;
       background: transparent;
-      text-align: center;
-      width: 200px;
+      text-align: left;
+      width: 180px;
       outline: none;
       font-family: inherit;
     }
@@ -1097,13 +1096,11 @@
     .invoice-notice {
       font-size: 12px;
       margin-bottom: 16px;
-      text-align: center;
     }
     
     .invoice-subject {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 8px;
     }
     
@@ -1121,7 +1118,6 @@
       width: 280px;
       outline: none;
       font-family: inherit;
-      text-align: center;
     }
     
     /* 編集可能フィールドのスタイル */
@@ -1177,12 +1173,12 @@
     }
     
     .invoice-logo-small {
-      width: 80px;
+      width: 100px;
       height: auto;
     }
     
     .invoice-stamp {
-      width: 100px;
+      width: 110px;
       height: auto;
     }
     
@@ -1277,6 +1273,20 @@
       margin-top: 8px !important;
       font-size: 10px;
       color: #666;
+    }
+    
+    .invoice-payment-logo {
+      width: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      flex-shrink: 0;
+    }
+    
+    .invoice-logo-payment {
+      max-width: 110px;
+      height: auto;
     }
     
     .invoice-detail-section {
@@ -2771,6 +2781,9 @@
                 <p>【名義】カ)エカオキョウイクグループ</p>
                 <p class="invoice-payment-note">※恐れ入りますが、振込手数料はお客様<br>のご負担でお願いいたします。</p>
               </div>
+            </div>
+            <div class="invoice-payment-logo">
+              <img src="${INVOICE_IMAGES.logo}" alt="EQAO" class="invoice-logo-payment" onerror="this.style.display='none'">
             </div>
           </div>
           
