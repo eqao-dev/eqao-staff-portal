@@ -1024,11 +1024,16 @@
     /* 請求書プレビュー */
     .invoice-preview {
       background: #fff;
-      padding: 40px;
-      font-size: 12px;
-      line-height: 1.6;
+      padding: 30px 35px;
+      font-size: 11px;
+      line-height: 1.5;
       color: #333;
       font-family: 'Noto Sans JP', sans-serif;
+      width: 210mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     
     .invoice-title-section {
@@ -1974,9 +1979,7 @@
         grid-template-columns: 1fr;
       }
       
-      .invoice-preview {
-        padding: 20px;
-      }
+      /* モバイル表示時もPDF生成用のサイズは維持 */
       
       .invoice-parties {
         flex-direction: column;
@@ -3521,15 +3524,25 @@ Email: globalsight.official@gmail.com`;
         // PDF生成（モーダルを閉じる前に実行）
         const pdfBlob = await html2pdf()
           .set({
-            margin: 10,
-            image: { type: 'jpeg', quality: 0.98 },
+            margin: [5, 5, 5, 5],
+            filename: `請求書_${student.studentName}.pdf`,
+            image: { type: 'jpeg', quality: 0.95 },
             html2canvas: { 
               scale: 2,
               useCORS: true,
               allowTaint: true,
-              logging: false
+              logging: false,
+              width: element.scrollWidth,
+              height: element.scrollHeight,
+              scrollX: 0,
+              scrollY: 0
             },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4', 
+              orientation: 'portrait'
+            },
+            pagebreak: { mode: 'avoid-all' }
           })
           .from(element)
           .outputPdf('blob');
