@@ -3485,7 +3485,9 @@ Email: globalsight.official@gmail.com`;
     
     // ===== メール送信確認＆実行 =====
     async function confirmSendEmail() {
-      if (!currentStudent) return;
+      // currentStudentをローカル変数にコピー（非同期処理中にnullになるのを防ぐ）
+      const student = currentStudent;
+      if (!student) return;
       
       const email = document.getElementById('email-to').value;
       const subject = document.getElementById('email-subject').value;
@@ -3505,7 +3507,7 @@ Email: globalsight.official@gmail.com`;
       const referralDiscount = document.getElementById('discount-referral')?.checked || false;
       
       // 料金再計算
-      const breakdown = calculateInvoiceBreakdown(currentStudent, {
+      const breakdown = calculateInvoiceBreakdown(student, {
         singleParentDiscount,
         referralDiscount
       });
@@ -3539,12 +3541,12 @@ Email: globalsight.official@gmail.com`;
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({
               action: 'sendInvoice',
-              studentId: currentStudent.studentId,
+              studentId: student.studentId,
               email: email,
               emailSubject: subject,
               emailBody: body,
-              studentName: invoiceToName || currentStudent.studentName,
-              parentName: currentStudent.parentName,
+              studentName: invoiceToName || student.studentName,
+              parentName: student.parentName,
               total: breakdown.total,
               pdfBase64: base64data,
               billingStart: billingStart,
@@ -3558,8 +3560,8 @@ Email: globalsight.official@gmail.com`;
           
           if (result.success) {
             // ローカルデータ更新
-            currentStudent.invoiceSent = '入金待ち';
-            currentStudent.nextRenewalMonth = nextRenewal.replace('-', '');
+            student.invoiceSent = '入金待ち';
+            student.nextRenewalMonth = nextRenewal.replace('-', '');
             updateStats();
             renderList();
             closeModal();
