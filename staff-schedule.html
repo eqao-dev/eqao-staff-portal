@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スケジュール担当 | EQAO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --primary-light: #e0f2fe;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --warning: #eab308;
+      --warning-light: #fef9c3;
+    }
+    
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .refresh-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* メイン */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    /* 統計カード */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-card.total .stat-icon {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    .stat-card.pending .stat-icon {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+    
+    .stat-card.done .stat-icon {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    
+    .stat-info {
+      flex: 1;
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+    }
+    
+    /* フィルター */
+    .filter-bar {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    
+    /* 生徒リスト */
+    .student-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    /* 生徒カード */
+    .student-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    
+    .student-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .student-card.incomplete {
+      border-left: 4px solid var(--warning);
+    }
+    
+    .student-card.complete {
+      border-left: 4px solid var(--success);
+    }
+    
+    .student-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      gap: 16px;
+    }
+    
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+    
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    
+    .student-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    
+    .student-meta {
+      font-size: 13px;
+      color: #888;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .student-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .status-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .status-badge.pending {
+      background: var(--warning-light);
+      color: #92400e;
+    }
+    
+    .status-badge.done {
+      background: var(--success-light);
+      color: #166534;
+    }
+    
+    .expand-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    
+    .expand-btn:hover {
+      background: #eee;
+      color: #333;
+    }
+    
+    .student-card.expanded .expand-btn {
+      transform: rotate(180deg);
+      background: var(--primary);
+      color: #fff;
+    }
+    
+    /* 詳細パネル */
+    .student-details {
+      display: none;
+      border-top: 1px solid #eee;
+      padding: 20px;
+      background: #fafafa;
+    }
+    
+    .student-card.expanded .student-details {
+      display: block;
+    }
+    
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .detail-section {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    
+    .detail-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 13px;
+    }
+    
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      color: #888;
+    }
+    
+    .detail-value {
+      color: #333;
+      font-weight: 500;
+      text-align: right;
+      max-width: 60%;
+    }
+    
+    /* ステータスチェック */
+    .status-section {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .status-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .status-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1;
+      min-width: 180px;
+    }
+    
+    .status-check:hover {
+      border-color: var(--primary);
+    }
+    
+    .status-check.checked {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+    
+    .status-check input {
+      display: none;
+    }
+    
+    .status-check-box {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      color: transparent;
+    }
+    
+    .status-check.checked .status-check-box {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+    
+    .status-check-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+    }
+    
+    .status-check.checked .status-check-label {
+      color: #166534;
+    }
+    
+    /* ローディング */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      gap: 16px;
+    }
+    
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e5e5e5;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      font-size: 14px;
+      color: #888;
+    }
+    
+    /* 空状態 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+    }
+    
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      background: #f5f5f5;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #bbb;
+    }
+    
+    .empty-state-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    /* トースト */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .toast.success {
+      background: var(--success);
+    }
+    
+    .toast.error {
+      background: #ef4444;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 16px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .student-header {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        padding-right: 56px;
+      }
+      
+      .expand-btn {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+      }
+      
+      .status-badges {
+        width: 100%;
+      }
+      
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .status-checks {
+        flex-direction: column;
+      }
+      
+      .status-check {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="staff-executive.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+        </a>
+        <div class="header-info">
+          <div class="header-icon">
+            <i data-lucide="calendar-clock" style="width:20px;height:20px;"></i>
+          </div>
+          <div class="header-title">スケジュール担当</div>
+        </div>
+      </div>
+      <button class="refresh-btn" onclick="loadData()">
+        <i data-lucide="refresh-cw" style="width:16px;height:16px;"></i>
+        更新
+      </button>
+    </div>
+  </header>
+  
+  <!-- メイン -->
+  <main class="main">
+    <!-- 統計カード -->
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">
+          <i data-lucide="users" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">総生徒数</div>
+          <div class="stat-value" id="stat-total">-</div>
+        </div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-icon">
+          <i data-lucide="clock" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">未完了</div>
+          <div class="stat-value" id="stat-incomplete">-</div>
+        </div>
+      </div>
+      <div class="stat-card done">
+        <div class="stat-icon">
+          <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">完了</div>
+          <div class="stat-value" id="stat-complete">-</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- フィルター -->
+    <div class="filter-bar">
+      <span class="filter-label">
+        <i data-lucide="filter" style="width:16px;height:16px;"></i>
+        表示
+      </span>
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="incomplete">未完了のみ</button>
+      <button class="filter-btn" data-filter="complete">完了のみ</button>
+    </div>
+    
+    <!-- 生徒リスト -->
+    <div class="student-list" id="student-list">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">読み込み中...</div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- トースト -->
+  <div class="toast" id="toast"></div>
+  
+  <script>
+    // 設定
+    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyXdCxzPU6oXAm2Mi9mfMDeNvQAyE0mmTOABA2EOYelvX6J2Rr48VcizS0vMgIS7Qc7/exec';
+    
+    let students = [];
+    let currentFilter = 'all';
+    
+    const STATUS_COLUMNS = [
+      { key: 'statusCommunity', label: 'EQAOコミュニティ', column: 'EQAOコミュニティ' },
+      { key: 'statusTutorialAdj', label: 'チュートリアル調整', column: 'チュートリアル調整' },
+      { key: 'statusTutorialDone', label: 'チュートリアル実施', column: 'チュートリアル実施' },
+      { key: 'statusSchedule', label: 'スケジュール作成', column: 'スケジュール作成' },
+      { key: 'statusLine', label: 'ライングループ作成', column: 'ライングループ作成' }
+    ];
+    
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      setupFilters();
+      loadData();
+    });
+    
+    // フィルター設定
+    function setupFilters() {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          renderStudents();
+        });
+      });
+    }
+    
+    // データ読み込み
+    async function loadData() {
+      const listEl = document.getElementById('student-list');
+      listEl.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">読み込み中...</div>
+        </div>
+      `;
+      
+      try {
+        const response = await fetch(`${GAS_API_URL}?action=getScheduleData`);
+        const result = await response.json();
+        
+        if (result.success) {
+          students = result.data;
+          updateStats();
+          renderStudents();
+        } else {
+          throw new Error(result.message || 'データの取得に失敗しました');
+        }
+      } catch (error) {
+        console.error('データ読み込みエラー:', error);
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <i data-lucide="alert-circle" style="width:32px;height:32px;"></i>
+            </div>
+            <div class="empty-state-title">データの読み込みに失敗しました</div>
+            <p>ページを再読み込みしてください</p>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+    }
+    
+    // 統計更新
+    function updateStats() {
+      const total = students.length;
+      const complete = students.filter(s => isComplete(s)).length;
+      const incomplete = total - complete;
+      
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-incomplete').textContent = incomplete;
+      document.getElementById('stat-complete').textContent = complete;
+    }
+    
+    // 完了チェック
+    function isComplete(student) {
+      return STATUS_COLUMNS.every(col => student[col.key] === '完了');
+    }
+    
+    // 生徒リスト描画
+    function renderStudents() {
+      const listEl = document.getElementById('student-list');
+      
+      let filtered = students;
+      if (currentFilter === 'incomplete') {
+        filtered = students.filter(s => !isComplete(s));
+      } else if (currentFilter === 'complete') {
+        filtered = students.filter(s => isComplete(s));
+      }
+      
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <i data-lucide="users" style="width:32px;height:32px;"></i>
+            </div>
+            <div class="empty-state-title">該当する生徒がいません</div>
+            <p>条件に一致する生徒データがありません</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+      
+      listEl.innerHTML = filtered.map(student => renderStudentCard(student)).join('');
+      lucide.createIcons();
+    }
+    
+    // 生徒カード描画
+    function renderStudentCard(student) {
+      const complete = isComplete(student);
+      const initial = student.studentName ? student.studentName.charAt(0) : '?';
+      
+      const statusBadges = STATUS_COLUMNS.map(col => {
+        const done = student[col.key] === '完了';
+        return `
+          <span class="status-badge ${done ? 'done' : 'pending'}">
+            <i data-lucide="${done ? 'check' : 'clock'}" style="width:10px;height:10px;"></i>
+            ${col.label}
+          </span>
+        `;
+      }).join('');
+      
+      const statusChecks = STATUS_COLUMNS.map(col => {
+        const checked = student[col.key] === '完了';
+        return `
+          <label class="status-check ${checked ? 'checked' : ''}" onclick="event.stopPropagation()">
+            <input type="checkbox" ${checked ? 'checked' : ''} 
+              onchange="updateStatus('${student.studentId}', '${col.column}', this.checked)">
+            <div class="status-check-box">
+              <i data-lucide="check" style="width:14px;height:14px;"></i>
+            </div>
+            <span class="status-check-label">${col.label}</span>
+          </label>
+        `;
+      }).join('');
+      
+      return `
+        <div class="student-card ${complete ? 'complete' : 'incomplete'}" id="card-${student.studentId}">
+          <div class="student-header" onclick="toggleCard('${student.studentId}')">
+            <div class="student-info">
+              <div class="student-avatar">${initial}</div>
+              <div>
+                <div class="student-name">${student.studentName || '名前なし'}</div>
+                <div class="student-meta">
+                  <span><i data-lucide="hash" style="width:12px;height:12px;"></i>${student.studentId}</span>
+                  <span><i data-lucide="graduation-cap" style="width:12px;height:12px;"></i>${student.grade || '-'}</span>
+                  <span><i data-lucide="school" style="width:12px;height:12px;"></i>${student.highSchool || '-'}</span>
+                </div>
+              </div>
+            </div>
+            <div class="status-badges">
+              ${statusBadges}
+            </div>
+            <button class="expand-btn">
+              <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+          <div class="student-details">
+            <div class="details-grid">
+              <div class="detail-section">
+                <div class="detail-section-title">
+                  <i data-lucide="target" style="width:14px;height:14px;"></i>
+                  志望校情報
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">第一志望決定</span>
+                  <span class="detail-value">${student.firstChoice || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">志望大学</span>
+                  <span class="detail-value">${student.university || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">学部</span>
+                  <span class="detail-value">${student.faculty || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">学科</span>
+                  <span class="detail-value">${student.department || '-'}</span>
+                </div>
+              </div>
+              
+              <div class="detail-section">
+                <div class="detail-section-title">
+                  <i data-lucide="user-check" style="width:14px;height:14px;"></i>
+                  講師への希望
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">講師性別</span>
+                  <span class="detail-value">${student.teacherGender || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">思考スタイル</span>
+                  <span class="detail-value">${student.thinkingStyle || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">フィードバック</span>
+                  <span class="detail-value">${student.feedbackPref || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">厳しさ</span>
+                  <span class="detail-value">${student.strictness || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">MBTI</span>
+                  <span class="detail-value">${student.mbti || '-'}</span>
+                </div>
+              </div>
+              
+              <div class="detail-section">
+                <div class="detail-section-title">
+                  <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+                  スケジュール希望
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">曜日別スタイル</span>
+                  <span class="detail-value">${student.weekdayStyle || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">緊急対応</span>
+                  <span class="detail-value">${student.urgentResponse || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">希望日程</span>
+                  <span class="detail-value">${student.scheduleDate || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">補足</span>
+                  <span class="detail-value">${student.scheduleMemo || '-'}</span>
+                </div>
+              </div>
+              
+              <div class="detail-section">
+                <div class="detail-section-title">
+                  <i data-lucide="info" style="width:14px;height:14px;"></i>
+                  その他
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">学習スタイル</span>
+                  <span class="detail-value">${student.learningStyle || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">宿題量</span>
+                  <span class="detail-value">${student.homework || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">親への報告</span>
+                  <span class="detail-value">${student.parentReport || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">モチベーション</span>
+                  <span class="detail-value">${student.motivation || '-'}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="status-section">
+              <div class="status-section-title">
+                <i data-lucide="list-checks" style="width:18px;height:18px;"></i>
+                ステータス管理
+              </div>
+              <div class="status-checks">
+                ${statusChecks}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // カード展開/折りたたみ
+    function toggleCard(studentId) {
+      const card = document.getElementById(`card-${studentId}`);
+      card.classList.toggle('expanded');
+      lucide.createIcons();
+    }
+    
+    // ステータス更新
+    async function updateStatus(studentId, columnName, checked) {
+      const value = checked ? '完了' : '';
+      
+      try {
+        const url = `${GAS_API_URL}?action=updateStatus&studentId=${encodeURIComponent(studentId)}&column=${encodeURIComponent(columnName)}&value=${encodeURIComponent(value)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.success) {
+          const student = students.find(s => s.studentId === studentId);
+          if (student) {
+            const statusKey = STATUS_COLUMNS.find(c => c.column === columnName)?.key;
+            if (statusKey) {
+              student[statusKey] = value;
+            }
+          }
+          
+          updateStats();
+          
+          const card = document.getElementById(`card-${studentId}`);
+          const wasExpanded = card.classList.contains('expanded');
+          card.outerHTML = renderStudentCard(students.find(s => s.studentId === studentId));
+          if (wasExpanded) {
+            document.getElementById(`card-${studentId}`).classList.add('expanded');
+          }
+          lucide.createIcons();
+          
+          showToast('ステータスを更新しました', 'success');
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('ステータス更新エラー:', error);
+        showToast('更新に失敗しました', 'error');
+        loadData();
+      }
+    }
+    
+    // トースト表示
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" style="width:18px;height:18px;"></i>
+        ${message}
+      `;
+      toast.classList.add('show');
+      lucide.createIcons();
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

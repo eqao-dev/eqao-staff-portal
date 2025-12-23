@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタッフポータル | EQAO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .logo {
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+    }
+    
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    
+    .nav-item:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+    
+    /* メイン */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    
+    /* ヒーロー */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      background: #111;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: #fff;
+    }
+    
+    .hero-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+    }
+    
+    .hero-subtitle {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+    }
+    
+    /* セクション */
+    .section {
+      margin-bottom: 40px;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* カードグリッド */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    /* カード */
+    .card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .card:hover {
+      border-color: #ccc;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    .card-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      color: #999;
+      transition: all 0.2s;
+    }
+    
+    .card:hover .card-arrow {
+      background: #111;
+      color: #fff;
+    }
+    
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    
+    .card-desc {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    /* 幹部エリア */
+    .executive-section {
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+    
+    .executive-icon {
+      width: 64px;
+      height: 64px;
+      background: #111;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: #fff;
+    }
+    
+    .executive-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f5f5f5;
+      color: #666;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .executive-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    
+    .executive-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    
+    .executive-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #111;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    
+    .executive-btn:hover {
+      background: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+    
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+      
+      .hero-title {
+        font-size: 26px;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .executive-section {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="logo">
+          <img src="/logo.png" alt="EQAO">
+        </div>
+        <div class="brand-name">EQAO スタッフポータル</div>
+      </div>
+      <nav class="header-nav">
+        <a href="#" class="nav-item">
+          <i data-lucide="help-circle" style="width:18px;height:18px;"></i>
+          ヘルプ
+        </a>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- メイン -->
+  <main class="main">
+    <!-- ヒーロー -->
+    <div class="hero">
+      <div class="hero-icon">
+        <i data-lucide="layout-dashboard" style="width:36px;height:36px;"></i>
+      </div>
+      <h1 class="hero-title">スタッフポータル</h1>
+      <p class="hero-subtitle">
+        EQAOの業務システムへようこそ。<br>
+        各種ツールや情報にアクセスできます。
+      </p>
+    </div>
+    
+    <!-- 一般メニュー -->
+    <div class="section">
+      <div class="section-title">
+        <i data-lucide="grid-3x3" style="width:16px;height:16px;"></i>
+        メニュー
+      </div>
+      <div class="card-grid">
+        <a href="#" class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i data-lucide="calendar-days" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="card-arrow">
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+          <div class="card-title">スケジュール確認</div>
+          <div class="card-desc">授業スケジュールや予定を確認できます。</div>
+        </a>
+        
+        <a href="#" class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i data-lucide="users" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="card-arrow">
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+          <div class="card-title">生徒情報</div>
+          <div class="card-desc">担当生徒の情報を確認できます。</div>
+        </a>
+        
+        <a href="#" class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i data-lucide="book-open" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="card-arrow">
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+          <div class="card-title">マニュアル・研修</div>
+          <div class="card-desc">業務マニュアルや研修資料を確認できます。</div>
+        </a>
+      </div>
+    </div>
+    
+    <!-- 幹部エリア -->
+    <div class="executive-section">
+      <div class="executive-icon">
+        <i data-lucide="shield" style="width:32px;height:32px;"></i>
+      </div>
+      <div class="executive-badge">
+        <i data-lucide="lock" style="width:12px;height:12px;"></i>
+        パスワード必要
+      </div>
+      <h2 class="executive-title">幹部ページ</h2>
+      <p class="executive-desc">経理・スケジュール管理など、幹部向けの管理機能にアクセスできます。</p>
+      <a href="staff-executive.html" class="executive-btn">
+        <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+        幹部ページへ
+      </a>
+    </div>
+  </main>
+  
+  <!-- フッター -->
+  <footer class="footer">
+    <p class="footer-text">© 2025 EQAO Education Group</p>
+  </footer>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
