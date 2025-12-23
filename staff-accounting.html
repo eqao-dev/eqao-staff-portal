@@ -2633,6 +2633,7 @@
       // 割引のチェック状態（スプレッドシートの値から）
       const hasSingleParent = currentStudent.singleParent === 'はい';
       const hasReferral = currentStudent.referral === 'あり';
+      const referralNameDisplay = currentStudent.referralName || '';
       
       document.getElementById('invoice-content').innerHTML = `
         <!-- 編集パネル（PDF出力には含まれない） -->
@@ -2671,7 +2672,7 @@
                 <label class="discount-checkbox ${isRenewal ? 'disabled' : ''}">
                   <input type="checkbox" id="discount-referral" ${hasReferral && !isRenewal ? 'checked' : ''} ${isRenewal ? 'disabled' : ''} onchange="recalculateInvoice()">
                   <span class="checkbox-label">紹介割引</span>
-                  ${hasReferral ? '<span class="checkbox-hint">（紹介者: ${currentStudent.referralName || ''}）</span>' : ''}
+                  ${hasReferral ? '<span class="checkbox-hint">（紹介者: ' + referralNameDisplay + '）</span>' : ''}
                 </label>
               </div>
               ${isRenewal ? '<p class="discount-note">※継続更新のため入塾金割引は適用外</p>' : ''}
