@@ -3515,82 +3515,64 @@ Email: globalsight.official@gmail.com`;
         referralDiscount
       });
       
-      // PDF生成
-      const element = document.getElementById('invoice-pdf');
+      // 請求書日付情報を生成
+      const today = new Date();
+      const invoiceDate = formatDateSlash(today);
+      const dueDate = formatDateSlash(new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000));
+      const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${student.studentId}-01`;
+      
+      // GAS側でPDF生成するためのデータを準備
+      const invoiceData = {
+        studentId: student.studentId,
+        studentName: invoiceToName || student.studentName,
+        invoiceDate: invoiceDate,
+        invoiceNumber: invoiceNumber,
+        dueDate: dueDate,
+        invoiceSubject: invoiceSubject || '総合型選抜対策 入塾金・授業料',
+        subtotal: breakdown.subtotalExTax,
+        tax: breakdown.tax,
+        total: breakdown.total,
+        items: breakdown.items
+      };
       
       try {
         showToast('請求書を送信中...', 'info');
-        
-        // PDF生成（モーダルを閉じる前に実行）
-        const pdfBlob = await html2pdf()
-          .set({
-            margin: [5, 5, 5, 5],
-            filename: `請求書_${student.studentName}.pdf`,
-            image: { type: 'jpeg', quality: 0.95 },
-            html2canvas: { 
-              scale: 2,
-              useCORS: true,
-              allowTaint: true,
-              logging: false,
-              width: element.scrollWidth,
-              height: element.scrollHeight,
-              scrollX: 0,
-              scrollY: 0
-            },
-            jsPDF: { 
-              unit: 'mm', 
-              format: 'a4', 
-              orientation: 'portrait'
-            },
-            pagebreak: { mode: 'avoid-all' }
-          })
-          .from(element)
-          .outputPdf('blob');
-        
-        // PDF生成後にモーダルを閉じる
         closeEmailModal();
         
-        // Base64に変換
-        const reader = new FileReader();
-        reader.readAsDataURL(pdfBlob);
-        reader.onloadend = async () => {
-          const base64data = reader.result.split(',')[1];
-          
-          // GASに送信（設定データも含む）
-          const response = await fetch(GAS_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify({
-              action: 'sendInvoice',
-              studentId: student.studentId,
-              email: email,
-              emailSubject: subject,
-              emailBody: body,
-              studentName: invoiceToName || student.studentName,
-              parentName: student.parentName,
-              total: breakdown.total,
-              pdfBase64: base64data,
-              billingStart: billingStart,
-              billingEnd: billingEnd,
-              nextRenewalMonth: nextRenewal.replace('-', ''),
-              invoiceSubject: invoiceSubject
-            })
-          });
-          
-          const result = await response.json();
-          
-          if (result.success) {
-            // ローカルデータ更新
-            student.invoiceSent = '入金待ち';
-            student.nextRenewalMonth = nextRenewal.replace('-', '');
-            updateStats();
-            renderList();
-            closeModal();
-            showToast('請求書を送信しました', 'success');
-          } else {
-            throw new Error(result.message);
-          }
-        };
+        // GASに送信（PDF生成はGAS側で行う）
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'sendInvoice',
+            studentId: student.studentId,
+            email: email,
+            emailSubject: subject,
+            emailBody: body,
+            studentName: invoiceToName || student.studentName,
+            parentName: student.parentName,
+            total: breakdown.total,
+            billingStart: billingStart,
+            billingEnd: billingEnd,
+            nextRenewalMonth: nextRenewal.replace('-', ''),
+            invoiceSubject: invoiceSubject,
+            invoiceData: invoiceData
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // ローカルデータ更新
+          student.invoiceSent = '入金待ち';
+          student.nextRenewalMonth = nextRenewal.replace('-', '');
+          updateStats();
+          renderList();
+          closeModal();
+          showToast('請求書を送信しました', 'success');
+        } else {
+          throw new Error(result.message);
+        }
       } catch (error) {
         console.error('送信エラー:', error);
         showToast('送信に失敗しました: ' + error.message, 'error');
