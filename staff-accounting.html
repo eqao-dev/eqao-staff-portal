@@ -1041,6 +1041,7 @@
     
     .invoice-to-section {
       flex: 1;
+      padding-top: 20px;
     }
     
     .invoice-meta-box.right-align {
@@ -1055,6 +1056,7 @@
       gap: 8px;
       font-size: 12px;
       margin-bottom: 2px;
+      justify-content: flex-end;
     }
     
     .invoice-meta-label {
@@ -1063,7 +1065,7 @@
     
     .invoice-meta-value {
       font-weight: 500;
-      min-width: 140px;
+      text-align: right;
     }
     
     .invoice-to-name-wrapper {
@@ -1139,10 +1141,10 @@
     
     .invoice-from-section {
       width: 260px;
-      padding-top: 24px;
     }
     
     .invoice-company {
+      margin-top: 20px;
       margin-bottom: 12px;
     }
     
@@ -1217,14 +1219,16 @@
       display: flex;
       gap: 0;
       margin-bottom: 24px;
+      width: 100%;
     }
     
     .invoice-payment-date {
-      width: 120px;
+      width: 100px;
       border: 1px solid #ddd;
       border-right: none;
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
     }
     
     .invoice-payment-date-label {
@@ -1556,8 +1560,8 @@
     }
     
     .edit-panel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
     }
     
@@ -1594,7 +1598,8 @@
     }
     
     .discount-section {
-      grid-column: 1 / -1;
+      width: 100%;
+      margin-top: 8px;
     }
     
     .discount-checkboxes {
@@ -2690,16 +2695,6 @@
           <div class="invoice-header-section">
             <!-- 左：宛先 -->
             <div class="invoice-to-section">
-              <div class="invoice-meta-box right-align">
-                <div class="invoice-meta-row">
-                  <span class="invoice-meta-label">請求日：</span>
-                  <span class="invoice-meta-value">${invoiceDate}</span>
-                </div>
-                <div class="invoice-meta-row">
-                  <span class="invoice-meta-label">請求書番号：</span>
-                  <span class="invoice-meta-value">${invoiceNumber}</span>
-                </div>
-              </div>
               <div class="invoice-to-name-wrapper">
                 <input type="text" class="invoice-to-name-input editable-field" id="invoice-to-name" value="${currentStudent.studentName || ''}">
                 <span class="invoice-to-sama">様</span>
@@ -2711,8 +2706,18 @@
               </div>
             </div>
             
-            <!-- 右：会社情報 -->
+            <!-- 右：請求日・請求書番号・会社情報 -->
             <div class="invoice-from-section">
+              <div class="invoice-meta-box right-align">
+                <div class="invoice-meta-row">
+                  <span class="invoice-meta-label">請求日：</span>
+                  <span class="invoice-meta-value">${invoiceDate}</span>
+                </div>
+                <div class="invoice-meta-row">
+                  <span class="invoice-meta-label">請求書番号：</span>
+                  <span class="invoice-meta-value">${invoiceNumber}</span>
+                </div>
+              </div>
               <div class="invoice-company">
                 <div class="invoice-company-name">株式会社EQAO教育グループ</div>
                 <div class="invoice-company-dept">経理</div>
@@ -2794,7 +2799,7 @@
           <!-- 備考 -->
           <div class="invoice-remarks-section">
             <div class="invoice-remarks-label">備考</div>
-            <textarea class="invoice-remarks-input editable-field" id="invoice-remarks" placeholder="備考を入力...">生徒番号：${currentStudent.studentId}　生徒氏名：${currentStudent.studentName}</textarea>
+            <textarea class="invoice-remarks-input editable-field" id="invoice-remarks" placeholder="備考を入力..."></textarea>
           </div>
         </div>
       `;
