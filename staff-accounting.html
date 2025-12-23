@@ -1081,7 +1081,7 @@
       font-weight: 600;
       border: none;
       background: transparent;
-      text-align: left;
+      text-align: center;
       width: 180px;
       outline: none;
       font-family: inherit;
@@ -1106,6 +1106,7 @@
     
     .invoice-subject-label {
       font-size: 12px;
+      flex-shrink: 0;
     }
     
     .invoice-subject-input {
@@ -1115,7 +1116,7 @@
       border-bottom: 1px solid #333;
       background: transparent;
       padding: 4px 0;
-      width: 280px;
+      width: 380px;
       outline: none;
       font-family: inherit;
     }
@@ -1213,13 +1214,13 @@
     
     .invoice-payment-section {
       display: flex;
+      justify-content: flex-end;
       gap: 0;
       margin-bottom: 24px;
-      width: 100%;
     }
     
     .invoice-payment-date {
-      width: 100px;
+      width: 150px;
       border: 1px solid #ddd;
       border-right: none;
       display: flex;
@@ -1247,8 +1248,9 @@
     }
     
     .invoice-payment-bank {
-      flex: 1;
+      width: 220px;
       border: 1px solid #ddd;
+      flex-shrink: 0;
     }
     
     .invoice-payment-bank-label {
@@ -1273,20 +1275,6 @@
       margin-top: 8px !important;
       font-size: 10px;
       color: #666;
-    }
-    
-    .invoice-payment-logo {
-      width: 130px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      flex-shrink: 0;
-    }
-    
-    .invoice-logo-payment {
-      max-width: 110px;
-      height: auto;
     }
     
     .invoice-detail-section {
@@ -2782,9 +2770,6 @@
                 <p class="invoice-payment-note">※恐れ入りますが、振込手数料はお客様<br>のご負担でお願いいたします。</p>
               </div>
             </div>
-            <div class="invoice-payment-logo">
-              <img src="${INVOICE_IMAGES.logo}" alt="EQAO" class="invoice-logo-payment" onerror="this.style.display='none'">
-            </div>
           </div>
           
           <!-- 明細テーブル -->
@@ -2822,6 +2807,31 @@
       
       // 初回計算
       recalculateInvoice();
+      
+      // 件名の自動フォントサイズ調整
+      const subjectInput = document.getElementById('invoice-subject');
+      if (subjectInput) {
+        subjectInput.addEventListener('input', adjustSubjectFontSize);
+        adjustSubjectFontSize(); // 初回調整
+      }
+    }
+    
+    // ===== 件名フォントサイズ自動調整 =====
+    function adjustSubjectFontSize() {
+      const input = document.getElementById('invoice-subject');
+      if (!input) return;
+      
+      const text = input.value;
+      const maxWidth = 380; // 入力欄の幅
+      
+      // 文字数に応じてフォントサイズを調整
+      let fontSize = 16;
+      if (text.length > 20) fontSize = 14;
+      if (text.length > 25) fontSize = 13;
+      if (text.length > 30) fontSize = 12;
+      if (text.length > 35) fontSize = 11;
+      
+      input.style.fontSize = fontSize + 'px';
     }
     
     // ===== 請求書再計算 =====
@@ -3027,6 +3037,24 @@
       
       if (!confirm(`${email} に請求書を送信しますか？`)) return;
       
+      // 編集パネルから設定値を取得
+      const billingStart = document.getElementById('billing-start')?.value || '';
+      const billingEnd = document.getElementById('billing-end')?.value || '';
+      const nextRenewal = document.getElementById('next-renewal')?.value || '';
+      const invoiceSubject = document.getElementById('invoice-subject')?.value || '';
+      const invoiceToName = document.getElementById('invoice-to-name')?.value || '';
+      const invoiceRemarks = document.getElementById('invoice-remarks')?.value || '';
+      
+      // 割引適用状態
+      const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+      const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+      
+      // 料金再計算
+      const breakdown = calculateInvoiceBreakdown(currentStudent, {
+        singleParentDiscount,
+        referralDiscount
+      });
+      
       // PDF生成
       const element = document.getElementById('invoice-pdf');
       
@@ -3049,7 +3077,7 @@
         reader.onloadend = async () => {
           const base64data = reader.result.split(',')[1];
           
-          // GASに送信
+          // GASに送信（設定データも含む）
           const response = await fetch(GAS_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -3057,10 +3085,18 @@
               action: 'sendInvoice',
               studentId: currentStudent.studentId,
               email: email,
-              studentName: currentStudent.studentName,
+              studentName: invoiceToName || currentStudent.studentName,
               parentName: currentStudent.parentName,
-              total: currentStudent.total,
-              pdfBase64: base64data
+              total: breakdown.total,
+              pdfBase64: base64data,
+              // 追加データ
+              billingStart: billingStart,
+              billingEnd: billingEnd,
+              nextRenewalMonth: nextRenewal.replace('-', ''), // YYYY-MM → YYYYMM
+              invoiceSubject: invoiceSubject,
+              invoiceRemarks: invoiceRemarks,
+              singleParentDiscount: singleParentDiscount,
+              referralDiscount: referralDiscount
             })
           });
           
@@ -3068,7 +3104,8 @@
           
           if (result.success) {
             // ローカルデータ更新
-            currentStudent.invoiceSent = '送信済';
+            currentStudent.invoiceSent = '入金待ち';
+            currentStudent.nextRenewalMonth = nextRenewal.replace('-', '');
             updateStats();
             renderList();
             closeModal();
