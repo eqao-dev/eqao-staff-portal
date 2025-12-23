@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スケジュール担当 | EQAO</title>
+  <title>入塾手続き | EQAO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -193,7 +193,47 @@
       margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f5f5f5;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 8px 14px;
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px;
+      color: #888;
+    }
+    
+    .search-box:focus-within {
+      border-color: var(--primary);
+      background: #fff;
+    }
+    
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      color: #333;
+      width: 100%;
+      outline: none;
+      font-family: inherit;
+    }
+    
+    .search-box input::placeholder {
+      color: #999;
+    }
+    
+    .filter-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       flex-wrap: wrap;
     }
     
@@ -323,6 +363,17 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    
+    .status-badge:hover {
+      transform: scale(1.05);
+    }
+    
+    .status-badge:active {
+      transform: scale(0.95);
     }
     
     .status-badge.pending {
@@ -330,9 +381,17 @@
       color: #92400e;
     }
     
+    .status-badge.pending:hover {
+      background: #fde68a;
+    }
+    
     .status-badge.done {
       background: var(--success-light);
       color: #166534;
+    }
+    
+    .status-badge.done:hover {
+      background: #bbf7d0;
     }
     
     .expand-btn {
@@ -597,6 +656,28 @@
         grid-template-columns: 1fr 1fr;
       }
       
+      .stat-card {
+        padding: 14px;
+      }
+      
+      .stat-value {
+        font-size: 22px;
+      }
+      
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      
+      .search-box {
+        max-width: none;
+      }
+      
+      .filter-buttons {
+        justify-content: flex-start;
+      }
+      
       .student-header {
         flex-direction: column;
         align-items: flex-start;
@@ -612,6 +693,12 @@
       
       .status-badges {
         width: 100%;
+        flex-wrap: wrap;
+      }
+      
+      .status-badge {
+        font-size: 10px;
+        padding: 4px 8px;
       }
       
       .details-grid {
@@ -626,6 +713,30 @@
         min-width: auto;
       }
     }
+    
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .header-title {
+        font-size: 16px;
+      }
+      
+      .refresh-btn span {
+        display: none;
+      }
+      
+      .refresh-btn {
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -638,9 +749,9 @@
         </a>
         <div class="header-info">
           <div class="header-icon">
-            <i data-lucide="calendar-clock" style="width:20px;height:20px;"></i>
+            <i data-lucide="clipboard-check" style="width:20px;height:20px;"></i>
           </div>
-          <div class="header-title">スケジュール担当</div>
+          <div class="header-title">入塾手続き</div>
         </div>
       </div>
       <button class="refresh-btn" onclick="loadData()">
@@ -668,7 +779,7 @@
           <i data-lucide="clock" style="width:24px;height:24px;"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">未完了</div>
+          <div class="stat-label">入塾手続き 未完了</div>
           <div class="stat-value" id="stat-incomplete">-</div>
         </div>
       </div>
@@ -677,21 +788,27 @@
           <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">完了</div>
+          <div class="stat-label">入塾手続き 完了</div>
           <div class="stat-value" id="stat-complete">-</div>
         </div>
       </div>
     </div>
     
-    <!-- フィルター -->
+    <!-- 検索・フィルター -->
     <div class="filter-bar">
-      <span class="filter-label">
-        <i data-lucide="filter" style="width:16px;height:16px;"></i>
-        表示
-      </span>
-      <button class="filter-btn active" data-filter="all">すべて</button>
-      <button class="filter-btn" data-filter="incomplete">未完了のみ</button>
-      <button class="filter-btn" data-filter="complete">完了のみ</button>
+      <div class="search-box">
+        <i data-lucide="search" style="width:18px;height:18px;"></i>
+        <input type="text" id="search-input" placeholder="生徒番号・名前で検索..." oninput="handleSearch()">
+      </div>
+      <div class="filter-buttons">
+        <span class="filter-label">
+          <i data-lucide="filter" style="width:16px;height:16px;"></i>
+          表示
+        </span>
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="incomplete">未完了のみ</button>
+        <button class="filter-btn" data-filter="complete">完了のみ</button>
+      </div>
     </div>
     
     <!-- 生徒リスト -->
@@ -712,6 +829,7 @@
     
     let students = [];
     let currentFilter = 'all';
+    let searchQuery = '';
     
     const STATUS_COLUMNS = [
       { key: 'statusCommunity', label: 'EQAOコミュニティ', column: 'EQAOコミュニティ' },
@@ -792,15 +910,32 @@
       return STATUS_COLUMNS.every(col => student[col.key] === '完了');
     }
     
+    // 検索処理
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
+      renderStudents();
+    }
+    
     // 生徒リスト描画
     function renderStudents() {
       const listEl = document.getElementById('student-list');
       
       let filtered = students;
+      
+      // 検索フィルター
+      if (searchQuery) {
+        filtered = filtered.filter(s => {
+          const id = String(s.studentId).toLowerCase();
+          const name = (s.studentName || '').toLowerCase();
+          return id.includes(searchQuery) || name.includes(searchQuery);
+        });
+      }
+      
+      // 完了/未完了フィルター
       if (currentFilter === 'incomplete') {
-        filtered = students.filter(s => !isComplete(s));
+        filtered = filtered.filter(s => !isComplete(s));
       } else if (currentFilter === 'complete') {
-        filtered = students.filter(s => isComplete(s));
+        filtered = filtered.filter(s => isComplete(s));
       }
       
       if (filtered.length === 0) {
@@ -829,7 +964,8 @@
       const statusBadges = STATUS_COLUMNS.map(col => {
         const done = student[col.key] === '完了';
         return `
-          <span class="status-badge ${done ? 'done' : 'pending'}">
+          <span class="status-badge ${done ? 'done' : 'pending'}" 
+                onclick="event.stopPropagation(); updateStatus('${student.studentId}', '${col.column}', ${!done})">
             <i data-lucide="${done ? 'check' : 'clock'}" style="width:10px;height:10px;"></i>
             ${col.label}
           </span>
@@ -991,42 +1127,47 @@
       lucide.createIcons();
     }
     
-    // ステータス更新
+    // ステータス更新（楽観的更新）
     async function updateStatus(studentId, columnName, checked) {
       const value = checked ? '完了' : '';
       
+      // 先にローカルデータを更新（即座にUI反映）
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) {
+        console.error('生徒が見つかりません:', studentId);
+        showToast('エラー: 生徒が見つかりません', 'error');
+        return;
+      }
+      
+      const statusKey = STATUS_COLUMNS.find(c => c.column === columnName)?.key;
+      if (statusKey) {
+        student[statusKey] = value;
+      }
+      
+      // UIを即座に更新
+      updateStats();
+      const card = document.getElementById(`card-${studentId}`);
+      const wasExpanded = card.classList.contains('expanded');
+      card.outerHTML = renderStudentCard(student);
+      if (wasExpanded) {
+        document.getElementById(`card-${studentId}`).classList.add('expanded');
+      }
+      lucide.createIcons();
+      
+      // バックグラウンドでAPIを呼び出す
       try {
         const url = `${GAS_API_URL}?action=updateStatus&studentId=${encodeURIComponent(studentId)}&column=${encodeURIComponent(columnName)}&value=${encodeURIComponent(value)}`;
         const response = await fetch(url);
         const result = await response.json();
         
         if (result.success) {
-          const student = students.find(s => s.studentId === studentId);
-          if (student) {
-            const statusKey = STATUS_COLUMNS.find(c => c.column === columnName)?.key;
-            if (statusKey) {
-              student[statusKey] = value;
-            }
-          }
-          
-          updateStats();
-          
-          const card = document.getElementById(`card-${studentId}`);
-          const wasExpanded = card.classList.contains('expanded');
-          card.outerHTML = renderStudentCard(students.find(s => s.studentId === studentId));
-          if (wasExpanded) {
-            document.getElementById(`card-${studentId}`).classList.add('expanded');
-          }
-          lucide.createIcons();
-          
-          showToast('ステータスを更新しました', 'success');
+          showToast('保存しました', 'success');
         } else {
           throw new Error(result.message);
         }
       } catch (error) {
         console.error('ステータス更新エラー:', error);
-        showToast('更新に失敗しました', 'error');
-        loadData();
+        showToast('保存に失敗しました（再読み込みしてください）', 'error');
       }
     }
     
