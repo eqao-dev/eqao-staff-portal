@@ -508,8 +508,13 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
-    .student-card.sent {
+    .student-card.sent,
+    .student-card.paid {
       border-left: 4px solid var(--success);
+    }
+    
+    .student-card.waiting {
+      border-left: 4px solid #3b82f6;
     }
     
     .student-card.pending {
@@ -604,9 +609,15 @@
       font-weight: 600;
     }
     
-    .status-tag.sent {
+    .status-tag.sent,
+    .status-tag.paid {
       background: var(--success-light);
       color: var(--success);
+    }
+    
+    .status-tag.waiting {
+      background: #dbeafe;
+      color: #1e40af;
     }
     
     .status-tag.pending {
@@ -1190,6 +1201,12 @@
     .invoice-summary-table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
+    }
+    
+    .invoice-summary-table th,
+    .invoice-summary-table td {
+      width: 33.33%;
     }
     
     .invoice-summary-table th {
@@ -1214,18 +1231,19 @@
     
     .invoice-payment-section {
       display: flex;
-      justify-content: flex-end;
-      gap: 0;
+      width: 100%;
       margin-bottom: 24px;
     }
     
+    .invoice-payment-spacer {
+      width: 33.33%;
+    }
+    
     .invoice-payment-date {
-      width: 150px;
+      width: 33.33%;
       border: 1px solid #ddd;
-      border-right: none;
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
     }
     
     .invoice-payment-date-label {
@@ -1248,9 +1266,9 @@
     }
     
     .invoice-payment-bank {
-      width: 220px;
+      width: 33.33%;
       border: 1px solid #ddd;
-      flex-shrink: 0;
+      border-left: none;
     }
     
     .invoice-payment-bank-label {
@@ -1463,6 +1481,227 @@
       font-size: 11px;
       color: #888;
       margin-top: 8px;
+    }
+    
+    /* メール編集モーダル */
+    .email-modal {
+      max-width: 700px;
+    }
+    
+    .email-modal-body {
+      padding: 20px;
+    }
+    
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .email-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .email-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .email-input {
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    
+    .email-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .email-input[readonly] {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    .email-preview-toggle {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    
+    .toggle-btn {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .toggle-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .toggle-btn:hover:not(.active) {
+      background: #f5f5f5;
+    }
+    
+    .email-textarea {
+      width: 100%;
+      min-height: 300px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      line-height: 1.6;
+      resize: vertical;
+    }
+    
+    .email-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .email-html-preview {
+      min-height: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    
+    .email-attachment {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #0369a1;
+      margin-top: 8px;
+    }
+    
+    .action-btn.secondary {
+      background: #f5f5f5;
+      color: #555;
+    }
+    
+    .action-btn.secondary:hover {
+      background: #e5e5e5;
+    }
+    
+    /* ステータスバッジ */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .status-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .status-badge.waiting {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .status-badge.paid {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    /* ステータス変更ドロップダウン */
+    .status-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .status-dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .status-dropdown-btn.waiting {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .status-dropdown-btn.waiting:hover {
+      background: #bfdbfe;
+    }
+    
+    .status-dropdown-btn.paid {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .status-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 4px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 100;
+      min-width: 120px;
+      display: none;
+    }
+    
+    .status-dropdown-menu.show {
+      display: block;
+    }
+    
+    .status-dropdown-item {
+      padding: 10px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .status-dropdown-item:first-child {
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .status-dropdown-item:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+    
+    .status-dropdown-item:hover {
+      background: #f5f5f5;
     }
     
     /* 更新通知バナー */
@@ -1885,7 +2124,8 @@
         </span>
         <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">すべて</button>
         <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">未送信</button>
-        <button class="filter-btn" data-filter="sent" onclick="setFilter('sent')">送信済</button>
+        <button class="filter-btn" data-filter="waiting" onclick="setFilter('waiting')">入金待ち</button>
+        <button class="filter-btn" data-filter="paid" onclick="setFilter('paid')">着金済</button>
       </div>
       <button class="price-table-btn" onclick="openPriceModal()">
         <i data-lucide="calculator" style="width:16px;height:16px;"></i>
@@ -2016,6 +2256,59 @@
           </table>
           <p class="price-note">※ 経理確認の上、適用</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メール編集モーダル -->
+  <div class="modal-overlay" id="email-modal">
+    <div class="modal email-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="mail" style="width:20px;height:20px;"></i>
+          メール送信
+        </div>
+        <button class="modal-close" onclick="closeEmailModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body email-modal-body">
+        <div class="email-form">
+          <div class="email-field">
+            <label class="email-label">宛先</label>
+            <input type="email" class="email-input" id="email-to" readonly>
+          </div>
+          <div class="email-field">
+            <label class="email-label">件名</label>
+            <input type="text" class="email-input" id="email-subject">
+          </div>
+          <div class="email-field">
+            <label class="email-label">本文</label>
+            <div class="email-preview-toggle">
+              <button class="toggle-btn active" onclick="setEmailView('edit')">編集</button>
+              <button class="toggle-btn" onclick="setEmailView('preview')">プレビュー</button>
+            </div>
+          </div>
+          <div class="email-body-edit" id="email-body-edit">
+            <textarea class="email-textarea" id="email-body"></textarea>
+          </div>
+          <div class="email-body-preview" id="email-body-preview" style="display:none;">
+            <div class="email-html-preview" id="email-html-preview"></div>
+          </div>
+        </div>
+        <div class="email-attachment">
+          <i data-lucide="paperclip" style="width:14px;height:14px;"></i>
+          <span>添付: 請求書PDF</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn secondary" onclick="closeEmailModal()">
+          キャンセル
+        </button>
+        <button class="action-btn send" onclick="confirmSendEmail()">
+          <i data-lucide="send" style="width:16px;height:16px;"></i>
+          送信する
+        </button>
       </div>
     </div>
   </div>
@@ -2427,9 +2720,11 @@
       
       // ステータスフィルター
       if (currentFilter === 'pending') {
-        filtered = filtered.filter(s => s.invoiceSent !== '送信済');
-      } else if (currentFilter === 'sent') {
-        filtered = filtered.filter(s => s.invoiceSent === '送信済');
+        filtered = filtered.filter(s => !s.invoiceSent || s.invoiceSent === '' || s.invoiceSent === '未送信');
+      } else if (currentFilter === 'waiting') {
+        filtered = filtered.filter(s => s.invoiceSent === '入金待ち');
+      } else if (currentFilter === 'paid') {
+        filtered = filtered.filter(s => s.invoiceSent === '着金済');
       }
       
       if (filtered.length === 0) {
@@ -2452,13 +2747,48 @@
     
     // ===== 生徒カード描画 =====
     function renderStudentCard(student) {
-      const isSent = student.invoiceSent === '送信済';
+      const status = student.invoiceSent || '未送信';
+      const isPending = !status || status === '' || status === '未送信';
+      const isWaiting = status === '入金待ち';
+      const isPaid = status === '着金済';
+      
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
       const total = parseInt(student.total) || 0;
       const isRenewal = student.billingType === '継続';
       
+      // ステータスに応じたクラスとラベル
+      let statusClass = 'pending';
+      let statusLabel = '未送信';
+      if (isWaiting) {
+        statusClass = 'waiting';
+        statusLabel = '入金待ち';
+      } else if (isPaid) {
+        statusClass = 'paid';
+        statusLabel = '着金済';
+      }
+      
+      // ステータス変更用のドロップダウン（入金待ち・着金済の場合のみ）
+      const statusDropdown = (isWaiting || isPaid) ? `
+        <div class="status-dropdown">
+          <button class="status-dropdown-btn ${statusClass}" onclick="event.stopPropagation(); toggleStatusDropdown('${student.studentId}')">
+            ${statusLabel}
+            <i data-lucide="chevron-down" style="width:12px;height:12px;"></i>
+          </button>
+          <div class="status-dropdown-menu" id="status-menu-${student.studentId}">
+            <div class="status-dropdown-item" onclick="event.stopPropagation(); changeStatus('${student.studentId}', '入金待ち')">
+              入金待ち
+            </div>
+            <div class="status-dropdown-item" onclick="event.stopPropagation(); changeStatus('${student.studentId}', '着金済')">
+              着金済
+            </div>
+          </div>
+        </div>
+      ` : `
+        <span class="status-tag pending">未送信</span>
+      `;
+      
       return `
-        <div class="student-card ${isSent ? 'sent' : 'pending'}" id="card-${student.studentId}">
+        <div class="student-card ${statusClass}" id="card-${student.studentId}">
           <div class="student-header" onclick="toggleCard('${student.studentId}')">
             <div class="student-info">
               <div class="student-avatar">${initial}</div>
@@ -2475,9 +2805,7 @@
             </div>
             <div class="billing-summary">
               <div class="billing-amount">¥${total.toLocaleString()}</div>
-              <span class="status-tag ${isSent ? 'sent' : 'pending'}">
-                ${isSent ? '送信済' : '未送信'}
-              </span>
+              ${statusDropdown}
             </div>
             <button class="expand-btn">
               <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
@@ -2582,15 +2910,15 @@
                   <i data-lucide="eye" style="width:16px;height:16px;"></i>
                   プレビュー
                 </button>
-                ${isSent ? `
-                  <button class="action-btn resend" onclick="openInvoicePreview('${student.studentId}')">
-                    <i data-lucide="repeat" style="width:16px;height:16px;"></i>
-                    再送信
-                  </button>
-                ` : `
+                ${isPending ? `
                   <button class="action-btn send" onclick="openInvoicePreview('${student.studentId}')">
                     <i data-lucide="send" style="width:16px;height:16px;"></i>
                     請求書送信
+                  </button>
+                ` : `
+                  <button class="action-btn resend" onclick="openInvoicePreview('${student.studentId}')">
+                    <i data-lucide="repeat" style="width:16px;height:16px;"></i>
+                    再送信
                   </button>
                 `}
               </div>
@@ -2754,6 +3082,7 @@
           
           <!-- 入金情報 -->
           <div class="invoice-payment-section">
+            <div class="invoice-payment-spacer"></div>
             <div class="invoice-payment-date">
               <div class="invoice-payment-date-label">入金期日</div>
               <div class="invoice-payment-date-value">${dueDate}</div>
@@ -3025,8 +3354,8 @@
       }
     }
     
-    // ===== 請求書メール送信 =====
-    async function sendInvoice() {
+    // ===== メール編集モーダルを開く =====
+    function sendInvoice() {
       if (!currentStudent) return;
       
       const email = currentStudent.parentEmail || currentStudent.studentEmail;
@@ -3034,6 +3363,130 @@
         showToast('送信先メールアドレスがありません', 'error');
         return;
       }
+      
+      // 編集パネルから設定値を取得
+      const billingStart = document.getElementById('billing-start')?.value || '';
+      const billingEnd = document.getElementById('billing-end')?.value || '';
+      const invoiceSubject = document.getElementById('invoice-subject')?.value || '';
+      
+      // 割引適用状態
+      const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+      const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+      
+      // 料金再計算
+      const breakdown = calculateInvoiceBreakdown(currentStudent, {
+        singleParentDiscount,
+        referralDiscount
+      });
+      
+      // 請求期間の表示
+      const billingPeriod = billingStart && billingEnd 
+        ? `${billingStart.replace('-', '年')}月〜${billingEnd.replace('-', '年')}月` 
+        : '';
+      
+      // メール本文生成
+      const emailBody = generateEmailBody(currentStudent, breakdown, billingPeriod, invoiceSubject);
+      
+      // モーダルに値をセット
+      document.getElementById('email-to').value = email;
+      document.getElementById('email-subject').value = `【EQAO】ご請求書のお送り（${currentStudent.studentName}様）`;
+      document.getElementById('email-body').value = emailBody;
+      
+      // プレビュー更新
+      updateEmailPreview();
+      
+      // モーダル表示
+      document.getElementById('email-modal').classList.add('show');
+      lucide.createIcons();
+    }
+    
+    // ===== メール本文生成 =====
+    function generateEmailBody(student, breakdown, billingPeriod, invoiceSubject) {
+      return `${student.parentName || student.studentName} 様
+
+いつもお世話になっております。
+EQAOでございます。
+
+この度は、ご入塾いただき誠にありがとうございます。
+添付ファイルにて請求書をお送りいたします。
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+■ ご請求内容
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+生徒番号：${student.studentId}
+生徒氏名：${student.studentName}
+${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}${billingPeriod ? '請求期間：' + billingPeriod + '\n' : ''}ご請求金額：¥${breakdown.total.toLocaleString()}（税込）
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+■ お支払いについて
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+お支払期限：請求書発行日より2週間以内
+お振込先：請求書に記載の口座へお振込ください
+
+※ お振込の際は、生徒番号をご入力ください。
+※ お振込手数料はお客様ご負担となります。
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+ご不明点がございましたら、お気軽にお問い合わせください。
+
+---
+EQAO事務局
+Email: info@eqao.jp`;
+    }
+    
+    // ===== メールプレビュー更新 =====
+    function updateEmailPreview() {
+      const bodyText = document.getElementById('email-body').value;
+      const htmlPreview = document.getElementById('email-html-preview');
+      
+      // テキストをHTMLに変換（改行を<br>に、区切り線をスタイル付きに）
+      let html = bodyText
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/━+/g, '<hr style="border:none;border-top:1px solid #ddd;margin:16px 0;">')
+        .replace(/■\s*(.+)/g, '<strong style="color:#333;font-size:14px;">■ $1</strong>')
+        .replace(/\n/g, '<br>');
+      
+      htmlPreview.innerHTML = `<div style="font-family:sans-serif;color:#333;">${html}</div>`;
+    }
+    
+    // ===== メール編集/プレビュー切り替え =====
+    function setEmailView(view) {
+      const editBtn = document.querySelector('.toggle-btn:first-child');
+      const previewBtn = document.querySelector('.toggle-btn:last-child');
+      const editArea = document.getElementById('email-body-edit');
+      const previewArea = document.getElementById('email-body-preview');
+      
+      if (view === 'edit') {
+        editBtn.classList.add('active');
+        previewBtn.classList.remove('active');
+        editArea.style.display = 'block';
+        previewArea.style.display = 'none';
+      } else {
+        editBtn.classList.remove('active');
+        previewBtn.classList.add('active');
+        editArea.style.display = 'none';
+        previewArea.style.display = 'block';
+        updateEmailPreview();
+      }
+    }
+    
+    // ===== メールモーダルを閉じる =====
+    function closeEmailModal() {
+      document.getElementById('email-modal').classList.remove('show');
+    }
+    
+    // ===== メール送信確認＆実行 =====
+    async function confirmSendEmail() {
+      if (!currentStudent) return;
+      
+      const email = document.getElementById('email-to').value;
+      const subject = document.getElementById('email-subject').value;
+      const body = document.getElementById('email-body').value;
       
       if (!confirm(`${email} に請求書を送信しますか？`)) return;
       
@@ -3043,7 +3496,6 @@
       const nextRenewal = document.getElementById('next-renewal')?.value || '';
       const invoiceSubject = document.getElementById('invoice-subject')?.value || '';
       const invoiceToName = document.getElementById('invoice-to-name')?.value || '';
-      const invoiceRemarks = document.getElementById('invoice-remarks')?.value || '';
       
       // 割引適用状態
       const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
@@ -3060,6 +3512,7 @@
       
       try {
         showToast('請求書を送信中...', 'info');
+        closeEmailModal();
         
         const pdfBlob = await html2pdf()
           .set({
@@ -3085,18 +3538,16 @@
               action: 'sendInvoice',
               studentId: currentStudent.studentId,
               email: email,
+              emailSubject: subject,
+              emailBody: body,
               studentName: invoiceToName || currentStudent.studentName,
               parentName: currentStudent.parentName,
               total: breakdown.total,
               pdfBase64: base64data,
-              // 追加データ
               billingStart: billingStart,
               billingEnd: billingEnd,
-              nextRenewalMonth: nextRenewal.replace('-', ''), // YYYY-MM → YYYYMM
-              invoiceSubject: invoiceSubject,
-              invoiceRemarks: invoiceRemarks,
-              singleParentDiscount: singleParentDiscount,
-              referralDiscount: referralDiscount
+              nextRenewalMonth: nextRenewal.replace('-', ''),
+              invoiceSubject: invoiceSubject
             })
           });
           
@@ -3117,6 +3568,55 @@
       } catch (error) {
         console.error('送信エラー:', error);
         showToast('送信に失敗しました: ' + error.message, 'error');
+      }
+    }
+    
+    // ===== ステータスドロップダウン切り替え =====
+    function toggleStatusDropdown(studentId) {
+      const menu = document.getElementById(`status-menu-${studentId}`);
+      // 他のドロップダウンを閉じる
+      document.querySelectorAll('.status-dropdown-menu.show').forEach(el => {
+        if (el.id !== `status-menu-${studentId}`) {
+          el.classList.remove('show');
+        }
+      });
+      menu.classList.toggle('show');
+    }
+    
+    // ===== ステータス変更 =====
+    async function changeStatus(studentId, newStatus) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
+      
+      // ドロップダウンを閉じる
+      document.querySelectorAll('.status-dropdown-menu.show').forEach(el => el.classList.remove('show'));
+      
+      try {
+        showToast('ステータス更新中...', 'info');
+        
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'updateStatus',
+            studentId: studentId,
+            status: newStatus
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          student.invoiceSent = newStatus;
+          renderList();
+          updateStats();
+          showToast(`ステータスを「${newStatus}」に変更しました`, 'success');
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('ステータス更新エラー:', error);
+        showToast('ステータス更新に失敗しました', 'error');
       }
     }
     
@@ -3154,6 +3654,19 @@
     document.getElementById('price-modal').addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
         closePriceModal();
+      }
+    });
+    
+    document.getElementById('email-modal').addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeEmailModal();
+      }
+    });
+    
+    // ドキュメントクリックでステータスドロップダウンを閉じる
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.status-dropdown')) {
+        document.querySelectorAll('.status-dropdown-menu.show').forEach(el => el.classList.remove('show'));
       }
     });
   </script>
