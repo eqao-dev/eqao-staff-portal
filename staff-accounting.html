@@ -2276,7 +2276,7 @@
         <div class="email-form">
           <div class="email-field">
             <label class="email-label">宛先</label>
-            <input type="email" class="email-input" id="email-to" readonly>
+            <input type="email" class="email-input" id="email-to">
           </div>
           <div class="email-field">
             <label class="email-label">件名</label>
@@ -3379,17 +3379,15 @@
         referralDiscount
       });
       
-      // 請求期間の表示
-      const billingPeriod = billingStart && billingEnd 
-        ? `${billingStart.replace('-', '年')}月〜${billingEnd.replace('-', '年')}月` 
-        : '';
+      // 支払月数を計算
+      const paymentMonths = parseInt(currentStudent.paymentMonth) || 1;
       
       // メール本文生成
-      const emailBody = generateEmailBody(currentStudent, breakdown, billingPeriod, invoiceSubject);
+      const emailBody = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
       
       // モーダルに値をセット
       document.getElementById('email-to').value = email;
-      document.getElementById('email-subject').value = `【EQAO】ご請求書のお送り（${currentStudent.studentName}様）`;
+      document.getElementById('email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
       document.getElementById('email-body').value = emailBody;
       
       // プレビュー更新
@@ -3401,7 +3399,9 @@
     }
     
     // ===== メール本文生成 =====
-    function generateEmailBody(student, breakdown, billingPeriod, invoiceSubject) {
+    function generateEmailBody(student, breakdown, paymentMonths, invoiceSubject) {
+      const monthsDisplay = paymentMonths > 1 ? `（${paymentMonths}ヶ月分）` : '';
+      
       return `${student.parentName || student.studentName} 様
 
 いつもお世話になっております。
@@ -3416,7 +3416,7 @@ EQAOでございます。
 
 生徒番号：${student.studentId}
 生徒氏名：${student.studentName}
-${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}${billingPeriod ? '請求期間：' + billingPeriod + '\n' : ''}ご請求金額：¥${breakdown.total.toLocaleString()}（税込）
+${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}ご請求金額：¥${breakdown.total.toLocaleString()}（税込）${monthsDisplay}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
 ■ お支払いについて
@@ -3430,11 +3430,14 @@ ${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}${billingPeriod ? '�
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
 
-ご不明点がございましたら、お気軽にお問い合わせください。
+ご不明点がございましたら、EQAO公式LINEまでお気軽にお問い合わせください。
+https://lin.ee/xxxxxxx
+
+今後ともよろしくお願いいたします。
 
 ---
-EQAO事務局
-Email: info@eqao.jp`;
+株式会社EQAO教育グループ
+Email: globalsight.official@gmail.com`;
     }
     
     // ===== メールプレビュー更新 =====
