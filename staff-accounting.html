@@ -122,6 +122,146 @@
       background: var(--primary-dark);
     }
     
+    /* タブナビゲーション */
+    .tab-nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 0 24px;
+      position: sticky;
+      top: 64px;
+      z-index: 90;
+    }
+    
+    .tab-nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+    }
+    
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 24px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      position: relative;
+    }
+    
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      border-radius: 3px 3px 0 0;
+      transition: all 0.2s;
+    }
+    
+    .tab-btn:hover:not(.disabled) {
+      color: var(--primary-dark);
+      background: var(--primary-light);
+    }
+    
+    .tab-btn.active {
+      color: var(--primary-dark);
+    }
+    
+    .tab-btn.active::after {
+      background: var(--primary);
+    }
+    
+    .tab-btn.disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+    
+    .tab-btn .coming-soon {
+      font-size: 10px;
+      font-weight: 700;
+      background: #e5e5e5;
+      color: #888;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 4px;
+    }
+    
+    /* タブコンテンツ */
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Coming Soon画面 */
+    .coming-soon-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    
+    .coming-soon-icon {
+      width: 100px;
+      height: 100px;
+      background: #f5f5f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      margin-bottom: 24px;
+    }
+    
+    .coming-soon-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    
+    .coming-soon-text {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    
+    .coming-soon-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px 32px;
+    }
+    
+    .coming-soon-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .coming-soon-feature i {
+      color: #bbb;
+    }
+    
     /* メイン */
     .main {
       max-width: 1400px;
@@ -130,6 +270,72 @@
     }
     
     /* 統計カード */
+    .billing-type-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .billing-type-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: #fff;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .billing-type-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    
+    .billing-type-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+    
+    .billing-type-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .billing-type-icon.new {
+      background: #3b82f6;
+    }
+    
+    .billing-type-icon.renewal {
+      background: #8b5cf6;
+    }
+    
+    .billing-type-label {
+      font-weight: 600;
+    }
+    
+    .billing-type-count {
+      background: #f0f0f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+    }
+    
+    .billing-type-btn.active .billing-type-count {
+      background: var(--primary);
+      color: #111;
+    }
+    
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -174,6 +380,11 @@
     .stat-card.amount .stat-icon {
       background: #e0f2fe;
       color: #0ea5e9;
+    }
+    
+    .stat-card.total-amount .stat-icon {
+      background: #f3e8ff;
+      color: #9333ea;
     }
     
     .stat-info {
@@ -337,6 +548,26 @@
       font-size: 15px;
       font-weight: 600;
       color: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .billing-type-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    
+    .billing-type-badge.new {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+    
+    .billing-type-badge.renewal {
+      background: #ede9fe;
+      color: #7c3aed;
     }
     
     .student-meta {
@@ -472,6 +703,144 @@
       color: #111;
     }
     
+    /* 料金内訳 */
+    .billing-breakdown {
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .breakdown-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    
+    .breakdown-section {
+      margin-bottom: 20px;
+    }
+    
+    .breakdown-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .breakdown-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8f9fa;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .breakdown-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .breakdown-section-subtotal {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    
+    .breakdown-items {
+      padding: 0 8px;
+    }
+    
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px dashed #e5e5e5;
+    }
+    
+    .breakdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .breakdown-item-name {
+      color: #555;
+      flex: 1;
+    }
+    
+    .breakdown-item-calc {
+      color: #888;
+      font-size: 12px;
+      text-align: right;
+      margin-right: 16px;
+    }
+    
+    .breakdown-item-amount {
+      font-weight: 600;
+      color: #333;
+      min-width: 90px;
+      text-align: right;
+    }
+    
+    .breakdown-item-amount.discount {
+      color: var(--danger);
+    }
+    
+    .breakdown-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-light);
+      border: 2px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+    }
+    
+    .breakdown-total-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+    }
+    
+    .breakdown-total-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    
+    .breakdown-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+    }
+    
+    .breakdown-check.match {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    
+    .breakdown-check.mismatch {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+    
+    .breakdown-check-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     /* アクションボタン */
     .action-section {
       background: #fff;
@@ -879,12 +1248,40 @@
         padding: 0 16px;
       }
       
+      .tab-nav {
+        padding: 0 16px;
+      }
+      
+      .tab-btn {
+        padding: 14px 16px;
+        font-size: 13px;
+      }
+      
+      .tab-btn .coming-soon {
+        display: none;
+      }
+      
       .main {
         padding: 16px;
       }
       
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .billing-type-selector {
+        gap: 8px;
+      }
+      
+      .billing-type-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+        flex: 1;
+        justify-content: center;
+      }
+      
+      .billing-type-icon {
+        display: none;
       }
       
       .filter-bar {
@@ -916,6 +1313,18 @@
       .invoice-from {
         text-align: left;
       }
+      
+      .coming-soon-container {
+        padding: 60px 16px;
+      }
+      
+      .coming-soon-title {
+        font-size: 18px;
+      }
+      
+      .coming-soon-features {
+        padding: 16px 20px;
+      }
     }
   </style>
 </head>
@@ -940,24 +1349,51 @@
     </div>
   </header>
 
+  <!-- タブナビゲーション -->
+  <div class="tab-nav">
+    <div class="tab-nav-inner">
+      <button class="tab-btn active" data-tab="invoice" onclick="switchTab('invoice')">
+        <i data-lucide="file-text" style="width:18px;height:18px;"></i>
+        請求書管理
+      </button>
+      <button class="tab-btn disabled" data-tab="payroll" disabled>
+        <i data-lucide="wallet" style="width:18px;height:18px;"></i>
+        給与管理
+        <span class="coming-soon">準備中</span>
+      </button>
+    </div>
+  </div>
+
   <main class="main">
-    <!-- 統計カード -->
+    <!-- 請求書管理タブ -->
+    <div class="tab-content active" id="tab-invoice">
+    
+    <!-- 請求タイプ切り替え -->
+    <div class="billing-type-selector">
+      <button class="billing-type-btn active" data-type="all" onclick="setBillingType('all')">
+        <span class="billing-type-label">すべて</span>
+        <span class="billing-type-count" id="count-all">-</span>
+      </button>
+      <button class="billing-type-btn" data-type="new" onclick="setBillingType('new')">
+        <span class="billing-type-icon new"></span>
+        <span class="billing-type-label">新規入塾</span>
+        <span class="billing-type-count" id="count-new">-</span>
+      </button>
+      <button class="billing-type-btn" data-type="renewal" onclick="setBillingType('renewal')">
+        <span class="billing-type-icon renewal"></span>
+        <span class="billing-type-label">継続更新</span>
+        <span class="billing-type-count" id="count-renewal">-</span>
+      </button>
+    </div>
+
+    <!-- 統計サマリー -->
     <div class="stats-grid">
-      <div class="stat-card total">
-        <div class="stat-icon">
-          <i data-lucide="users" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">新規入塾者</div>
-          <div class="stat-value" id="stat-total">-</div>
-        </div>
-      </div>
       <div class="stat-card pending">
         <div class="stat-icon">
           <i data-lucide="clock" style="width:24px;height:24px;"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">請求書未送信</div>
+          <div class="stat-label">未送信</div>
           <div class="stat-value" id="stat-pending">-</div>
         </div>
       </div>
@@ -966,7 +1402,7 @@
           <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">請求書送信済</div>
+          <div class="stat-label">送信済</div>
           <div class="stat-value" id="stat-sent">-</div>
         </div>
       </div>
@@ -975,8 +1411,17 @@
           <i data-lucide="banknote" style="width:24px;height:24px;"></i>
         </div>
         <div class="stat-info">
+          <div class="stat-label">未送信請求額</div>
+          <div class="stat-value small" id="stat-pending-amount">-</div>
+        </div>
+      </div>
+      <div class="stat-card total-amount">
+        <div class="stat-icon">
+          <i data-lucide="trending-up" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-info">
           <div class="stat-label">請求総額</div>
-          <div class="stat-value small" id="stat-amount">-</div>
+          <div class="stat-value small" id="stat-total-amount">-</div>
         </div>
       </div>
     </div>
@@ -1005,6 +1450,32 @@
         <span>データを読み込んでいます...</span>
       </div>
     </div>
+    </div><!-- /tab-invoice -->
+
+    <!-- 給与管理タブ -->
+    <div class="tab-content" id="tab-payroll">
+      <div class="coming-soon-container">
+        <div class="coming-soon-icon">
+          <i data-lucide="hard-hat" style="width:48px;height:48px;"></i>
+        </div>
+        <h2 class="coming-soon-title">給与管理機能は準備中です</h2>
+        <p class="coming-soon-text">講師の給与計算・支払い管理機能を開発中です。<br>もうしばらくお待ちください。</p>
+        <div class="coming-soon-features">
+          <div class="coming-soon-feature">
+            <i data-lucide="calculator" style="width:20px;height:20px;"></i>
+            <span>授業コマ数からの自動計算</span>
+          </div>
+          <div class="coming-soon-feature">
+            <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+            <span>月次給与明細の作成</span>
+          </div>
+          <div class="coming-soon-feature">
+            <i data-lucide="send" style="width:20px;height:20px;"></i>
+            <span>給与明細のメール送信</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-payroll -->
   </main>
 
   <!-- 請求書プレビューモーダル -->
@@ -1040,13 +1511,240 @@
 
   <script>
     // ===== 設定 =====
-    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+    const GAS_API_URL = 'YOUR_GAS_WEB_APP_URL'; // ここにGASのウェブアプリURLを設定
     
     // ===== 状態管理 =====
     let students = [];
     let currentFilter = 'all';
+    let currentBillingType = 'all'; // all, new, renewal
     let currentStudent = null;
     
+    // ===== タブ切り替え =====
+    function switchTab(tabId) {
+      // タブボタンの状態更新
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      });
+      
+      // タブコンテンツの表示切り替え
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === `tab-${tabId}`);
+      });
+      
+      lucide.createIcons();
+    }
+
+    // ===== 料金定数 =====
+    const PRICES = {
+      // 初期費用
+      ENROLLMENT_FEE: 39800,      // 入塾金
+      MATERIAL_FEE: 19800,        // 教材費
+      ACCOUNT_FEE: 550,           // アカウント設定費
+      VIDEO_FEE: 11000,           // 過去動画教材費（入塾時）
+      
+      // 月額費用
+      BASIC_FEE: 11980,           // 在籍基本料
+      SYSTEM_FEE: 2980,           // システムサーバー費
+      
+      // 授業料（コマ単価）
+      COURSE: {
+        '海外大学': 15500,
+        '国公立大学': 15500,
+        '難関私立大学': 13500,
+        '一般私立大学': 12800,
+        // 旧名称対応
+        '難関国公立大学': 15500,
+        '最難関私大': 13500,
+        '難関私大': 12800
+      },
+      
+      // ENGLISH
+      ENGLISH: 12800,
+      
+      // まとめ払い割引
+      BULK_DISCOUNT: {
+        4: 10000,
+        6: 15000,
+        8: 20000,
+        10: 30000,
+        12: 40000
+      }
+    };
+    
+    // ===== 料金内訳計算・表示 =====
+    function renderBillingBreakdown(student) {
+      const monthlyLessons = parseInt(student.monthlyLessons) || 0;
+      const paymentMonths = parseInt(student.paymentMonth) || 0;
+      const englishLessons = parseInt(student.englishLessons) || 0;
+      const englishMonths = parseInt(student.englishPayment) || 0;
+      const courseType = student.course || '';
+      const hasVideo = student.videoMaterial === '購入する';
+      
+      // === 初期費用計算 ===
+      let initialItems = [];
+      initialItems.push({ name: '入塾金', amount: PRICES.ENROLLMENT_FEE });
+      initialItems.push({ name: '教材費', amount: PRICES.MATERIAL_FEE });
+      initialItems.push({ name: 'アカウント設定費', amount: PRICES.ACCOUNT_FEE });
+      if (hasVideo) {
+        initialItems.push({ name: '過去動画教材費', amount: PRICES.VIDEO_FEE });
+      }
+      const initialSubtotal = initialItems.reduce((sum, item) => sum + item.amount, 0);
+      
+      // === 総合型コース計算 ===
+      let courseItems = [];
+      let courseSubtotal = 0;
+      let bulkDiscount = 0;
+      
+      if (monthlyLessons > 0 && paymentMonths > 0) {
+        const coursePrice = PRICES.COURSE[courseType] || 0;
+        const basicTotal = PRICES.BASIC_FEE * paymentMonths;
+        const systemTotal = PRICES.SYSTEM_FEE * paymentMonths;
+        const lessonTotal = coursePrice * monthlyLessons * paymentMonths;
+        
+        courseItems.push({
+          name: '在籍基本料',
+          calc: `¥${PRICES.BASIC_FEE.toLocaleString()} × ${paymentMonths}ヶ月`,
+          amount: basicTotal
+        });
+        courseItems.push({
+          name: 'システムサーバー費',
+          calc: `¥${PRICES.SYSTEM_FEE.toLocaleString()} × ${paymentMonths}ヶ月`,
+          amount: systemTotal
+        });
+        courseItems.push({
+          name: `授業料（${courseType || '未選択'}）`,
+          calc: `¥${coursePrice.toLocaleString()} × ${monthlyLessons}コマ × ${paymentMonths}ヶ月`,
+          amount: lessonTotal
+        });
+        
+        // まとめ払い割引
+        if (PRICES.BULK_DISCOUNT[paymentMonths]) {
+          bulkDiscount = PRICES.BULK_DISCOUNT[paymentMonths];
+          courseItems.push({
+            name: `まとめ払い割引（${paymentMonths}ヶ月）`,
+            calc: '',
+            amount: -bulkDiscount,
+            isDiscount: true
+          });
+        }
+        
+        courseSubtotal = basicTotal + systemTotal + lessonTotal - bulkDiscount;
+      }
+      
+      // === ENGLISH計算 ===
+      let englishItems = [];
+      let englishSubtotal = 0;
+      
+      if (englishLessons > 0 && englishMonths > 0) {
+        const englishTotal = PRICES.ENGLISH * englishLessons * englishMonths;
+        englishItems.push({
+          name: '英語資格対策授業料',
+          calc: `¥${PRICES.ENGLISH.toLocaleString()} × ${englishLessons}コマ × ${englishMonths}ヶ月`,
+          amount: englishTotal
+        });
+        englishSubtotal = englishTotal;
+      }
+      
+      // === 計算合計 ===
+      const calculatedTotal = initialSubtotal + courseSubtotal + englishSubtotal;
+      
+      // === SSの値と比較 ===
+      const ssInitial = parseInt(student.initialFee) || 0;
+      const ssCourse = parseInt(student.courseFee) || 0;
+      const ssEnglish = parseInt(student.englishFee) || 0;
+      const ssDiscount = parseInt(student.discount) || 0;
+      const ssTotal = parseInt(student.total) || 0;
+      
+      const isMatch = calculatedTotal === ssTotal;
+      
+      // === HTML生成 ===
+      let html = '';
+      
+      // 初期費用
+      html += `
+        <div class="breakdown-section">
+          <div class="breakdown-section-header">
+            <span class="breakdown-section-title">📦 初期費用</span>
+            <span class="breakdown-section-subtotal">¥${initialSubtotal.toLocaleString()}</span>
+          </div>
+          <div class="breakdown-items">
+            ${initialItems.map(item => `
+              <div class="breakdown-item">
+                <span class="breakdown-item-name">${item.name}</span>
+                <span class="breakdown-item-calc"></span>
+                <span class="breakdown-item-amount">¥${item.amount.toLocaleString()}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      
+      // 総合型コース
+      if (courseItems.length > 0) {
+        html += `
+          <div class="breakdown-section">
+            <div class="breakdown-section-header">
+              <span class="breakdown-section-title">📚 総合型選抜コース</span>
+              <span class="breakdown-section-subtotal">¥${courseSubtotal.toLocaleString()}</span>
+            </div>
+            <div class="breakdown-items">
+              ${courseItems.map(item => `
+                <div class="breakdown-item">
+                  <span class="breakdown-item-name">${item.name}</span>
+                  <span class="breakdown-item-calc">${item.calc}</span>
+                  <span class="breakdown-item-amount ${item.isDiscount ? 'discount' : ''}">${item.isDiscount ? '-' : ''}¥${Math.abs(item.amount).toLocaleString()}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      // ENGLISH
+      if (englishItems.length > 0) {
+        html += `
+          <div class="breakdown-section">
+            <div class="breakdown-section-header">
+              <span class="breakdown-section-title">🌐 ENGLISHコース</span>
+              <span class="breakdown-section-subtotal">¥${englishSubtotal.toLocaleString()}</span>
+            </div>
+            <div class="breakdown-items">
+              ${englishItems.map(item => `
+                <div class="breakdown-item">
+                  <span class="breakdown-item-name">${item.name}</span>
+                  <span class="breakdown-item-calc">${item.calc}</span>
+                  <span class="breakdown-item-amount">¥${item.amount.toLocaleString()}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      // 合計
+      html += `
+        <div class="breakdown-total">
+          <span class="breakdown-total-label">計算合計（税込）</span>
+          <span class="breakdown-total-amount">¥${calculatedTotal.toLocaleString()}</span>
+        </div>
+      `;
+      
+      // SSとの比較
+      html += `
+        <div class="breakdown-check ${isMatch ? 'match' : 'mismatch'}">
+          <i data-lucide="${isMatch ? 'check-circle' : 'alert-triangle'}" style="width:20px;height:20px;"></i>
+          <span class="breakdown-check-text">
+            ${isMatch 
+              ? 'SS記録額と一致しています' 
+              : `SS記録額: ¥${ssTotal.toLocaleString()}（差額: ¥${Math.abs(calculatedTotal - ssTotal).toLocaleString()}）`
+            }
+          </span>
+        </div>
+      `;
+      
+      return html;
+    }
+
     // ===== 初期化 =====
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
@@ -1089,18 +1787,46 @@
       }
     }
     
+    // ===== 請求タイプ切り替え =====
+    function setBillingType(type) {
+      currentBillingType = type;
+      document.querySelectorAll('.billing-type-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type);
+      });
+      updateStats();
+      renderList();
+    }
+    
     // ===== 統計更新 =====
     function updateStats() {
-      const total = students.length;
-      // invoiceSentフィールドで送信済みかどうか判定（仮）
-      const sent = students.filter(s => s.invoiceSent === '送信済').length;
-      const pending = total - sent;
-      const totalAmount = students.reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+      // 請求タイプでフィルタリング
+      const newStudents = students.filter(s => s.billingType === '新規' || !s.billingType);
+      const renewalStudents = students.filter(s => s.billingType === '継続');
       
-      document.getElementById('stat-total').textContent = total;
+      // カウント表示
+      document.getElementById('count-all').textContent = students.length;
+      document.getElementById('count-new').textContent = newStudents.length;
+      document.getElementById('count-renewal').textContent = renewalStudents.length;
+      
+      // 現在の表示対象
+      let filtered = students;
+      if (currentBillingType === 'new') {
+        filtered = newStudents;
+      } else if (currentBillingType === 'renewal') {
+        filtered = renewalStudents;
+      }
+      
+      const sent = filtered.filter(s => s.invoiceSent === '送信済').length;
+      const pending = filtered.length - sent;
+      const pendingAmount = filtered
+        .filter(s => s.invoiceSent !== '送信済')
+        .reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+      const totalAmount = filtered.reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+      
       document.getElementById('stat-pending').textContent = pending;
       document.getElementById('stat-sent').textContent = sent;
-      document.getElementById('stat-amount').textContent = '¥' + totalAmount.toLocaleString();
+      document.getElementById('stat-pending-amount').textContent = '¥' + pendingAmount.toLocaleString();
+      document.getElementById('stat-total-amount').textContent = '¥' + totalAmount.toLocaleString();
     }
     
     // ===== フィルター設定 =====
@@ -1118,6 +1844,13 @@
       const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
       
       let filtered = [...students];
+      
+      // 請求タイプフィルター
+      if (currentBillingType === 'new') {
+        filtered = filtered.filter(s => s.billingType === '新規' || !s.billingType);
+      } else if (currentBillingType === 'renewal') {
+        filtered = filtered.filter(s => s.billingType === '継続');
+      }
       
       // 検索フィルター
       if (searchQuery) {
@@ -1158,6 +1891,7 @@
       const isSent = student.invoiceSent === '送信済';
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
       const total = parseInt(student.total) || 0;
+      const isRenewal = student.billingType === '継続';
       
       return `
         <div class="student-card ${isSent ? 'sent' : 'pending'}" id="card-${student.studentId}">
@@ -1165,7 +1899,10 @@
             <div class="student-info">
               <div class="student-avatar">${initial}</div>
               <div>
-                <div class="student-name">${student.studentName || '名前なし'}</div>
+                <div class="student-name">
+                  ${student.studentName || '名前なし'}
+                  <span class="billing-type-badge ${isRenewal ? 'renewal' : 'new'}">${isRenewal ? '継続' : '新規'}</span>
+                </div>
                 <div class="student-meta">
                   <span><i data-lucide="hash" style="width:12px;height:12px;"></i>${student.studentId}</span>
                   <span><i data-lucide="graduation-cap" style="width:12px;height:12px;"></i>${student.grade || '-'}</span>
@@ -1218,17 +1955,25 @@
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">月コマ数</span>
-                  <span class="detail-value">${student.monthlyLessons || '-'}</span>
+                  <span class="detail-value">${student.monthlyLessons || '-'}コマ</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">支払月数</span>
                   <span class="detail-value">${student.paymentMonth || '-'}ヶ月</span>
                 </div>
-                <div class="detail-item">
+                <div class="detail-item" style="border-top:1px solid #eee;padding-top:8px;margin-top:8px;">
                   <span class="detail-label">ENGLISH</span>
                   <span class="detail-value">${student.englishEnroll || '-'}</span>
                 </div>
                 <div class="detail-item">
+                  <span class="detail-label">ENGLISH月コマ数</span>
+                  <span class="detail-value">${student.englishLessons || '-'}コマ</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">ENGLISH支払月数</span>
+                  <span class="detail-value">${student.englishPayment || '-'}ヶ月</span>
+                </div>
+                <div class="detail-item" style="border-top:1px solid #eee;padding-top:8px;margin-top:8px;">
                   <span class="detail-label">動画教材</span>
                   <span class="detail-value">${student.videoMaterial || '-'}</span>
                 </div>
@@ -1252,33 +1997,15 @@
                   <span class="detail-value">${student.referralName || '-'}</span>
                 </div>
               </div>
-              
-              <div class="detail-section">
-                <div class="detail-section-title">
-                  <i data-lucide="calculator" style="width:14px;height:14px;"></i>
-                  請求内訳
-                </div>
-                <div class="detail-item">
-                  <span class="detail-label">初回費用</span>
-                  <span class="detail-value price">¥${(parseInt(student.initialFee) || 0).toLocaleString()}</span>
-                </div>
-                <div class="detail-item">
-                  <span class="detail-label">総合型料金</span>
-                  <span class="detail-value price">¥${(parseInt(student.courseFee) || 0).toLocaleString()}</span>
-                </div>
-                <div class="detail-item">
-                  <span class="detail-label">ENGLISH料金</span>
-                  <span class="detail-value price">¥${(parseInt(student.englishFee) || 0).toLocaleString()}</span>
-                </div>
-                <div class="detail-item">
-                  <span class="detail-label">割引額</span>
-                  <span class="detail-value discount">-¥${(parseInt(student.discount) || 0).toLocaleString()}</span>
-                </div>
-                <div class="detail-item" style="border-top:2px solid #eee;padding-top:12px;margin-top:8px;">
-                  <span class="detail-label" style="font-weight:600;">合計</span>
-                  <span class="detail-value total">¥${total.toLocaleString()}</span>
-                </div>
+            </div>
+            
+            <!-- 詳細料金内訳セクション -->
+            <div class="billing-breakdown">
+              <div class="breakdown-title">
+                <i data-lucide="calculator" style="width:18px;height:18px;"></i>
+                料金内訳チェック
               </div>
+              ${renderBillingBreakdown(student)}
             </div>
             
             <div class="action-section">
