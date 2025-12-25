@@ -2485,11 +2485,10 @@
       color: #666;
     }
     
-    .period-inputs {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .period-inputs select.edit-input {
+  width: 140px;
+  padding: 8px 12px;
+}
     
     .period-input {
       padding: 8px 12px;
@@ -2778,6 +2777,78 @@
         padding: 16px 20px;
       }
     }
+  /* 購入コマ数入力 */
+.lessons-input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.lessons-input-item {
+  background: #f8f9fa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.lessons-input-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.lessons-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lessons-input {
+  width: 100px !important;
+  text-align: right;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+.lessons-input-unit {
+  font-size: 14px;
+  color: #666;
+}
+
+.lessons-input-hint {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+}
+
+/* 再送信ボタン（一覧用） */
+.resend-btn-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 8px;
+}
+
+.resend-btn-small:hover {
+  background: #bbf7d0;
+  border-color: #22c55e;
+}
+
   </style>
 </head>
 <body>
@@ -3088,7 +3159,7 @@
           <div class="email-form-container">
             <div class="email-form-group">
               <label class="email-label">送信先</label>
-              <input type="email" class="email-input" id="wizard-email-to" readonly>
+              <input type="email" class="email-input" id="wizard-email-to">
             </div>
             <div class="email-form-group">
               <label class="email-label">件名</label>
@@ -3162,14 +3233,18 @@
         </div>
         
         <div class="price-section">
-          <h3 class="price-section-title">🎁 まとめ払い割引</h3>
-          <table class="price-table">
-            <tr><td>4ヶ月</td><td class="price-value discount">-¥10,000</td></tr>
-            <tr><td>6ヶ月</td><td class="price-value discount">-¥15,000</td></tr>
-            <tr><td>8ヶ月</td><td class="price-value discount">-¥20,000</td></tr>
-            <tr><td>10ヶ月</td><td class="price-value discount">-¥30,000</td></tr>
-            <tr><td>12ヶ月</td><td class="price-value discount">-¥40,000</td></tr>
-          </table>
+         <h3 class="price-section-title">🎁 まとめ払い割引</h3>
+         <table class="price-table">
+         <tr><td>4ヶ月</td><td class="price-value discount">-¥10,000</td></tr>
+         <tr><td>5ヶ月</td><td class="price-value discount">-¥12,500</td></tr>
+         <tr><td>6ヶ月</td><td class="price-value discount">-¥15,000</td></tr>
+         <tr><td>7ヶ月</td><td class="price-value discount">-¥17,500</td></tr>
+         <tr><td>8ヶ月</td><td class="price-value discount">-¥20,000</td></tr>
+         <tr><td>9ヶ月</td><td class="price-value discount">-¥25,000</td></tr>
+         <tr><td>10ヶ月</td><td class="price-value discount">-¥30,000</td></tr>
+         <tr><td>11ヶ月</td><td class="price-value discount">-¥35,000</td></tr>
+         <tr><td>12ヶ月</td><td class="price-value discount">-¥40,000</td></tr>
+         </table>
         </div>
         
         <div class="price-section">
@@ -3310,12 +3385,16 @@
       
       // まとめ払い割引
       BULK_DISCOUNT: {
-        4: 10000,
-        6: 15000,
-        8: 20000,
-        10: 30000,
-        12: 40000
-      }
+     4: 10000,
+     5: 12500,
+     6: 15000,
+     7: 17500,
+     8: 20000,
+     9: 25000,
+     10: 30000,
+     11: 35000,
+     12: 40000
+    }
     };
     
     // ===== ひとり親証明書リンクのフォーマット =====
@@ -4183,8 +4262,14 @@
               </div>
             </div>
             <div class="billing-summary">
-              <div class="billing-amount">¥${total.toLocaleString()}</div>
-              ${statusDropdown}
+             <div class="billing-amount">¥${total.toLocaleString()}</div>
+             ${statusDropdown}
+             ${isWaiting ? `
+             <button class="resend-btn-small" onclick="event.stopPropagation(); openResendModal('${student.studentId}')">
+              <i data-lucide="repeat" style="width:14px;height:14px;"></i>
+              再送信
+             </button>
+             ` : ''}
             </div>
             <button class="expand-btn">
               <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
@@ -4558,116 +4643,170 @@
       
       return options.join('');
     }
+
+    // ===== 請求期間のドロップダウンオプション生成 =====
+function generateBillingMonthOptions(selectedValue) {
+  const today = new Date();
+  const options = [];
+  
+  // 6ヶ月前から24ヶ月先まで生成
+  for (let i = -6; i < 24; i++) {
+    const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const value = `${year}-${String(month).padStart(2, '0')}`;
+    const label = `${year}年${month}月`;
+    const selected = value === selectedValue ? 'selected' : '';
+    options.push(`<option value="${value}" ${selected}>${label}</option>`);
+  }
+  
+  return options.join('');
+}
     
     // ===== 設定画面のHTML生成 =====
-    function generateSettingsContent() {
-      const today = new Date();
-      const invoiceDate = formatDateSlash(today);
-      
-      const dueDays = getPaymentDueDays(currentStudent);
-      const dueDate = formatDateSlash(new Date(today.getTime() + dueDays * 24 * 60 * 60 * 1000));
-      
-      const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
-      
-      const isRenewal = currentStudent.billingType === '継続';
-      const defaultSubject = isRenewal 
-        ? `総合型選抜対策 授業料` 
-        : `総合型選抜対策 入塾金・授業料`;
-      
-      const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
-      const startMonth = today.getMonth() + 1;
-      const endMonth = ((startMonth + paymentMonths - 2) % 12) + 1;
-      const startYear = today.getFullYear();
-      const endYear = startMonth + paymentMonths - 1 > 12 ? startYear + 1 : startYear;
-      
-      // nextRenewalMonthをYYYY-MM形式に変換（YYYYMM形式の場合）
-      let nextRenewalMonth = currentStudent.nextRenewalMonth || '';
-      if (nextRenewalMonth && nextRenewalMonth.length === 6 && !nextRenewalMonth.includes('-')) {
-        nextRenewalMonth = nextRenewalMonth.slice(0, 4) + '-' + nextRenewalMonth.slice(4);
-      }
-      
-      const hasSingleParent = currentStudent.singleParent === 'はい';
-      const hasReferral = currentStudent.referral === 'あり';
-      const referralNameDisplay = currentStudent.referralName || '';
-      
-      return `
-        <div class="invoice-edit-panel" style="border:none;background:none;padding:0;">
-          <div class="edit-panel-grid">
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">生徒名</label>
-              <input type="text" class="edit-input" id="invoice-to-name" value="${currentStudent.studentName || ''}">
-            </div>
-            
-            <div class="edit-panel-item full-width">
-              <label class="edit-panel-label">件名</label>
-              <input type="text" class="edit-input" id="invoice-subject" value="${defaultSubject}">
-            </div>
-            
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">請求日</label>
-              <input type="text" class="edit-input" id="invoice-date" value="${invoiceDate}">
-            </div>
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">請求書番号</label>
-              <input type="text" class="edit-input" id="invoice-number" value="${invoiceNumber}">
-            </div>
-            
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">入金期日</label>
-              <input type="text" class="edit-input" id="invoice-due-date" value="${dueDate}">
-            </div>
-            
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">請求期間</label>
-              <div class="period-inputs">
-                <input type="month" class="period-input" id="billing-start" value="${startYear}-${String(startMonth).padStart(2, '0')}">
-                <span>〜</span>
-                <input type="month" class="period-input" id="billing-end" value="${endYear}-${String(endMonth).padStart(2, '0')}">
+function generateSettingsContent() {
+  const today = new Date();
+  const invoiceDate = formatDateSlash(today);
+  
+  const dueDays = getPaymentDueDays(currentStudent);
+  const dueDate = formatDateSlash(new Date(today.getTime() + dueDays * 24 * 60 * 60 * 1000));
+  
+  const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
+  
+  const isRenewal = currentStudent.billingType === '継続';
+  const defaultSubject = isRenewal 
+    ? `総合型選抜対策 授業料` 
+    : `総合型選抜対策 入塾金・授業料`;
+  
+  const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
+  const monthlyLessons = parseInt(currentStudent.monthlyLessons) || 0;
+  const englishLessons = parseInt(currentStudent.englishLessons) || 0;
+  const englishMonths = parseInt(currentStudent.englishPayment) || 0;
+  
+  // デフォルトの購入コマ数を計算
+  const defaultTotalLessons = monthlyLessons * paymentMonths;
+  const defaultEnglishLessons = englishLessons * englishMonths;
+  
+  const startMonth = today.getMonth() + 1;
+  const endMonth = ((startMonth + paymentMonths - 2) % 12) + 1;
+  const startYear = today.getFullYear();
+  const endYear = startMonth + paymentMonths - 1 > 12 ? startYear + 1 : startYear;
+  
+  // nextRenewalMonthをYYYY-MM形式に変換（YYYYMM形式の場合）
+  let nextRenewalMonth = currentStudent.nextRenewalMonth || '';
+  if (nextRenewalMonth && nextRenewalMonth.length === 6 && !nextRenewalMonth.includes('-')) {
+    nextRenewalMonth = nextRenewalMonth.slice(0, 4) + '-' + nextRenewalMonth.slice(4);
+  }
+  
+  const hasSingleParent = currentStudent.singleParent === 'はい';
+  const hasReferral = currentStudent.referral === 'あり';
+  const referralNameDisplay = currentStudent.referralName || '';
+  
+  return `
+    <div class="invoice-edit-panel" style="border:none;background:none;padding:0;">
+      <div class="edit-panel-grid">
+        <div class="edit-panel-item">
+          <label class="edit-panel-label">生徒名</label>
+          <input type="text" class="edit-input" id="invoice-to-name" value="${currentStudent.studentName || ''}">
+        </div>
+        
+        <div class="edit-panel-item full-width">
+          <label class="edit-panel-label">件名</label>
+          <input type="text" class="edit-input" id="invoice-subject" value="${defaultSubject}">
+        </div>
+        
+        <div class="edit-panel-item">
+          <label class="edit-panel-label">請求日</label>
+          <input type="text" class="edit-input" id="invoice-date" value="${invoiceDate}">
+        </div>
+        <div class="edit-panel-item">
+          <label class="edit-panel-label">請求書番号</label>
+          <input type="text" class="edit-input" id="invoice-number" value="${invoiceNumber}">
+        </div>
+        
+        <div class="edit-panel-item">
+          <label class="edit-panel-label">入金期日</label>
+          <input type="text" class="edit-input" id="invoice-due-date" value="${dueDate}">
+        </div>
+        
+        <div class="edit-panel-item">
+         <label class="edit-panel-label">請求期間</label>
+         <div class="period-inputs">
+          <select class="edit-input" id="billing-start">
+           ${generateBillingMonthOptions(`${startYear}-${String(startMonth).padStart(2, '0')}`)}
+          </select>
+           <span>〜</span>
+          <select class="edit-input" id="billing-end">
+           ${generateBillingMonthOptions(`${endYear}-${String(endMonth).padStart(2, '0')}`)}
+          </select>
+         </div>
+       </div>
+        
+        <div class="edit-panel-item">
+          <label class="edit-panel-label">次回更新月</label>
+          <select class="edit-input" id="next-renewal">
+            ${generateRenewalMonthOptions(nextRenewalMonth)}
+          </select>
+        </div>
+        
+        <!-- 購入コマ数セクション -->
+        <div class="edit-panel-item full-width">
+          <label class="edit-panel-label">📚 購入コマ数</label>
+          <div class="lessons-input-grid">
+            <div class="lessons-input-item">
+              <label class="lessons-input-label">総合型選抜コース（${currentStudent.course || '未選択'}）</label>
+              <div class="lessons-input-wrapper">
+                <input type="number" class="edit-input lessons-input" id="purchase-total-lessons" value="${defaultTotalLessons}" min="0">
+                <span class="lessons-input-unit">コマ</span>
               </div>
+              <span class="lessons-input-hint">申請: ${monthlyLessons}コマ/月 × ${paymentMonths}ヶ月 = ${defaultTotalLessons}コマ</span>
             </div>
-            
-            <div class="edit-panel-item">
-              <label class="edit-panel-label">次回更新月</label>
-              <select class="edit-input" id="next-renewal">
-                ${generateRenewalMonthOptions(nextRenewalMonth)}
-              </select>
-            </div>
-            
-            <div class="edit-panel-item discount-section full-width">
-              <label class="edit-panel-label">特別割引（入塾金から-¥10,000）</label>
-              <div class="discount-checkboxes">
-                <label class="discount-checkbox ${isRenewal ? 'disabled' : ''}">
-                  <input type="checkbox" id="discount-single-parent" ${hasSingleParent && !isRenewal ? 'checked' : ''} ${isRenewal ? 'disabled' : ''}>
-                  <span class="checkbox-label">ひとり親割引</span>
-                  ${hasSingleParent ? '<span class="checkbox-hint">（申告あり）</span>' : ''}
-                </label>
-                <label class="discount-checkbox ${isRenewal ? 'disabled' : ''}">
-                  <input type="checkbox" id="discount-referral" ${hasReferral && !isRenewal ? 'checked' : ''} ${isRenewal ? 'disabled' : ''}>
-                  <span class="checkbox-label">紹介割引</span>
-                  ${hasReferral ? '<span class="checkbox-hint">（紹介者: ' + referralNameDisplay + '）</span>' : ''}
-                </label>
+            <div class="lessons-input-item">
+              <label class="lessons-input-label">ENGLISH（英語資格対策）</label>
+              <div class="lessons-input-wrapper">
+                <input type="number" class="edit-input lessons-input" id="purchase-english-lessons" value="${defaultEnglishLessons}" min="0">
+                <span class="lessons-input-unit">コマ</span>
               </div>
-              ${isRenewal ? '<p class="discount-note">※継続更新のため入塾金割引は適用外</p>' : ''}
-            </div>
-            
-            <div class="edit-panel-item full-width">
-              <label class="edit-panel-label">消費税</label>
-              <div class="discount-checkboxes">
-                <label class="discount-checkbox tax-exempt-checkbox">
-                  <input type="checkbox" id="tax-exempt">
-                  <span class="checkbox-label">免税（海外生徒）</span>
-                </label>
-              </div>
-            </div>
-            
-            <div class="edit-panel-item full-width">
-              <label class="edit-panel-label">備考</label>
-              <input type="text" class="edit-input" id="invoice-remarks" value="生徒番号：${currentStudent.studentId}" placeholder="備考を入力...">
+              <span class="lessons-input-hint">申請: ${englishLessons}コマ/月 × ${englishMonths}ヶ月 = ${defaultEnglishLessons}コマ</span>
             </div>
           </div>
         </div>
-      `;
-    }
+        
+        <div class="edit-panel-item discount-section full-width">
+          <label class="edit-panel-label">特別割引（入塾金から-¥10,000）</label>
+          <div class="discount-checkboxes">
+            <label class="discount-checkbox ${isRenewal ? 'disabled' : ''}">
+              <input type="checkbox" id="discount-single-parent" ${hasSingleParent && !isRenewal ? 'checked' : ''} ${isRenewal ? 'disabled' : ''}>
+              <span class="checkbox-label">ひとり親割引</span>
+              ${hasSingleParent ? '<span class="checkbox-hint">（申告あり）</span>' : ''}
+            </label>
+            <label class="discount-checkbox ${isRenewal ? 'disabled' : ''}">
+              <input type="checkbox" id="discount-referral" ${hasReferral && !isRenewal ? 'checked' : ''} ${isRenewal ? 'disabled' : ''}>
+              <span class="checkbox-label">紹介割引</span>
+              ${hasReferral ? '<span class="checkbox-hint">（紹介者: ' + referralNameDisplay + '）</span>' : ''}
+            </label>
+          </div>
+          ${isRenewal ? '<p class="discount-note">※継続更新のため入塾金割引は適用外</p>' : ''}
+        </div>
+        
+        <div class="edit-panel-item full-width">
+          <label class="edit-panel-label">消費税</label>
+          <div class="discount-checkboxes">
+            <label class="discount-checkbox tax-exempt-checkbox">
+              <input type="checkbox" id="tax-exempt">
+              <span class="checkbox-label">免税（海外生徒）</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="edit-panel-item full-width">
+          <label class="edit-panel-label">備考</label>
+          <input type="text" class="edit-input" id="invoice-remarks" value="生徒番号：${currentStudent.studentId}" placeholder="備考を入力...">
+        </div>
+      </div>
+    </div>
+  `;
+}
     
     // ===== ウィザードUI更新 =====
     function updateWizardUI() {
@@ -4815,168 +4954,180 @@
     }
     
     // ===== プレビュー生成（ウィザード用） =====
-    async function generateWizardPreview() {
-      if (!currentStudent) return;
-      
-      const previewArea = document.getElementById('pdf-preview-area');
-      
+async function generateWizardPreview() {
+  if (!currentStudent) return;
+  
+  const previewArea = document.getElementById('pdf-preview-area');
+  
+  previewArea.innerHTML = `
+    <div class="pdf-loading">
+      <div class="pdf-loading-spinner"></div>
+      <p>PDFを生成中...</p>
+    </div>
+  `;
+  
+  try {
+    const studentName = document.getElementById('invoice-to-name').value;
+    const invoiceSubject = document.getElementById('invoice-subject').value;
+    const invoiceDate = document.getElementById('invoice-date').value;
+    const invoiceNumber = document.getElementById('invoice-number').value;
+    const dueDate = document.getElementById('invoice-due-date').value;
+    const remarks = document.getElementById('invoice-remarks').value;
+    
+    const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+    const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+    const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
+    
+    // カスタムコマ数を取得
+    const customTotalLessons = parseInt(document.getElementById('purchase-total-lessons')?.value) || 0;
+    const customEnglishLessons = parseInt(document.getElementById('purchase-english-lessons')?.value) || 0;
+    
+    const breakdown = calculateInvoiceBreakdown(currentStudent, {
+      singleParentDiscount,
+      referralDiscount,
+      taxExempt: isTaxExempt,
+      totalLessons: customTotalLessons,
+      englishLessons: customEnglishLessons
+    });
+    
+    const invoiceData = {
+      studentId: currentStudent.studentId,
+      studentName: studentName,
+      invoiceDate: invoiceDate,
+      invoiceNumber: invoiceNumber,
+      dueDate: dueDate,
+      invoiceSubject: invoiceSubject,
+      subtotal: breakdown.subtotalExTax,
+      tax: breakdown.tax,
+      total: breakdown.total,
+      items: breakdown.items,
+      remarks: remarks,
+      isTaxExempt: isTaxExempt,
+      // カスタムコマ数も保存
+      totalLessons: customTotalLessons,
+      englishLessons: customEnglishLessons
+    };
+    
+    const response = await fetch(GAS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'previewInvoice',
+        invoiceData: invoiceData
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      const pdfDataUrl = 'data:application/pdf;base64,' + result.pdfBase64;
       previewArea.innerHTML = `
-        <div class="pdf-loading">
-          <div class="pdf-loading-spinner"></div>
-          <p>PDFを生成中...</p>
-        </div>
+        <embed src="${pdfDataUrl}" type="application/pdf" width="100%" height="500px">
       `;
       
-      try {
-        const studentName = document.getElementById('invoice-to-name').value;
-        const invoiceSubject = document.getElementById('invoice-subject').value;
-        const invoiceDate = document.getElementById('invoice-date').value;
-        const invoiceNumber = document.getElementById('invoice-number').value;
-        const dueDate = document.getElementById('invoice-due-date').value;
-        const remarks = document.getElementById('invoice-remarks').value;
-        
-        const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
-        const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-        const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
-        
-        const breakdown = calculateInvoiceBreakdown(currentStudent, {
-          singleParentDiscount,
-          referralDiscount,
-          taxExempt: isTaxExempt
-        });
-        
-        const invoiceData = {
-          studentId: currentStudent.studentId,
-          studentName: studentName,
-          invoiceDate: invoiceDate,
-          invoiceNumber: invoiceNumber,
-          dueDate: dueDate,
-          invoiceSubject: invoiceSubject,
-          subtotal: breakdown.subtotalExTax,
-          tax: breakdown.tax,
-          total: breakdown.total,
-          items: breakdown.items,
-          remarks: remarks,
-          isTaxExempt: isTaxExempt
-        };
-        
-        const response = await fetch(GAS_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            action: 'previewInvoice',
-            invoiceData: invoiceData
-          })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          const pdfDataUrl = 'data:application/pdf;base64,' + result.pdfBase64;
-          previewArea.innerHTML = `
-            <embed src="${pdfDataUrl}" type="application/pdf" width="100%" height="500px">
-          `;
-          
-          currentPdfBase64 = result.pdfBase64;
-          currentInvoiceData = invoiceData;
-        } else {
-          throw new Error(result.message || 'PDF生成に失敗しました');
-        }
-        
-      } catch (error) {
-        console.error('プレビュー生成エラー:', error);
-        previewArea.innerHTML = `
-          <div class="pdf-preview-placeholder" style="color:#d32f2f;">
-            <i data-lucide="alert-circle" style="width:48px;height:48px;"></i>
-            <p>プレビュー生成に失敗しました<br>${error.message}</p>
-          </div>
-        `;
-        lucide.createIcons();
-      }
+      currentPdfBase64 = result.pdfBase64;
+      currentInvoiceData = invoiceData;
+    } else {
+      throw new Error(result.message || 'PDF生成に失敗しました');
     }
     
-    // ===== メールステップ準備 =====
-    function prepareEmailStep() {
-      if (!currentStudent || !currentInvoiceData) return;
-      
-      // 料金計算（メール本文用）
-      const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
-      const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-      const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
-      
-      const breakdown = calculateInvoiceBreakdown(currentStudent, {
-        singleParentDiscount,
-        referralDiscount,
-        taxExempt: isTaxExempt
-      });
-      
-      const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
-      const invoiceSubject = currentInvoiceData.invoiceSubject || '';
-      
-      document.getElementById('wizard-email-to').value = currentStudent.parentEmail || currentStudent.studentEmail || '';
-      document.getElementById('wizard-email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
-      document.getElementById('wizard-email-body').value = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
-    }
-    
-    // ===== ウィザード送信 =====
+  } catch (error) {
+    console.error('プレビュー生成エラー:', error);
+    previewArea.innerHTML = `
+      <div class="pdf-preview-placeholder" style="color:#d32f2f;">
+        <i data-lucide="alert-circle" style="width:48px;height:48px;"></i>
+        <p>プレビュー生成に失敗しました<br>${error.message}</p>
+      </div>
+    `;
+    lucide.createIcons();
+  }
+}
+ 
+// ===== メールステップ準備 =====
+function prepareEmailStep() {
+  if (!currentStudent || !currentInvoiceData) return;
+  
+  // 料金計算（メール本文用）
+  const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+  const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+  const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
+  
+  const breakdown = calculateInvoiceBreakdown(currentStudent, {
+    singleParentDiscount,
+    referralDiscount,
+    taxExempt: isTaxExempt
+  });
+  
+  const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
+  const invoiceSubject = currentInvoiceData.invoiceSubject || '';
+  
+  document.getElementById('wizard-email-to').value = currentStudent.parentEmail || currentStudent.studentEmail || '';
+  document.getElementById('wizard-email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
+  document.getElementById('wizard-email-body').value = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
+}
+
+
     async function wizardSend() {
-      const student = currentStudent;
-      if (!student || !currentInvoiceData) return;
+  const student = currentStudent;
+  const invoiceData = currentInvoiceData;
+  if (!student || !invoiceData) return;
+  
+  const email = document.getElementById('wizard-email-to').value;
+  const subject = document.getElementById('wizard-email-subject').value;
+  const body = document.getElementById('wizard-email-body').value;
+  
+  if (!confirm(`${email} に請求書を送信しますか？`)) return;
+  
+  const billingStart = document.getElementById('billing-start')?.value || '';
+  const billingEnd = document.getElementById('billing-end')?.value || '';
+  const nextRenewal = document.getElementById('next-renewal')?.value || '';
+  
+  try {
+    showToast('請求書を送信中...', 'info');
+    closeModal();
+    
+    const response = await fetch(GAS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'sendInvoice',
+        studentId: student.studentId,
+        email: email,
+        emailSubject: subject,
+        emailBody: body,
+        studentName: invoiceData.studentName,
+        parentName: student.parentName,
+        total: invoiceData.total,
+        billingStart: billingStart,
+        billingEnd: billingEnd,
+        nextRenewalMonth: nextRenewal.replace('-', ''),
+        invoiceSubject: invoiceData.invoiceSubject,
+        invoiceData: invoiceData,
+        billingType: student.billingType || '新規',
+        totalLessons: invoiceData.totalLessons || 0,
+        englishLessons: invoiceData.englishLessons || 0
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      student.invoiceSent = '入金待ち';
+      student.nextRenewalMonth = nextRenewal.replace('-', '');
+      updateStats();
+      renderList();
+      showToast('請求書を送信しました', 'success');
       
-      const email = document.getElementById('wizard-email-to').value;
-      const subject = document.getElementById('wizard-email-subject').value;
-      const body = document.getElementById('wizard-email-body').value;
-      
-      if (!confirm(`${email} に請求書を送信しますか？`)) return;
-      
-      const billingStart = document.getElementById('billing-start')?.value || '';
-      const billingEnd = document.getElementById('billing-end')?.value || '';
-      const nextRenewal = document.getElementById('next-renewal')?.value || '';
-      
-      try {
-        showToast('請求書を送信中...', 'info');
-        closeModal();
-        
-        const response = await fetch(GAS_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            action: 'sendInvoice',
-            studentId: student.studentId,
-            email: email,
-            emailSubject: subject,
-            emailBody: body,
-            studentName: currentInvoiceData.studentName,
-            parentName: student.parentName,
-            total: currentInvoiceData.total,
-            billingStart: billingStart,
-            billingEnd: billingEnd,
-            nextRenewalMonth: nextRenewal.replace('-', ''),
-            invoiceSubject: currentInvoiceData.invoiceSubject,
-            invoiceData: currentInvoiceData,
-            billingType: student.billingType || '新規'
-          })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          student.invoiceSent = '入金待ち';
-          student.nextRenewalMonth = nextRenewal.replace('-', '');
-          updateStats();
-          renderList();
-          showToast('請求書を送信しました', 'success');
-          
-          currentPdfBase64 = null;
-          currentInvoiceData = null;
-        } else {
-          throw new Error(result.message);
-        }
-      } catch (error) {
-        console.error('送信エラー:', error);
-        showToast('送信に失敗しました: ' + error.message, 'error');
-      }
+      currentPdfBase64 = null;
+      currentInvoiceData = null;
+    } else {
+      throw new Error(result.message);
     }
+  } catch (error) {
+    console.error('送信エラー:', error);
+    showToast('送信に失敗しました: ' + error.message, 'error');
+  }
+}
     
     // ===== プレビュー無効化（設定変更時） =====
     function invalidatePreview() {
@@ -5137,103 +5288,105 @@
     let currentInvoiceData = null;
     
     // ===== 請求書用の料金計算（税込み価格） =====
-    function calculateInvoiceBreakdown(student, options = {}) {
-      const items = [];
-      let total = 0; // 税込み合計
-      
-      const monthlyLessons = parseInt(student.monthlyLessons) || 0;
-      const paymentMonths = parseInt(student.paymentMonth) || 0;
-      const englishLessons = parseInt(student.englishLessons) || 0;
-      const englishMonths = parseInt(student.englishPayment) || 0;
-      const courseType = student.course || '';
-      const hasVideo = student.videoMaterial === '購入する';
-      const isRenewal = student.billingType === '継続';
-      
-      // 割引オプション
-      const singleParentDiscount = options.singleParentDiscount || false;
-      const referralDiscount = options.referralDiscount || false;
-      const taxExempt = options.taxExempt || false;
-      
-      // 新規の場合は初期費用（税込み）
-      if (!isRenewal) {
-        // 入塾金
-        items.push({ name: '入塾金', qty: 1, unit: PRICES.ENROLLMENT_FEE, amount: PRICES.ENROLLMENT_FEE });
-        total += PRICES.ENROLLMENT_FEE;
-        
-        // ひとり親割引（入塾金から-10,000円）
-        if (singleParentDiscount) {
-          items.push({ name: 'ひとり親割引', qty: 1, unit: -10000, amount: -10000 });
-          total -= 10000;
-        }
-        
-        // 紹介割引（入塾金から-10,000円）
-        if (referralDiscount) {
-          items.push({ name: '紹介割引', qty: 1, unit: -10000, amount: -10000 });
-          total -= 10000;
-        }
-        
-        // 教材費
-        items.push({ name: '教材費', qty: 1, unit: PRICES.MATERIAL_FEE, amount: PRICES.MATERIAL_FEE });
-        total += PRICES.MATERIAL_FEE;
-        
-        // アカウント設定費
-        items.push({ name: 'アカウント設定費', qty: 1, unit: PRICES.ACCOUNT_FEE, amount: PRICES.ACCOUNT_FEE });
-        total += PRICES.ACCOUNT_FEE;
-        
-        // 動画教材（入塾時購入）
-        if (hasVideo) {
-          items.push({ name: '過去動画教材費', qty: 1, unit: PRICES.VIDEO_FEE, amount: PRICES.VIDEO_FEE });
-          total += PRICES.VIDEO_FEE;
-        }
-      }
-      
-      // 在籍基本料（税込み）
-      if (paymentMonths > 0) {
-        const basicAmount = PRICES.BASIC_FEE * paymentMonths;
-        items.push({ name: '在籍基本料', qty: paymentMonths, unit: PRICES.BASIC_FEE, amount: basicAmount });
-        total += basicAmount;
-        
-        // システムサーバー費
-        const systemAmount = PRICES.SYSTEM_FEE * paymentMonths;
-        items.push({ name: 'システムサーバー費', qty: paymentMonths, unit: PRICES.SYSTEM_FEE, amount: systemAmount });
-        total += systemAmount;
-      }
-      
-      // 授業料（税込み）
-      if (monthlyLessons > 0 && paymentMonths > 0) {
-        const coursePrice = PRICES.COURSE[courseType] || 12800;
-        const totalLessons = monthlyLessons * paymentMonths;
-        const lessonAmount = coursePrice * totalLessons;
-        items.push({ name: `授業料(${courseType || 'コース'})`, qty: totalLessons, unit: coursePrice, amount: lessonAmount });
-        total += lessonAmount;
-      }
-      
-      // まとめ払い割引
-      if (paymentMonths > 0 && PRICES.BULK_DISCOUNT[paymentMonths]) {
-        const discountAmount = PRICES.BULK_DISCOUNT[paymentMonths];
-        items.push({ name: `まとめ払い割引(${paymentMonths}ヶ月)`, qty: 1, unit: -discountAmount, amount: -discountAmount });
-        total -= discountAmount;
-      }
-      
-      // ENGLISH（税込み）
-      if (englishLessons > 0 && englishMonths > 0) {
-        const totalEnglish = englishLessons * englishMonths;
-        const englishAmount = PRICES.ENGLISH * totalEnglish;
-        items.push({ name: '英語資格対策授業料', qty: totalEnglish, unit: PRICES.ENGLISH, amount: englishAmount });
-        total += englishAmount;
-      }
-      
-      // 内税計算（税込み価格から税抜・消費税を算出）
-      // 免税の場合は消費税を0にする
-      if (taxExempt) {
-        const subtotalExTax = Math.floor(total / 1.1);  // 元の税抜価格
-        return { items, total: subtotalExTax, subtotalExTax, tax: 0 };
-      } else {
-        const subtotalExTax = Math.floor(total / 1.1);
-        const tax = total - subtotalExTax;
-        return { items, total, subtotalExTax, tax };
-      }
+function calculateInvoiceBreakdown(student, options = {}) {
+  const items = [];
+  let total = 0; // 税込み合計
+  
+  const monthlyLessons = parseInt(student.monthlyLessons) || 0;
+  const paymentMonths = parseInt(student.paymentMonth) || 0;
+  const englishLessonsPerMonth = parseInt(student.englishLessons) || 0;
+  const englishMonths = parseInt(student.englishPayment) || 0;
+  const courseType = student.course || '';
+  const hasVideo = student.videoMaterial === '購入する';
+  const isRenewal = student.billingType === '継続';
+  
+  // 割引オプション
+  const singleParentDiscount = options.singleParentDiscount || false;
+  const referralDiscount = options.referralDiscount || false;
+  const taxExempt = options.taxExempt || false;
+  
+  // カスタムコマ数（指定がなければデフォルト計算）
+  const customTotalLessons = options.totalLessons !== undefined ? options.totalLessons : (monthlyLessons * paymentMonths);
+  const customEnglishLessons = options.englishLessons !== undefined ? options.englishLessons : (englishLessonsPerMonth * englishMonths);
+  
+  // 新規の場合は初期費用（税込み）
+  if (!isRenewal) {
+    // 入塾金
+    items.push({ name: '入塾金', qty: 1, unit: PRICES.ENROLLMENT_FEE, amount: PRICES.ENROLLMENT_FEE });
+    total += PRICES.ENROLLMENT_FEE;
+    
+    // ひとり親割引（入塾金から-10,000円）
+    if (singleParentDiscount) {
+      items.push({ name: 'ひとり親割引', qty: 1, unit: -10000, amount: -10000 });
+      total -= 10000;
     }
+    
+    // 紹介割引（入塾金から-10,000円）
+    if (referralDiscount) {
+      items.push({ name: '紹介割引', qty: 1, unit: -10000, amount: -10000 });
+      total -= 10000;
+    }
+    
+    // 教材費
+    items.push({ name: '教材費', qty: 1, unit: PRICES.MATERIAL_FEE, amount: PRICES.MATERIAL_FEE });
+    total += PRICES.MATERIAL_FEE;
+    
+    // アカウント設定費
+    items.push({ name: 'アカウント設定費', qty: 1, unit: PRICES.ACCOUNT_FEE, amount: PRICES.ACCOUNT_FEE });
+    total += PRICES.ACCOUNT_FEE;
+    
+    // 動画教材（入塾時購入）
+    if (hasVideo) {
+      items.push({ name: '過去動画教材費', qty: 1, unit: PRICES.VIDEO_FEE, amount: PRICES.VIDEO_FEE });
+      total += PRICES.VIDEO_FEE;
+    }
+  }
+  
+  // 在籍基本料（税込み）
+  if (paymentMonths > 0) {
+    const basicAmount = PRICES.BASIC_FEE * paymentMonths;
+    items.push({ name: '在籍基本料', qty: paymentMonths, unit: PRICES.BASIC_FEE, amount: basicAmount });
+    total += basicAmount;
+    
+    // システムサーバー費
+    const systemAmount = PRICES.SYSTEM_FEE * paymentMonths;
+    items.push({ name: 'システムサーバー費', qty: paymentMonths, unit: PRICES.SYSTEM_FEE, amount: systemAmount });
+    total += systemAmount;
+  }
+  
+  // 授業料（税込み）- カスタムコマ数を使用
+  if (customTotalLessons > 0) {
+    const coursePrice = PRICES.COURSE[courseType] || 12800;
+    const lessonAmount = coursePrice * customTotalLessons;
+    items.push({ name: `授業料(${courseType || 'コース'})`, qty: customTotalLessons, unit: coursePrice, amount: lessonAmount });
+    total += lessonAmount;
+  }
+  
+  // まとめ払い割引
+  if (paymentMonths > 0 && PRICES.BULK_DISCOUNT[paymentMonths]) {
+    const discountAmount = PRICES.BULK_DISCOUNT[paymentMonths];
+    items.push({ name: `まとめ払い割引(${paymentMonths}ヶ月)`, qty: 1, unit: -discountAmount, amount: -discountAmount });
+    total -= discountAmount;
+  }
+  
+  // ENGLISH（税込み）- カスタムコマ数を使用
+  if (customEnglishLessons > 0) {
+    const englishAmount = PRICES.ENGLISH * customEnglishLessons;
+    items.push({ name: '英語資格対策授業料', qty: customEnglishLessons, unit: PRICES.ENGLISH, amount: englishAmount });
+    total += englishAmount;
+  }
+  
+  // 内税計算（税込み価格から税抜・消費税を算出）
+  // 免税の場合は消費税を0にする
+  if (taxExempt) {
+    const subtotalExTax = Math.floor(total / 1.1);  // 元の税抜価格
+    return { items, total: subtotalExTax, subtotalExTax, tax: 0 };
+  } else {
+    const subtotalExTax = Math.floor(total / 1.1);
+    const tax = total - subtotalExTax;
+    return { items, total, subtotalExTax, tax };
+  }
+}
     
     // ===== 日付フォーマット（スラッシュ区切り） =====
     function formatDateSlash(date) {
