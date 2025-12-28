@@ -97,66 +97,174 @@
     
     /* メイン */
     .main {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 40px 24px;
     }
     
-    /* ヒーロー */
-    .hero {
-      text-align: center;
-      margin-bottom: 48px;
+    /* お知らせ掲示板 */
+    .notice-board {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
     }
     
-    .hero-icon {
-      width: 72px;
-      height: 72px;
-      background: #111;
-      border-radius: 18px;
+    .notice-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      color: #fff;
-    }
-    
-    .hero-title {
-      font-size: 32px;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 12px;
-    }
-    
-    .hero-subtitle {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.7;
-    }
-    
-    /* セクション */
-    .section {
-      margin-bottom: 40px;
-    }
-    
-    .section-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #888;
+      justify-content: space-between;
       margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .notice-title {
       display: flex;
       align-items: center;
       gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
     }
     
-    /* カードグリッド */
-    .card-grid {
+    .notice-all {
+      font-size: 13px;
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .notice-all:hover {
+      color: #111;
+    }
+    
+    .notice-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .notice-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #f9fafb;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+    
+    .notice-item:hover {
+      background: #f0f0f0;
+    }
+    
+    .notice-item.new {
+      background: #fef3c7;
+    }
+    
+    .notice-item.new:hover {
+      background: #fde68a;
+    }
+    
+    .notice-badge {
+      flex-shrink: 0;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #ef4444;
+      color: #fff;
+    }
+    
+    .notice-badge.info {
+      background: #6b7280;
+    }
+    
+    .notice-text {
+      flex: 1;
+      font-size: 13px;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .notice-date {
+      flex-shrink: 0;
+      font-size: 12px;
+      color: #999;
+    }
+    
+    /* クイックアクション */
+    .quick-actions {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .quick-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    
+    .quick-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    
+    .quick-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      background: #10b981;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    .quick-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    .quick-btn.secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    
+    .quick-btn.secondary:hover {
+      background: #e5e7eb;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    /* カテゴリグリッド */
+    .category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
     }
     
-    /* カード */
-    .card {
+    /* カテゴリカード */
+    .category-card {
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 16px;
@@ -166,19 +274,37 @@
       text-decoration: none;
       color: inherit;
       display: block;
+      position: relative;
+      overflow: hidden;
     }
     
-    .card:hover {
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    
+    .category-card.blue::before { background: #0ea5e9; }
+    .category-card.green::before { background: #10b981; }
+    .category-card.purple::before { background: #8b5cf6; }
+    .category-card.orange::before { background: #f59e0b; }
+    .category-card.pink::before { background: #ec4899; }
+    .category-card.teal::before { background: #14b8a6; }
+    
+    .category-card:hover {
       border-color: #ccc;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
     
     .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     
     .card-icon {
@@ -188,9 +314,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f5f5f5;
-      color: #333;
     }
+    
+    .category-card.blue .card-icon { background: #e0f2fe; color: #0284c7; }
+    .category-card.green .card-icon { background: #d1fae5; color: #059669; }
+    .category-card.purple .card-icon { background: #ede9fe; color: #7c3aed; }
+    .category-card.orange .card-icon { background: #fef3c7; color: #d97706; }
+    .category-card.pink .card-icon { background: #fce7f3; color: #db2777; }
+    .category-card.teal .card-icon { background: #ccfbf1; color: #0d9488; }
     
     .card-arrow {
       width: 32px;
@@ -204,7 +335,7 @@
       transition: all 0.2s;
     }
     
-    .card:hover .card-arrow {
+    .category-card:hover .card-arrow {
       background: #111;
       color: #fff;
     }
@@ -217,56 +348,66 @@
     }
     
     .card-desc {
-      font-size: 14px;
+      font-size: 13px;
       color: #666;
-      line-height: 1.6;
+      line-height: 1.5;
+    }
+    
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    
+    .card-tag {
+      font-size: 11px;
+      color: #888;
+      background: #f5f5f5;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
     
     /* 幹部エリア */
     .executive-section {
       background: #fff;
       border: 2px solid #111;
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    
+    .executive-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
     
     .executive-icon {
-      width: 64px;
-      height: 64px;
+      width: 52px;
+      height: 52px;
       background: #111;
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
       color: #fff;
+      flex-shrink: 0;
     }
     
-    .executive-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #f5f5f5;
-      color: #666;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    
-    .executive-title {
-      font-size: 24px;
+    .executive-info h2 {
+      font-size: 18px;
       font-weight: 700;
       color: #111;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     
-    .executive-desc {
-      font-size: 14px;
+    .executive-info p {
+      font-size: 13px;
       color: #666;
-      margin-bottom: 24px;
     }
     
     .executive-btn {
@@ -275,25 +416,25 @@
       gap: 8px;
       background: #111;
       color: #fff;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 15px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 14px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     
     .executive-btn:hover {
       background: #333;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
     
     /* フッター */
     .footer {
       text-align: center;
       padding: 32px 24px;
-      margin-top: 40px;
+      margin-top: 20px;
     }
     
     .footer-text {
@@ -307,16 +448,34 @@
         padding: 24px 16px;
       }
       
-      .hero-title {
-        font-size: 26px;
-      }
-      
-      .card-grid {
+      .category-grid {
         grid-template-columns: 1fr;
       }
       
+      .quick-actions {
+        padding: 16px;
+      }
+      
+      .quick-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+      
+      .notice-item {
+        padding: 10px 12px;
+      }
+      
+      .notice-text {
+        font-size: 12px;
+      }
+      
       .executive-section {
-        padding: 28px 20px;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .executive-left {
+        flex-direction: column;
       }
     }
   </style>
@@ -342,77 +501,192 @@
   
   <!-- メイン -->
   <main class="main">
-    <!-- ヒーロー -->
-    <div class="hero">
-      <div class="hero-icon">
-        <i data-lucide="layout-dashboard" style="width:36px;height:36px;"></i>
+    <!-- お知らせ掲示板 -->
+    <div class="notice-board">
+      <div class="notice-header">
+        <div class="notice-title">
+          <i data-lucide="megaphone" style="width:20px;height:20px;"></i>
+          お知らせ
+        </div>
+        <a href="#" class="notice-all">すべて見る</a>
       </div>
-      <h1 class="hero-title">スタッフポータル</h1>
-      <p class="hero-subtitle">
-        EQAOの業務システムへようこそ。<br>
-        各種ツールや情報にアクセスできます。
-      </p>
+      <div class="notice-list">
+        <a href="#" class="notice-item new">
+          <span class="notice-badge">NEW</span>
+          <span class="notice-text">【重要】年末年始の営業時間について</span>
+          <span class="notice-date">12/28</span>
+        </a>
+        <a href="#" class="notice-item">
+          <span class="notice-badge info">更新</span>
+          <span class="notice-text">研修プログラムが更新されました</span>
+          <span class="notice-date">12/25</span>
+        </a>
+        <a href="#" class="notice-item">
+          <span class="notice-badge info">共有</span>
+          <span class="notice-text">1月のスケジュールが公開されました</span>
+          <span class="notice-date">12/20</span>
+        </a>
+      </div>
     </div>
     
-    <!-- 一般メニュー -->
-    <div class="section">
-      <div class="section-title">
-        <i data-lucide="grid-3x3" style="width:16px;height:16px;"></i>
-        メニュー
+    <!-- クイックアクション -->
+    <div class="quick-actions">
+      <div class="quick-header">
+        <i data-lucide="zap" style="width:16px;height:16px;"></i>
+        クイックメニュー
       </div>
-      <div class="card-grid">
-        <a href="#" class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <i data-lucide="calendar-days" style="width:24px;height:24px;"></i>
-            </div>
-            <div class="card-arrow">
-              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-            </div>
-          </div>
-          <div class="card-title">スケジュール確認</div>
-          <div class="card-desc">授業スケジュールや予定を確認できます。</div>
+      <div class="quick-buttons">
+        <a href="#" class="quick-btn">
+          <i data-lucide="file-check" style="width:18px;height:18px;"></i>
+          授業実施報告
         </a>
-        
-        <a href="#" class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <i data-lucide="users" style="width:24px;height:24px;"></i>
-            </div>
-            <div class="card-arrow">
-              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-            </div>
-          </div>
-          <div class="card-title">生徒情報</div>
-          <div class="card-desc">担当生徒の情報を確認できます。</div>
+        <a href="#" class="quick-btn">
+          <i data-lucide="clock" style="width:18px;height:18px;"></i>
+          稼働報告
         </a>
-        
-        <a href="#" class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <i data-lucide="book-open" style="width:24px;height:24px;"></i>
-            </div>
-            <div class="card-arrow">
-              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-            </div>
-          </div>
-          <div class="card-title">マニュアル・研修</div>
-          <div class="card-desc">業務マニュアルや研修資料を確認できます。</div>
+        <a href="#" class="quick-btn">
+          <i data-lucide="trending-up" style="width:18px;height:18px;"></i>
+          生徒進捗報告
+        </a>
+        <a href="#" class="quick-btn">
+          <i data-lucide="users" style="width:18px;height:18px;"></i>
+          生徒情報
+        </a>
+        <a href="#" class="quick-btn">
+          <i data-lucide="message-square" style="width:18px;height:18px;"></i>
+          代表面談フォーム
         </a>
       </div>
+    </div>
+    
+    <!-- カテゴリグリッド -->
+    <div class="category-grid">
+      <!-- スケジュール -->
+      <a href="category-schedule.html" class="category-card blue">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="calendar" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">スケジュール</div>
+        <div class="card-desc">授業予定・年間スケジュール・振替状況など</div>
+        <div class="card-tags">
+          <span class="card-tag">個人予定</span>
+          <span class="card-tag">年間予定</span>
+          <span class="card-tag">講師稼働</span>
+        </div>
+      </a>
+      
+      <!-- 生徒管理 -->
+      <a href="category-students.html" class="category-card green">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="graduation-cap" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">生徒管理</div>
+        <div class="card-desc">生徒情報・担任一覧・進捗状況など</div>
+        <div class="card-tags">
+          <span class="card-tag">生徒ポータル</span>
+          <span class="card-tag">担任・メンター</span>
+          <span class="card-tag">自習室</span>
+        </div>
+      </a>
+      
+      <!-- 授業・教材 -->
+      <a href="category-lessons.html" class="category-card purple">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="book-open" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">授業・教材</div>
+        <div class="card-desc">授業ステップ・教材・過去問など</div>
+        <div class="card-tags">
+          <span class="card-tag">個別/集団授業</span>
+          <span class="card-tag">動画教材</span>
+          <span class="card-tag">過去問</span>
+        </div>
+      </a>
+      
+      <!-- ルール・研修 -->
+      <a href="category-rules.html" class="category-card orange">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="book" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">ルール・研修</div>
+        <div class="card-desc">スタッフルール・マニュアル・研修など</div>
+        <div class="card-tags">
+          <span class="card-tag">規定書</span>
+          <span class="card-tag">マニュアル</span>
+          <span class="card-tag">研修</span>
+        </div>
+      </a>
+      
+      <!-- 組織・HR -->
+      <a href="category-organization.html" class="category-card pink">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="building" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">組織・情報</div>
+        <div class="card-desc">組織図・バッジ・料金シミュレーターなど</div>
+        <div class="card-tags">
+          <span class="card-tag">組織図</span>
+          <span class="card-tag">バッジ</span>
+          <span class="card-tag">数字で見る</span>
+        </div>
+      </a>
+      
+      <!-- リソース・リンク -->
+      <a href="category-resources.html" class="category-card teal">
+        <div class="card-header">
+          <div class="card-icon">
+            <i data-lucide="link" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="card-arrow">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </div>
+        </div>
+        <div class="card-title">リソース・リンク</div>
+        <div class="card-desc">広報素材・公式SNS・各種リンクなど</div>
+        <div class="card-tags">
+          <span class="card-tag">公式LINE</span>
+          <span class="card-tag">SNS</span>
+          <span class="card-tag">PV動画</span>
+        </div>
+      </a>
     </div>
     
     <!-- 幹部エリア -->
     <div class="executive-section">
-      <div class="executive-icon">
-        <i data-lucide="shield" style="width:32px;height:32px;"></i>
+      <div class="executive-left">
+        <div class="executive-icon">
+          <i data-lucide="shield" style="width:26px;height:26px;"></i>
+        </div>
+        <div class="executive-info">
+          <h2>幹部・部署別ページ</h2>
+          <p>経理・スケジュール管理・担任など</p>
+        </div>
       </div>
-      <div class="executive-badge">
-        <i data-lucide="lock" style="width:12px;height:12px;"></i>
-        パスワード必要
-      </div>
-      <h2 class="executive-title">幹部ページ</h2>
-      <p class="executive-desc">経理・スケジュール管理など、幹部向けの管理機能にアクセスできます。</p>
       <a href="staff-executive.html" class="executive-btn">
         <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
         幹部ページへ

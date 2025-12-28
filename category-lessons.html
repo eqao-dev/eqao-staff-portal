@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>授業・教材 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f8f9fa; min-height: 100vh; color: #333; }
+    
+    .header { background: #111; padding: 0 24px; height: 64px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .header-content { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 16px; }
+    .back-btn { display: flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 14px; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+    .back-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .header-divider { width: 1px; height: 20px; background: #444; }
+    .header-title { font-size: 16px; font-weight: 600; color: #fff; }
+    
+    .main { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    
+    .page-header { margin-bottom: 32px; }
+    .page-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: #ede9fe; color: #7c3aed; }
+    .page-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .page-desc { font-size: 14px; color: #666; }
+    
+    .button-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+    
+    .btn-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; transition: all 0.2s; }
+    .btn-card:hover { border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15); transform: translateY(-2px); }
+    .btn-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #ede9fe; color: #7c3aed; flex-shrink: 0; }
+    .btn-content { flex: 1; }
+    .btn-title { font-size: 14px; font-weight: 600; color: #111; }
+    .btn-desc { font-size: 12px; color: #888; margin-top: 2px; }
+    .btn-arrow { color: #ccc; transition: color 0.2s; }
+    .btn-card:hover .btn-arrow { color: #8b5cf6; }
+    
+    .footer { text-align: center; padding: 32px 24px; margin-top: 40px; }
+    .footer-text { font-size: 13px; color: #999; }
+    
+    @media (max-width: 768px) {
+      .main { padding: 24px 16px; }
+      .button-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="back-btn">
+        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+        ポータルに戻る
+      </a>
+      <div class="header-divider"></div>
+      <span class="header-title">授業・教材</span>
+    </div>
+  </header>
+  
+  <main class="main">
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="book-open" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">授業・教材</h1>
+      <p class="page-desc">授業ステップ・教材・過去問などを確認できます</p>
+    </div>
+    
+    <div class="button-grid">
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="user" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">個別授業ステップ</div>
+          <div class="btn-desc">個別授業の進行手順</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">集団授業ステップ</div>
+          <div class="btn-desc">集団授業の進行手順</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="folder" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">生徒用教材</div>
+          <div class="btn-desc">生徒がアクセスする教材</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="play-circle" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">動画教材</div>
+          <div class="btn-desc">生徒向け動画コンテンツ</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="app-window" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">生徒用プラットフォーム</div>
+          <div class="btn-desc">生徒がアクセスするプラットフォーム</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="file-text" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">過去問一覧</div>
+          <div class="btn-desc">各科目の過去問題集</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="archive" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">過去の生徒書類</div>
+          <div class="btn-desc">過去の書類・資料を確認</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+      
+      <a href="#" class="btn-card">
+        <div class="btn-icon"><i data-lucide="newspaper" style="width:20px;height:20px;"></i></div>
+        <div class="btn-content">
+          <div class="btn-title">生徒向けコラム</div>
+          <div class="btn-desc">生徒がアクセスしているコラム</div>
+        </div>
+        <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
+      </a>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <p class="footer-text">© 2025 EQAO Education Group</p>
+  </footer>
+  
+  <script>lucide.createIcons();</script>
+</body>
+</html>
