@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     :root {
       --primary: #eab308;
       --primary-dark: #ca8a04;
@@ -27,14 +28,14 @@
       --danger: #ef4444;
       --danger-light: #fee2e2;
     }
-    
+
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: #f8f9fa;
       min-height: 100vh;
       color: #333;
     }
-    
+
     /* ヘッダー */
     .header {
       background: #111;
@@ -46,7 +47,7 @@
       top: 0;
       z-index: 100;
     }
-    
+
     .header-content {
       max-width: 1400px;
       margin: 0 auto;
@@ -55,36 +56,36 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    
+
     .back-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       color: #fff;
       text-decoration: none;
       transition: all 0.2s;
     }
-    
+
     .back-btn:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
     }
-    
+
     .header-info {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    
+
     .header-icon {
       width: 36px;
       height: 36px;
@@ -95,13 +96,13 @@
       justify-content: center;
       color: #111;
     }
-    
+
     .header-title {
       font-size: 18px;
       font-weight: 700;
       color: #fff;
     }
-    
+
     .refresh-btn {
       display: flex;
       align-items: center;
@@ -117,11 +118,11 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .refresh-btn:hover {
       background: var(--primary-dark);
     }
-    
+
     /* タブナビゲーション */
     .tab-nav {
       background: #fff;
@@ -131,14 +132,14 @@
       top: 64px;
       z-index: 90;
     }
-    
+
     .tab-nav-inner {
       max-width: 1400px;
       margin: 0 auto;
       display: flex;
       gap: 4px;
     }
-    
+
     .tab-btn {
       display: flex;
       align-items: center;
@@ -154,7 +155,7 @@
       font-family: inherit;
       position: relative;
     }
-    
+
     .tab-btn::after {
       content: '';
       position: absolute;
@@ -166,25 +167,25 @@
       border-radius: 3px 3px 0 0;
       transition: all 0.2s;
     }
-    
+
     .tab-btn:hover:not(.disabled) {
       color: var(--primary-dark);
       background: var(--primary-light);
     }
-    
+
     .tab-btn.active {
       color: var(--primary-dark);
     }
-    
+
     .tab-btn.active::after {
       background: var(--primary);
     }
-    
+
     .tab-btn.disabled {
       color: #aaa;
       cursor: not-allowed;
     }
-    
+
     .tab-btn .coming-soon {
       font-size: 10px;
       font-weight: 700;
@@ -194,16 +195,16 @@
       border-radius: 10px;
       margin-left: 4px;
     }
-    
+
     /* タブコンテンツ */
     .tab-content {
       display: none;
     }
-    
+
     .tab-content.active {
       display: block;
     }
-    
+
     /* コマ数管理タブ */
     .lessons-summary {
       display: grid;
@@ -211,7 +212,7 @@
       gap: 16px;
       margin-bottom: 24px;
     }
-    
+
     .lessons-summary-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -221,7 +222,7 @@
       align-items: center;
       gap: 16px;
     }
-    
+
     .lessons-summary-icon {
       width: 48px;
       height: 48px;
@@ -230,35 +231,35 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .lessons-summary-icon.total {
       background: #eff6ff;
       color: #2563eb;
     }
-    
+
     .lessons-summary-icon.english {
       background: #f0fdf4;
       color: #16a34a;
     }
-    
+
     .lessons-summary-label {
       font-size: 13px;
       color: #666;
       margin-bottom: 4px;
     }
-    
+
     .lessons-summary-value {
       font-size: 24px;
       font-weight: 700;
       color: #111;
     }
-    
+
     .lessons-student-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    
+
     .lessons-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -266,11 +267,11 @@
       overflow: visible;
       transition: all 0.3s;
     }
-    
+
     .lessons-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    
+
     .lessons-card-header {
       padding: 16px 20px;
       display: flex;
@@ -278,13 +279,13 @@
       justify-content: space-between;
       cursor: pointer;
     }
-    
+
     .lessons-card-info {
       display: flex;
       align-items: center;
       gap: 14px;
     }
-    
+
     .lessons-card-avatar {
       width: 42px;
       height: 42px;
@@ -297,72 +298,72 @@
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .lessons-card-name {
       font-weight: 600;
       color: #111;
       font-size: 15px;
     }
-    
+
     .lessons-card-id {
       font-size: 12px;
       color: #888;
       margin-top: 2px;
     }
-    
+
     .lessons-card-counts {
       display: flex;
       gap: 16px;
       align-items: center;
     }
-    
+
     .lessons-count-item {
       text-align: center;
     }
-    
+
     .lessons-count-label {
       font-size: 11px;
       color: #888;
       margin-bottom: 2px;
     }
-    
+
     .lessons-count-value {
       font-size: 18px;
       font-weight: 700;
     }
-    
+
     .lessons-count-value.total {
       color: #2563eb;
     }
-    
+
     .lessons-count-value.english {
       color: #16a34a;
     }
-    
+
     .lessons-count-value.zero {
       color: #ccc;
     }
-    
+
     .lessons-card-toggle {
       color: #999;
       transition: transform 0.3s;
     }
-    
+
     .lessons-card.expanded .lessons-card-toggle {
       transform: rotate(180deg);
     }
-    
+
     .lessons-card-detail {
       display: none;
       border-top: 1px solid #eee;
       padding: 16px 20px;
       background: #fafafa;
     }
-    
+
     .lessons-card.expanded .lessons-card-detail {
       display: block;
     }
-    
+
     .invoice-history-title {
       font-size: 13px;
       font-weight: 600;
@@ -372,13 +373,13 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .invoice-history-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
     }
-    
+
     .invoice-history-table th {
       text-align: left;
       padding: 8px 12px;
@@ -387,16 +388,16 @@
       color: #555;
       border-bottom: 1px solid #ddd;
     }
-    
+
     .invoice-history-table td {
       padding: 10px 12px;
       border-bottom: 1px solid #eee;
     }
-    
+
     .invoice-history-table tr:last-child td {
       border-bottom: none;
     }
-    
+
     .invoice-status {
       display: inline-block;
       padding: 3px 10px;
@@ -404,24 +405,24 @@
       font-size: 11px;
       font-weight: 600;
     }
-    
+
     .invoice-status.paid {
       background: #dcfce7;
       color: #166534;
     }
-    
+
     .invoice-status.waiting {
       background: #dbeafe;
       color: #1e40af;
     }
-    
+
     .no-history {
       text-align: center;
       color: #999;
       padding: 20px;
       font-size: 13px;
     }
-    
+
     /* Coming Soon画面 */
     .coming-soon-container {
       display: flex;
@@ -431,7 +432,7 @@
       padding: 80px 20px;
       text-align: center;
     }
-    
+
     .coming-soon-icon {
       width: 100px;
       height: 100px;
@@ -443,21 +444,21 @@
       color: #bbb;
       margin-bottom: 24px;
     }
-    
+
     .coming-soon-title {
       font-size: 22px;
       font-weight: 700;
       color: #333;
       margin-bottom: 12px;
     }
-    
+
     .coming-soon-text {
       font-size: 15px;
       color: #666;
       line-height: 1.8;
       margin-bottom: 32px;
     }
-    
+
     .coming-soon-features {
       display: flex;
       flex-direction: column;
@@ -467,7 +468,7 @@
       border-radius: 12px;
       padding: 20px 32px;
     }
-    
+
     .coming-soon-feature {
       display: flex;
       align-items: center;
@@ -475,18 +476,18 @@
       font-size: 14px;
       color: #666;
     }
-    
+
     .coming-soon-feature i {
       color: #bbb;
     }
-    
+
     /* メイン */
     .main {
       max-width: 1400px;
       margin: 0 auto;
       padding: 24px;
     }
-    
+
     /* 統計カード */
     .billing-type-selector {
       display: flex;
@@ -494,7 +495,7 @@
       margin-bottom: 20px;
       flex-wrap: wrap;
     }
-    
+
     .billing-type-btn {
       display: flex;
       align-items: center;
@@ -510,36 +511,36 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .billing-type-btn:hover {
       border-color: var(--primary);
       background: var(--primary-light);
     }
-    
+
     .billing-type-btn.active {
       border-color: var(--primary);
       background: var(--primary-light);
       color: var(--primary-dark);
     }
-    
+
     .billing-type-icon {
       width: 12px;
       height: 12px;
       border-radius: 50%;
     }
-    
+
     .billing-type-icon.new {
       background: #3b82f6;
     }
-    
+
     .billing-type-icon.renewal {
       background: #8b5cf6;
     }
-    
+
     .billing-type-label {
       font-weight: 600;
     }
-    
+
     .billing-type-count {
       background: #f0f0f0;
       padding: 4px 10px;
@@ -548,19 +549,19 @@
       font-weight: 700;
       color: #555;
     }
-    
+
     .billing-type-btn.active .billing-type-count {
       background: var(--primary);
       color: #111;
     }
-    
+
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
-    
+
     .stat-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -570,7 +571,7 @@
       align-items: center;
       gap: 16px;
     }
-    
+
     .stat-icon {
       width: 48px;
       height: 48px;
@@ -579,62 +580,62 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .stat-card.total .stat-icon {
       background: var(--primary-light);
       color: var(--primary-dark);
     }
-    
+
     .stat-card.pending .stat-icon {
       background: var(--warning-light);
       color: var(--warning);
     }
-    
+
     .stat-card.sent .stat-icon {
       background: #fef3c7;
       color: #d97706;
     }
-    
+
     .stat-card.paid .stat-icon {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .stat-card.amount .stat-icon {
       background: #fef3c7;
       color: #d97706;
     }
-    
+
     .stat-card.paid-amount .stat-icon {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .stat-card.total-amount .stat-icon {
       background: #f3e8ff;
       color: #9333ea;
     }
-    
+
     .stat-info {
       flex: 1;
     }
-    
+
     .stat-label {
       font-size: 13px;
       color: #666;
       margin-bottom: 4px;
     }
-    
+
     .stat-value {
       font-size: 28px;
       font-weight: 700;
       color: #111;
     }
-    
+
     .stat-value.small {
       font-size: 20px;
     }
-    
+
     /* フィルター */
     .filter-bar {
       background: #fff;
@@ -647,7 +648,7 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    
+
     .search-box {
       display: flex;
       align-items: center;
@@ -661,12 +662,12 @@
       max-width: 320px;
       color: #888;
     }
-    
+
     .search-box:focus-within {
       border-color: var(--primary);
       background: #fff;
     }
-    
+
     .search-box input {
       border: none;
       background: transparent;
@@ -676,14 +677,14 @@
       outline: none;
       font-family: inherit;
     }
-    
+
     .filter-buttons {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
-    
+
     .filter-label {
       font-size: 14px;
       font-weight: 600;
@@ -692,7 +693,7 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .filter-btn {
       padding: 8px 16px;
       border: 1px solid #e5e5e5;
@@ -705,18 +706,18 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .filter-btn:hover {
       border-color: var(--primary);
       color: var(--primary-dark);
     }
-    
+
     .filter-btn.active {
       background: var(--primary-light);
       border-color: var(--primary);
       color: var(--primary-dark);
     }
-    
+
     /* 期間フィルター */
     .period-filter-section {
       background: #fff;
@@ -729,7 +730,7 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    
+
     .period-filter-label {
       font-size: 14px;
       font-weight: 600;
@@ -738,13 +739,13 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .period-preset-buttons {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
     }
-    
+
     .period-btn {
       padding: 6px 14px;
       border: 1px solid #e5e5e5;
@@ -757,25 +758,25 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .period-btn:hover {
       border-color: #10b981;
       color: #10b981;
     }
-    
+
     .period-btn.active {
       background: #d1fae5;
       border-color: #10b981;
       color: #059669;
     }
-    
+
     .period-custom-inputs {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-left: auto;
     }
-    
+
     .period-date-input {
       padding: 6px 10px;
       border: 1px solid #ddd;
@@ -783,12 +784,12 @@
       font-size: 13px;
       font-family: inherit;
     }
-    
+
     .period-date-input:focus {
       outline: none;
       border-color: #10b981;
     }
-    
+
     .period-apply-btn {
       padding: 6px 14px;
       background: #10b981;
@@ -800,18 +801,18 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    
+
     .period-apply-btn:hover {
       background: #059669;
     }
-    
+
     /* 生徒リスト */
     .student-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    
+
     .student-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -819,29 +820,29 @@
       overflow: visible;
       transition: all 0.3s;
     }
-    
+
     .student-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    
+
     .student-card.sent,
     .student-card.paid {
       border-left: 4px solid var(--success);
     }
-    
+
     .student-card.waiting {
       border-left: 4px solid #3b82f6;
     }
-    
+
     .student-card.pending {
       border-left: 4px solid var(--warning);
     }
-    
+
     .student-card.overdue {
       border-left: 4px solid #ef4444;
       background: #fef2f2;
     }
-    
+
     .student-header {
       padding: 16px 20px;
       display: flex;
@@ -849,14 +850,14 @@
       gap: 16px;
       cursor: pointer;
     }
-    
+
     .student-info {
       display: flex;
       align-items: center;
       gap: 14px;
       flex: 1;
     }
-    
+
     .student-avatar {
       width: 42px;
       height: 42px;
@@ -869,7 +870,7 @@
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .student-name {
       font-size: 15px;
       font-weight: 600;
@@ -878,24 +879,24 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .billing-type-badge {
       font-size: 10px;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 4px;
     }
-    
+
     .billing-type-badge.new {
       background: #dbeafe;
       color: #1d4ed8;
     }
-    
+
     .billing-type-badge.renewal {
       background: #ede9fe;
       color: #7c3aed;
     }
-    
+
     .student-meta {
       display: flex;
       align-items: center;
@@ -904,48 +905,48 @@
       font-size: 13px;
       color: #666;
     }
-    
+
     .student-meta span {
       display: flex;
       align-items: center;
       gap: 4px;
     }
-    
+
     .billing-summary {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    
+
     .billing-amount {
       font-size: 18px;
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .status-tag {
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
     }
-    
+
     .status-tag.sent,
     .status-tag.paid {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .status-tag.waiting {
       background: #dbeafe;
       color: #1e40af;
     }
-    
+
     .status-tag.pending {
       background: var(--warning-light);
       color: var(--warning);
     }
-    
+
     .expand-btn {
       width: 36px;
       height: 36px;
@@ -959,11 +960,11 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-    
+
     .student-card.expanded .expand-btn {
       transform: rotate(180deg);
     }
-    
+
     /* 詳細パネル */
     .student-details {
       display: none;
@@ -971,25 +972,25 @@
       padding: 20px;
       background: #fafafa;
     }
-    
+
     .student-card.expanded .student-details {
       display: block;
     }
-    
+
     .details-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
       margin-bottom: 20px;
     }
-    
+
     .detail-section {
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
       padding: 16px;
     }
-    
+
     .detail-section-title {
       display: flex;
       align-items: center;
@@ -1001,7 +1002,7 @@
       padding-bottom: 10px;
       border-bottom: 1px solid #eee;
     }
-    
+
     .detail-item {
       display: flex;
       justify-content: space-between;
@@ -1009,39 +1010,39 @@
       padding: 8px 0;
       font-size: 14px;
     }
-    
+
     .detail-label {
       color: #666;
     }
-    
+
     .detail-value {
       font-weight: 500;
       color: #333;
       text-align: right;
     }
-    
+
     .detail-value.price {
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .detail-value.discount {
       color: var(--danger);
     }
-    
+
     .detail-value.total {
       font-size: 18px;
       font-weight: 700;
       color: #111;
     }
-    
+
     /* 証明書リンク */
     .detail-value.proof-links {
       display: flex;
       gap: 8px;
       justify-content: flex-end;
     }
-    
+
     .proof-link {
       display: inline-flex;
       align-items: center;
@@ -1055,12 +1056,12 @@
       text-decoration: none;
       transition: all 0.2s;
     }
-    
+
     .proof-link:hover {
       background: #dbeafe;
       color: #1d4ed8;
     }
-    
+
     /* 購入コマ数 */
     .detail-section.purchased-lessons {
       background: #f0fdf4;
@@ -1069,16 +1070,16 @@
       padding: 12px;
       margin-top: 12px;
     }
-    
+
     .detail-section.purchased-lessons .detail-section-title {
       color: #166534;
     }
-    
+
     .detail-value.purchased {
       color: #166534;
       font-weight: 700;
     }
-    
+
     /* 料金内訳 */
     .billing-breakdown {
       background: #fff;
@@ -1087,7 +1088,7 @@
       padding: 20px;
       margin-bottom: 20px;
     }
-    
+
     .breakdown-title {
       display: flex;
       align-items: center;
@@ -1099,15 +1100,15 @@
       padding-bottom: 12px;
       border-bottom: 2px solid var(--primary-light);
     }
-    
+
     .breakdown-section {
       margin-bottom: 20px;
     }
-    
+
     .breakdown-section:last-child {
       margin-bottom: 0;
     }
-    
+
     .breakdown-section-header {
       display: flex;
       align-items: center;
@@ -1117,23 +1118,23 @@
       border-radius: 8px;
       margin-bottom: 10px;
     }
-    
+
     .breakdown-section-title {
       font-size: 14px;
       font-weight: 600;
       color: #333;
     }
-    
+
     .breakdown-section-subtotal {
       font-size: 15px;
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .breakdown-items {
       padding: 0 8px;
     }
-    
+
     .breakdown-item {
       display: flex;
       justify-content: space-between;
@@ -1142,34 +1143,34 @@
       font-size: 13px;
       border-bottom: 1px dashed #e5e5e5;
     }
-    
+
     .breakdown-item:last-child {
       border-bottom: none;
     }
-    
+
     .breakdown-item-name {
       color: #555;
       flex: 1;
     }
-    
+
     .breakdown-item-calc {
       color: #888;
       font-size: 12px;
       text-align: right;
       margin-right: 16px;
     }
-    
+
     .breakdown-item-amount {
       font-weight: 600;
       color: #333;
       min-width: 90px;
       text-align: right;
     }
-    
+
     .breakdown-item-amount.discount {
       color: var(--danger);
     }
-    
+
     .breakdown-total {
       display: flex;
       justify-content: space-between;
@@ -1180,19 +1181,19 @@
       border-radius: 10px;
       margin-top: 16px;
     }
-    
+
     .breakdown-total-label {
       font-size: 16px;
       font-weight: 700;
       color: #333;
     }
-    
+
     .breakdown-total-amount {
       font-size: 24px;
       font-weight: 700;
       color: var(--primary-dark);
     }
-    
+
     .breakdown-check {
       display: flex;
       align-items: center;
@@ -1201,17 +1202,17 @@
       padding: 12px 16px;
       border-radius: 8px;
     }
-    
+
     .breakdown-check.match {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .breakdown-check.mismatch {
       background: var(--danger-light);
       color: var(--danger);
     }
-    
+
     .breakdown-check-text {
       font-size: 14px;
       font-weight: 600;
@@ -1224,7 +1225,7 @@
       border-radius: 10px;
       padding: 20px;
     }
-    
+
     .action-section-title {
       display: flex;
       align-items: center;
@@ -1234,13 +1235,13 @@
       color: #333;
       margin-bottom: 16px;
     }
-    
+
     .action-buttons {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
-    
+
     .action-btn {
       display: flex;
       align-items: center;
@@ -1254,46 +1255,46 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .action-btn.preview {
       background: #f5f5f5;
       color: #333;
     }
-    
+
     .action-btn.preview:hover:not(:disabled) {
       background: #eee;
     }
-    
+
     .action-btn.preview:disabled {
       background: #f0f0f0;
       color: #bbb;
       cursor: not-allowed;
     }
-    
+
     .action-btn.send {
       background: var(--primary);
       color: #111;
     }
-    
+
     .action-btn.send:hover:not(:disabled) {
       background: var(--primary-dark);
     }
-    
+
     .action-btn.send:disabled {
       background: #ddd;
       color: #999;
       cursor: not-allowed;
     }
-    
+
     .action-btn.resend {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .action-btn.resend:hover {
       background: #bbf7d0;
     }
-    
+
     /* ローディング */
     .loading {
       display: flex;
@@ -1303,7 +1304,7 @@
       padding: 60px 20px;
       color: #666;
     }
-    
+
     .loading-spinner {
       width: 40px;
       height: 40px;
@@ -1313,11 +1314,13 @@
       animation: spin 0.8s linear infinite;
       margin-bottom: 16px;
     }
-    
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
-    
+
     /* モーダル */
     .modal-overlay {
       position: fixed;
@@ -1325,18 +1328,18 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       padding: 20px;
     }
-    
+
     .modal-overlay.show {
       display: flex;
     }
-    
+
     .modal {
       background: #fff;
       border-radius: 16px;
@@ -1347,7 +1350,7 @@
       display: flex;
       flex-direction: column;
     }
-    
+
     .modal-header {
       padding: 20px 24px;
       border-bottom: 1px solid #eee;
@@ -1355,7 +1358,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .modal-title {
       font-size: 18px;
       font-weight: 700;
@@ -1364,7 +1367,7 @@
       align-items: center;
       gap: 10px;
     }
-    
+
     .modal-close {
       width: 36px;
       height: 36px;
@@ -1377,13 +1380,13 @@
       justify-content: center;
       color: #666;
     }
-    
+
     .modal-body {
       flex: 1;
       overflow-y: auto;
       padding: 24px;
     }
-    
+
     .modal-footer {
       padding: 16px 24px;
       border-top: 1px solid #eee;
@@ -1391,12 +1394,12 @@
       justify-content: flex-end;
       gap: 12px;
     }
-    
+
     /* ウィザードモーダル */
     .wizard-modal {
       max-width: 900px;
     }
-    
+
     .wizard-steps {
       display: flex;
       align-items: center;
@@ -1405,14 +1408,14 @@
       background: #f9fafb;
       border-bottom: 1px solid #eee;
     }
-    
+
     .wizard-step {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
     }
-    
+
     .wizard-step-number {
       width: 32px;
       height: 32px;
@@ -1426,32 +1429,32 @@
       font-size: 14px;
       transition: all 0.3s;
     }
-    
+
     .wizard-step.active .wizard-step-number,
     .wizard-step.completed .wizard-step-number {
       background: var(--primary);
       color: #fff;
     }
-    
+
     .wizard-step.completed .wizard-step-number {
       background: var(--success);
     }
-    
+
     .wizard-step-label {
       font-size: 12px;
       color: #6b7280;
       font-weight: 500;
     }
-    
+
     .wizard-step.active .wizard-step-label {
       color: var(--primary);
       font-weight: 600;
     }
-    
+
     .wizard-step.completed .wizard-step-label {
       color: var(--success);
     }
-    
+
     .wizard-step-line {
       width: 60px;
       height: 2px;
@@ -1460,34 +1463,34 @@
       margin-bottom: 20px;
       transition: background 0.3s;
     }
-    
+
     .wizard-step-line.completed {
       background: var(--success);
     }
-    
+
     .wizard-body {
       padding: 0;
     }
-    
+
     .wizard-content {
       display: none;
       padding: 24px;
     }
-    
+
     .wizard-content.active {
       display: block;
     }
-    
+
     .wizard-footer {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    
+
     .wizard-footer-spacer {
       flex: 1;
     }
-    
+
     .wizard-btn {
       display: flex;
       align-items: center;
@@ -1500,63 +1503,65 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    
+
     .wizard-btn.back {
       background: #f3f4f6;
       color: #374151;
     }
-    
+
     .wizard-btn.back:hover {
       background: #e5e7eb;
     }
-    
+
     .wizard-btn.next {
       background: var(--primary);
       color: #fff;
     }
-    
+
     .wizard-btn.next:hover {
       background: var(--primary-dark);
     }
-    
+
     .wizard-btn.send {
       background: var(--success);
       color: #fff;
     }
-    
+
     .wizard-btn.send:hover {
       background: #059669;
     }
-    
+
     .wizard-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
     }
-    
+
     .btn-spinner {
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: btn-spin 0.8s linear infinite;
       display: inline-block;
     }
-    
+
     @keyframes btn-spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
-    
+
     /* ウィザード内のフォーム */
     .email-form-container {
       max-width: 600px;
       margin: 0 auto;
     }
-    
+
     .email-form-group {
       margin-bottom: 20px;
     }
-    
+
     .email-label {
       display: block;
       font-size: 13px;
@@ -1564,7 +1569,7 @@
       color: #374151;
       margin-bottom: 8px;
     }
-    
+
     .email-input {
       width: 100%;
       padding: 12px 14px;
@@ -1573,18 +1578,18 @@
       font-size: 14px;
       transition: all 0.2s;
     }
-    
+
     .email-input:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
-    
+
     .email-input[readonly] {
       background: #f9fafb;
       color: #6b7280;
     }
-    
+
     .email-textarea {
       width: 100%;
       padding: 12px 14px;
@@ -1596,23 +1601,23 @@
       min-height: 200px;
       transition: all 0.2s;
     }
-    
+
     .email-textarea:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
-    
+
     /* バリデーションエラー */
     .input-error {
       border-color: #ef4444 !important;
       background-color: #fef2f2 !important;
     }
-    
+
     .input-error:focus {
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
     }
-    
+
     .validation-error {
       display: flex;
       align-items: center;
@@ -1621,7 +1626,7 @@
       font-size: 12px;
       margin-top: 6px;
     }
-    
+
     /* 請求書プレビュー */
     .invoice-preview {
       background: #fff;
@@ -1636,38 +1641,38 @@
       box-sizing: border-box;
       overflow: hidden;
     }
-    
+
     .invoice-title-section {
       text-align: center;
       margin-bottom: 24px;
     }
-    
+
     .invoice-main-title {
       font-size: 28px;
       font-weight: 700;
       letter-spacing: 12px;
       margin: 0;
     }
-    
+
     .invoice-header-section {
       display: flex;
       justify-content: space-between;
       gap: 40px;
       margin-bottom: 24px;
     }
-    
+
     .invoice-to-section {
       flex: 1;
       padding-top: 20px;
     }
-    
+
     .invoice-meta-box.right-align {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       margin-bottom: 16px;
     }
-    
+
     .invoice-meta-row {
       display: flex;
       gap: 8px;
@@ -1675,16 +1680,16 @@
       margin-bottom: 2px;
       justify-content: flex-end;
     }
-    
+
     .invoice-meta-label {
       color: #666;
     }
-    
+
     .invoice-meta-value {
       font-weight: 500;
       text-align: right;
     }
-    
+
     .invoice-to-name-wrapper {
       display: inline-flex;
       align-items: baseline;
@@ -1692,7 +1697,7 @@
       border-bottom: 1px solid #333;
       padding-bottom: 8px;
     }
-    
+
     .invoice-to-name-input {
       font-size: 20px;
       font-weight: 600;
@@ -1703,29 +1708,29 @@
       outline: none;
       font-family: inherit;
     }
-    
+
     .invoice-to-sama {
       font-size: 16px;
       font-weight: 400;
       margin-left: 16px;
     }
-    
+
     .invoice-notice {
       font-size: 12px;
       margin-bottom: 16px;
     }
-    
+
     .invoice-subject {
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
-    
+
     .invoice-subject-label {
       font-size: 12px;
       flex-shrink: 0;
     }
-    
+
     .invoice-subject-input {
       font-size: 16px;
       font-weight: 600;
@@ -1737,51 +1742,51 @@
       outline: none;
       font-family: inherit;
     }
-    
+
     /* 編集可能フィールドのスタイル */
     .editable-field {
       background: #fffef0 !important;
       transition: all 0.2s;
     }
-    
+
     .editable-field:hover {
       background: #fef9c3 !important;
     }
-    
+
     .editable-field:focus {
       background: #fef9c3 !important;
       border-color: var(--primary) !important;
     }
-    
+
     .invoice-from-section {
       width: 260px;
     }
-    
+
     .invoice-company {
       margin-top: 20px;
       margin-bottom: 12px;
     }
-    
+
     .invoice-company-name {
       font-size: 14px;
       font-weight: 700;
     }
-    
+
     .invoice-company-dept {
       font-size: 12px;
       color: #666;
     }
-    
+
     .invoice-company-details {
       font-size: 10px;
       color: #555;
       line-height: 1.5;
     }
-    
+
     .invoice-company-details p {
       margin: 0;
     }
-    
+
     .invoice-stamps {
       margin-top: 16px;
       display: flex;
@@ -1789,32 +1794,32 @@
       justify-content: flex-end;
       gap: 12px;
     }
-    
+
     .invoice-logo-small {
       width: 100px;
       height: auto;
     }
-    
+
     .invoice-stamp {
       width: 110px;
       height: auto;
     }
-    
+
     .invoice-summary-section {
       margin-bottom: 20px;
     }
-    
+
     .invoice-summary-table {
       width: 100%;
       border-collapse: collapse;
       table-layout: fixed;
     }
-    
+
     .invoice-summary-table th,
     .invoice-summary-table td {
       width: 33.33%;
     }
-    
+
     .invoice-summary-table th {
       background: #f5f5f5;
       border: 1px solid #ddd;
@@ -1822,36 +1827,36 @@
       font-size: 12px;
       font-weight: 500;
     }
-    
+
     .invoice-summary-table td {
       border: 1px solid #ddd;
       padding: 12px;
       text-align: center;
       font-size: 14px;
     }
-    
+
     .invoice-total-cell {
       font-size: 22px !important;
       font-weight: 700;
     }
-    
+
     .invoice-payment-section {
       display: flex;
       width: 100%;
       margin-bottom: 24px;
     }
-    
+
     .invoice-payment-spacer {
       width: 33.33%;
     }
-    
+
     .invoice-payment-date {
       width: 33.33%;
       border: 1px solid #ddd;
       display: flex;
       flex-direction: column;
     }
-    
+
     .invoice-payment-date-label {
       background: #f5f5f5;
       padding: 8px 12px;
@@ -1860,7 +1865,7 @@
       border-bottom: 1px solid #ddd;
       text-align: center;
     }
-    
+
     .invoice-payment-date-value {
       padding: 12px;
       font-size: 13px;
@@ -1870,13 +1875,13 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .invoice-payment-bank {
       width: 33.33%;
       border: 1px solid #ddd;
       border-left: none;
     }
-    
+
     .invoice-payment-bank-label {
       background: #f5f5f5;
       padding: 8px 12px;
@@ -1884,32 +1889,32 @@
       font-weight: 500;
       border-bottom: 1px solid #ddd;
     }
-    
+
     .invoice-payment-bank-details {
       padding: 12px;
       font-size: 11px;
       line-height: 1.6;
     }
-    
+
     .invoice-payment-bank-details p {
       margin: 0;
     }
-    
+
     .invoice-payment-note {
       margin-top: 8px !important;
       font-size: 10px;
       color: #666;
     }
-    
+
     .invoice-detail-section {
       margin-bottom: 20px;
     }
-    
+
     .invoice-detail-table {
       width: 100%;
       border-collapse: collapse;
     }
-    
+
     .invoice-detail-table th {
       background: #f5f5f5;
       border: 1px solid #ddd;
@@ -1917,28 +1922,28 @@
       font-size: 11px;
       font-weight: 500;
     }
-    
+
     .invoice-detail-table td {
       border: 1px solid #ddd;
       padding: 8px 12px;
       font-size: 11px;
     }
-    
+
     .invoice-detail-table .col-desc {
       width: 50%;
     }
-    
+
     .invoice-detail-table .col-qty,
     .invoice-detail-table .col-unit,
     .invoice-detail-table .col-amount {
       width: 16.66%;
       text-align: right;
     }
-    
+
     .invoice-detail-table .text-right {
       text-align: right;
     }
-    
+
     .invoice-breakdown-section {
       display: flex;
       flex-direction: column;
@@ -1946,35 +1951,35 @@
       margin-bottom: 24px;
       padding-right: 20px;
     }
-    
+
     .invoice-breakdown-row {
       display: flex;
       gap: 40px;
       margin-bottom: 8px;
       font-size: 13px;
     }
-    
+
     .invoice-breakdown-label {
       color: #666;
     }
-    
+
     .invoice-breakdown-value {
       font-weight: 600;
       min-width: 100px;
       text-align: right;
     }
-    
+
     .invoice-remarks-section {
       border-top: 1px solid #ddd;
       padding-top: 16px;
     }
-    
+
     .invoice-remarks-label {
       font-size: 11px;
       font-weight: 500;
       margin-bottom: 8px;
     }
-    
+
     .invoice-remarks-input {
       width: 100%;
       min-height: 60px;
@@ -1986,15 +1991,15 @@
       resize: vertical;
       outline: none;
     }
-    
+
     .invoice-remarks-input:focus {
       border-color: var(--primary);
     }
-    
+
     .invoice-remarks-input::placeholder {
       color: #aaa;
     }
-    
+
     /* トースト */
     .toast {
       position: fixed;
@@ -2009,47 +2014,47 @@
       gap: 10px;
       font-size: 14px;
       font-weight: 500;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       transform: translateY(100px);
       opacity: 0;
       transition: all 0.3s;
       z-index: 2000;
     }
-    
+
     .toast.show {
       transform: translateY(0);
       opacity: 1;
     }
-    
+
     .toast.success {
       background: var(--success);
     }
-    
+
     .toast.error {
       background: var(--danger);
     }
-    
+
     .toast.info {
       background: #6366f1;
     }
-    
+
     /* 料金表モーダル */
     .price-modal {
       max-width: 600px;
     }
-    
+
     .price-table-body {
       padding: 20px;
     }
-    
+
     .price-section {
       margin-bottom: 24px;
     }
-    
+
     .price-section:last-child {
       margin-bottom: 0;
     }
-    
+
     .price-section-title {
       font-size: 14px;
       font-weight: 600;
@@ -2057,65 +2062,65 @@
       padding-bottom: 8px;
       border-bottom: 2px solid var(--primary);
     }
-    
+
     .price-table {
       width: 100%;
       border-collapse: collapse;
     }
-    
+
     .price-table td {
       padding: 8px 12px;
       border-bottom: 1px solid #eee;
       font-size: 13px;
     }
-    
+
     .price-table td:first-child {
       color: #555;
     }
-    
+
     .price-value {
       text-align: right;
       font-weight: 600;
       color: #111;
     }
-    
+
     .price-value.discount {
       color: var(--danger);
     }
-    
+
     .price-note {
       font-size: 11px;
       color: #888;
       margin-top: 8px;
     }
-    
+
     /* メール編集モーダル */
     .email-modal {
       max-width: 700px;
     }
-    
+
     .email-modal-body {
       padding: 20px;
     }
-    
+
     .email-form {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-    
+
     .email-field {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    
+
     .email-label {
       font-size: 12px;
       font-weight: 600;
       color: #555;
     }
-    
+
     .email-input {
       padding: 10px 12px;
       border: 1px solid #ddd;
@@ -2123,23 +2128,23 @@
       font-size: 14px;
       font-family: inherit;
     }
-    
+
     .email-input:focus {
       outline: none;
       border-color: var(--primary);
     }
-    
+
     .email-input[readonly] {
       background: #f5f5f5;
       color: #666;
     }
-    
+
     .email-preview-toggle {
       display: flex;
       gap: 8px;
       margin-top: 4px;
     }
-    
+
     .toggle-btn {
       padding: 6px 12px;
       border: 1px solid #ddd;
@@ -2150,18 +2155,18 @@
       font-family: inherit;
       transition: all 0.2s;
     }
-    
+
     .toggle-btn.active {
       background: var(--primary);
       border-color: var(--primary);
       color: #000;
       font-weight: 600;
     }
-    
+
     .toggle-btn:hover:not(.active) {
       background: #f5f5f5;
     }
-    
+
     .email-textarea {
       width: 100%;
       min-height: 300px;
@@ -2173,12 +2178,12 @@
       line-height: 1.6;
       resize: vertical;
     }
-    
+
     .email-textarea:focus {
       outline: none;
       border-color: var(--primary);
     }
-    
+
     .email-html-preview {
       min-height: 300px;
       max-height: 400px;
@@ -2190,7 +2195,7 @@
       font-size: 13px;
       line-height: 1.8;
     }
-    
+
     .email-attachment {
       display: flex;
       align-items: center;
@@ -2203,16 +2208,16 @@
       color: #0369a1;
       margin-top: 8px;
     }
-    
+
     .action-btn.secondary {
       background: #f5f5f5;
       color: #555;
     }
-    
+
     .action-btn.secondary:hover {
       background: #e5e5e5;
     }
-    
+
     /* ステータスバッジ */
     .status-badge {
       display: inline-flex;
@@ -2223,28 +2228,28 @@
       font-size: 11px;
       font-weight: 500;
     }
-    
+
     .status-badge.pending {
       background: #fef3c7;
       color: #92400e;
     }
-    
+
     .status-badge.waiting {
       background: #dbeafe;
       color: #1e40af;
     }
-    
+
     .status-badge.paid {
       background: #dcfce7;
       color: #166534;
     }
-    
+
     /* ステータス変更ドロップダウン */
     .status-dropdown {
       position: relative;
       display: inline-block;
     }
-    
+
     .status-dropdown-btn {
       display: flex;
       align-items: center;
@@ -2258,21 +2263,21 @@
       font-family: inherit;
       transition: all 0.2s;
     }
-    
+
     .status-dropdown-btn.waiting {
       background: #dbeafe;
       color: #1e40af;
     }
-    
+
     .status-dropdown-btn.waiting:hover {
       background: #bfdbfe;
     }
-    
+
     .status-dropdown-btn.paid {
       background: #dcfce7;
       color: #166534;
     }
-    
+
     .status-dropdown-menu {
       position: absolute;
       top: 100%;
@@ -2281,17 +2286,17 @@
       background: #fff;
       border: 1px solid #ddd;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       z-index: 1000;
       min-width: 120px;
       display: none;
       overflow: visible;
     }
-    
+
     .status-dropdown-menu.show {
       display: block;
     }
-    
+
     .status-dropdown-item {
       padding: 10px 14px;
       font-size: 12px;
@@ -2299,19 +2304,19 @@
       transition: background 0.2s;
       white-space: nowrap;
     }
-    
+
     .status-dropdown-item:first-child {
       border-radius: 8px 8px 0 0;
     }
-    
+
     .status-dropdown-item:last-child {
       border-radius: 0 0 8px 8px;
     }
-    
+
     .status-dropdown-item:hover {
       background: #f5f5f5;
     }
-    
+
     /* 更新通知バナー */
     .renewal-alert {
       background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
@@ -2323,7 +2328,7 @@
       align-items: center;
       gap: 12px;
     }
-    
+
     .renewal-alert-icon {
       width: 40px;
       height: 40px;
@@ -2335,23 +2340,23 @@
       color: #fff;
       flex-shrink: 0;
     }
-    
+
     .renewal-alert-content {
       flex: 1;
     }
-    
+
     .renewal-alert-title {
       font-size: 14px;
       font-weight: 600;
       color: #92400e;
       margin-bottom: 4px;
     }
-    
+
     .renewal-alert-text {
       font-size: 12px;
       color: #a16207;
     }
-    
+
     .renewal-alert-badge {
       background: #f59e0b;
       color: #fff;
@@ -2360,7 +2365,7 @@
       padding: 8px 16px;
       border-radius: 8px;
     }
-    
+
     /* 期日超過アラート */
     .overdue-alert {
       background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
@@ -2372,7 +2377,7 @@
       align-items: center;
       gap: 12px;
     }
-    
+
     .overdue-alert-icon {
       width: 40px;
       height: 40px;
@@ -2384,23 +2389,23 @@
       color: #fff;
       flex-shrink: 0;
     }
-    
+
     .overdue-alert-content {
       flex: 1;
     }
-    
+
     .overdue-alert-title {
       font-size: 14px;
       font-weight: 600;
       color: #991b1b;
       margin-bottom: 4px;
     }
-    
+
     .overdue-alert-text {
       font-size: 12px;
       color: #b91c1c;
     }
-    
+
     .overdue-alert-badge {
       background: #ef4444;
       color: #fff;
@@ -2409,7 +2414,7 @@
       padding: 8px 16px;
       border-radius: 8px;
     }
-    
+
     /* 期日超過バッジ */
     .overdue-badge {
       display: inline-flex;
@@ -2423,7 +2428,7 @@
       font-weight: 600;
       margin-left: 8px;
     }
-    
+
     /* 料金表ボタン */
     .price-table-btn {
       display: flex;
@@ -2440,12 +2445,12 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .price-table-btn:hover {
       background: #f5f5f5;
       border-color: #bbb;
     }
-    
+
     /* 請求書編集パネル */
     .invoice-edit-panel {
       background: #f8f9fa;
@@ -2454,7 +2459,7 @@
       padding: 20px;
       margin-bottom: 20px;
     }
-    
+
     .edit-panel-title {
       display: flex;
       align-items: center;
@@ -2466,30 +2471,30 @@
       padding-bottom: 12px;
       border-bottom: 1px solid #e5e5e5;
     }
-    
+
     .edit-panel-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
-    
+
     .edit-panel-item {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    
+
     .edit-panel-label {
       font-size: 12px;
       font-weight: 600;
       color: #666;
     }
-    
+
     .period-inputs select.edit-input {
-  width: 140px;
-  padding: 8px 12px;
-}
-    
+      width: 140px;
+      padding: 8px 12px;
+    }
+
     .period-input {
       padding: 8px 12px;
       border: 1px solid #ddd;
@@ -2498,23 +2503,23 @@
       font-family: inherit;
       background: #fff;
     }
-    
+
     .period-input:focus {
       outline: none;
       border-color: var(--primary);
     }
-    
+
     .discount-section {
       width: 100%;
       margin-top: 8px;
     }
-    
+
     .discount-checkboxes {
       display: flex;
       gap: 24px;
       flex-wrap: wrap;
     }
-    
+
     .discount-checkbox {
       display: flex;
       align-items: center;
@@ -2526,44 +2531,44 @@
       border-radius: 8px;
       transition: all 0.2s;
     }
-    
+
     .discount-checkbox:hover:not(.disabled) {
       border-color: var(--primary);
       background: var(--primary-light);
     }
-    
+
     .discount-checkbox.disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
-    
+
     .discount-checkbox input[type="checkbox"] {
       width: 18px;
       height: 18px;
       accent-color: var(--primary);
     }
-    
+
     .checkbox-label {
       font-size: 13px;
       font-weight: 500;
     }
-    
+
     .checkbox-hint {
       font-size: 11px;
       color: #888;
     }
-    
+
     .discount-note {
       font-size: 11px;
       color: #888;
       margin-top: 8px;
     }
-    
+
     /* 編集パネル追加スタイル */
     .edit-panel-item.full-width {
       width: 100%;
     }
-    
+
     .edit-input {
       padding: 8px 12px;
       border: 1px solid #ddd;
@@ -2573,12 +2578,12 @@
       background: #fff;
       width: 100%;
     }
-    
+
     .edit-input:focus {
       outline: none;
       border-color: var(--primary);
     }
-    
+
     .preview-button-area {
       margin-top: 20px;
       padding-top: 16px;
@@ -2587,7 +2592,7 @@
       align-items: center;
       gap: 16px;
     }
-    
+
     .preview-generate-btn {
       display: flex;
       align-items: center;
@@ -2602,21 +2607,21 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    
+
     .preview-generate-btn:hover {
       background: var(--primary-dark);
     }
-    
+
     .preview-generate-btn:disabled {
       background: #ccc;
       cursor: not-allowed;
     }
-    
+
     .preview-hint {
       font-size: 12px;
       color: #888;
     }
-    
+
     /* PDFプレビューエリア */
     .pdf-preview-area {
       background: #f5f5f5;
@@ -2628,18 +2633,18 @@
       justify-content: center;
       overflow: hidden;
     }
-    
+
     .pdf-preview-placeholder {
       text-align: center;
       color: #999;
     }
-    
+
     .pdf-preview-placeholder p {
       margin-top: 16px;
       font-size: 14px;
       line-height: 1.6;
     }
-    
+
     .pdf-preview-area iframe,
     .pdf-preview-area object,
     .pdf-preview-area embed {
@@ -2647,7 +2652,7 @@
       height: 600px;
       border: none;
     }
-    
+
     .pdf-loading {
       display: flex;
       flex-direction: column;
@@ -2655,7 +2660,7 @@
       gap: 16px;
       color: #666;
     }
-    
+
     .pdf-loading-spinner {
       width: 40px;
       height: 40px;
@@ -2664,9 +2669,11 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Empty State */
@@ -2675,7 +2682,7 @@
       padding: 60px 20px;
       color: #666;
     }
-    
+
     .empty-state-icon {
       width: 64px;
       height: 64px;
@@ -2687,170 +2694,243 @@
       margin: 0 auto 16px;
       color: #999;
     }
-    
+
     .empty-state-title {
       font-size: 16px;
       font-weight: 600;
       color: #333;
       margin-bottom: 8px;
     }
-    
+
     /* レスポンシブ */
     @media (max-width: 768px) {
       .header {
         padding: 0 16px;
       }
-      
+
       .tab-nav {
         padding: 0 16px;
       }
-      
+
       .tab-btn {
         padding: 14px 16px;
         font-size: 13px;
       }
-      
+
       .tab-btn .coming-soon {
         display: none;
       }
-      
+
       .main {
         padding: 16px;
       }
-      
+
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      
+
       .billing-type-selector {
         gap: 8px;
       }
-      
+
       .billing-type-btn {
         padding: 10px 14px;
         font-size: 13px;
         flex: 1;
         justify-content: center;
       }
-      
+
       .billing-type-icon {
         display: none;
       }
-      
+
       .filter-bar {
         flex-direction: column;
         align-items: stretch;
       }
-      
+
       .search-box {
         max-width: none;
       }
-      
+
       .billing-summary {
         display: none;
       }
-      
+
       .details-grid {
         grid-template-columns: 1fr;
       }
-      
+
       /* モバイル表示時もPDF生成用のサイズは維持 */
-      
+
       .invoice-parties {
         flex-direction: column;
         gap: 20px;
       }
-      
+
       .invoice-from {
         text-align: left;
       }
-      
+
       .coming-soon-container {
         padding: 60px 16px;
       }
-      
+
       .coming-soon-title {
         font-size: 18px;
       }
-      
+
       .coming-soon-features {
         padding: 16px 20px;
       }
     }
-  /* 購入コマ数入力 */
-.lessons-input-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-top: 8px;
-}
 
-.lessons-input-item {
-  background: #f8f9fa;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  padding: 12px 16px;
-}
+    /* 購入コマ数入力 */
+    .lessons-input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
 
-.lessons-input-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 8px;
-}
+    .lessons-input-item {
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
 
-.lessons-input-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .lessons-input-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
 
-.lessons-input {
-  width: 100px !important;
-  text-align: right;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-}
+    .lessons-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.lessons-input-unit {
-  font-size: 14px;
-  color: #666;
-}
+    .lessons-input {
+      width: 100px !important;
+      text-align: right;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+    }
 
-.lessons-input-hint {
-  display: block;
-  font-size: 11px;
-  color: #888;
-  margin-top: 6px;
-}
+    .lessons-input-unit {
+      font-size: 14px;
+      color: #666;
+    }
 
-/* 再送信ボタン（一覧用） */
-.resend-btn-small {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: #dcfce7;
-  border: 1px solid #86efac;
-  border-radius: 8px;
-  color: #16a34a;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-left: 8px;
-}
+    .lessons-input-hint {
+      display: block;
+      font-size: 11px;
+      color: #888;
+      margin-top: 6px;
+    }
 
-.resend-btn-small:hover {
-  background: #bbf7d0;
-  border-color: #22c55e;
-}
+    /* 再送信ボタン（一覧用） */
+    .resend-btn-small {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      color: #16a34a;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 8px;
+    }
 
+    .resend-btn-small:hover {
+      background: #bbf7d0;
+      border-color: #22c55e;
+    }
+
+    /* 受講内容編集セクション */
+    .course-edit-section {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .course-edit-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+
+    .course-edit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .course-edit-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .course-edit-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #78350f;
+    }
+
+    .course-edit-input {
+      padding: 8px 10px;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #fff;
+    }
+
+    .course-edit-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+    }
+
+    .resend-mode-banner {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .resend-mode-banner i {
+      color: #2563eb;
+    }
+
+    .resend-mode-banner-text {
+      font-size: 13px;
+      color: #1e40af;
+      font-weight: 500;
+    }
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="header-content">
@@ -2894,157 +2974,157 @@
   <main class="main">
     <!-- 請求書管理タブ -->
     <div class="tab-content active" id="tab-invoice">
-    
-    <!-- 請求タイプ切り替え -->
-    <div class="billing-type-selector">
-      <button class="billing-type-btn active" data-type="all" onclick="setBillingType('all')">
-        <span class="billing-type-label">すべて</span>
-        <span class="billing-type-count" id="count-all">-</span>
-      </button>
-      <button class="billing-type-btn" data-type="new" onclick="setBillingType('new')">
-        <span class="billing-type-icon new"></span>
-        <span class="billing-type-label">新規入塾</span>
-        <span class="billing-type-count" id="count-new">-</span>
-      </button>
-      <button class="billing-type-btn" data-type="renewal" onclick="setBillingType('renewal')">
-        <span class="billing-type-icon renewal"></span>
-        <span class="billing-type-label">継続更新</span>
-        <span class="billing-type-count" id="count-renewal">-</span>
-      </button>
-    </div>
 
-    <!-- 統計サマリー -->
-    <div class="stats-grid">
-      <div class="stat-card pending">
-        <div class="stat-icon">
-          <i data-lucide="clock" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">未送信</div>
-          <div class="stat-value" id="stat-pending">-</div>
-        </div>
+      <!-- 請求タイプ切り替え -->
+      <div class="billing-type-selector">
+        <button class="billing-type-btn active" data-type="all" onclick="setBillingType('all')">
+          <span class="billing-type-label">すべて</span>
+          <span class="billing-type-count" id="count-all">-</span>
+        </button>
+        <button class="billing-type-btn" data-type="new" onclick="setBillingType('new')">
+          <span class="billing-type-icon new"></span>
+          <span class="billing-type-label">新規入塾</span>
+          <span class="billing-type-count" id="count-new">-</span>
+        </button>
+        <button class="billing-type-btn" data-type="renewal" onclick="setBillingType('renewal')">
+          <span class="billing-type-icon renewal"></span>
+          <span class="billing-type-label">継続更新</span>
+          <span class="billing-type-count" id="count-renewal">-</span>
+        </button>
       </div>
-      <div class="stat-card sent">
-        <div class="stat-icon">
-          <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">入金待ち</div>
-          <div class="stat-value" id="stat-sent">-</div>
-        </div>
-      </div>
-      <div class="stat-card paid">
-        <div class="stat-icon">
-          <i data-lucide="circle-check" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">着金済</div>
-          <div class="stat-value" id="stat-paid">-</div>
-        </div>
-      </div>
-      <div class="stat-card amount">
-        <div class="stat-icon">
-          <i data-lucide="banknote" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">未入金額</div>
-          <div class="stat-value small" id="stat-pending-amount">-</div>
-        </div>
-      </div>
-      <div class="stat-card paid-amount">
-        <div class="stat-icon">
-          <i data-lucide="piggy-bank" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">着金済金額</div>
-          <div class="stat-value small" id="stat-paid-amount">-</div>
-        </div>
-      </div>
-      <div class="stat-card total-amount">
-        <div class="stat-icon">
-          <i data-lucide="trending-up" style="width:24px;height:24px;"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">請求総額</div>
-          <div class="stat-value small" id="stat-total-amount">-</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- 期間フィルター（着金日ベース） -->
-    <div class="period-filter-section">
-      <div class="period-filter-label">
-        <i data-lucide="calendar" style="width:14px;height:14px;"></i>
-        着金期間:
+      <!-- 統計サマリー -->
+      <div class="stats-grid">
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i data-lucide="clock" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">未送信</div>
+            <div class="stat-value" id="stat-pending">-</div>
+          </div>
+        </div>
+        <div class="stat-card sent">
+          <div class="stat-icon">
+            <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">入金待ち</div>
+            <div class="stat-value" id="stat-sent">-</div>
+          </div>
+        </div>
+        <div class="stat-card paid">
+          <div class="stat-icon">
+            <i data-lucide="circle-check" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">着金済</div>
+            <div class="stat-value" id="stat-paid">-</div>
+          </div>
+        </div>
+        <div class="stat-card amount">
+          <div class="stat-icon">
+            <i data-lucide="banknote" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">未入金額</div>
+            <div class="stat-value small" id="stat-pending-amount">-</div>
+          </div>
+        </div>
+        <div class="stat-card paid-amount">
+          <div class="stat-icon">
+            <i data-lucide="piggy-bank" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">着金済金額</div>
+            <div class="stat-value small" id="stat-paid-amount">-</div>
+          </div>
+        </div>
+        <div class="stat-card total-amount">
+          <div class="stat-icon">
+            <i data-lucide="trending-up" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">請求総額</div>
+            <div class="stat-value small" id="stat-total-amount">-</div>
+          </div>
+        </div>
       </div>
-      <div class="period-preset-buttons">
-        <button class="period-btn active" data-period="all" onclick="setPeriodFilter('all')">全期間</button>
-        <button class="period-btn" data-period="thisMonth" onclick="setPeriodFilter('thisMonth')">今月</button>
-        <button class="period-btn" data-period="lastMonth" onclick="setPeriodFilter('lastMonth')">先月</button>
-        <button class="period-btn" data-period="thisYear" onclick="setPeriodFilter('thisYear')">今年</button>
-        <button class="period-btn" data-period="custom" onclick="toggleCustomPeriod()">カスタム</button>
-      </div>
-      <div class="period-custom-inputs" id="period-custom-inputs" style="display:none;">
-        <input type="date" id="period-start" class="period-date-input">
-        <span>〜</span>
-        <input type="date" id="period-end" class="period-date-input">
-        <button class="period-apply-btn" onclick="applyCustomPeriod()">適用</button>
-      </div>
-    </div>
 
-    <!-- フィルター -->
-    <!-- 更新通知バナー -->
-    <div class="renewal-alert" id="renewal-alert" style="display: none;">
-      <div class="renewal-alert-icon">
-        <i data-lucide="bell-ring" style="width:20px;height:20px;"></i>
+      <!-- 期間フィルター（着金日ベース） -->
+      <div class="period-filter-section">
+        <div class="period-filter-label">
+          <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+          着金期間:
+        </div>
+        <div class="period-preset-buttons">
+          <button class="period-btn active" data-period="all" onclick="setPeriodFilter('all')">全期間</button>
+          <button class="period-btn" data-period="thisMonth" onclick="setPeriodFilter('thisMonth')">今月</button>
+          <button class="period-btn" data-period="lastMonth" onclick="setPeriodFilter('lastMonth')">先月</button>
+          <button class="period-btn" data-period="thisYear" onclick="setPeriodFilter('thisYear')">今年</button>
+          <button class="period-btn" data-period="custom" onclick="toggleCustomPeriod()">カスタム</button>
+        </div>
+        <div class="period-custom-inputs" id="period-custom-inputs" style="display:none;">
+          <input type="date" id="period-start" class="period-date-input">
+          <span>〜</span>
+          <input type="date" id="period-end" class="period-date-input">
+          <button class="period-apply-btn" onclick="applyCustomPeriod()">適用</button>
+        </div>
       </div>
-      <div class="renewal-alert-content">
-        <div class="renewal-alert-title">更新が必要な生徒がいます</div>
-        <div class="renewal-alert-text" id="renewal-alert-text">今月更新が必要な生徒が0名います</div>
-      </div>
-      <div class="renewal-alert-badge" id="renewal-alert-count">0</div>
-    </div>
-    
-    <!-- 入金期日超過アラート -->
-    <div class="overdue-alert" id="overdue-alert" style="display: none;">
-      <div class="overdue-alert-icon">
-        <i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>
-      </div>
-      <div class="overdue-alert-content">
-        <div class="overdue-alert-title">入金期日を超過しています</div>
-        <div class="overdue-alert-text" id="overdue-alert-text">入金期日を過ぎた請求書が0件あります</div>
-      </div>
-      <div class="overdue-alert-badge" id="overdue-alert-count">0</div>
-    </div>
 
-    <div class="filter-bar">
-      <div class="search-box">
-        <i data-lucide="search" style="width:16px;height:16px;"></i>
-        <input type="text" id="search-input" placeholder="生徒番号・氏名で検索..." oninput="renderList()">
+      <!-- フィルター -->
+      <!-- 更新通知バナー -->
+      <div class="renewal-alert" id="renewal-alert" style="display: none;">
+        <div class="renewal-alert-icon">
+          <i data-lucide="bell-ring" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="renewal-alert-content">
+          <div class="renewal-alert-title">更新が必要な生徒がいます</div>
+          <div class="renewal-alert-text" id="renewal-alert-text">今月更新が必要な生徒が0名います</div>
+        </div>
+        <div class="renewal-alert-badge" id="renewal-alert-count">0</div>
       </div>
-      <div class="filter-buttons">
-        <span class="filter-label">
-          <i data-lucide="filter" style="width:14px;height:14px;"></i>
-          フィルター:
-        </span>
-        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">すべて</button>
-        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">未送信</button>
-        <button class="filter-btn" data-filter="waiting" onclick="setFilter('waiting')">入金待ち</button>
-        <button class="filter-btn" data-filter="paid" onclick="setFilter('paid')">着金済</button>
-      </div>
-      <button class="price-table-btn" onclick="openPriceModal()">
-        <i data-lucide="calculator" style="width:16px;height:16px;"></i>
-        料金表
-      </button>
-    </div>
 
-    <!-- 生徒リスト -->
-    <div class="student-list" id="student-list">
-      <div class="loading">
-        <div class="loading-spinner"></div>
-        <span>データを読み込んでいます...</span>
+      <!-- 入金期日超過アラート -->
+      <div class="overdue-alert" id="overdue-alert" style="display: none;">
+        <div class="overdue-alert-icon">
+          <i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="overdue-alert-content">
+          <div class="overdue-alert-title">入金期日を超過しています</div>
+          <div class="overdue-alert-text" id="overdue-alert-text">入金期日を過ぎた請求書が0件あります</div>
+        </div>
+        <div class="overdue-alert-badge" id="overdue-alert-count">0</div>
       </div>
-    </div>
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <i data-lucide="search" style="width:16px;height:16px;"></i>
+          <input type="text" id="search-input" placeholder="生徒番号・氏名で検索..." oninput="renderList()">
+        </div>
+        <div class="filter-buttons">
+          <span class="filter-label">
+            <i data-lucide="filter" style="width:14px;height:14px;"></i>
+            フィルター:
+          </span>
+          <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">すべて</button>
+          <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">未送信</button>
+          <button class="filter-btn" data-filter="waiting" onclick="setFilter('waiting')">入金待ち</button>
+          <button class="filter-btn" data-filter="paid" onclick="setFilter('paid')">着金済</button>
+        </div>
+        <button class="price-table-btn" onclick="openPriceModal()">
+          <i data-lucide="calculator" style="width:16px;height:16px;"></i>
+          料金表
+        </button>
+      </div>
+
+      <!-- 生徒リスト -->
+      <div class="student-list" id="student-list">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <span>データを読み込んでいます...</span>
+        </div>
+      </div>
     </div><!-- /tab-invoice -->
 
     <!-- 給与管理タブ -->
@@ -3107,7 +3187,7 @@
   <div class="modal-overlay" id="invoice-modal">
     <div class="modal wizard-modal">
       <div class="modal-header">
-        <div class="modal-title">
+        <div class="modal-title" id="wizard-modal-title">
           <i data-lucide="file-text" style="width:20px;height:20px;"></i>
           請求書作成
         </div>
@@ -3115,7 +3195,7 @@
           <i data-lucide="x" style="width:20px;height:20px;"></i>
         </button>
       </div>
-      
+
       <!-- ステップインジケーター -->
       <div class="wizard-steps">
         <div class="wizard-step active" data-step="1">
@@ -3133,7 +3213,7 @@
           <div class="wizard-step-label">送信</div>
         </div>
       </div>
-      
+
       <div class="modal-body wizard-body">
         <!-- STEP 1: 設定 -->
         <div class="wizard-content active" id="wizard-step-1">
@@ -3141,7 +3221,7 @@
             <!-- 動的に生成 -->
           </div>
         </div>
-        
+
         <!-- STEP 2: プレビュー -->
         <div class="wizard-content" id="wizard-step-2">
           <div class="pdf-preview-container">
@@ -3153,7 +3233,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- STEP 3: 送信 -->
         <div class="wizard-content" id="wizard-step-3">
           <div class="email-form-container">
@@ -3172,7 +3252,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="modal-footer wizard-footer">
         <button class="wizard-btn back" id="wizard-back-btn" onclick="wizardBack()" style="display:none;">
           <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
@@ -3190,7 +3270,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- 料金表モーダル -->
   <div class="modal-overlay" id="price-modal">
     <div class="modal price-modal">
@@ -3207,51 +3287,114 @@
         <div class="price-section">
           <h3 class="price-section-title">📦 初期費用（税込）</h3>
           <table class="price-table">
-            <tr><td>入塾金</td><td class="price-value">¥39,800</td></tr>
-            <tr><td>教材費</td><td class="price-value">¥19,800</td></tr>
-            <tr><td>アカウント設定費</td><td class="price-value">¥550</td></tr>
-            <tr><td>過去動画教材費（任意）</td><td class="price-value">¥11,000</td></tr>
+            <tr>
+              <td>入塾金</td>
+              <td class="price-value">¥39,800</td>
+            </tr>
+            <tr>
+              <td>教材費</td>
+              <td class="price-value">¥19,800</td>
+            </tr>
+            <tr>
+              <td>アカウント設定費</td>
+              <td class="price-value">¥550</td>
+            </tr>
+            <tr>
+              <td>過去動画教材費（任意）</td>
+              <td class="price-value">¥11,000</td>
+            </tr>
           </table>
         </div>
-        
+
         <div class="price-section">
           <h3 class="price-section-title">📚 月額費用（税込）</h3>
           <table class="price-table">
-            <tr><td>在籍基本料</td><td class="price-value">¥11,980</td></tr>
-            <tr><td>システムサーバー費</td><td class="price-value">¥2,980</td></tr>
+            <tr>
+              <td>在籍基本料</td>
+              <td class="price-value">¥11,980</td>
+            </tr>
+            <tr>
+              <td>システムサーバー費</td>
+              <td class="price-value">¥2,980</td>
+            </tr>
           </table>
         </div>
-        
+
         <div class="price-section">
           <h3 class="price-section-title">🎓 授業料（税込/1コマ）</h3>
           <table class="price-table">
-            <tr><td>海外大学・国公立大学</td><td class="price-value">¥15,500</td></tr>
-            <tr><td>難関私立大学</td><td class="price-value">¥13,500</td></tr>
-            <tr><td>一般私立大学</td><td class="price-value">¥12,800</td></tr>
-            <tr><td>ENGLISH（英語資格対策）</td><td class="price-value">¥12,800</td></tr>
+            <tr>
+              <td>海外大学・国公立大学</td>
+              <td class="price-value">¥15,500</td>
+            </tr>
+            <tr>
+              <td>難関私立大学</td>
+              <td class="price-value">¥13,500</td>
+            </tr>
+            <tr>
+              <td>一般私立大学</td>
+              <td class="price-value">¥12,800</td>
+            </tr>
+            <tr>
+              <td>ENGLISH（英語資格対策）</td>
+              <td class="price-value">¥12,800</td>
+            </tr>
           </table>
         </div>
-        
+
         <div class="price-section">
-         <h3 class="price-section-title">🎁 まとめ払い割引</h3>
-         <table class="price-table">
-         <tr><td>4ヶ月</td><td class="price-value discount">-¥10,000</td></tr>
-         <tr><td>5ヶ月</td><td class="price-value discount">-¥12,500</td></tr>
-         <tr><td>6ヶ月</td><td class="price-value discount">-¥15,000</td></tr>
-         <tr><td>7ヶ月</td><td class="price-value discount">-¥17,500</td></tr>
-         <tr><td>8ヶ月</td><td class="price-value discount">-¥20,000</td></tr>
-         <tr><td>9ヶ月</td><td class="price-value discount">-¥25,000</td></tr>
-         <tr><td>10ヶ月</td><td class="price-value discount">-¥30,000</td></tr>
-         <tr><td>11ヶ月</td><td class="price-value discount">-¥35,000</td></tr>
-         <tr><td>12ヶ月</td><td class="price-value discount">-¥40,000</td></tr>
-         </table>
+          <h3 class="price-section-title">🎁 まとめ払い割引</h3>
+          <table class="price-table">
+            <tr>
+              <td>4ヶ月</td>
+              <td class="price-value discount">-¥10,000</td>
+            </tr>
+            <tr>
+              <td>5ヶ月</td>
+              <td class="price-value discount">-¥12,500</td>
+            </tr>
+            <tr>
+              <td>6ヶ月</td>
+              <td class="price-value discount">-¥15,000</td>
+            </tr>
+            <tr>
+              <td>7ヶ月</td>
+              <td class="price-value discount">-¥17,500</td>
+            </tr>
+            <tr>
+              <td>8ヶ月</td>
+              <td class="price-value discount">-¥20,000</td>
+            </tr>
+            <tr>
+              <td>9ヶ月</td>
+              <td class="price-value discount">-¥25,000</td>
+            </tr>
+            <tr>
+              <td>10ヶ月</td>
+              <td class="price-value discount">-¥30,000</td>
+            </tr>
+            <tr>
+              <td>11ヶ月</td>
+              <td class="price-value discount">-¥35,000</td>
+            </tr>
+            <tr>
+              <td>12ヶ月</td>
+              <td class="price-value discount">-¥40,000</td>
+            </tr>
+          </table>
         </div>
-        
+
         <div class="price-section">
           <h3 class="price-section-title">💡 特別割引（入塾金より）</h3>
           <table class="price-table">
-            <tr><td>ひとり親割引</td><td class="price-value discount">-¥10,000</td></tr>
-            <tr><td>紹介割引</td><td class="price-value discount">-¥10,000</td></tr>
+            <tr>
+              <td>ひとり親割引</td>
+              <td class="price-value discount">-¥10,000</td>
+            </tr>
+            <tr>
+              <td>紹介割引</td>
+              <td class="price-value discount">-¥10,000</td>
+            </tr>
           </table>
           <p class="price-note">※ 経理確認の上、適用</p>
         </div>
@@ -3318,13 +3461,13 @@
   <script>
     // ===== 設定 =====
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
-    
+
     // 請求書用画像URL（GitHubにアップロード後に設定）
     const INVOICE_IMAGES = {
       stamp: 'https://raw.githubusercontent.com/eqao-dev/eqao-staff-portal/main/stamp.png',
       logo: 'https://raw.githubusercontent.com/eqao-dev/eqao-staff-portal/main/logo.png'
     };
-    
+
     // ===== 状態管理 =====
     let students = [];
     let currentFilter = 'all';
@@ -3335,24 +3478,26 @@
     let periodEnd = null;
     let purchasedLessonsMap = {}; // 生徒ごとの購入コマ数
     let invoiceHistoryData = []; // 請求書履歴データ
-    
+    let isResendMode = false; // 再送信モードフラグ
+    let editedCourseData = {}; // 編集された受講内容を保持
+
     // ===== タブ切り替え =====
     function switchTab(tabId) {
       // タブボタンの状態更新
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tabId);
       });
-      
+
       // タブコンテンツの表示切り替え
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.toggle('active', content.id === `tab-${tabId}`);
       });
-      
+
       // コマ数管理タブの場合はデータを表示
       if (tabId === 'lessons') {
         renderLessonsTab();
       }
-      
+
       lucide.createIcons();
     }
 
@@ -3363,11 +3508,11 @@
       MATERIAL_FEE: 19800,        // 教材費
       ACCOUNT_FEE: 550,           // アカウント設定費
       VIDEO_FEE: 11000,           // 過去動画教材費（入塾時）
-      
+
       // 月額費用
       BASIC_FEE: 11980,           // 在籍基本料
       SYSTEM_FEE: 2980,           // システムサーバー費
-      
+
       // 授業料（コマ単価）
       COURSE: {
         '海外大学': 15500,
@@ -3379,33 +3524,33 @@
         '最難関私大': 13500,
         '難関私大': 12800
       },
-      
+
       // ENGLISH
       ENGLISH: 12800,
-      
+
       // まとめ払い割引
       BULK_DISCOUNT: {
-     4: 10000,
-     5: 12500,
-     6: 15000,
-     7: 17500,
-     8: 20000,
-     9: 25000,
-     10: 30000,
-     11: 35000,
-     12: 40000
-    }
+        4: 10000,
+        5: 12500,
+        6: 15000,
+        7: 17500,
+        8: 20000,
+        9: 25000,
+        10: 30000,
+        11: 35000,
+        12: 40000
+      }
     };
-    
+
     // ===== ひとり親証明書リンクのフォーマット =====
     function formatProofLinks(proofUrls) {
       if (!proofUrls) return '-';
-      
+
       // URLが連結されている場合を分割（https://で区切る）
       const urls = proofUrls.split(/(?=https:\/\/)/g).filter(url => url.trim());
-      
+
       if (urls.length === 0) return '-';
-      
+
       return urls.map((url, index) => {
         const label = urls.length > 1 ? `書類${index + 1}` : '確認する';
         return `<a href="${url.trim()}" target="_blank" class="proof-link">
@@ -3414,15 +3559,15 @@
         </a>`;
       }).join(' ');
     }
-    
+
     // ===== 購入コマ数表示 =====
     function renderPurchasedLessons(studentId) {
       const lessons = purchasedLessonsMap[studentId];
-      
+
       if (!lessons || (lessons.totalLessons === 0 && lessons.englishLessons === 0)) {
         return ''; // データがなければ非表示
       }
-      
+
       return `
         <div class="detail-section purchased-lessons">
           <div class="detail-section-title">
@@ -3444,7 +3589,7 @@
         </div>
       `;
     }
-    
+
     // ===== 料金内訳計算・表示 =====
     function renderBillingBreakdown(student) {
       const monthlyLessons = parseInt(student.monthlyLessons) || 0;
@@ -3453,7 +3598,7 @@
       const englishMonths = parseInt(student.englishPayment) || 0;
       const courseType = student.course || '';
       const hasVideo = student.videoMaterial === '購入する';
-      
+
       // === 初期費用計算 ===
       let initialItems = [];
       initialItems.push({ name: '入塾金', amount: PRICES.ENROLLMENT_FEE });
@@ -3463,18 +3608,18 @@
         initialItems.push({ name: '過去動画教材費', amount: PRICES.VIDEO_FEE });
       }
       const initialSubtotal = initialItems.reduce((sum, item) => sum + item.amount, 0);
-      
+
       // === 総合型コース計算 ===
       let courseItems = [];
       let courseSubtotal = 0;
       let bulkDiscount = 0;
-      
+
       if (monthlyLessons > 0 && paymentMonths > 0) {
         const coursePrice = PRICES.COURSE[courseType] || 0;
         const basicTotal = PRICES.BASIC_FEE * paymentMonths;
         const systemTotal = PRICES.SYSTEM_FEE * paymentMonths;
         const lessonTotal = coursePrice * monthlyLessons * paymentMonths;
-        
+
         courseItems.push({
           name: '在籍基本料',
           calc: `¥${PRICES.BASIC_FEE.toLocaleString()} × ${paymentMonths}ヶ月`,
@@ -3490,7 +3635,7 @@
           calc: `¥${coursePrice.toLocaleString()} × ${monthlyLessons}コマ × ${paymentMonths}ヶ月`,
           amount: lessonTotal
         });
-        
+
         // まとめ払い割引
         if (PRICES.BULK_DISCOUNT[paymentMonths]) {
           bulkDiscount = PRICES.BULK_DISCOUNT[paymentMonths];
@@ -3501,14 +3646,14 @@
             isDiscount: true
           });
         }
-        
+
         courseSubtotal = basicTotal + systemTotal + lessonTotal - bulkDiscount;
       }
-      
+
       // === ENGLISH計算 ===
       let englishItems = [];
       let englishSubtotal = 0;
-      
+
       if (englishLessons > 0 && englishMonths > 0) {
         const englishTotal = PRICES.ENGLISH * englishLessons * englishMonths;
         englishItems.push({
@@ -3518,22 +3663,22 @@
         });
         englishSubtotal = englishTotal;
       }
-      
+
       // === 計算合計 ===
       const calculatedTotal = initialSubtotal + courseSubtotal + englishSubtotal;
-      
+
       // === SSの値と比較 ===
       const ssInitial = parseInt(student.initialFee) || 0;
       const ssCourse = parseInt(student.courseFee) || 0;
       const ssEnglish = parseInt(student.englishFee) || 0;
       const ssDiscount = parseInt(student.discount) || 0;
       const ssTotal = parseInt(student.total) || 0;
-      
+
       const isMatch = calculatedTotal === ssTotal;
-      
+
       // === HTML生成 ===
       let html = '';
-      
+
       // 初期費用
       html += `
         <div class="breakdown-section">
@@ -3552,7 +3697,7 @@
           </div>
         </div>
       `;
-      
+
       // 総合型コース
       if (courseItems.length > 0) {
         html += `
@@ -3573,7 +3718,7 @@
           </div>
         `;
       }
-      
+
       // ENGLISH
       if (englishItems.length > 0) {
         html += `
@@ -3594,7 +3739,7 @@
           </div>
         `;
       }
-      
+
       // 合計
       html += `
         <div class="breakdown-total">
@@ -3602,20 +3747,20 @@
           <span class="breakdown-total-amount">¥${calculatedTotal.toLocaleString()}</span>
         </div>
       `;
-      
+
       // SSとの比較
       html += `
         <div class="breakdown-check ${isMatch ? 'match' : 'mismatch'}">
           <i data-lucide="${isMatch ? 'check-circle' : 'alert-triangle'}" style="width:20px;height:20px;"></i>
           <span class="breakdown-check-text">
-            ${isMatch 
-              ? 'SS記録額と一致しています' 
-              : `SS記録額: ¥${ssTotal.toLocaleString()}（差額: ¥${Math.abs(calculatedTotal - ssTotal).toLocaleString()}）`
-            }
+            ${isMatch
+          ? 'SS記録額と一致しています'
+          : `SS記録額: ¥${ssTotal.toLocaleString()}（差額: ¥${Math.abs(calculatedTotal - ssTotal).toLocaleString()}）`
+        }
           </span>
         </div>
       `;
-      
+
       return html;
     }
 
@@ -3624,7 +3769,7 @@
       lucide.createIcons();
       loadData();
     });
-    
+
     // ===== データ読み込み =====
     async function loadData() {
       const listEl = document.getElementById('student-list');
@@ -3634,26 +3779,26 @@
           <span>データを読み込んでいます...</span>
         </div>
       `;
-      
+
       try {
         // 経理データと請求書履歴を同時に取得
         const [accountingRes, historyRes] = await Promise.all([
           fetch(`${GAS_API_URL}?action=getAccountingData`),
           fetch(`${GAS_API_URL}?action=getInvoiceHistory`)
         ]);
-        
+
         const accountingResult = await accountingRes.json();
         const historyResult = await historyRes.json();
-        
+
         if (accountingResult.success) {
           students = accountingResult.data || [];
-          
+
           // 購入コマ数と請求書履歴を保持
           if (historyResult.success) {
             purchasedLessonsMap = historyResult.purchasedLessons || {};
             invoiceHistoryData = historyResult.data || [];
           }
-          
+
           updateStats();
           renderList();
         } else {
@@ -3673,7 +3818,7 @@
         lucide.createIcons();
       }
     }
-    
+
     // ===== 請求タイプ切り替え =====
     function setBillingType(type) {
       currentBillingType = type;
@@ -3683,18 +3828,18 @@
       updateStats();
       renderList();
     }
-    
+
     // ===== 統計更新 =====
     function updateStats() {
       // 請求タイプでフィルタリング
       const newStudents = students.filter(s => s.billingType === '新規' || !s.billingType);
       const renewalStudents = students.filter(s => s.billingType === '継続');
-      
+
       // カウント表示
       document.getElementById('count-all').textContent = students.length;
       document.getElementById('count-new').textContent = newStudents.length;
       document.getElementById('count-renewal').textContent = renewalStudents.length;
-      
+
       // 現在の表示対象
       let filtered = students;
       if (currentBillingType === 'new') {
@@ -3702,64 +3847,64 @@
       } else if (currentBillingType === 'renewal') {
         filtered = renewalStudents;
       }
-      
+
       // ステータス別カウント（未送信 / 入金待ち / 着金済）
       const pending = filtered.filter(s => !s.invoiceSent || s.invoiceSent === '未送信').length;
       const waiting = filtered.filter(s => s.invoiceSent === '入金待ち').length;
       const paid = filtered.filter(s => s.invoiceSent === '着金済').length;
-      
+
       // 期間でフィルターされた着金済データ
       const paidInPeriod = filtered.filter(s => s.invoiceSent === '着金済' && isPaidInPeriod(s));
       const paidCountInPeriod = paidInPeriod.length;
-      
+
       // 金額計算
       const pendingAmount = filtered
         .filter(s => s.invoiceSent === '入金待ち')
         .reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
-      
+
       // 着金済金額は期間フィルター適用
       const paidAmount = paidInPeriod
         .reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
-      
+
       const totalAmount = filtered.reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
-      
+
       document.getElementById('stat-pending').textContent = pending;
       document.getElementById('stat-sent').textContent = waiting;
       document.getElementById('stat-paid').textContent = currentPeriod === 'all' ? paid : `${paidCountInPeriod}/${paid}`;
       document.getElementById('stat-pending-amount').textContent = '¥' + pendingAmount.toLocaleString();
       document.getElementById('stat-paid-amount').textContent = '¥' + paidAmount.toLocaleString();
       document.getElementById('stat-total-amount').textContent = '¥' + totalAmount.toLocaleString();
-      
+
       // 更新通知バナーの表示
       checkRenewalAlerts();
     }
-    
+
     // ===== 更新通知チェック =====
     function checkRenewalAlerts() {
       const now = new Date();
       const currentMonth = now.getFullYear() * 100 + (now.getMonth() + 1); // 202412形式
-      const nextMonth = now.getMonth() === 11 
-        ? (now.getFullYear() + 1) * 100 + 1 
+      const nextMonth = now.getMonth() === 11
+        ? (now.getFullYear() + 1) * 100 + 1
         : now.getFullYear() * 100 + (now.getMonth() + 2);
-      
+
       // 更新が必要な生徒（次回更新月が今月または来月）
       const renewalNeeded = students.filter(s => {
         if (!s.nextRenewalMonth) return false;
         const renewalMonth = parseInt(s.nextRenewalMonth);
         return renewalMonth > 0 && renewalMonth <= nextMonth;
       });
-      
+
       const alertEl = document.getElementById('renewal-alert');
       const countEl = document.getElementById('renewal-alert-count');
       const textEl = document.getElementById('renewal-alert-text');
-      
+
       if (renewalNeeded.length > 0) {
         alertEl.style.display = 'flex';
         countEl.textContent = renewalNeeded.length;
-        
+
         const thisMonthCount = renewalNeeded.filter(s => parseInt(s.nextRenewalMonth) <= currentMonth).length;
         const nextMonthCount = renewalNeeded.length - thisMonthCount;
-        
+
         let text = '';
         if (thisMonthCount > 0) {
           text += `今月更新が必要: ${thisMonthCount}名`;
@@ -3773,26 +3918,26 @@
       } else {
         alertEl.style.display = 'none';
       }
-      
+
       // 期日超過チェック
       checkOverdueAlerts();
     }
-    
+
     // ===== 入金期日超過チェック =====
     // 入金期日設定（デフォルト値として使用）
     const PAYMENT_DUE_DAYS = {
       '新規': 3,    // 新規: 送信日から3日後
       '継続': 14    // 継続: 送信日から14日後
     };
-    
+
     function getPaymentDueDays(student) {
       const billingType = student.billingType || '新規';
       return PAYMENT_DUE_DAYS[billingType] || PAYMENT_DUE_DAYS['新規'];
     }
-    
+
     function isOverdue(student) {
       if (student.invoiceSent !== '入金待ち') return false;
-      
+
       // スプレッドシートに入金期日がある場合はそれを使用
       if (student.dueDate) {
         let dueDate;
@@ -3801,38 +3946,38 @@
         } else {
           dueDate = new Date(student.dueDate);
         }
-        
+
         if (!isNaN(dueDate.getTime())) {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
           return today > dueDate;
         }
       }
-      
+
       // 入金期日がない場合は送信日 + デフォルト日数で計算
       if (!student.invoiceDate) return false;
-      
+
       let sendDate;
       if (typeof student.invoiceDate === 'string') {
         sendDate = new Date(student.invoiceDate.replace(/\//g, '-'));
       } else {
         sendDate = new Date(student.invoiceDate);
       }
-      
+
       if (isNaN(sendDate.getTime())) return false;
-      
+
       const dueDays = getPaymentDueDays(student);
       const dueDate = new Date(sendDate);
       dueDate.setDate(dueDate.getDate() + dueDays);
-      
+
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       return today > dueDate;
     }
-    
+
     function getDaysOverdue(student) {
       let dueDate;
-      
+
       // スプレッドシートに入金期日がある場合はそれを使用
       if (student.dueDate) {
         if (typeof student.dueDate === 'string') {
@@ -3840,12 +3985,12 @@
         } else {
           dueDate = new Date(student.dueDate);
         }
-        
+
         if (isNaN(dueDate.getTime())) {
           dueDate = null;
         }
       }
-      
+
       // 入金期日がない場合は送信日 + デフォルト日数で計算
       if (!dueDate && student.invoiceDate) {
         let sendDate;
@@ -3854,36 +3999,36 @@
         } else {
           sendDate = new Date(student.invoiceDate);
         }
-        
+
         if (!isNaN(sendDate.getTime())) {
           const dueDays = getPaymentDueDays(student);
           dueDate = new Date(sendDate);
           dueDate.setDate(dueDate.getDate() + dueDays);
         }
       }
-      
+
       if (!dueDate) return 0;
-      
+
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      
+
       const diffTime = today - dueDate;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return Math.max(0, diffDays);
     }
-    
+
     function checkOverdueAlerts() {
       // 入金待ちで期日超過の生徒
       const overdueStudents = students.filter(s => isOverdue(s));
-      
+
       const alertEl = document.getElementById('overdue-alert');
       const countEl = document.getElementById('overdue-alert-count');
       const textEl = document.getElementById('overdue-alert-text');
-      
+
       if (overdueStudents.length > 0) {
         alertEl.style.display = 'flex';
         countEl.textContent = overdueStudents.length;
-        
+
         // 超過金額の計算
         const overdueAmount = overdueStudents.reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
         textEl.textContent = `入金期日を過ぎた請求書が${overdueStudents.length}件（¥${overdueAmount.toLocaleString()}）あります`;
@@ -3892,29 +4037,29 @@
         alertEl.style.display = 'none';
       }
     }
-    
+
     // ===== コマ数管理タブ =====
     function renderLessonsTab() {
       const listEl = document.getElementById('lessons-student-list');
-      
+
       // サマリー計算
       let totalLessonsSum = 0;
       let englishLessonsSum = 0;
-      
+
       Object.values(purchasedLessonsMap).forEach(lessons => {
         totalLessonsSum += lessons.totalLessons || 0;
         englishLessonsSum += lessons.englishLessons || 0;
       });
-      
+
       document.getElementById('total-lessons-sum').textContent = totalLessonsSum + 'コマ';
       document.getElementById('english-lessons-sum').textContent = englishLessonsSum + 'コマ';
-      
+
       // 購入コマ数がある生徒のみ表示
       const studentsWithLessons = students.filter(s => {
         const lessons = purchasedLessonsMap[s.studentId];
         return lessons && (lessons.totalLessons > 0 || lessons.englishLessons > 0);
       });
-      
+
       if (studentsWithLessons.length === 0) {
         listEl.innerHTML = `
           <div class="empty-state">
@@ -3928,18 +4073,18 @@
         lucide.createIcons();
         return;
       }
-      
+
       listEl.innerHTML = studentsWithLessons.map(student => renderLessonsCard(student)).join('');
       lucide.createIcons();
     }
-    
+
     function renderLessonsCard(student) {
       const lessons = purchasedLessonsMap[student.studentId] || { totalLessons: 0, englishLessons: 0 };
       const initial = (student.studentName || '?').charAt(0);
-      
+
       // この生徒の請求書履歴
       const studentHistory = invoiceHistoryData.filter(h => String(h['生徒番号']) === String(student.studentId));
-      
+
       return `
         <div class="lessons-card" id="lessons-card-${student.studentId}">
           <div class="lessons-card-header" onclick="toggleLessonsCard('${student.studentId}')">
@@ -3974,19 +4119,19 @@
         </div>
       `;
     }
-    
+
     function renderInvoiceHistory(history) {
       if (!history || history.length === 0) {
         return '<div class="no-history">請求書履歴がありません</div>';
       }
-      
+
       // 新しい順に並び替え
       const sorted = [...history].sort((a, b) => {
         const dateA = new Date(a['発行日']);
         const dateB = new Date(b['発行日']);
         return dateB - dateA;
       });
-      
+
       return `
         <table class="invoice-history-table">
           <thead>
@@ -4018,7 +4163,7 @@
         </table>
       `;
     }
-    
+
     function formatHistoryDate(date) {
       if (!date) return '-';
       if (typeof date === 'string') {
@@ -4027,14 +4172,14 @@
       const d = new Date(date);
       return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
     }
-    
+
     function toggleLessonsCard(studentId) {
       const card = document.getElementById(`lessons-card-${studentId}`);
       if (card) {
         card.classList.toggle('expanded');
       }
     }
-    
+
     // ===== フィルター設定 =====
     function setFilter(filter) {
       currentFilter = filter;
@@ -4043,21 +4188,21 @@
       });
       renderList();
     }
-    
+
     // ===== 期間フィルター =====
     function setPeriodFilter(period) {
       currentPeriod = period;
-      
+
       // ボタンの状態更新
       document.querySelectorAll('.period-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.period === period);
       });
-      
+
       // カスタム入力欄を非表示
       if (period !== 'custom') {
         document.getElementById('period-custom-inputs').style.display = 'none';
       }
-      
+
       // 期間を設定
       const now = new Date();
       switch (period) {
@@ -4079,20 +4224,20 @@
           periodEnd = null;
           break;
       }
-      
+
       updateStats();
     }
-    
+
     function toggleCustomPeriod() {
       const customInputs = document.getElementById('period-custom-inputs');
       const isVisible = customInputs.style.display !== 'none';
       customInputs.style.display = isVisible ? 'none' : 'flex';
-      
+
       // ボタンの状態更新
       document.querySelectorAll('.period-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.period === 'custom' && !isVisible);
       });
-      
+
       // デフォルト値を設定
       if (!isVisible) {
         const now = new Date();
@@ -4101,30 +4246,30 @@
         document.getElementById('period-end').value = now.toISOString().split('T')[0];
       }
     }
-    
+
     function applyCustomPeriod() {
       const startInput = document.getElementById('period-start').value;
       const endInput = document.getElementById('period-end').value;
-      
+
       if (!startInput || !endInput) {
         showToast('開始日と終了日を入力してください', 'warning');
         return;
       }
-      
+
       currentPeriod = 'custom';
       periodStart = new Date(startInput);
       periodEnd = new Date(endInput);
       periodEnd.setHours(23, 59, 59, 999); // 終了日の終わりまで含める
-      
+
       updateStats();
       showToast(`期間: ${startInput} 〜 ${endInput}`, 'info');
     }
-    
+
     // 着金日が期間内かチェック
     function isPaidInPeriod(student) {
       if (!periodStart || !periodEnd) return true; // 全期間の場合
       if (!student.paidDate) return false; // 着金日がない場合は含めない
-      
+
       // 着金日をパース
       let paidDate;
       if (typeof student.paidDate === 'string') {
@@ -4132,24 +4277,24 @@
       } else {
         paidDate = new Date(student.paidDate);
       }
-      
+
       return paidDate >= periodStart && paidDate <= periodEnd;
     }
-    
+
     // ===== リスト描画 =====
     function renderList() {
       const listEl = document.getElementById('student-list');
       const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-      
+
       let filtered = [...students];
-      
+
       // 請求タイプフィルター
       if (currentBillingType === 'new') {
         filtered = filtered.filter(s => s.billingType === '新規' || !s.billingType);
       } else if (currentBillingType === 'renewal') {
         filtered = filtered.filter(s => s.billingType === '継続');
       }
-      
+
       // 検索フィルター
       if (searchQuery) {
         filtered = filtered.filter(s => {
@@ -4158,7 +4303,7 @@
           return id.includes(searchQuery) || name.includes(searchQuery);
         });
       }
-      
+
       // ステータスフィルター
       if (currentFilter === 'pending') {
         filtered = filtered.filter(s => !s.invoiceSent || s.invoiceSent === '' || s.invoiceSent === '未送信');
@@ -4167,7 +4312,7 @@
       } else if (currentFilter === 'paid') {
         filtered = filtered.filter(s => s.invoiceSent === '着金済');
       }
-      
+
       if (filtered.length === 0) {
         listEl.innerHTML = `
           <div class="empty-state">
@@ -4181,26 +4326,26 @@
         lucide.createIcons();
         return;
       }
-      
+
       listEl.innerHTML = filtered.map(student => renderStudentCard(student)).join('');
       lucide.createIcons();
     }
-    
+
     // ===== 生徒カード描画 =====
     function renderStudentCard(student) {
       const status = student.invoiceSent || '未送信';
       const isPending = !status || status === '' || status === '未送信';
       const isWaiting = status === '入金待ち';
       const isPaid = status === '着金済';
-      
+
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
       const total = parseInt(student.total) || 0;
       const isRenewal = student.billingType === '継続';
-      
+
       // 期日超過チェック
       const overdueFlag = isOverdue(student);
       const daysOverdue = getDaysOverdue(student);
-      
+
       // ステータスに応じたクラスとラベル
       let statusClass = 'pending';
       let statusLabel = '未送信';
@@ -4211,7 +4356,7 @@
         statusClass = 'paid';
         statusLabel = '着金済';
       }
-      
+
       // ステータス変更用のドロップダウン（入金待ち・着金済の場合のみ）
       const statusDropdown = (isWaiting || isPaid) ? `
         <div class="status-dropdown">
@@ -4235,7 +4380,7 @@
       ` : `
         <span class="status-tag pending">未送信</span>
       `;
-      
+
       // 期日超過バッジ
       const overdueBadge = overdueFlag ? `
         <span class="overdue-badge">
@@ -4243,7 +4388,7 @@
           ${daysOverdue}日超過
         </span>
       ` : '';
-      
+
       return `
         <div class="student-card ${statusClass} ${overdueFlag ? 'overdue' : ''}" id="card-${student.studentId}">
           <div class="student-header" onclick="toggleCard('${student.studentId}')">
@@ -4265,7 +4410,7 @@
              <div class="billing-amount">¥${total.toLocaleString()}</div>
              ${statusDropdown}
              ${isWaiting ? `
-             <button class="resend-btn-small" onclick="event.stopPropagation(); openResendModal('${student.studentId}')">
+             <button class="resend-btn-small" onclick="event.stopPropagation(); openResendWizard('${student.studentId}')">
               <i data-lucide="repeat" style="width:14px;height:14px;"></i>
               再送信
              </button>
@@ -4387,7 +4532,7 @@
                     請求書作成
                   </button>
                 ` : isWaiting ? `
-                  <button class="action-btn resend" onclick="openResendModal('${student.studentId}')">
+                  <button class="action-btn resend" onclick="openResendWizard('${student.studentId}')">
                     <i data-lucide="repeat" style="width:16px;height:16px;"></i>
                     再送信
                   </button>
@@ -4398,12 +4543,12 @@
         </div>
       `;
     }
-    
+
     // ===== カード展開 =====
     function toggleCard(studentId) {
       const card = document.getElementById(`card-${studentId}`);
       const isExpanding = !card.classList.contains('expanded');
-      
+
       // 他の開いているカードを閉じる
       if (isExpanding) {
         document.querySelectorAll('.student-card.expanded').forEach(c => {
@@ -4412,49 +4557,49 @@
           }
         });
       }
-      
+
       card.classList.toggle('expanded');
       lucide.createIcons();
     }
-    
+
     // ===== 請求書プレビュー =====
     function openInvoicePreview(studentId) {
       currentStudent = students.find(s => String(s.studentId) === String(studentId));
       if (!currentStudent) return;
-      
+
       const today = new Date();
       const invoiceDate = formatDateSlash(today);
-      
+
       // 請求タイプに応じた入金期日を計算
       const dueDays = getPaymentDueDays(currentStudent);
       const dueDate = formatDateSlash(new Date(today.getTime() + dueDays * 24 * 60 * 60 * 1000));
-      
+
       const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
-      
+
       // デフォルトの件名
       const isRenewal = currentStudent.billingType === '継続';
-      const defaultSubject = isRenewal 
-        ? `総合型選抜対策 授業料` 
+      const defaultSubject = isRenewal
+        ? `総合型選抜対策 授業料`
         : `総合型選抜対策 入塾金・授業料`;
-      
+
       // 請求期間のデフォルト（支払月数から計算）
       const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
       const startMonth = today.getMonth() + 1;
       const endMonth = ((startMonth + paymentMonths - 2) % 12) + 1;
       const startYear = today.getFullYear();
       const endYear = startMonth + paymentMonths - 1 > 12 ? startYear + 1 : startYear;
-      
+
       // 次回更新月のデフォルト（YYYY-MM形式に変換）
       let nextRenewalMonth = currentStudent.nextRenewalMonth || '';
       if (nextRenewalMonth && nextRenewalMonth.length === 6 && !nextRenewalMonth.includes('-')) {
         nextRenewalMonth = nextRenewalMonth.slice(0, 4) + '-' + nextRenewalMonth.slice(4);
       }
-      
+
       // 割引のチェック状態（スプレッドシートの値から）
       const hasSingleParent = currentStudent.singleParent === 'はい';
       const hasReferral = currentStudent.referral === 'あり';
       const referralNameDisplay = currentStudent.referralName || '';
-      
+
       document.getElementById('invoice-content').innerHTML = `
         <!-- 編集パネル -->
         <div class="invoice-edit-panel">
@@ -4564,21 +4709,21 @@
           </div>
         </div>
       `;
-      
+
       document.getElementById('invoice-modal').classList.add('show');
       lucide.createIcons();
-      
+
       // プレビューデータをリセット
       currentPdfBase64 = null;
       currentInvoiceData = null;
-      
+
       // 設定変更時にプレビューをリセットするイベントを追加
       const settingInputs = document.querySelectorAll('.invoice-edit-panel input, .invoice-edit-panel select');
       settingInputs.forEach(input => {
         input.addEventListener('change', invalidatePreview);
         input.addEventListener('input', invalidatePreview);
       });
-      
+
       // 件名の自動フォントサイズ調整
       const subjectInput = document.getElementById('invoice-subject');
       if (subjectInput) {
@@ -4586,28 +4731,34 @@
         adjustSubjectFontSize(); // 初回調整
       }
     }
-    
+
     // ===== ウィザード状態管理 =====
     let currentWizardStep = 1;
-    
+
     // ===== 請求書作成ウィザードを開く =====
     function openInvoiceWizard(studentId) {
       currentStudent = students.find(s => String(s.studentId) === String(studentId));
       if (!currentStudent) return;
-      
+
       // ウィザードをリセット
       currentWizardStep = 1;
       currentPdfBase64 = null;
       currentInvoiceData = null;
-      
+
+      isResendMode = false;
+      editedCourseData = {};
+
+      // モーダルタイトルを更新
+      document.getElementById('wizard-modal-title').innerHTML = '<i data-lucide="file-text" style="width:20px;height:20px;"></i> 請求書作成';
+
       // STEP 1: 設定画面を生成
       document.getElementById('invoice-settings-content').innerHTML = generateSettingsContent();
-      
+
       // モーダルを開く
       document.getElementById('invoice-modal').classList.add('show');
       updateWizardUI();
       lucide.createIcons();
-      
+
       // 設定変更イベントを追加
       setTimeout(() => {
         const settingInputs = document.querySelectorAll('#invoice-settings-content input, #invoice-settings-content select');
@@ -4615,7 +4766,7 @@
           input.addEventListener('change', () => { currentPdfBase64 = null; currentInvoiceData = null; });
           input.addEventListener('input', () => { currentPdfBase64 = null; currentInvoiceData = null; });
         });
-        
+
         // 件名の自動フォントサイズ調整
         const subjectInput = document.getElementById('invoice-subject');
         if (subjectInput) {
@@ -4624,12 +4775,75 @@
         }
       }, 100);
     }
-    
+
+    // ===== 再送信ウィザードを開く =====
+    function openResendWizard(studentId) {
+      currentStudent = students.find(s => String(s.studentId) === String(studentId));
+      if (!currentStudent) return;
+
+      currentWizardStep = 1;
+      currentPdfBase64 = null;
+      currentInvoiceData = null;
+      isResendMode = true;
+      editedCourseData = {};
+
+      document.getElementById('wizard-modal-title').innerHTML = '<i data-lucide="repeat" style="width:20px;height:20px;"></i> 請求書再送信';
+      document.getElementById('invoice-settings-content').innerHTML = generateSettingsContent();
+      document.getElementById('invoice-modal').classList.add('show');
+      updateWizardUI();
+      lucide.createIcons();
+
+      setTimeout(() => {
+        const settingInputs = document.querySelectorAll('#invoice-settings-content input, #invoice-settings-content select');
+        settingInputs.forEach(input => {
+          input.addEventListener('change', () => { currentPdfBase64 = null; currentInvoiceData = null; });
+          input.addEventListener('input', () => { currentPdfBase64 = null; currentInvoiceData = null; });
+        });
+
+        const subjectInput = document.getElementById('invoice-subject');
+        if (subjectInput) {
+          subjectInput.addEventListener('input', adjustSubjectFontSize);
+          adjustSubjectFontSize();
+        }
+
+        // 受講内容編集の変更を監視
+        if (isResendMode) {
+          const courseEditInputs = document.querySelectorAll('.course-edit-input');
+          courseEditInputs.forEach(input => {
+            input.addEventListener('change', updatePurchaseLessonsFromEdit);
+            input.addEventListener('input', updatePurchaseLessonsFromEdit);
+          });
+        }
+      }, 100);
+    }
+
+    // ===== 受講内容編集から購入コマ数を更新 =====
+    function updatePurchaseLessonsFromEdit() {
+      const monthlyLessons = parseInt(document.getElementById('edit-monthly-lessons')?.value) || 0;
+      const paymentMonths = parseInt(document.getElementById('edit-payment-months')?.value) || 0;
+      const englishLessons = parseInt(document.getElementById('edit-english-lessons')?.value) || 0;
+      const englishMonths = parseInt(document.getElementById('edit-english-months')?.value) || 0;
+
+      const totalLessonsInput = document.getElementById('purchase-total-lessons');
+      const englishLessonsInput = document.getElementById('purchase-english-lessons');
+
+      if (totalLessonsInput) totalLessonsInput.value = monthlyLessons * paymentMonths;
+      if (englishLessonsInput) englishLessonsInput.value = englishLessons * englishMonths;
+
+      editedCourseData = {
+        course: document.getElementById('edit-course-type')?.value || currentStudent.course,
+        monthlyLessons, paymentMonths, englishLessons, englishMonths
+      };
+
+      currentPdfBase64 = null;
+      currentInvoiceData = null;
+    }
+
     // ===== 次回更新月のドロップダウンオプション生成 =====
     function generateRenewalMonthOptions(selectedValue) {
       const today = new Date();
       const options = ['<option value="">選択してください</option>'];
-      
+
       // 今月から18ヶ月分を生成
       for (let i = 0; i < 18; i++) {
         const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
@@ -4640,69 +4854,115 @@
         const selected = value === selectedValue ? 'selected' : '';
         options.push(`<option value="${value}" ${selected}>${label}</option>`);
       }
-      
+
       return options.join('');
     }
 
     // ===== 請求期間のドロップダウンオプション生成 =====
-function generateBillingMonthOptions(selectedValue) {
-  const today = new Date();
-  const options = [];
-  
-  // 6ヶ月前から24ヶ月先まで生成
-  for (let i = -6; i < 24; i++) {
-    const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const value = `${year}-${String(month).padStart(2, '0')}`;
-    const label = `${year}年${month}月`;
-    const selected = value === selectedValue ? 'selected' : '';
-    options.push(`<option value="${value}" ${selected}>${label}</option>`);
-  }
-  
-  return options.join('');
-}
-    
+    function generateBillingMonthOptions(selectedValue) {
+      const today = new Date();
+      const options = [];
+
+      // 6ヶ月前から24ヶ月先まで生成
+      for (let i = -6; i < 24; i++) {
+        const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const value = `${year}-${String(month).padStart(2, '0')}`;
+        const label = `${year}年${month}月`;
+        const selected = value === selectedValue ? 'selected' : '';
+        options.push(`<option value="${value}" ${selected}>${label}</option>`);
+      }
+
+      return options.join('');
+    }
+
     // ===== 設定画面のHTML生成 =====
-function generateSettingsContent() {
-  const today = new Date();
-  const invoiceDate = formatDateSlash(today);
-  
-  const dueDays = getPaymentDueDays(currentStudent);
-  const dueDate = formatDateSlash(new Date(today.getTime() + dueDays * 24 * 60 * 60 * 1000));
-  
-  const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
-  
-  const isRenewal = currentStudent.billingType === '継続';
-  const defaultSubject = isRenewal 
-    ? `総合型選抜対策 授業料` 
-    : `総合型選抜対策 入塾金・授業料`;
-  
-  const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
-  const monthlyLessons = parseInt(currentStudent.monthlyLessons) || 0;
-  const englishLessons = parseInt(currentStudent.englishLessons) || 0;
-  const englishMonths = parseInt(currentStudent.englishPayment) || 0;
-  
-  // デフォルトの購入コマ数を計算
-  const defaultTotalLessons = monthlyLessons * paymentMonths;
-  const defaultEnglishLessons = englishLessons * englishMonths;
-  
-  const startMonth = today.getMonth() + 1;
-  const endMonth = ((startMonth + paymentMonths - 2) % 12) + 1;
-  const startYear = today.getFullYear();
-  const endYear = startMonth + paymentMonths - 1 > 12 ? startYear + 1 : startYear;
-  
-  // nextRenewalMonthをYYYY-MM形式に変換（YYYYMM形式の場合）
-  let nextRenewalMonth = currentStudent.nextRenewalMonth || '';
-  if (nextRenewalMonth && nextRenewalMonth.length === 6 && !nextRenewalMonth.includes('-')) {
-    nextRenewalMonth = nextRenewalMonth.slice(0, 4) + '-' + nextRenewalMonth.slice(4);
-  }
-  
-  const hasSingleParent = currentStudent.singleParent === 'はい';
-  const hasReferral = currentStudent.referral === 'あり';
-  const referralNameDisplay = currentStudent.referralName || '';
-  
-  return `
+    function generateSettingsContent() {
+      const today = new Date();
+      const invoiceDate = formatDateSlash(today);
+
+      const dueDays = getPaymentDueDays(currentStudent);
+      const dueDate = formatDateSlash(new Date(today.getTime() + dueDays * 24 * 60 * 60 * 1000));
+
+      const invoiceNumber = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}-${currentStudent.studentId}-01`;
+
+      const isRenewal = currentStudent.billingType === '継続';
+      const defaultSubject = isRenewal
+        ? `総合型選抜対策 授業料`
+        : `総合型選抜対策 入塾金・授業料`;
+
+      const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
+      const monthlyLessons = parseInt(currentStudent.monthlyLessons) || 0;
+      const englishLessons = parseInt(currentStudent.englishLessons) || 0;
+      const englishMonths = parseInt(currentStudent.englishPayment) || 0;
+
+      // デフォルトの購入コマ数を計算
+      const defaultTotalLessons = monthlyLessons * paymentMonths;
+      const defaultEnglishLessons = englishLessons * englishMonths;
+
+      const startMonth = today.getMonth() + 1;
+      const endMonth = ((startMonth + paymentMonths - 2) % 12) + 1;
+      const startYear = today.getFullYear();
+      const endYear = startMonth + paymentMonths - 1 > 12 ? startYear + 1 : startYear;
+
+      // nextRenewalMonthをYYYY-MM形式に変換（YYYYMM形式の場合）
+      let nextRenewalMonth = currentStudent.nextRenewalMonth || '';
+      if (nextRenewalMonth && nextRenewalMonth.length === 6 && !nextRenewalMonth.includes('-')) {
+        nextRenewalMonth = nextRenewalMonth.slice(0, 4) + '-' + nextRenewalMonth.slice(4);
+      }
+
+      const hasSingleParent = currentStudent.singleParent === 'はい';
+      const hasReferral = currentStudent.referral === 'あり';
+      const referralNameDisplay = currentStudent.referralName || '';
+
+      // 再送信モード用の表示
+      const resendModeBanner = isResendMode ? `
+  <div class="resend-mode-banner">
+    <i data-lucide="info" style="width:18px;height:18px;"></i>
+    <span class="resend-mode-banner-text">再送信モード - 前回の請求書内容を確認・編集して再送信できます</span>
+  </div>
+` : '';
+
+      const courseEditSection = isResendMode ? `
+  <div class="course-edit-section">
+    <div class="course-edit-title">
+      <i data-lucide="edit-3" style="width:16px;height:16px;"></i>
+      受講内容の修正（必要な場合のみ）
+    </div>
+    <div class="course-edit-grid">
+      <div class="course-edit-item">
+        <label class="course-edit-label">コース種別</label>
+        <select class="course-edit-input" id="edit-course-type">
+          <option value="海外大学" ${currentStudent.course === '海外大学' ? 'selected' : ''}>海外大学</option>
+          <option value="国公立大学" ${currentStudent.course === '国公立大学' ? 'selected' : ''}>国公立大学</option>
+          <option value="難関私立大学" ${currentStudent.course === '難関私立大学' ? 'selected' : ''}>難関私立大学</option>
+          <option value="一般私立大学" ${currentStudent.course === '一般私立大学' ? 'selected' : ''}>一般私立大学</option>
+        </select>
+      </div>
+      <div class="course-edit-item">
+        <label class="course-edit-label">総合型 月コマ数</label>
+        <input type="number" class="course-edit-input" id="edit-monthly-lessons" value="${monthlyLessons}" min="0">
+      </div>
+      <div class="course-edit-item">
+        <label class="course-edit-label">総合型 支払月数</label>
+        <input type="number" class="course-edit-input" id="edit-payment-months" value="${paymentMonths}" min="0">
+      </div>
+      <div class="course-edit-item">
+        <label class="course-edit-label">ENGLISH 月コマ数</label>
+        <input type="number" class="course-edit-input" id="edit-english-lessons" value="${englishLessons}" min="0">
+      </div>
+      <div class="course-edit-item">
+        <label class="course-edit-label">ENGLISH 支払月数</label>
+        <input type="number" class="course-edit-input" id="edit-english-months" value="${englishMonths}" min="0">
+      </div>
+    </div>
+  </div>
+` : '';
+
+      return `
+      ${resendModeBanner}
+    ${courseEditSection}
     <div class="invoice-edit-panel" style="border:none;background:none;padding:0;">
       <div class="edit-panel-grid">
         <div class="edit-panel-item">
@@ -4806,8 +5066,8 @@ function generateSettingsContent() {
       </div>
     </div>
   `;
-}
-    
+    }
+
     // ===== ウィザードUI更新 =====
     function updateWizardUI() {
       // ステップインジケーター更新
@@ -4820,33 +5080,33 @@ function generateSettingsContent() {
           el.classList.add('completed');
         }
       });
-      
+
       // ステップライン更新
       document.querySelectorAll('.wizard-step-line').forEach((el, idx) => {
         el.classList.toggle('completed', idx + 1 < currentWizardStep);
       });
-      
+
       // コンテンツ切り替え
       document.querySelectorAll('.wizard-content').forEach((el, idx) => {
         el.classList.toggle('active', idx + 1 === currentWizardStep);
       });
-      
+
       // ボタン表示更新
       const backBtn = document.getElementById('wizard-back-btn');
       const nextBtn = document.getElementById('wizard-next-btn');
       const sendBtn = document.getElementById('wizard-send-btn');
-      
+
       backBtn.style.display = currentWizardStep > 1 ? 'flex' : 'none';
       nextBtn.style.display = currentWizardStep < 3 ? 'flex' : 'none';
       sendBtn.style.display = currentWizardStep === 3 ? 'flex' : 'none';
-      
+
       lucide.createIcons();
     }
-    
+
     // ===== ウィザード次へ =====
     async function wizardNext() {
       const nextBtn = document.getElementById('wizard-next-btn');
-      
+
       if (currentWizardStep === 1) {
         // STEP 1 → STEP 2: バリデーション
         const errors = validateStep1();
@@ -4854,17 +5114,17 @@ function generateSettingsContent() {
           showValidationErrors(errors);
           return;
         }
-        
+
         // ボタンをローディング状態に
         nextBtn.disabled = true;
         nextBtn.innerHTML = `
           <span class="btn-spinner"></span>
           PDFを生成中...
         `;
-        
+
         // プレビュー生成
         await generateWizardPreview();
-        
+
         // ボタンを元に戻す
         nextBtn.disabled = false;
         nextBtn.innerHTML = `
@@ -4872,7 +5132,7 @@ function generateSettingsContent() {
           <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
         `;
         lucide.createIcons();
-        
+
         if (currentPdfBase64) {
           currentWizardStep = 2;
           updateWizardUI();
@@ -4884,45 +5144,45 @@ function generateSettingsContent() {
         updateWizardUI();
       }
     }
-    
+
     // ===== ステップ1バリデーション =====
     function validateStep1() {
       const errors = [];
-      
+
       const studentName = document.getElementById('invoice-to-name')?.value?.trim();
       if (!studentName) {
         errors.push({ field: 'invoice-to-name', message: '生徒名を入力してください' });
       }
-      
+
       const invoiceDate = document.getElementById('invoice-date')?.value?.trim();
       if (!invoiceDate) {
         errors.push({ field: 'invoice-date', message: '請求日を入力してください' });
       }
-      
+
       const dueDate = document.getElementById('invoice-due-date')?.value?.trim();
       if (!dueDate) {
         errors.push({ field: 'invoice-due-date', message: '入金期日を入力してください' });
       }
-      
+
       const nextRenewal = document.getElementById('next-renewal')?.value?.trim();
       if (!nextRenewal) {
         errors.push({ field: 'next-renewal', message: '次回更新月を入力してください' });
       }
-      
+
       return errors;
     }
-    
+
     // ===== バリデーションエラー表示 =====
     function showValidationErrors(errors) {
       // 既存のエラー表示をクリア
       document.querySelectorAll('.validation-error').forEach(el => el.remove());
       document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
-      
+
       errors.forEach(error => {
         const field = document.getElementById(error.field);
         if (field) {
           field.classList.add('input-error');
-          
+
           // エラーメッセージを追加
           const errorEl = document.createElement('div');
           errorEl.className = 'validation-error';
@@ -4930,9 +5190,9 @@ function generateSettingsContent() {
           field.parentNode.appendChild(errorEl);
         }
       });
-      
+
       lucide.createIcons();
-      
+
       // 最初のエラーフィールドにスクロール
       if (errors.length > 0) {
         const firstField = document.getElementById(errors[0].field);
@@ -4941,10 +5201,10 @@ function generateSettingsContent() {
           firstField.focus();
         }
       }
-      
+
       showToast(`入力エラーがあります（${errors.length}件）`, 'error');
     }
-    
+
     // ===== ウィザード戻る =====
     function wizardBack() {
       if (currentWizardStep > 1) {
@@ -4952,195 +5212,195 @@ function generateSettingsContent() {
         updateWizardUI();
       }
     }
-    
+
     // ===== プレビュー生成（ウィザード用） =====
-async function generateWizardPreview() {
-  if (!currentStudent) return;
-  
-  const previewArea = document.getElementById('pdf-preview-area');
-  
-  previewArea.innerHTML = `
+    async function generateWizardPreview() {
+      if (!currentStudent) return;
+
+      const previewArea = document.getElementById('pdf-preview-area');
+
+      previewArea.innerHTML = `
     <div class="pdf-loading">
       <div class="pdf-loading-spinner"></div>
       <p>PDFを生成中...</p>
     </div>
   `;
-  
-  try {
-    const studentName = document.getElementById('invoice-to-name').value;
-    const invoiceSubject = document.getElementById('invoice-subject').value;
-    const invoiceDate = document.getElementById('invoice-date').value;
-    const invoiceNumber = document.getElementById('invoice-number').value;
-    const dueDate = document.getElementById('invoice-due-date').value;
-    const remarks = document.getElementById('invoice-remarks').value;
-    
-    const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
-    const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-    const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
-    
-    // カスタムコマ数を取得
-    const customTotalLessons = parseInt(document.getElementById('purchase-total-lessons')?.value) || 0;
-    const customEnglishLessons = parseInt(document.getElementById('purchase-english-lessons')?.value) || 0;
-    
-    const breakdown = calculateInvoiceBreakdown(currentStudent, {
-      singleParentDiscount,
-      referralDiscount,
-      taxExempt: isTaxExempt,
-      totalLessons: customTotalLessons,
-      englishLessons: customEnglishLessons
-    });
-    
-    const invoiceData = {
-      studentId: currentStudent.studentId,
-      studentName: studentName,
-      invoiceDate: invoiceDate,
-      invoiceNumber: invoiceNumber,
-      dueDate: dueDate,
-      invoiceSubject: invoiceSubject,
-      subtotal: breakdown.subtotalExTax,
-      tax: breakdown.tax,
-      total: breakdown.total,
-      items: breakdown.items,
-      remarks: remarks,
-      isTaxExempt: isTaxExempt,
-      // カスタムコマ数も保存
-      totalLessons: customTotalLessons,
-      englishLessons: customEnglishLessons
-    };
-    
-    const response = await fetch(GAS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        action: 'previewInvoice',
-        invoiceData: invoiceData
-      })
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      const pdfDataUrl = 'data:application/pdf;base64,' + result.pdfBase64;
-      previewArea.innerHTML = `
+
+      try {
+        const studentName = document.getElementById('invoice-to-name').value;
+        const invoiceSubject = document.getElementById('invoice-subject').value;
+        const invoiceDate = document.getElementById('invoice-date').value;
+        const invoiceNumber = document.getElementById('invoice-number').value;
+        const dueDate = document.getElementById('invoice-due-date').value;
+        const remarks = document.getElementById('invoice-remarks').value;
+
+        const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+        const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+        const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
+
+        // カスタムコマ数を取得
+        const customTotalLessons = parseInt(document.getElementById('purchase-total-lessons')?.value) || 0;
+        const customEnglishLessons = parseInt(document.getElementById('purchase-english-lessons')?.value) || 0;
+
+        const breakdown = calculateInvoiceBreakdown(currentStudent, {
+          singleParentDiscount,
+          referralDiscount,
+          taxExempt: isTaxExempt,
+          totalLessons: customTotalLessons,
+          englishLessons: customEnglishLessons
+        });
+
+        const invoiceData = {
+          studentId: currentStudent.studentId,
+          studentName: studentName,
+          invoiceDate: invoiceDate,
+          invoiceNumber: invoiceNumber,
+          dueDate: dueDate,
+          invoiceSubject: invoiceSubject,
+          subtotal: breakdown.subtotalExTax,
+          tax: breakdown.tax,
+          total: breakdown.total,
+          items: breakdown.items,
+          remarks: remarks,
+          isTaxExempt: isTaxExempt,
+          // カスタムコマ数も保存
+          totalLessons: customTotalLessons,
+          englishLessons: customEnglishLessons
+        };
+
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'previewInvoice',
+            invoiceData: invoiceData
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          const pdfDataUrl = 'data:application/pdf;base64,' + result.pdfBase64;
+          previewArea.innerHTML = `
         <embed src="${pdfDataUrl}" type="application/pdf" width="100%" height="500px">
       `;
-      
-      currentPdfBase64 = result.pdfBase64;
-      currentInvoiceData = invoiceData;
-    } else {
-      throw new Error(result.message || 'PDF生成に失敗しました');
-    }
-    
-  } catch (error) {
-    console.error('プレビュー生成エラー:', error);
-    previewArea.innerHTML = `
+
+          currentPdfBase64 = result.pdfBase64;
+          currentInvoiceData = invoiceData;
+        } else {
+          throw new Error(result.message || 'PDF生成に失敗しました');
+        }
+
+      } catch (error) {
+        console.error('プレビュー生成エラー:', error);
+        previewArea.innerHTML = `
       <div class="pdf-preview-placeholder" style="color:#d32f2f;">
         <i data-lucide="alert-circle" style="width:48px;height:48px;"></i>
         <p>プレビュー生成に失敗しました<br>${error.message}</p>
       </div>
     `;
-    lucide.createIcons();
-  }
-}
- 
-// ===== メールステップ準備 =====
-function prepareEmailStep() {
-  if (!currentStudent || !currentInvoiceData) return;
-  
-  // 料金計算（メール本文用）
-  const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
-  const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-  const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
-  
-  const breakdown = calculateInvoiceBreakdown(currentStudent, {
-    singleParentDiscount,
-    referralDiscount,
-    taxExempt: isTaxExempt
-  });
-  
-  const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
-  const invoiceSubject = currentInvoiceData.invoiceSubject || '';
-  
-  document.getElementById('wizard-email-to').value = currentStudent.parentEmail || currentStudent.studentEmail || '';
-  document.getElementById('wizard-email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
-  document.getElementById('wizard-email-body').value = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
-}
+        lucide.createIcons();
+      }
+    }
+
+    // ===== メールステップ準備 =====
+    function prepareEmailStep() {
+      if (!currentStudent || !currentInvoiceData) return;
+
+      // 料金計算（メール本文用）
+      const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
+      const referralDiscount = document.getElementById('discount-referral')?.checked || false;
+      const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
+
+      const breakdown = calculateInvoiceBreakdown(currentStudent, {
+        singleParentDiscount,
+        referralDiscount,
+        taxExempt: isTaxExempt
+      });
+
+      const paymentMonths = parseInt(currentStudent.paymentMonth) || 0;
+      const invoiceSubject = currentInvoiceData.invoiceSubject || '';
+
+      document.getElementById('wizard-email-to').value = currentStudent.parentEmail || currentStudent.studentEmail || '';
+      document.getElementById('wizard-email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
+      document.getElementById('wizard-email-body').value = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
+    }
 
 
     async function wizardSend() {
-  const student = currentStudent;
-  const invoiceData = currentInvoiceData;
-  if (!student || !invoiceData) return;
-  
-  const email = document.getElementById('wizard-email-to').value;
-  const subject = document.getElementById('wizard-email-subject').value;
-  const body = document.getElementById('wizard-email-body').value;
-  
-  if (!confirm(`${email} に請求書を送信しますか？`)) return;
-  
-  const billingStart = document.getElementById('billing-start')?.value || '';
-  const billingEnd = document.getElementById('billing-end')?.value || '';
-  const nextRenewal = document.getElementById('next-renewal')?.value || '';
-  
-  try {
-    showToast('請求書を送信中...', 'info');
-    closeModal();
-    
-    const response = await fetch(GAS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        action: 'sendInvoice',
-        studentId: student.studentId,
-        email: email,
-        emailSubject: subject,
-        emailBody: body,
-        studentName: invoiceData.studentName,
-        parentName: student.parentName,
-        total: invoiceData.total,
-        billingStart: billingStart,
-        billingEnd: billingEnd,
-        nextRenewalMonth: nextRenewal.replace('-', ''),
-        invoiceSubject: invoiceData.invoiceSubject,
-        invoiceData: invoiceData,
-        billingType: student.billingType || '新規',
-        totalLessons: invoiceData.totalLessons || 0,
-        englishLessons: invoiceData.englishLessons || 0
-      })
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      student.invoiceSent = '入金待ち';
-      student.nextRenewalMonth = nextRenewal.replace('-', '');
-      updateStats();
-      renderList();
-      showToast('請求書を送信しました', 'success');
-      
-      currentPdfBase64 = null;
-      currentInvoiceData = null;
-    } else {
-      throw new Error(result.message);
+      const student = currentStudent;
+      const invoiceData = currentInvoiceData;
+      if (!student || !invoiceData) return;
+
+      const email = document.getElementById('wizard-email-to').value;
+      const subject = document.getElementById('wizard-email-subject').value;
+      const body = document.getElementById('wizard-email-body').value;
+
+      if (!confirm(`${email} に請求書を送信しますか？`)) return;
+
+      const billingStart = document.getElementById('billing-start')?.value || '';
+      const billingEnd = document.getElementById('billing-end')?.value || '';
+      const nextRenewal = document.getElementById('next-renewal')?.value || '';
+
+      try {
+        showToast('請求書を送信中...', 'info');
+        closeModal();
+
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'sendInvoice',
+            studentId: student.studentId,
+            email: email,
+            emailSubject: subject,
+            emailBody: body,
+            studentName: invoiceData.studentName,
+            parentName: student.parentName,
+            total: invoiceData.total,
+            billingStart: billingStart,
+            billingEnd: billingEnd,
+            nextRenewalMonth: nextRenewal.replace('-', ''),
+            invoiceSubject: invoiceData.invoiceSubject,
+            invoiceData: invoiceData,
+            billingType: student.billingType || '新規',
+            totalLessons: invoiceData.totalLessons || 0,
+            englishLessons: invoiceData.englishLessons || 0
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          student.invoiceSent = '入金待ち';
+          student.nextRenewalMonth = nextRenewal.replace('-', '');
+          updateStats();
+          renderList();
+          showToast('請求書を送信しました', 'success');
+
+          currentPdfBase64 = null;
+          currentInvoiceData = null;
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('送信エラー:', error);
+        showToast('送信に失敗しました: ' + error.message, 'error');
+      }
     }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    showToast('送信に失敗しました: ' + error.message, 'error');
-  }
-}
-    
+
     // ===== プレビュー無効化（設定変更時） =====
     function invalidatePreview() {
       // 既にプレビューがない場合は何もしない
       if (!currentPdfBase64 && !currentInvoiceData) return;
-      
+
       // プレビューデータをリセット
       currentPdfBase64 = null;
       currentInvoiceData = null;
-      
+
       // ボタンを無効化
       updateActionButtons(false);
-      
+
       // プレビューエリアに再生成を促すメッセージ
       const previewArea = document.getElementById('pdf-preview-area');
       if (previewArea) {
@@ -5153,36 +5413,36 @@ function prepareEmailStep() {
         lucide.createIcons();
       }
     }
-    
+
     // ===== 件名フォントサイズ自動調整 =====
     function adjustSubjectFontSize() {
       const input = document.getElementById('invoice-subject');
       if (!input) return;
-      
+
       const text = input.value;
       const maxWidth = 380; // 入力欄の幅
-      
+
       // 文字数に応じてフォントサイズを調整
       let fontSize = 16;
       if (text.length > 20) fontSize = 14;
       if (text.length > 25) fontSize = 13;
       if (text.length > 30) fontSize = 12;
       if (text.length > 35) fontSize = 11;
-      
+
       input.style.fontSize = fontSize + 'px';
     }
-    
+
     // ===== 請求書再計算（現在は使用しない） =====
     function recalculateInvoice() {
       // PDFプレビュー方式に変更したため、ここでは何もしない
     }
-    
+
     // ===== PDFプレビュー生成 =====
     async function generatePreview() {
       if (!currentStudent) return;
-      
+
       const previewArea = document.getElementById('pdf-preview-area');
-      
+
       // ローディング表示
       previewArea.innerHTML = `
         <div class="pdf-loading">
@@ -5190,7 +5450,7 @@ function prepareEmailStep() {
           <p>PDFを生成中...</p>
         </div>
       `;
-      
+
       try {
         // フォームから値を取得
         const studentName = document.getElementById('invoice-to-name').value;
@@ -5199,21 +5459,21 @@ function prepareEmailStep() {
         const invoiceNumber = document.getElementById('invoice-number').value;
         const dueDate = document.getElementById('invoice-due-date').value;
         const remarks = document.getElementById('invoice-remarks').value;
-        
+
         // 割引チェック状態を取得
         const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
         const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-        
+
         // 免税チェック状態を取得
         const isTaxExempt = document.getElementById('tax-exempt')?.checked || false;
-        
+
         // 料金計算
         const breakdown = calculateInvoiceBreakdown(currentStudent, {
           singleParentDiscount,
           referralDiscount,
           taxExempt: isTaxExempt
         });
-        
+
         // 請求書データを作成
         const invoiceData = {
           studentId: currentStudent.studentId,
@@ -5229,7 +5489,7 @@ function prepareEmailStep() {
           remarks: remarks,
           isTaxExempt: isTaxExempt
         };
-        
+
         // GASにリクエスト
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
@@ -5239,26 +5499,26 @@ function prepareEmailStep() {
             invoiceData: invoiceData
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           // Base64からPDFを表示
           const pdfDataUrl = 'data:application/pdf;base64,' + result.pdfBase64;
           previewArea.innerHTML = `
             <embed src="${pdfDataUrl}" type="application/pdf" width="100%" height="600px">
           `;
-          
+
           // 現在のPDFデータを保存（送信時に使用）
           currentPdfBase64 = result.pdfBase64;
           currentInvoiceData = invoiceData;
-          
+
           // ボタンを有効化
           updateActionButtons(true);
         } else {
           throw new Error(result.message || 'PDF生成に失敗しました');
         }
-        
+
       } catch (error) {
         console.error('プレビュー生成エラー:', error);
         previewArea.innerHTML = `
@@ -5268,126 +5528,126 @@ function prepareEmailStep() {
           </div>
         `;
         lucide.createIcons();
-        
+
         // ボタンを無効化
         updateActionButtons(false);
       }
     }
-    
+
     // ===== アクションボタンの有効/無効切り替え =====
     function updateActionButtons(enabled) {
       const downloadBtn = document.getElementById('btn-download-pdf');
       const sendBtn = document.getElementById('btn-send-invoice');
-      
+
       if (downloadBtn) downloadBtn.disabled = !enabled;
       if (sendBtn) sendBtn.disabled = !enabled;
     }
-    
+
     // 現在のPDFデータを保持する変数
     let currentPdfBase64 = null;
     let currentInvoiceData = null;
-    
+
     // ===== 請求書用の料金計算（税込み価格） =====
-function calculateInvoiceBreakdown(student, options = {}) {
-  const items = [];
-  let total = 0; // 税込み合計
-  
-  const monthlyLessons = parseInt(student.monthlyLessons) || 0;
-  const paymentMonths = parseInt(student.paymentMonth) || 0;
-  const englishLessonsPerMonth = parseInt(student.englishLessons) || 0;
-  const englishMonths = parseInt(student.englishPayment) || 0;
-  const courseType = student.course || '';
-  const hasVideo = student.videoMaterial === '購入する';
-  const isRenewal = student.billingType === '継続';
-  
-  // 割引オプション
-  const singleParentDiscount = options.singleParentDiscount || false;
-  const referralDiscount = options.referralDiscount || false;
-  const taxExempt = options.taxExempt || false;
-  
-  // カスタムコマ数（指定がなければデフォルト計算）
-  const customTotalLessons = options.totalLessons !== undefined ? options.totalLessons : (monthlyLessons * paymentMonths);
-  const customEnglishLessons = options.englishLessons !== undefined ? options.englishLessons : (englishLessonsPerMonth * englishMonths);
-  
-  // 新規の場合は初期費用（税込み）
-  if (!isRenewal) {
-    // 入塾金
-    items.push({ name: '入塾金', qty: 1, unit: PRICES.ENROLLMENT_FEE, amount: PRICES.ENROLLMENT_FEE });
-    total += PRICES.ENROLLMENT_FEE;
-    
-    // ひとり親割引（入塾金から-10,000円）
-    if (singleParentDiscount) {
-      items.push({ name: 'ひとり親割引', qty: 1, unit: -10000, amount: -10000 });
-      total -= 10000;
+    function calculateInvoiceBreakdown(student, options = {}) {
+      const items = [];
+      let total = 0; // 税込み合計
+
+      const monthlyLessons = parseInt(student.monthlyLessons) || 0;
+      const paymentMonths = parseInt(student.paymentMonth) || 0;
+      const englishLessonsPerMonth = parseInt(student.englishLessons) || 0;
+      const englishMonths = parseInt(student.englishPayment) || 0;
+      const courseType = student.course || '';
+      const hasVideo = student.videoMaterial === '購入する';
+      const isRenewal = student.billingType === '継続';
+
+      // 割引オプション
+      const singleParentDiscount = options.singleParentDiscount || false;
+      const referralDiscount = options.referralDiscount || false;
+      const taxExempt = options.taxExempt || false;
+
+      // カスタムコマ数（指定がなければデフォルト計算）
+      const customTotalLessons = options.totalLessons !== undefined ? options.totalLessons : (monthlyLessons * paymentMonths);
+      const customEnglishLessons = options.englishLessons !== undefined ? options.englishLessons : (englishLessonsPerMonth * englishMonths);
+
+      // 新規の場合は初期費用（税込み）
+      if (!isRenewal) {
+        // 入塾金
+        items.push({ name: '入塾金', qty: 1, unit: PRICES.ENROLLMENT_FEE, amount: PRICES.ENROLLMENT_FEE });
+        total += PRICES.ENROLLMENT_FEE;
+
+        // ひとり親割引（入塾金から-10,000円）
+        if (singleParentDiscount) {
+          items.push({ name: 'ひとり親割引', qty: 1, unit: -10000, amount: -10000 });
+          total -= 10000;
+        }
+
+        // 紹介割引（入塾金から-10,000円）
+        if (referralDiscount) {
+          items.push({ name: '紹介割引', qty: 1, unit: -10000, amount: -10000 });
+          total -= 10000;
+        }
+
+        // 教材費
+        items.push({ name: '教材費', qty: 1, unit: PRICES.MATERIAL_FEE, amount: PRICES.MATERIAL_FEE });
+        total += PRICES.MATERIAL_FEE;
+
+        // アカウント設定費
+        items.push({ name: 'アカウント設定費', qty: 1, unit: PRICES.ACCOUNT_FEE, amount: PRICES.ACCOUNT_FEE });
+        total += PRICES.ACCOUNT_FEE;
+
+        // 動画教材（入塾時購入）
+        if (hasVideo) {
+          items.push({ name: '過去動画教材費', qty: 1, unit: PRICES.VIDEO_FEE, amount: PRICES.VIDEO_FEE });
+          total += PRICES.VIDEO_FEE;
+        }
+      }
+
+      // 在籍基本料（税込み）
+      if (paymentMonths > 0) {
+        const basicAmount = PRICES.BASIC_FEE * paymentMonths;
+        items.push({ name: '在籍基本料', qty: paymentMonths, unit: PRICES.BASIC_FEE, amount: basicAmount });
+        total += basicAmount;
+
+        // システムサーバー費
+        const systemAmount = PRICES.SYSTEM_FEE * paymentMonths;
+        items.push({ name: 'システムサーバー費', qty: paymentMonths, unit: PRICES.SYSTEM_FEE, amount: systemAmount });
+        total += systemAmount;
+      }
+
+      // 授業料（税込み）- カスタムコマ数を使用
+      if (customTotalLessons > 0) {
+        const coursePrice = PRICES.COURSE[courseType] || 12800;
+        const lessonAmount = coursePrice * customTotalLessons;
+        items.push({ name: `授業料(${courseType || 'コース'})`, qty: customTotalLessons, unit: coursePrice, amount: lessonAmount });
+        total += lessonAmount;
+      }
+
+      // まとめ払い割引
+      if (paymentMonths > 0 && PRICES.BULK_DISCOUNT[paymentMonths]) {
+        const discountAmount = PRICES.BULK_DISCOUNT[paymentMonths];
+        items.push({ name: `まとめ払い割引(${paymentMonths}ヶ月)`, qty: 1, unit: -discountAmount, amount: -discountAmount });
+        total -= discountAmount;
+      }
+
+      // ENGLISH（税込み）- カスタムコマ数を使用
+      if (customEnglishLessons > 0) {
+        const englishAmount = PRICES.ENGLISH * customEnglishLessons;
+        items.push({ name: '英語資格対策授業料', qty: customEnglishLessons, unit: PRICES.ENGLISH, amount: englishAmount });
+        total += englishAmount;
+      }
+
+      // 内税計算（税込み価格から税抜・消費税を算出）
+      // 免税の場合は消費税を0にする
+      if (taxExempt) {
+        const subtotalExTax = Math.floor(total / 1.1);  // 元の税抜価格
+        return { items, total: subtotalExTax, subtotalExTax, tax: 0 };
+      } else {
+        const subtotalExTax = Math.floor(total / 1.1);
+        const tax = total - subtotalExTax;
+        return { items, total, subtotalExTax, tax };
+      }
     }
-    
-    // 紹介割引（入塾金から-10,000円）
-    if (referralDiscount) {
-      items.push({ name: '紹介割引', qty: 1, unit: -10000, amount: -10000 });
-      total -= 10000;
-    }
-    
-    // 教材費
-    items.push({ name: '教材費', qty: 1, unit: PRICES.MATERIAL_FEE, amount: PRICES.MATERIAL_FEE });
-    total += PRICES.MATERIAL_FEE;
-    
-    // アカウント設定費
-    items.push({ name: 'アカウント設定費', qty: 1, unit: PRICES.ACCOUNT_FEE, amount: PRICES.ACCOUNT_FEE });
-    total += PRICES.ACCOUNT_FEE;
-    
-    // 動画教材（入塾時購入）
-    if (hasVideo) {
-      items.push({ name: '過去動画教材費', qty: 1, unit: PRICES.VIDEO_FEE, amount: PRICES.VIDEO_FEE });
-      total += PRICES.VIDEO_FEE;
-    }
-  }
-  
-  // 在籍基本料（税込み）
-  if (paymentMonths > 0) {
-    const basicAmount = PRICES.BASIC_FEE * paymentMonths;
-    items.push({ name: '在籍基本料', qty: paymentMonths, unit: PRICES.BASIC_FEE, amount: basicAmount });
-    total += basicAmount;
-    
-    // システムサーバー費
-    const systemAmount = PRICES.SYSTEM_FEE * paymentMonths;
-    items.push({ name: 'システムサーバー費', qty: paymentMonths, unit: PRICES.SYSTEM_FEE, amount: systemAmount });
-    total += systemAmount;
-  }
-  
-  // 授業料（税込み）- カスタムコマ数を使用
-  if (customTotalLessons > 0) {
-    const coursePrice = PRICES.COURSE[courseType] || 12800;
-    const lessonAmount = coursePrice * customTotalLessons;
-    items.push({ name: `授業料(${courseType || 'コース'})`, qty: customTotalLessons, unit: coursePrice, amount: lessonAmount });
-    total += lessonAmount;
-  }
-  
-  // まとめ払い割引
-  if (paymentMonths > 0 && PRICES.BULK_DISCOUNT[paymentMonths]) {
-    const discountAmount = PRICES.BULK_DISCOUNT[paymentMonths];
-    items.push({ name: `まとめ払い割引(${paymentMonths}ヶ月)`, qty: 1, unit: -discountAmount, amount: -discountAmount });
-    total -= discountAmount;
-  }
-  
-  // ENGLISH（税込み）- カスタムコマ数を使用
-  if (customEnglishLessons > 0) {
-    const englishAmount = PRICES.ENGLISH * customEnglishLessons;
-    items.push({ name: '英語資格対策授業料', qty: customEnglishLessons, unit: PRICES.ENGLISH, amount: englishAmount });
-    total += englishAmount;
-  }
-  
-  // 内税計算（税込み価格から税抜・消費税を算出）
-  // 免税の場合は消費税を0にする
-  if (taxExempt) {
-    const subtotalExTax = Math.floor(total / 1.1);  // 元の税抜価格
-    return { items, total: subtotalExTax, subtotalExTax, tax: 0 };
-  } else {
-    const subtotalExTax = Math.floor(total / 1.1);
-    const tax = total - subtotalExTax;
-    return { items, total, subtotalExTax, tax };
-  }
-}
-    
+
     // ===== 日付フォーマット（スラッシュ区切り） =====
     function formatDateSlash(date) {
       const y = date.getFullYear();
@@ -5395,7 +5655,7 @@ function calculateInvoiceBreakdown(student, options = {}) {
       const d = String(date.getDate()).padStart(2, '0');
       return `${y}/${m}/${d}`;
     }
-    
+
     // ===== モーダルを閉じる =====
     function closeModal() {
       document.getElementById('invoice-modal').classList.remove('show');
@@ -5404,17 +5664,17 @@ function calculateInvoiceBreakdown(student, options = {}) {
       currentPdfBase64 = null;
       currentInvoiceData = null;
     }
-    
+
     // ===== 料金表モーダル =====
     function openPriceModal() {
       document.getElementById('price-modal').classList.add('show');
       lucide.createIcons();
     }
-    
+
     function closePriceModal() {
       document.getElementById('price-modal').classList.remove('show');
     }
-    
+
     // ===== PDFダウンロード =====
     async function downloadPDF() {
       // プレビューが生成されていない場合
@@ -5422,7 +5682,7 @@ function calculateInvoiceBreakdown(student, options = {}) {
         showToast('先にPDFプレビューを生成してください', 'warning');
         return;
       }
-      
+
       try {
         // Base64からBlobを作成
         const byteCharacters = atob(currentPdfBase64);
@@ -5432,7 +5692,7 @@ function calculateInvoiceBreakdown(student, options = {}) {
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: 'application/pdf' });
-        
+
         // ダウンロードリンクを作成
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -5442,66 +5702,66 @@ function calculateInvoiceBreakdown(student, options = {}) {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
+
         showToast('PDFをダウンロードしました', 'success');
       } catch (error) {
         console.error('PDFダウンロードエラー:', error);
         showToast('PDFダウンロードに失敗しました', 'error');
       }
     }
-    
+
     // ===== メール編集モーダルを開く =====
     function sendInvoice() {
       if (!currentStudent) return;
-      
+
       // プレビューが生成されていない場合は警告
       if (!currentInvoiceData) {
         showToast('先にPDFプレビューを生成してください', 'warning');
         return;
       }
-      
+
       const email = currentStudent.parentEmail || currentStudent.studentEmail;
       if (!email) {
         showToast('送信先メールアドレスがありません', 'error');
         return;
       }
-      
+
       // 編集パネルから設定値を取得
       const invoiceSubject = document.getElementById('invoice-subject')?.value || '';
-      
+
       // 割引適用状態
       const singleParentDiscount = document.getElementById('discount-single-parent')?.checked || false;
       const referralDiscount = document.getElementById('discount-referral')?.checked || false;
-      
+
       // 料金再計算
       const breakdown = calculateInvoiceBreakdown(currentStudent, {
         singleParentDiscount,
         referralDiscount
       });
-      
+
       // 支払月数を計算
       const paymentMonths = parseInt(currentStudent.paymentMonth) || 1;
-      
+
       // メール本文生成
       const emailBody = generateEmailBody(currentStudent, breakdown, paymentMonths, invoiceSubject);
-      
+
       // モーダルに値をセット
       document.getElementById('email-to').value = email;
       document.getElementById('email-subject').value = `【EQAO】ご請求書の送付（${currentStudent.studentName}様）`;
       document.getElementById('email-body').value = emailBody;
-      
+
       // プレビュー更新
       updateEmailPreview();
-      
+
       // モーダル表示
       document.getElementById('email-modal').classList.add('show');
       lucide.createIcons();
     }
-    
+
     // ===== メール本文生成 =====
     function generateEmailBody(student, breakdown, paymentMonths, invoiceSubject) {
       const monthsDisplay = paymentMonths > 1 ? `（${paymentMonths}ヶ月分）` : '';
-      
+
       return `${student.studentName} 様
 
 いつもお世話になっております。
@@ -5522,7 +5782,7 @@ ${invoiceSubject ? '件名：' + invoiceSubject + '\n' : ''}ご請求金額：¥
 ■ お支払いについて
 ━━━━━━━━━━━━━━━━━━━━━━━━
 
-お支払期限：請求書に記載の期日をご確認ください
+お支払期限：請求書発行日より2週間以内
 お振込先：請求書に記載の口座へお振込ください
 
 ※ お振込の際は、生徒番号をご入力ください。
@@ -5539,12 +5799,12 @@ https://lin.ee/Zu2Gb05
 株式会社EQAO教育グループ
 Email: globalsight.official@gmail.com`;
     }
-    
+
     // ===== メールプレビュー更新 =====
     function updateEmailPreview() {
       const bodyText = document.getElementById('email-body').value;
       const htmlPreview = document.getElementById('email-html-preview');
-      
+
       // テキストをHTMLに変換（改行を<br>に、区切り線をスタイル付きに）
       let html = bodyText
         .replace(/&/g, '&amp;')
@@ -5553,17 +5813,17 @@ Email: globalsight.official@gmail.com`;
         .replace(/━+/g, '<hr style="border:none;border-top:1px solid #ddd;margin:16px 0;">')
         .replace(/■\s*(.+)/g, '<strong style="color:#333;font-size:14px;">■ $1</strong>')
         .replace(/\n/g, '<br>');
-      
+
       htmlPreview.innerHTML = `<div style="font-family:sans-serif;color:#333;">${html}</div>`;
     }
-    
+
     // ===== メール編集/プレビュー切り替え =====
     function setEmailView(view) {
       const editBtn = document.querySelector('.toggle-btn:first-child');
       const previewBtn = document.querySelector('.toggle-btn:last-child');
       const editArea = document.getElementById('email-body-edit');
       const previewArea = document.getElementById('email-body-preview');
-      
+
       if (view === 'edit') {
         editBtn.classList.add('active');
         previewBtn.classList.remove('active');
@@ -5577,39 +5837,39 @@ Email: globalsight.official@gmail.com`;
         updateEmailPreview();
       }
     }
-    
+
     // ===== メールモーダルを閉じる =====
     function closeEmailModal() {
       document.getElementById('email-modal').classList.remove('show');
     }
-    
+
     // ===== メール送信確認＆実行 =====
     async function confirmSendEmail() {
       // currentStudentをローカル変数にコピー（非同期処理中にnullになるのを防ぐ）
       const student = currentStudent;
       if (!student) return;
-      
+
       // プレビューデータがない場合はエラー
       if (!currentInvoiceData) {
         showToast('先にPDFプレビューを生成してください', 'error');
         return;
       }
-      
+
       const email = document.getElementById('email-to').value;
       const subject = document.getElementById('email-subject').value;
       const body = document.getElementById('email-body').value;
-      
+
       if (!confirm(`${email} に請求書を送信しますか？`)) return;
-      
+
       // 編集パネルから設定値を取得
       const billingStart = document.getElementById('billing-start')?.value || '';
       const billingEnd = document.getElementById('billing-end')?.value || '';
       const nextRenewal = document.getElementById('next-renewal')?.value || '';
-      
+
       try {
         showToast('請求書を送信中...', 'info');
         closeEmailModal();
-        
+
         // GASに送信（currentInvoiceDataを使用）
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
@@ -5631,9 +5891,9 @@ Email: globalsight.official@gmail.com`;
             billingType: student.billingType || '新規'
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           // ローカルデータ更新
           student.invoiceSent = '入金待ち';
@@ -5642,7 +5902,7 @@ Email: globalsight.official@gmail.com`;
           renderList();
           closeModal();
           showToast('請求書を送信しました', 'success');
-          
+
           // プレビューデータをクリア
           currentPdfBase64 = null;
           currentInvoiceData = null;
@@ -5654,23 +5914,23 @@ Email: globalsight.official@gmail.com`;
         showToast('送信に失敗しました: ' + error.message, 'error');
       }
     }
-    
+
     // ===== 再送信モーダルを開く =====
     function openResendModal(studentId) {
       currentStudent = students.find(s => String(s.studentId) === String(studentId));
       if (!currentStudent) return;
-      
+
       // メール送信モーダルを開く（プレビューなし）
       const modal = document.getElementById('email-modal');
       modal.classList.add('show');
-      
+
       // 送信先メールアドレス
       document.getElementById('email-to').value = currentStudent.parentEmail || currentStudent.studentEmail || '';
-      
+
       // リマインド用の件名と本文
       document.getElementById('email-subject').value = `【EQAO】ご請求書のお送り（リマインド）（${currentStudent.studentName}様）`;
-      document.getElementById('email-body').value = 
-`${currentStudent.parentName || currentStudent.studentName} 様
+      document.getElementById('email-body').value =
+        `${currentStudent.parentName || currentStudent.studentName} 様
 
 いつもお世話になっております。
 株式会社EQAO教育グループでございます。
@@ -5687,32 +5947,32 @@ Email: globalsight.official@gmail.com`;
 株式会社EQAO教育グループ
 Email: contact@eqao.jp
 ━━━━━━━━━━━━━━━`;
-      
+
       // 送信ボタンを再送信用に変更
       const sendBtn = document.querySelector('#email-modal .action-btn.send');
       if (sendBtn) {
         sendBtn.onclick = confirmResendEmail;
         sendBtn.innerHTML = '<i data-lucide="repeat" style="width:16px;height:16px;"></i> リマインド送信';
       }
-      
+
       lucide.createIcons();
     }
-    
+
     // ===== リマインド再送信 =====
     async function confirmResendEmail() {
       const student = currentStudent;
       if (!student) return;
-      
+
       const email = document.getElementById('email-to').value;
       const subject = document.getElementById('email-subject').value;
       const body = document.getElementById('email-body').value;
-      
+
       if (!confirm(`${email} にリマインドメールを送信しますか？`)) return;
-      
+
       try {
         showToast('リマインドメールを送信中...', 'info');
         closeEmailModal();
-        
+
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
@@ -5725,9 +5985,9 @@ Email: contact@eqao.jp
             studentName: student.studentName
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           showToast('リマインドメールを送信しました', 'success');
         } else {
@@ -5738,7 +5998,7 @@ Email: contact@eqao.jp
         showToast('送信に失敗しました: ' + error.message, 'error');
       }
     }
-    
+
     // ===== ステータスドロップダウン切り替え =====
     function toggleStatusDropdown(studentId) {
       const menu = document.getElementById(`status-menu-${studentId}`);
@@ -5750,18 +6010,18 @@ Email: contact@eqao.jp
       });
       menu.classList.toggle('show');
     }
-    
+
     // ===== ステータス変更 =====
     async function changeStatus(studentId, newStatus) {
       const student = students.find(s => String(s.studentId) === String(studentId));
       if (!student) return;
-      
+
       // ドロップダウンを閉じる
       document.querySelectorAll('.status-dropdown-menu.show').forEach(el => el.classList.remove('show'));
-      
+
       try {
         showToast('ステータス更新中...', 'info');
-        
+
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
@@ -5771,9 +6031,9 @@ Email: contact@eqao.jp
             status: newStatus
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           student.invoiceSent = newStatus;
           renderList();
@@ -5787,7 +6047,7 @@ Email: contact@eqao.jp
         showToast('ステータス更新に失敗しました', 'error');
       }
     }
-    
+
     // ===== ユーティリティ =====
     function formatDate(date) {
       const y = date.getFullYear();
@@ -5795,7 +6055,7 @@ Email: contact@eqao.jp
       const d = date.getDate();
       return `${y}年${m}月${d}日`;
     }
-    
+
     function showToast(message, type = 'info') {
       const toast = document.getElementById('toast');
       const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info';
@@ -5806,31 +6066,31 @@ Email: contact@eqao.jp
       `;
       toast.classList.add('show');
       lucide.createIcons();
-      
+
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
     }
-    
+
     // モーダル外クリックで閉じる
     document.getElementById('invoice-modal').addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
         closeModal();
       }
     });
-    
+
     document.getElementById('price-modal').addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
         closePriceModal();
       }
     });
-    
+
     document.getElementById('email-modal').addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
         closeEmailModal();
       }
     });
-    
+
     // ドキュメントクリックでステータスドロップダウンを閉じる
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.status-dropdown')) {
@@ -5839,4 +6099,5 @@ Email: contact@eqao.jp
     });
   </script>
 </body>
+
 </html>
