@@ -718,22 +718,20 @@
       color: var(--primary-dark);
     }
 
-    /* 期間フィルター */
+    /* 期間フィルター（タブ風） */
     .period-filter-section {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 16px;
+      padding: 0 4px 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e5e5;
       flex-wrap: wrap;
     }
 
     .period-filter-label {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       color: #666;
       display: flex;
       align-items: center;
@@ -742,32 +740,44 @@
 
     .period-preset-buttons {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 0;
     }
 
     .period-btn {
-      padding: 6px 14px;
-      border: 1px solid #e5e5e5;
-      background: #fff;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
       font-weight: 500;
-      color: #666;
+      color: #888;
       cursor: pointer;
       transition: all 0.2s;
       font-family: inherit;
+      position: relative;
+    }
+
+    .period-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: transparent;
+      transition: background 0.2s;
     }
 
     .period-btn:hover {
-      border-color: #10b981;
       color: #10b981;
     }
 
     .period-btn.active {
-      background: #d1fae5;
-      border-color: #10b981;
-      color: #059669;
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    .period-btn.active::after {
+      background: #10b981;
     }
 
     .period-custom-inputs {
@@ -2928,6 +2938,238 @@
       color: #1e40af;
       font-weight: 500;
     }
+
+    /* 更新予定カレンダー */
+    .renewal-calendar-section {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .renewal-calendar-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 12px;
+    }
+
+    .renewal-month-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .renewal-month-card {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .renewal-month-card:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .renewal-month-card.selected {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .renewal-month-card.has-students {
+      border-color: #fcd34d;
+      background: #fffbeb;
+    }
+
+    .renewal-month-card.has-students .renewal-month-count {
+      color: #d97706;
+      font-weight: 700;
+    }
+
+    .renewal-month-card.current {
+      box-shadow: 0 0 0 2px #f59e0b;
+    }
+
+    .renewal-month-card.past {
+      opacity: 0.5;
+    }
+
+    .renewal-month-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .renewal-month-count {
+      font-size: 24px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin: 4px 0;
+    }
+
+    .renewal-month-year {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .renewal-month-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* 更新案内カード */
+    .stat-card.renewal-card {
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .stat-card.renewal-card:hover {
+      border-color: #fcd34d;
+      background: #fffbeb;
+    }
+
+    .renewal-counts {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .renewal-count-item {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .renewal-count-item strong {
+      font-size: 18px;
+      color: #d97706;
+      margin-left: 2px;
+    }
+
+    .renewal-send-icon {
+      color: #d97706;
+      opacity: 0.5;
+      transition: all 0.2s;
+    }
+
+    .stat-card.renewal-card:hover .renewal-send-icon {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    /* 更新案内アクションセクション */
+    .renewal-action-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+    }
+
+    .renewal-action-icon {
+      width: 36px;
+      height: 36px;
+      background: #f59e0b;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .renewal-action-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #92400e;
+      flex-shrink: 0;
+    }
+
+    .renewal-action-months {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .renewal-month-item {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .renewal-month-item:hover {
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .renewal-month-item.has-students {
+      color: #d97706;
+      font-weight: 600;
+    }
+
+    .renewal-month-item.current {
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    .renewal-month-separator {
+      color: #ddd;
+      margin: 0 2px;
+    }
+
+    .renewal-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f59e0b;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    .renewal-action-btn:hover {
+      background: #d97706;
+    }
+
+    @media (max-width: 768px) {
+      .renewal-action-section {
+        flex-wrap: wrap;
+      }
+
+      .renewal-action-months {
+        order: 3;
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .renewal-action-btn {
+        margin-left: auto;
+      }
+    }
   </style>
 </head>
 
@@ -3049,6 +3291,21 @@
             <div class="stat-value small" id="stat-total-amount">-</div>
           </div>
         </div>
+      </div>
+
+      <!-- 更新案内アクションセクション -->
+      <div class="renewal-action-section" id="renewal-action-section">
+        <div class="renewal-action-icon">
+          <i data-lucide="calendar-clock" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="renewal-action-label">更新案内</div>
+        <div class="renewal-action-months" id="renewal-action-badges">
+          <!-- JSで動的生成 -->
+        </div>
+        <button class="renewal-action-btn" onclick="openRenewalNoticeModal()">
+          <i data-lucide="send" style="width:14px;height:14px;"></i>
+          送信
+        </button>
       </div>
 
       <!-- 期間フィルター（着金日ベース） -->
@@ -3877,6 +4134,8 @@
       document.getElementById('stat-paid-amount').textContent = '¥' + paidAmount.toLocaleString();
       document.getElementById('stat-total-amount').textContent = '¥' + totalAmount.toLocaleString();
 
+      updateRenewalCardCounts();
+
       // 更新通知バナーの表示
       checkRenewalAlerts();
     }
@@ -3900,6 +4159,7 @@
       const countEl = document.getElementById('renewal-alert-count');
       const textEl = document.getElementById('renewal-alert-text');
 
+      // 更新通知バナーの表示（既存コードを修正）
       if (renewalNeeded.length > 0) {
         alertEl.style.display = 'flex';
         countEl.textContent = renewalNeeded.length;
@@ -3916,6 +4176,31 @@
           text += `来月更新予定: ${nextMonthCount}名`;
         }
         textEl.textContent = text;
+
+        // 更新案内ボタンを追加
+        if (!document.getElementById('renewal-notice-btn')) {
+          const btnHtml = `
+      <button id="renewal-notice-btn" onclick="openRenewalNoticeModal()" style="
+        background:#f59e0b;
+        color:#fff;
+        border:none;
+        padding:8px 16px;
+        border-radius:8px;
+        font-size:13px;
+        font-weight:600;
+        cursor:pointer;
+        margin-left:12px;
+        display:flex;
+        align-items:center;
+        gap:6px;
+      ">
+        <i data-lucide="send" style="width:14px;height:14px;"></i>
+        更新案内を送信
+      </button>
+    `;
+          alertEl.querySelector('.renewal-alert-content').insertAdjacentHTML('afterend', btnHtml);
+        }
+
         lucide.createIcons();
       } else {
         alertEl.style.display = 'none';
@@ -6262,29 +6547,29 @@ Email: contact@eqao.jp
     }
 
     // ===== 着金確認メールモーダルを開く =====
-function openPaymentConfirmModal(studentId) {
-  const student = students.find(s => String(s.studentId) === String(studentId));
-  if (!student) return;
+    function openPaymentConfirmModal(studentId) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
 
-  // 次回更新月をフォーマット
-  let nextRenewalDisplay = '次回更新時';
-  if (student.nextRenewalMonth) {
-    const monthStr = String(student.nextRenewalMonth);
-    if (monthStr.length === 6) {
-      // YYYYMM形式
-      const year = monthStr.slice(0, 4);
-      const month = parseInt(monthStr.slice(4));
-      nextRenewalDisplay = `${year}年${month}月`;
-    } else if (monthStr.includes('-')) {
-      // YYYY-MM形式
-      const [year, month] = monthStr.split('-');
-      nextRenewalDisplay = `${year}年${parseInt(month)}月`;
-    }
-  }
+      // 次回更新月をフォーマット
+      let nextRenewalDisplay = '次回更新時';
+      if (student.nextRenewalMonth) {
+        const monthStr = String(student.nextRenewalMonth);
+        if (monthStr.length === 6) {
+          // YYYYMM形式
+          const year = monthStr.slice(0, 4);
+          const month = parseInt(monthStr.slice(4));
+          nextRenewalDisplay = `${year}年${month}月`;
+        } else if (monthStr.includes('-')) {
+          // YYYY-MM形式
+          const [year, month] = monthStr.split('-');
+          nextRenewalDisplay = `${year}年${parseInt(month)}月`;
+        }
+      }
 
-  const email = student.parentEmail || student.studentEmail || '';
-  const subject = `【EQAO】ご入金確認のお知らせ（${student.studentName}様）`;
-  const body = `${student.studentName} 様
+      const email = student.parentEmail || student.studentEmail || '';
+      const subject = `【EQAO】ご入金確認のお知らせ（${student.studentName}様）`;
+      const body = `${student.studentName} 様
 
 平素より大変お世話になっております。
 株式会社EQAO教育グループでございます。
@@ -6313,87 +6598,416 @@ https://lin.ee/Zu2Gb05
 経理担当
 Email: globalsight.official@gmail.com`;
 
-  // モーダルに値をセット
-  document.getElementById('email-to').value = email;
-  document.getElementById('email-subject').value = subject;
-  document.getElementById('email-body').value = body;
+      // モーダルに値をセット
+      document.getElementById('email-to').value = email;
+      document.getElementById('email-subject').value = subject;
+      document.getElementById('email-body').value = body;
 
-  // プレビュー更新
-  updateEmailPreview();
+      // プレビュー更新
+      updateEmailPreview();
 
-  // 送信ボタンを着金確認用に変更
-  const sendBtn = document.querySelector('#email-modal .action-btn.send');
-  if (sendBtn) {
-    sendBtn.onclick = () => sendPaymentConfirmEmail(studentId);
-    sendBtn.innerHTML = '<i data-lucide="mail-check" style="width:16px;height:16px;"></i> 着金確認を送信';
-  }
+      // 送信ボタンを着金確認用に変更
+      const sendBtn = document.querySelector('#email-modal .action-btn.send');
+      if (sendBtn) {
+        sendBtn.onclick = () => sendPaymentConfirmEmail(studentId);
+        sendBtn.innerHTML = '<i data-lucide="mail-check" style="width:16px;height:16px;"></i> 着金確認を送信';
+      }
 
-  // 添付ファイル表示を非表示に
-  const attachmentEl = document.querySelector('#email-modal .email-attachment');
-  if (attachmentEl) {
-    attachmentEl.style.display = 'none';
-  }
+      // 添付ファイル表示を非表示に
+      const attachmentEl = document.querySelector('#email-modal .email-attachment');
+      if (attachmentEl) {
+        attachmentEl.style.display = 'none';
+      }
 
-  // モーダル表示
-  document.getElementById('email-modal').classList.add('show');
-  lucide.createIcons();
-}
+      // モーダル表示
+      document.getElementById('email-modal').classList.add('show');
+      lucide.createIcons();
+    }
 
-// ===== 着金確認メール送信 =====
-async function sendPaymentConfirmEmail(studentId) {
-  const student = students.find(s => String(s.studentId) === String(studentId));
-  if (!student) return;
+    // ===== 着金確認メール送信 =====
+    async function sendPaymentConfirmEmail(studentId) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
 
-  const email = document.getElementById('email-to').value;
-  const subject = document.getElementById('email-subject').value;
-  const body = document.getElementById('email-body').value;
+      const email = document.getElementById('email-to').value;
+      const subject = document.getElementById('email-subject').value;
+      const body = document.getElementById('email-body').value;
 
-  if (!email) {
-    showToast('送信先メールアドレスがありません', 'error');
-    return;
-  }
+      if (!email) {
+        showToast('送信先メールアドレスがありません', 'error');
+        return;
+      }
 
-  if (!confirm(`${email} に着金確認メールを送信しますか？`)) return;
+      if (!confirm(`${email} に着金確認メールを送信しますか？`)) return;
 
-  try {
-    showToast('メールを送信中...', 'info');
-    closeEmailModal();
+      try {
+        showToast('メールを送信中...', 'info');
+        closeEmailModal();
 
-    const response = await fetch(GAS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        action: 'sendPaymentConfirm',
-        studentId: student.studentId,
-        email: email,
-        emailSubject: subject,
-        emailBody: body,
-        studentName: student.studentName
-      })
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'sendPaymentConfirm',
+            studentId: student.studentId,
+            email: email,
+            emailSubject: subject,
+            emailBody: body,
+            studentName: student.studentName
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('着金確認メールを送信しました', 'success');
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('送信エラー:', error);
+        showToast('送信に失敗しました: ' + error.message, 'error');
+      }
+    }
+
+    function closeEmailModal() {
+      document.getElementById('email-modal').classList.remove('show');
+
+      // 添付ファイル表示をリセット（次回開いた時のため）
+      const attachmentEl = document.querySelector('#email-modal .email-attachment');
+      if (attachmentEl) {
+        attachmentEl.style.display = 'flex';
+      }
+    }
+
+    // ===== モーダルを閉じる =====
+    function closeRenewalNoticeModal() {
+      const modal = document.getElementById('renewal-notice-modal');
+      if (modal) modal.remove();
+    }
+
+    // ===== 全選択/解除 =====
+    function toggleRenewalSelectAll() {
+      const selectAll = document.getElementById('renewal-select-all').checked;
+      document.querySelectorAll('.renewal-target-checkbox').forEach(cb => {
+        cb.checked = selectAll;
+      });
+      updateRenewalSendButton();
+    }
+
+    // ===== 送信ボタンの状態更新 =====
+    function updateRenewalSendButton() {
+      const checked = document.querySelectorAll('.renewal-target-checkbox:checked').length;
+      const sendBtn = document.getElementById('renewal-send-btn');
+      sendBtn.disabled = checked === 0;
+      sendBtn.innerHTML = `<i data-lucide="send" style="width:16px;height:16px;"></i> 送信する（${checked}名）`;
+      lucide.createIcons();
+    }
+
+    // チェックボックス変更時にボタン更新（イベント委譲）
+    document.addEventListener('change', (e) => {
+      if (e.target.classList.contains('renewal-target-checkbox')) {
+        updateRenewalSendButton();
+        // 全選択チェックボックスの状態も更新
+        const total = document.querySelectorAll('.renewal-target-checkbox').length;
+        const checked = document.querySelectorAll('.renewal-target-checkbox:checked').length;
+        const selectAllCb = document.getElementById('renewal-select-all');
+        if (selectAllCb) selectAllCb.checked = total > 0 && total === checked;
+      }
     });
 
-    const result = await response.json();
+    // ===== 更新案内バッジの更新 =====
+    function updateRenewalCardCounts() {
+      const now = new Date();
+      const currentMonthKey = now.getFullYear() * 100 + (now.getMonth() + 1);
 
-    if (result.success) {
-      showToast('着金確認メールを送信しました', 'success');
-    } else {
-      throw new Error(result.message);
+      // 着金済の生徒のみ対象
+      const paidStudents = students.filter(s => s.invoiceSent === '着金済');
+
+      // 12ヶ月分を生成
+      const items = [];
+      for (let i = 0; i < 12; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth() + i, 1);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const monthKey = year * 100 + month;
+        const monthKeyStr = `${year}${String(month).padStart(2, '0')}`;
+
+        // この月の更新予定人数
+        const count = paidStudents.filter(s => {
+          const renewalMonth = parseInt(String(s.nextRenewalMonth || '').replace('-', ''));
+          return renewalMonth === monthKey;
+        }).length;
+
+        const isCurrent = monthKey === currentMonthKey;
+        const hasStudents = count > 0;
+        const countDisplay = count > 0 ? `${count}名` : '-';
+
+        // 区切り線（最初以外）
+        if (i > 0) {
+          items.push('<span class="renewal-month-separator">|</span>');
+        }
+
+        items.push(`
+  <span class="renewal-month-item ${hasStudents ? 'has-students' : ''} ${isCurrent ? 'current' : ''}" 
+        onclick="openRenewalNoticeModal(); setTimeout(() => selectRenewalMonth('${monthKeyStr}'), 100);">
+    ${month}月 : ${countDisplay}
+  </span>
+`);
+      }
+
+      const badgesContainer = document.getElementById('renewal-action-badges');
+      if (badgesContainer) {
+        badgesContainer.innerHTML = items.join('');
+      }
+
+      // 旧IDの互換性維持
+      const thisMonthEl = document.getElementById('renewal-this-month');
+      const nextMonthEl = document.getElementById('renewal-next-month');
+      if (thisMonthEl) {
+        const thisMonthCount = paidStudents.filter(s => {
+          const renewalMonth = parseInt(String(s.nextRenewalMonth || '').replace('-', ''));
+          return renewalMonth === currentMonthKey;
+        }).length;
+        thisMonthEl.textContent = thisMonthCount;
+      }
+      if (nextMonthEl) {
+        const nextMonthKey = now.getMonth() === 11
+          ? (now.getFullYear() + 1) * 100 + 1
+          : now.getFullYear() * 100 + (now.getMonth() + 2);
+        const nextMonthCount = paidStudents.filter(s => {
+          const renewalMonth = parseInt(String(s.nextRenewalMonth || '').replace('-', ''));
+          return renewalMonth === nextMonthKey;
+        }).length;
+        nextMonthEl.textContent = nextMonthCount;
+      }
     }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    showToast('送信に失敗しました: ' + error.message, 'error');
-  }
-}
+    // ===== 更新案内モーダルを開く =====
+    function openRenewalNoticeModal() {
+      const renewalMap = {};
+      const today = new Date();
 
-function closeEmailModal() {
-  document.getElementById('email-modal').classList.remove('show');
-  
-  // 添付ファイル表示をリセット（次回開いた時のため）
-  const attachmentEl = document.querySelector('#email-modal .email-attachment');
-  if (attachmentEl) {
-    attachmentEl.style.display = 'flex';
-  }
-}
+      for (let i = 0; i < 12; i++) {
+        const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
+        const key = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}`;
+        renewalMap[key] = {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          students: []
+        };
+      }
+
+      students.forEach(s => {
+        if (s.invoiceSent !== '着金済') return;
+        const renewalMonth = String(s.nextRenewalMonth || '').replace('-', '');
+        if (renewalMonth && renewalMap[renewalMonth]) {
+          renewalMap[renewalMonth].students.push(s);
+        }
+      });
+
+      const monthCards = Object.entries(renewalMap).map(([key, data]) => {
+        const count = data.students.length;
+        const isCurrentMonth = key === `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}`;
+
+        return `
+      <div class="renewal-month-card ${count > 0 ? 'has-students' : ''} ${isCurrentMonth ? 'current' : ''}" 
+           data-month="${key}" onclick="selectRenewalMonth('${key}')">
+        <div class="renewal-month-label">${data.month}月</div>
+        <div class="renewal-month-count">${count}</div>
+        <div class="renewal-month-year">${data.year}</div>
+      </div>
+    `;
+      }).join('');
+
+      const modalHtml = `
+    <div class="modal-overlay show" id="renewal-notice-modal" onclick="if(event.target===this)closeRenewalNoticeModal()">
+      <div class="modal" style="max-width:800px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="calendar-clock" style="width:20px;height:20px;"></i>
+            更新案内送信
+          </div>
+          <button class="modal-close" onclick="closeRenewalNoticeModal()">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <div class="modal-body" style="padding:20px;">
+          
+          <div class="renewal-calendar-section">
+            <div class="renewal-calendar-title">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              更新予定一覧（着金済の生徒）
+            </div>
+            <div class="renewal-month-grid">
+              ${monthCards}
+            </div>
+          </div>
+          
+          <div class="edit-panel-item" style="margin-bottom:20px;">
+            <label class="edit-panel-label" style="display:flex;align-items:center;gap:12px;">
+              <span id="renewal-target-label">対象月を選択してください</span>
+              <label style="font-weight:normal;font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer;">
+                <input type="checkbox" id="renewal-select-all" onchange="toggleRenewalSelectAll()">
+                全選択
+              </label>
+            </label>
+            <div id="renewal-target-list" style="max-height:200px;overflow-y:auto;border:1px solid #ddd;border-radius:8px;padding:8px;">
+              <div style="color:#999;text-align:center;padding:20px;">上のカレンダーから月を選択してください</div>
+            </div>
+          </div>
+
+          <div class="edit-panel-item" style="margin-bottom:20px;">
+            <label class="edit-panel-label">件名</label>
+            <input type="text" class="edit-input" id="renewal-email-subject" value="【EQAO】次回ご請求のご案内">
+          </div>
+
+          <div class="edit-panel-item">
+            <label class="edit-panel-label">本文テンプレート</label>
+            <textarea class="email-textarea" id="renewal-email-body" rows="10" style="min-height:180px;">保護者様
+
+平素より大変お世話になっております。
+株式会社EQAO教育グループでございます。
+
+次回のご請求時期が近づいてまいりましたので、ご案内申し上げます。
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+■ 次回ご請求について
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+次回のご請求は、来月中旬頃にご案内させていただく予定です。
+
+請求月数の変更をご希望の場合は、
+EQAO公式LINEよりお気軽にお知らせください。
+
+▼ EQAO公式LINE
+https://lin.ee/Zu2Gb05
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+ご不明点がございましたら、お気軽にお問い合わせください。
+今後ともどうぞよろしくお願いいたします。
+
+---
+株式会社EQAO教育グループ
+経理担当
+Email: globalsight.official@gmail.com</textarea>
+            <p style="font-size:11px;color:#888;margin-top:8px;">
+              ※本文先頭に「{生徒名} 様」が自動で追加されます
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="action-btn secondary" onclick="closeRenewalNoticeModal()">キャンセル</button>
+          <button class="action-btn send" id="renewal-send-btn" onclick="sendRenewalNotices()" disabled>
+            <i data-lucide="send" style="width:16px;height:16px;"></i>
+            送信する（0名）
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+      lucide.createIcons();
+
+      const currentMonthKey = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}`;
+      selectRenewalMonth(currentMonthKey);
+    }
+
+    // ===== 月を選択 =====
+    function selectRenewalMonth(monthKey) {
+      document.querySelectorAll('.renewal-month-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.month === monthKey);
+      });
+
+      const targets = students.filter(s => {
+        const renewalMonth = String(s.nextRenewalMonth || '').replace('-', '');
+        return renewalMonth === monthKey && s.invoiceSent === '着金済';
+      });
+
+      const year = monthKey.slice(0, 4);
+      const month = parseInt(monthKey.slice(4));
+
+      const labelEl = document.getElementById('renewal-target-label');
+      labelEl.innerHTML = `対象者一覧（${year}年${month}月更新: <strong>${targets.length}名</strong>）`;
+
+      const listEl = document.getElementById('renewal-target-list');
+
+      if (targets.length === 0) {
+        listEl.innerHTML = '<div style="color:#999;text-align:center;padding:20px;">この月に更新予定の生徒はいません</div>';
+        updateRenewalSendButton();
+        return;
+      }
+
+      listEl.innerHTML = targets.map(s => `
+    <label style="display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid #eee;cursor:pointer;">
+      <input type="checkbox" class="renewal-target-checkbox" value="${s.studentId}" data-email="${s.parentEmail || s.studentEmail || ''}" data-name="${s.studentName || ''}">
+      <span style="flex:1;">
+        <strong>${s.studentName || '名前なし'}</strong>
+        <span style="color:#888;font-size:12px;margin-left:8px;">#${s.studentId}</span>
+      </span>
+      <span style="font-size:12px;color:#666;">${s.parentEmail || s.studentEmail || 'メールなし'}</span>
+    </label>
+  `).join('');
+
+      const selectAllCb = document.getElementById('renewal-select-all');
+      if (selectAllCb) selectAllCb.checked = false;
+
+      updateRenewalSendButton();
+    }
+
+    // ===== 更新案内を送信 =====
+    async function sendRenewalNotices() {
+      const checkedBoxes = document.querySelectorAll('.renewal-target-checkbox:checked');
+      if (checkedBoxes.length === 0) return;
+
+      const subject = document.getElementById('renewal-email-subject').value;
+      const bodyTemplate = document.getElementById('renewal-email-body').value;
+
+      const targets = [];
+      checkedBoxes.forEach(cb => {
+        targets.push({
+          studentId: cb.value,
+          email: cb.dataset.email,
+          name: cb.dataset.name
+        });
+      });
+
+      const noEmail = targets.filter(t => !t.email);
+      if (noEmail.length > 0) {
+        alert(`メールアドレスがない生徒が${noEmail.length}名います:\n${noEmail.map(t => t.name).join(', ')}`);
+        return;
+      }
+
+      if (!confirm(`${targets.length}名に更新案内を送信します。よろしいですか？`)) return;
+
+      try {
+        showToast(`更新案内を送信中...`, 'info');
+        closeRenewalNoticeModal();
+
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'sendRenewalNotices',
+            subject: subject,
+            bodyTemplate: bodyTemplate,
+            targets: targets
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(`更新案内を${result.sentCount}名に送信しました`, 'success');
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('送信エラー:', error);
+        showToast('送信に失敗しました: ' + error.message, 'error');
+      }
+    }
 
   </script>
 </body>
