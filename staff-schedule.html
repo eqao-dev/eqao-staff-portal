@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     :root {
       --primary: #0ea5e9;
       --primary-dark: #0284c7;
@@ -24,14 +25,14 @@
       --warning: #eab308;
       --warning-light: #fef9c3;
     }
-    
+
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: #f8f9fa;
       min-height: 100vh;
       color: #333;
     }
-    
+
     /* ヘッダー */
     .header {
       background: #111;
@@ -43,7 +44,7 @@
       top: 0;
       z-index: 100;
     }
-    
+
     .header-content {
       max-width: 1400px;
       margin: 0 auto;
@@ -52,36 +53,36 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    
+
     .back-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       color: #fff;
       text-decoration: none;
       transition: all 0.2s;
     }
-    
+
     .back-btn:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
     }
-    
+
     .header-info {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    
+
     .header-icon {
       width: 36px;
       height: 36px;
@@ -92,13 +93,13 @@
       justify-content: center;
       color: #fff;
     }
-    
+
     .header-title {
       font-size: 18px;
       font-weight: 700;
       color: #fff;
     }
-    
+
     .refresh-btn {
       display: flex;
       align-items: center;
@@ -114,18 +115,18 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .refresh-btn:hover {
       background: var(--primary-dark);
     }
-    
+
     /* メイン */
     .main {
       max-width: 1400px;
       margin: 0 auto;
       padding: 24px;
     }
-    
+
     /* タブナビゲーション */
     .tab-nav {
       display: flex;
@@ -136,7 +137,7 @@
       padding: 6px;
       margin-bottom: 24px;
     }
-    
+
     .tab-btn {
       flex: 1;
       padding: 12px 16px;
@@ -154,36 +155,36 @@
       justify-content: center;
       gap: 8px;
     }
-    
+
     .tab-btn:hover {
       background: #f5f5f5;
       color: #333;
     }
-    
+
     .tab-btn.active {
       background: var(--primary);
       color: #fff;
     }
-    
+
     .tab-btn.disabled {
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
     }
-    
+
     .tab-btn.disabled:hover {
       background: transparent;
       color: #666;
     }
-    
+
     .tab-content {
       display: none;
     }
-    
+
     .tab-content.active {
       display: block;
     }
-    
+
     /* 準備中表示 */
     .coming-soon {
       background: #fff;
@@ -192,7 +193,7 @@
       padding: 60px 20px;
       text-align: center;
     }
-    
+
     .coming-soon-icon {
       width: 80px;
       height: 80px;
@@ -204,19 +205,19 @@
       margin: 0 auto 20px;
       color: var(--primary);
     }
-    
+
     .coming-soon-title {
       font-size: 20px;
       font-weight: 700;
       color: #333;
       margin-bottom: 8px;
     }
-    
+
     .coming-soon-text {
       font-size: 14px;
       color: #888;
     }
-    
+
     /* モーダル */
     .modal-overlay {
       position: fixed;
@@ -224,7 +225,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -234,12 +235,12 @@
       transition: all 0.3s;
       padding: 20px;
     }
-    
+
     .modal-overlay.show {
       opacity: 1;
       visibility: visible;
     }
-    
+
     .modal {
       background: #fff;
       border-radius: 16px;
@@ -247,7 +248,7 @@
       max-width: 420px;
       overflow: hidden;
     }
-    
+
     .modal-header {
       padding: 20px;
       border-bottom: 1px solid #eee;
@@ -255,7 +256,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .modal-title {
       font-size: 16px;
       font-weight: 700;
@@ -264,7 +265,7 @@
       align-items: center;
       gap: 10px;
     }
-    
+
     .modal-close {
       width: 36px;
       height: 36px;
@@ -278,24 +279,24 @@
       color: #666;
       transition: all 0.2s;
     }
-    
+
     .modal-close:hover {
       background: #eee;
       color: #333;
     }
-    
+
     .modal-body {
       padding: 20px;
     }
-    
+
     .form-group {
       margin-bottom: 16px;
     }
-    
+
     .form-group:last-child {
       margin-bottom: 0;
     }
-    
+
     .form-label {
       display: block;
       font-size: 13px;
@@ -303,7 +304,7 @@
       color: #333;
       margin-bottom: 8px;
     }
-    
+
     .form-input {
       width: 100%;
       padding: 12px 14px;
@@ -313,13 +314,13 @@
       font-family: inherit;
       transition: all 0.2s;
     }
-    
+
     .form-input:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
     }
-    
+
     .modal-footer {
       padding: 16px 20px;
       border-top: 1px solid #eee;
@@ -327,7 +328,7 @@
       gap: 10px;
       justify-content: flex-end;
     }
-    
+
     .modal-btn {
       padding: 10px 20px;
       border: none;
@@ -341,25 +342,25 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .modal-btn.secondary {
       background: #f5f5f5;
       color: #666;
     }
-    
+
     .modal-btn.secondary:hover {
       background: #eee;
     }
-    
+
     .modal-btn.primary {
       background: var(--primary);
       color: #fff;
     }
-    
+
     .modal-btn.primary:hover {
       background: var(--primary-dark);
     }
-    
+
     /* チュートリアル情報表示 */
     .tutorial-info {
       margin-top: 4px;
@@ -369,7 +370,7 @@
       align-items: center;
       gap: 4px;
     }
-    
+
     .status-icon-btn .tutorial-info-tooltip {
       position: absolute;
       top: 100%;
@@ -389,12 +390,12 @@
       text-align: left;
       line-height: 1.5;
     }
-    
+
     .status-icon-btn.done:hover .tutorial-info-tooltip {
       opacity: 1;
       visibility: visible;
     }
-    
+
     /* 統計カード */
     .stats-grid {
       display: grid;
@@ -402,7 +403,7 @@
       gap: 16px;
       margin-bottom: 24px;
     }
-    
+
     .stat-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -412,7 +413,7 @@
       align-items: center;
       gap: 16px;
     }
-    
+
     .stat-icon {
       width: 48px;
       height: 48px;
@@ -421,38 +422,38 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .stat-card.total .stat-icon {
       background: var(--primary-light);
       color: var(--primary);
     }
-    
+
     .stat-card.pending .stat-icon {
       background: var(--warning-light);
       color: var(--warning);
     }
-    
+
     .stat-card.done .stat-icon {
       background: var(--success-light);
       color: var(--success);
     }
-    
+
     .stat-info {
       flex: 1;
     }
-    
+
     .stat-label {
       font-size: 13px;
       color: #666;
       margin-bottom: 4px;
     }
-    
+
     .stat-value {
       font-size: 28px;
       font-weight: 700;
       color: #111;
     }
-    
+
     /* フィルター */
     .filter-bar {
       background: #fff;
@@ -465,7 +466,7 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    
+
     .search-box {
       display: flex;
       align-items: center;
@@ -479,12 +480,12 @@
       max-width: 320px;
       color: #888;
     }
-    
+
     .search-box:focus-within {
       border-color: var(--primary);
       background: #fff;
     }
-    
+
     .search-box input {
       border: none;
       background: transparent;
@@ -494,18 +495,18 @@
       outline: none;
       font-family: inherit;
     }
-    
+
     .search-box input::placeholder {
       color: #999;
     }
-    
+
     .filter-buttons {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
-    
+
     .filter-label {
       font-size: 14px;
       font-weight: 600;
@@ -514,7 +515,7 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .filter-btn {
       padding: 8px 16px;
       border: 1px solid #e5e5e5;
@@ -527,25 +528,25 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .filter-btn:hover {
       border-color: var(--primary);
       color: var(--primary);
     }
-    
+
     .filter-btn.active {
       background: var(--primary);
       border-color: var(--primary);
       color: #fff;
     }
-    
+
     /* 生徒リスト */
     .student-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    
+
     /* 生徒カード */
     .student-card {
       background: #fff;
@@ -554,19 +555,19 @@
       overflow: visible;
       transition: all 0.2s;
     }
-    
+
     .student-card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     }
-    
+
     .student-card.incomplete {
       border-left: 4px solid var(--warning);
     }
-    
+
     .student-card.complete {
       border-left: 4px solid var(--success);
     }
-    
+
     .student-header {
       padding: 16px 20px;
       display: flex;
@@ -576,11 +577,11 @@
       gap: 12px;
       border-radius: 14px;
     }
-    
+
     .student-card.expanded .student-header {
       border-radius: 14px 14px 0 0;
     }
-    
+
     .student-info {
       display: flex;
       align-items: center;
@@ -588,7 +589,7 @@
       flex: 1;
       min-width: 0;
     }
-    
+
     .student-avatar {
       width: 44px;
       height: 44px;
@@ -602,12 +603,12 @@
       font-size: 16px;
       flex-shrink: 0;
     }
-    
+
     .student-main {
       flex: 1;
       min-width: 0;
     }
-    
+
     .student-name {
       font-size: 15px;
       font-weight: 700;
@@ -617,7 +618,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    
+
     .student-meta {
       font-size: 12px;
       color: #888;
@@ -627,27 +628,27 @@
       white-space: nowrap;
       overflow: hidden;
     }
-    
+
     .student-meta span {
       display: flex;
       align-items: center;
       gap: 3px;
       flex-shrink: 0;
     }
-    
+
     .student-meta .school-name {
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100px;
     }
-    
+
     /* ステータスアイコン（コンパクト版） */
     .status-icons {
       display: flex;
       gap: 4px;
       flex-shrink: 0;
     }
-    
+
     .status-icon-btn {
       width: 30px;
       height: 30px;
@@ -660,27 +661,27 @@
       border: none;
       position: relative;
     }
-    
+
     .status-icon-btn.pending {
       background: var(--warning-light);
       color: #92400e;
     }
-    
+
     .status-icon-btn.pending:hover {
       background: #fde68a;
       transform: scale(1.1);
     }
-    
+
     .status-icon-btn.done {
       background: var(--success-light);
       color: #166534;
     }
-    
+
     .status-icon-btn.done:hover {
       background: #bbf7d0;
       transform: scale(1.1);
     }
-    
+
     /* ツールチップ（下に表示） */
     .status-icon-btn::after {
       content: attr(data-tooltip);
@@ -702,7 +703,7 @@
       margin-top: 6px;
       z-index: 10;
     }
-    
+
     .status-icon-btn::before {
       content: '';
       position: absolute;
@@ -717,13 +718,13 @@
       margin-top: -4px;
       z-index: 10;
     }
-    
+
     .status-icon-btn:hover::after,
     .status-icon-btn:hover::before {
       opacity: 1;
       visibility: visible;
     }
-    
+
     .expand-btn {
       width: 36px;
       height: 36px;
@@ -738,18 +739,18 @@
       transition: all 0.2s;
       flex-shrink: 0;
     }
-    
+
     .expand-btn:hover {
       background: #eee;
       color: #333;
     }
-    
+
     .student-card.expanded .expand-btn {
       transform: rotate(180deg);
       background: var(--primary);
       color: #fff;
     }
-    
+
     /* 詳細パネル */
     .student-details {
       display: none;
@@ -758,25 +759,25 @@
       background: #fafafa;
       border-radius: 0 0 14px 14px;
     }
-    
+
     .student-card.expanded .student-details {
       display: block;
     }
-    
+
     .details-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
       margin-bottom: 20px;
     }
-    
+
     .detail-section {
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 12px;
       padding: 16px;
     }
-    
+
     .detail-section-title {
       font-size: 13px;
       font-weight: 700;
@@ -786,7 +787,7 @@
       align-items: center;
       gap: 6px;
     }
-    
+
     .detail-item {
       display: flex;
       justify-content: space-between;
@@ -794,28 +795,28 @@
       border-bottom: 1px solid #f5f5f5;
       font-size: 13px;
     }
-    
+
     .detail-item:last-child {
       border-bottom: none;
     }
-    
+
     .detail-item.full-width {
       flex-direction: column;
       gap: 8px;
     }
-    
+
     .detail-item.full-width .detail-value {
       text-align: left;
       max-width: 100%;
     }
-    
+
     /* 曜日別スタイル表示 */
     .weekday-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
-    
+
     .weekday-item {
       display: flex;
       align-items: center;
@@ -825,37 +826,37 @@
       font-size: 12px;
       font-weight: 500;
     }
-    
+
     .weekday-item.school {
       background: #dbeafe;
       color: #1e40af;
     }
-    
+
     .weekday-item.online {
       background: #dcfce7;
       color: #166534;
     }
-    
+
     .weekday-item.either {
       background: #f3f4f6;
       color: #4b5563;
     }
-    
+
     .weekday-day {
       font-weight: 700;
     }
-    
+
     .weekday-type {
       font-size: 10px;
     }
-    
+
     /* 希望日程表示 */
     .schedule-list {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    
+
     .schedule-item {
       display: flex;
       align-items: center;
@@ -866,18 +867,18 @@
       font-size: 12px;
       color: #0369a1;
     }
-    
+
     .detail-label {
       color: #888;
     }
-    
+
     .detail-value {
       color: #333;
       font-weight: 500;
       text-align: right;
       max-width: 60%;
     }
-    
+
     /* ステータスチェック */
     .status-section {
       background: #fff;
@@ -885,7 +886,7 @@
       border-radius: 12px;
       padding: 20px;
     }
-    
+
     .status-section-title {
       font-size: 14px;
       font-weight: 700;
@@ -895,13 +896,13 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .status-checks {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
-    
+
     .status-check {
       display: flex;
       align-items: center;
@@ -915,20 +916,20 @@
       flex: 1;
       min-width: 180px;
     }
-    
+
     .status-check:hover {
       border-color: var(--primary);
     }
-    
+
     .status-check.checked {
       background: var(--success-light);
       border-color: var(--success);
     }
-    
+
     .status-check input {
       display: none;
     }
-    
+
     .status-check-box {
       width: 24px;
       height: 24px;
@@ -941,23 +942,23 @@
       flex-shrink: 0;
       color: transparent;
     }
-    
+
     .status-check.checked .status-check-box {
       background: var(--success);
       border-color: var(--success);
       color: white;
     }
-    
+
     .status-check-label {
       font-size: 13px;
       font-weight: 600;
       color: #666;
     }
-    
+
     .status-check.checked .status-check-label {
       color: #166534;
     }
-    
+
     /* ローディング */
     .loading {
       display: flex;
@@ -967,7 +968,7 @@
       padding: 60px;
       gap: 16px;
     }
-    
+
     .loading-spinner {
       width: 48px;
       height: 48px;
@@ -976,23 +977,25 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
-    
+
     .loading-text {
       font-size: 14px;
       color: #888;
     }
-    
+
     /* 空状態 */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
       color: #888;
     }
-    
+
     .empty-state-icon {
       width: 64px;
       height: 64px;
@@ -1004,14 +1007,14 @@
       margin: 0 auto 16px;
       color: #bbb;
     }
-    
+
     .empty-state-title {
       font-size: 16px;
       font-weight: 600;
       color: #666;
       margin-bottom: 8px;
     }
-    
+
     /* トースト */
     .toast {
       position: fixed;
@@ -1025,124 +1028,124 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       transform: translateY(100px);
       opacity: 0;
       transition: all 0.3s;
       z-index: 1000;
     }
-    
+
     .toast.show {
       transform: translateY(0);
       opacity: 1;
     }
-    
+
     .toast.success {
       background: var(--success);
     }
-    
+
     .toast.error {
       background: #ef4444;
     }
-    
+
     /* レスポンシブ */
     @media (max-width: 768px) {
       .main {
         padding: 16px;
       }
-      
+
       .tab-nav {
         flex-direction: column;
         gap: 4px;
       }
-      
+
       .tab-btn {
         justify-content: flex-start;
         padding: 10px 14px;
       }
-      
+
       .stats-grid {
         grid-template-columns: 1fr 1fr;
       }
-      
+
       .stat-card {
         padding: 14px;
       }
-      
+
       .stat-value {
         font-size: 22px;
       }
-      
+
       .filter-bar {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
       }
-      
+
       .search-box {
         max-width: none;
       }
-      
+
       .filter-buttons {
         justify-content: flex-start;
       }
-      
+
       .student-header {
         padding: 14px 16px;
         gap: 10px;
       }
-      
+
       .student-avatar {
         width: 38px;
         height: 38px;
         font-size: 14px;
       }
-      
+
       .status-icon-btn {
         width: 26px;
         height: 26px;
       }
-      
+
       .details-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .status-checks {
         flex-direction: column;
       }
-      
+
       .status-check {
         min-width: auto;
       }
     }
-    
+
     @media (max-width: 480px) {
       .stats-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .stat-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
       }
-      
+
       .header-title {
         font-size: 16px;
       }
-      
+
       .refresh-btn span {
         display: none;
       }
-      
+
       .refresh-btn {
         padding: 10px;
       }
-      
+
       .status-icons {
         gap: 3px;
       }
-      
+
       .status-icon-btn {
         width: 24px;
         height: 24px;
@@ -1150,6 +1153,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- ヘッダー -->
   <header class="header">
@@ -1171,7 +1175,7 @@
       </button>
     </div>
   </header>
-  
+
   <!-- メイン -->
   <main class="main">
     <!-- タブナビゲーション -->
@@ -1189,7 +1193,7 @@
         消費コマ数管理
       </button>
     </div>
-    
+
     <!-- 入塾手続きタブ -->
     <div class="tab-content active" id="tab-enrollment">
       <!-- 統計カード -->
@@ -1222,7 +1226,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 検索・フィルター -->
       <div class="filter-bar">
         <div class="search-box">
@@ -1239,7 +1243,7 @@
           <button class="filter-btn" data-filter="complete">完了のみ</button>
         </div>
       </div>
-      
+
       <!-- 生徒リスト -->
       <div class="student-list" id="student-list">
         <div class="loading">
@@ -1248,7 +1252,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- スケジュール調整タブ -->
     <div class="tab-content" id="tab-scheduling">
       <div class="coming-soon">
@@ -1259,7 +1263,7 @@
         <div class="coming-soon-text">この機能は準備中です</div>
       </div>
     </div>
-    
+
     <!-- 消費コマ数管理タブ -->
     <div class="tab-content" id="tab-lessons">
       <div class="coming-soon">
@@ -1271,7 +1275,7 @@
       </div>
     </div>
   </main>
-  
+
   <!-- チュートリアル実施モーダル -->
   <div class="modal-overlay" id="tutorial-modal">
     <div class="modal">
@@ -1307,74 +1311,74 @@
       </div>
     </div>
   </div>
-  
+
   <!-- トースト -->
   <div class="toast" id="toast"></div>
-  
+
   <script>
     // 設定
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
-    
+
     let students = [];
     let currentFilter = 'all';
     let searchQuery = '';
     let currentTab = 'enrollment';
-    
+
     // タブ切り替え
     function switchTab(tabId) {
       currentTab = tabId;
-      
+
       // タブボタン更新
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tabId);
       });
-      
+
       // タブコンテンツ更新
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.toggle('active', content.id === `tab-${tabId}`);
       });
-      
+
       lucide.createIcons();
     }
-    
+
     // チュートリアル実施モーダルを開く
     function openTutorialModal(studentId) {
       const student = students.find(s => String(s.studentId) === String(studentId));
       if (!student) return;
-      
+
       currentTutorialStudentId = studentId;
-      
+
       document.getElementById('tutorial-student-name').value = student.studentName || '';
       document.getElementById('tutorial-date').value = new Date().toISOString().split('T')[0];
       document.getElementById('tutorial-staff').value = '';
-      
+
       document.getElementById('tutorial-modal').classList.add('show');
       lucide.createIcons();
     }
-    
+
     // チュートリアル実施モーダルを閉じる
     function closeTutorialModal() {
       document.getElementById('tutorial-modal').classList.remove('show');
       currentTutorialStudentId = null;
     }
-    
+
     // チュートリアル実施を保存
     async function saveTutorial() {
       if (!currentTutorialStudentId) return;
-      
+
       const tutorialDate = document.getElementById('tutorial-date').value;
       const tutorialStaff = document.getElementById('tutorial-staff').value.trim();
-      
+
       if (!tutorialDate) {
         showToast('実施日を入力してください', 'error');
         return;
       }
-      
+
       if (!tutorialStaff) {
         showToast('実施者を入力してください', 'error');
         return;
       }
-      
+
       // ローカルデータ更新
       const student = students.find(s => String(s.studentId) === String(currentTutorialStudentId));
       if (student) {
@@ -1382,7 +1386,7 @@
         student.tutorialDate = tutorialDate;
         student.tutorialStaff = tutorialStaff;
       }
-      
+
       // UI更新
       updateStats();
       const card = document.getElementById(`card-${currentTutorialStudentId}`);
@@ -1392,15 +1396,15 @@
         document.getElementById(`card-${currentTutorialStudentId}`).classList.add('expanded');
       }
       lucide.createIcons();
-      
+
       closeTutorialModal();
-      
+
       // API呼び出し
       try {
         const url = `${GAS_API_URL}?action=updateTutorial&studentId=${encodeURIComponent(currentTutorialStudentId)}&date=${encodeURIComponent(tutorialDate)}&staff=${encodeURIComponent(tutorialStaff)}`;
         const response = await fetch(url);
         const result = await response.json();
-        
+
         if (result.success) {
           showToast('チュートリアル実施を記録しました', 'success');
         } else {
@@ -1411,24 +1415,24 @@
         showToast('保存に失敗しました', 'error');
       }
     }
-    
+
     // ステータス項目（アイコン付き）
     const STATUS_COLUMNS = [
-      { key: 'statusCommunity', label: 'EQAOコミュニティ', column: 'EQAOコミュニティ', icon: 'users' },
-      { key: 'statusTutorialAdj', label: 'チュートリアル調整', column: 'チュートリアル調整', icon: 'calendar' },
-      { key: 'statusTutorialDone', label: 'チュートリアル実施', column: 'チュートリアル実施', icon: 'video', hasDetails: true },
-      { key: 'statusSchedule', label: 'スケジュール作成', column: 'スケジュール作成', icon: 'calendar-check' },
-      { key: 'statusLine', label: 'ライングループ作成', column: 'ライングループ作成', icon: 'message-circle' }
+      { key: 'EQAOコミュニティ', label: 'EQAOコミュニティ', column: 'EQAOコミュニティ', icon: 'users' },
+      { key: 'チュートリアル調整', label: 'チュートリアル調整', column: 'チュートリアル調整', icon: 'calendar' },
+      { key: 'チュートリアル実施', label: 'チュートリアル実施', column: 'チュートリアル実施', icon: 'video', hasDetails: true },
+      { key: 'スケジュール作成', label: 'スケジュール作成', column: 'スケジュール作成', icon: 'calendar-check' },
+      { key: 'ライングループ作成', label: 'ライングループ作成', column: 'ライングループ作成', icon: 'message-circle' }
     ];
-    
+
     let currentTutorialStudentId = null;
-    
+
     // 初期化
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       setupFilters();
       loadData();
-      
+
       // モーダル外クリックで閉じる
       document.getElementById('tutorial-modal').addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) {
@@ -1436,7 +1440,7 @@
         }
       });
     });
-    
+
     // フィルター設定
     function setupFilters() {
       document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1448,7 +1452,7 @@
         });
       });
     }
-    
+
     // データ読み込み
     async function loadData() {
       const listEl = document.getElementById('student-list');
@@ -1458,11 +1462,11 @@
           <div class="loading-text">読み込み中...</div>
         </div>
       `;
-      
+
       try {
         const response = await fetch(`${GAS_API_URL}?action=getScheduleData`);
         const result = await response.json();
-        
+
         if (result.success) {
           students = result.data;
           updateStats();
@@ -1484,35 +1488,35 @@
         lucide.createIcons();
       }
     }
-    
+
     // 統計更新
     function updateStats() {
       const total = students.length;
       const complete = students.filter(s => isComplete(s)).length;
       const incomplete = total - complete;
-      
+
       document.getElementById('stat-total').textContent = total;
       document.getElementById('stat-incomplete').textContent = incomplete;
       document.getElementById('stat-complete').textContent = complete;
     }
-    
+
     // 完了チェック
     function isComplete(student) {
       return STATUS_COLUMNS.every(col => student[col.key] === '完了');
     }
-    
+
     // 検索処理
     function handleSearch() {
       searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
       renderStudents();
     }
-    
+
     // 生徒リスト描画
     function renderStudents() {
       const listEl = document.getElementById('student-list');
-      
+
       let filtered = students;
-      
+
       // 検索フィルター
       if (searchQuery) {
         filtered = filtered.filter(s => {
@@ -1521,14 +1525,14 @@
           return id.includes(searchQuery) || name.includes(searchQuery);
         });
       }
-      
+
       // 完了/未完了フィルター
       if (currentFilter === 'incomplete') {
         filtered = filtered.filter(s => !isComplete(s));
       } else if (currentFilter === 'complete') {
         filtered = filtered.filter(s => isComplete(s));
       }
-      
+
       if (filtered.length === 0) {
         listEl.innerHTML = `
           <div class="empty-state">
@@ -1542,20 +1546,20 @@
         lucide.createIcons();
         return;
       }
-      
+
       listEl.innerHTML = filtered.map(student => renderStudentCard(student)).join('');
       lucide.createIcons();
     }
-    
+
     // 生徒カード描画
     function renderStudentCard(student) {
       const complete = isComplete(student);
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
-      
+
       // アイコンのみのステータス表示（ツールチップ付き）
       const statusIcons = STATUS_COLUMNS.map(col => {
         const done = student[col.key] === '完了';
-        
+
         // チュートリアル実施の場合は特別処理
         if (col.hasDetails) {
           const tutorialDate = student.tutorialDate || '';
@@ -1563,7 +1567,7 @@
           const tooltipContent = done && (tutorialDate || tutorialStaff)
             ? `${col.label}\\n${tutorialDate ? '日付: ' + tutorialDate : ''}${tutorialStaff ? '\\n担当: ' + tutorialStaff : ''}`
             : col.label;
-          
+
           return `
             <button class="status-icon-btn ${done ? 'done' : 'pending'}" 
                     data-tooltip="${tooltipContent}"
@@ -1572,7 +1576,7 @@
             </button>
           `;
         }
-        
+
         return `
           <button class="status-icon-btn ${done ? 'done' : 'pending'}" 
                   data-tooltip="${col.label}"
@@ -1581,16 +1585,16 @@
           </button>
         `;
       }).join('');
-      
+
       // 詳細パネル内のチェックボックス（ラベル付き）
       const statusChecks = STATUS_COLUMNS.map(col => {
         const checked = student[col.key] === '完了';
-        
+
         // チュートリアル実施の場合は特別表示
         if (col.hasDetails) {
           const tutorialDate = student.tutorialDate || '';
           const tutorialStaff = student.tutorialStaff || '';
-          
+
           return `
             <label class="status-check ${checked ? 'checked' : ''}" onclick="event.stopPropagation(); ${checked ? '' : `openTutorialModal('${student.studentId}')`}">
               <input type="checkbox" ${checked ? 'checked' : ''} 
@@ -1610,7 +1614,7 @@
             </label>
           `;
         }
-        
+
         return `
           <label class="status-check ${checked ? 'checked' : ''}" onclick="event.stopPropagation()">
             <input type="checkbox" ${checked ? 'checked' : ''} 
@@ -1622,7 +1626,7 @@
           </label>
         `;
       }).join('');
-      
+
       return `
         <div class="student-card ${complete ? 'complete' : 'incomplete'}" id="card-${student.studentId}">
           <div class="student-header" onclick="toggleCard('${student.studentId}')">
@@ -1756,12 +1760,12 @@
         </div>
       `;
     }
-    
+
     // カード展開/折りたたみ
     function toggleCard(studentId) {
       const card = document.getElementById(`card-${studentId}`);
       const isExpanding = !card.classList.contains('expanded');
-      
+
       // 他の開いているカードを閉じる
       if (isExpanding) {
         document.querySelectorAll('.student-card.expanded').forEach(c => {
@@ -1770,15 +1774,15 @@
           }
         });
       }
-      
+
       card.classList.toggle('expanded');
       lucide.createIcons();
     }
-    
+
     // ステータス更新（楽観的更新）
     async function updateStatus(studentId, columnName, checked) {
       const value = checked ? '完了' : '';
-      
+
       // 先にローカルデータを更新（即座にUI反映）
       const student = students.find(s => String(s.studentId) === String(studentId));
       if (!student) {
@@ -1786,12 +1790,12 @@
         showToast('エラー: 生徒が見つかりません', 'error');
         return;
       }
-      
+
       const statusKey = STATUS_COLUMNS.find(c => c.column === columnName)?.key;
       if (statusKey) {
         student[statusKey] = value;
       }
-      
+
       // UIを即座に更新
       updateStats();
       const card = document.getElementById(`card-${studentId}`);
@@ -1801,13 +1805,13 @@
         document.getElementById(`card-${studentId}`).classList.add('expanded');
       }
       lucide.createIcons();
-      
+
       // バックグラウンドでAPIを呼び出す
       try {
         const url = `${GAS_API_URL}?action=updateStatus&studentId=${encodeURIComponent(studentId)}&column=${encodeURIComponent(columnName)}&value=${encodeURIComponent(value)}`;
         const response = await fetch(url);
         const result = await response.json();
-        
+
         if (result.success) {
           showToast('保存しました', 'success');
         } else {
@@ -1818,25 +1822,25 @@
         showToast('保存に失敗しました（再読み込みしてください）', 'error');
       }
     }
-    
+
     // 曜日別スタイルをフォーマット
     function formatWeekdayStyle(styleStr) {
       if (!styleStr || styleStr === '-') return '-';
-      
+
       const dayMap = {
         '月曜日': '月', '火曜日': '火', '水曜日': '水', '木曜日': '木',
         '金曜日': '金', '土曜日': '土', '日曜日': '日'
       };
-      
+
       const items = styleStr.split(',').map(item => item.trim());
       let html = '<div class="weekday-grid">';
-      
+
       items.forEach(item => {
         const [day, style] = item.split(':').map(s => s.trim());
         const shortDay = dayMap[day] || day;
         let typeClass = 'either';
         let label = style || '';
-        
+
         if (style === '校舎') {
           typeClass = 'school';
         } else if (style === 'オンライン') {
@@ -1844,7 +1848,7 @@
         } else if (style === 'どちらでも') {
           typeClass = 'either';
         }
-        
+
         html += `
           <span class="weekday-item ${typeClass}">
             <span class="weekday-day">${shortDay}</span>
@@ -1852,31 +1856,31 @@
           </span>
         `;
       });
-      
+
       html += '</div>';
       return html;
     }
-    
+
     // 希望日程をフォーマット
     function formatScheduleDate(dateStr) {
       if (!dateStr || dateStr === '-') return '-';
-      
+
       const items = dateStr.split(',').map(item => item.trim());
       let html = '<div class="schedule-list">';
-      
+
       items.forEach(item => {
         // 2026-01-15 09:30 形式をパース
         const parts = item.split(' ');
         const date = parts[0] || '';
         const time = parts[1] || '';
-        
+
         // 日付を見やすく
         let displayDate = date;
         if (date.includes('-')) {
           const [y, m, d] = date.split('-');
           displayDate = `${m}/${d}`;
         }
-        
+
         html += `
           <span class="schedule-item">
             <i data-lucide="calendar" style="width:12px;height:12px;"></i>
@@ -1884,11 +1888,11 @@
           </span>
         `;
       });
-      
+
       html += '</div>';
       return html;
     }
-    
+
     // トースト表示
     function showToast(message, type = 'info') {
       const toast = document.getElementById('toast');
@@ -1899,11 +1903,12 @@
       `;
       toast.classList.add('show');
       lucide.createIcons();
-      
+
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
     }
   </script>
 </body>
+
 </html>
