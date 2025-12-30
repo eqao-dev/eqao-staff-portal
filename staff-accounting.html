@@ -3857,16 +3857,18 @@
       const paidInPeriod = filtered.filter(s => s.invoiceSent === '着金済' && isPaidInPeriod(s));
       const paidCountInPeriod = paidInPeriod.length;
 
-      // 金額計算
+      // 金額計算（billedAmountがあればそれを使用、なければtotalを使用）
+      const getAmount = (s) => parseInt(s.billedAmount) || parseInt(s.total) || 0;
+
       const pendingAmount = filtered
         .filter(s => s.invoiceSent === '入金待ち')
-        .reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+        .reduce((sum, s) => sum + getAmount(s), 0);
 
       // 着金済金額は期間フィルター適用
       const paidAmount = paidInPeriod
-        .reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+        .reduce((sum, s) => sum + getAmount(s), 0);
 
-      const totalAmount = filtered.reduce((sum, s) => sum + (parseInt(s.total) || 0), 0);
+      const totalAmount = filtered.reduce((sum, s) => sum + getAmount(s), 0);
 
       document.getElementById('stat-pending').textContent = pending;
       document.getElementById('stat-sent').textContent = waiting;
@@ -4173,6 +4175,37 @@
       return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
     }
 
+    // 請求期間の日付フォーマット（YYYY-MM または ISO形式 → YYYY年MM月）
+    function formatBillingPeriod(dateValue) {
+      if (!dateValue) return '-';
+
+      // 文字列に変換
+      const dateStr = String(dateValue);
+
+      // ISO形式（2025-12-31T15:00:00.000Z）の場合
+      if (dateStr.includes('T')) {
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
+          return `${date.getFullYear()}年${date.getMonth() + 1}月`;
+        }
+      }
+
+      // YYYY-MM形式の場合
+      if (dateStr.match(/^\d{4}-\d{2}$/)) {
+        const [year, month] = dateStr.split('-');
+        return `${year}年${parseInt(month)}月`;
+      }
+
+      // YYYY/MM形式の場合
+      if (dateStr.match(/^\d{4}\/\d{2}$/)) {
+        const [year, month] = dateStr.split('/');
+        return `${year}年${parseInt(month)}月`;
+      }
+
+      // その他はそのまま返す
+      return dateStr;
+    }
+
     function toggleLessonsCard(studentId) {
       const card = document.getElementById(`lessons-card-${studentId}`);
       if (card) {
@@ -4339,7 +4372,10 @@
       const isPaid = status === '着金済';
 
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
-      const total = parseInt(student.total) || 0;
+      // 請求金額（billedAmountがあればそれを使用）
+      const total = parseInt(student.billedAmount) || parseInt(student.total) || 0;
+      const originalTotal = parseInt(student.total) || 0;
+      const hasDiscount = student.discountDetail && student.discountDetail.trim() !== '';
       const isRenewal = student.billingType === '継続';
 
       // 期日超過チェック
@@ -4407,15 +4443,27 @@
               </div>
             </div>
             <div class="billing-summary">
-             <div class="billing-amount">¥${total.toLocaleString()}</div>
-             ${statusDropdown}
-             ${isWaiting ? `
-             <button class="resend-btn-small" onclick="event.stopPropagation(); openResendWizard('${student.studentId}')">
-              <i data-lucide="repeat" style="width:14px;height:14px;"></i>
-              再送信
-             </button>
-             ` : ''}
-            </div>
+ <div class="billing-amount">¥${total.toLocaleString()}</div>
+ ${statusDropdown}
+ ${(isWaiting || isPaid) ? `
+ <button class="resend-btn-small" onclick="event.stopPropagation(); openInvoiceDetail('${student.studentId}')" style="background:#eff6ff;border-color:#93c5fd;color:#2563eb;">
+  <i data-lucide="file-search" style="width:14px;height:14px;"></i>
+  確認
+ </button>
+ ` : ''}
+ ${isWaiting ? `
+ <button class="resend-btn-small" onclick="event.stopPropagation(); openResendWizard('${student.studentId}')">
+  <i data-lucide="repeat" style="width:14px;height:14px;"></i>
+  再送信
+ </button>
+ ` : ''}
+ ${isPaid ? `
+ <button class="resend-btn-small" onclick="event.stopPropagation(); openPaymentConfirmModal('${student.studentId}')" style="background:#fef3c7;border-color:#fcd34d;color:#92400e;">
+  <i data-lucide="mail-check" style="width:14px;height:14px;"></i>
+  着金確認
+ </button>
+ ` : ''}
+</div>
             <button class="expand-btn">
               <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
             </button>
@@ -4531,12 +4579,18 @@
                     <i data-lucide="file-text" style="width:16px;height:16px;"></i>
                     請求書作成
                   </button>
-                ` : isWaiting ? `
-                  <button class="action-btn resend" onclick="openResendWizard('${student.studentId}')">
-                    <i data-lucide="repeat" style="width:16px;height:16px;"></i>
-                    再送信
+                ` : `
+                  <button class="action-btn preview" onclick="openInvoiceDetail('${student.studentId}')">
+                    <i data-lucide="file-search" style="width:16px;height:16px;"></i>
+                    請求書確認
                   </button>
-                ` : ''}
+                  ${isWaiting ? `
+                    <button class="action-btn resend" onclick="openResendWizard('${student.studentId}')">
+                      <i data-lucide="repeat" style="width:16px;height:16px;"></i>
+                      再送信
+                    </button>
+                  ` : ''}
+                `}
               </div>
             </div>
           </div>
@@ -5346,6 +5400,14 @@
         showToast('請求書を送信中...', 'info');
         closeModal();
 
+        // 適用割引情報を作成
+        const discountDetails = [];
+        const singleParentDiscount = document.getElementById('discount-single-parent')?.checked;
+        const referralDiscount = document.getElementById('discount-referral')?.checked;
+        if (singleParentDiscount) discountDetails.push('ひとり親:-10000');
+        if (referralDiscount) discountDetails.push('紹介:-10000');
+        const discountDetail = discountDetails.join(', ');
+
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
@@ -5365,7 +5427,8 @@
             invoiceData: invoiceData,
             billingType: student.billingType || '新規',
             totalLessons: invoiceData.totalLessons || 0,
-            englishLessons: invoiceData.englishLessons || 0
+            englishLessons: invoiceData.englishLessons || 0,
+            discountDetail: discountDetail  // 追加
           })
         });
 
@@ -6097,6 +6160,241 @@ Email: contact@eqao.jp
         document.querySelectorAll('.status-dropdown-menu.show').forEach(el => el.classList.remove('show'));
       }
     });
+
+    // ===== 請求書詳細表示 =====
+    function openInvoiceDetail(studentId) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
+
+      // 請求書履歴から最新の請求書情報を取得
+      const studentHistory = invoiceHistoryData.filter(h => String(h['生徒番号']) === String(studentId));
+      const latestInvoice = studentHistory.sort((a, b) => new Date(b['発行日']) - new Date(a['発行日']))[0];
+
+      const billedAmount = parseInt(student.billedAmount) || parseInt(student.total) || 0;
+      const discountDetail = student.discountDetail || '';
+      const invoiceNumber = student.latestInvoiceNumber || latestInvoice?.['請求書番号'] || '-';
+
+      const modalHtml = `
+        <div class="modal-overlay show" id="invoice-detail-modal" onclick="if(event.target===this)closeInvoiceDetail()">
+          <div class="modal" style="max-width:500px;">
+            <div class="modal-header">
+              <div class="modal-title">
+                <i data-lucide="file-text" style="width:20px;height:20px;"></i>
+                請求書詳細
+              </div>
+              <button class="modal-close" onclick="closeInvoiceDetail()">
+                <i data-lucide="x" style="width:20px;height:20px;"></i>
+              </button>
+            </div>
+            <div class="modal-body" style="padding:24px;">
+              <div class="detail-section" style="margin-bottom:16px;">
+                <div class="detail-section-title">
+                  <i data-lucide="user" style="width:14px;height:14px;"></i>
+                  基本情報
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">生徒名</span>
+                  <span class="detail-value">${student.studentName || '-'}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">請求書番号</span>
+                  <span class="detail-value">${invoiceNumber}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">ステータス</span>
+                  <span class="detail-value">${student.invoiceSent || '-'}</span>
+                </div>
+              </div>
+              
+              <div class="detail-section" style="margin-bottom:16px;">
+                <div class="detail-section-title">
+                  <i data-lucide="calculator" style="width:14px;height:14px;"></i>
+                  金額情報
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">SS記録額（割引前）</span>
+                  <span class="detail-value">¥${(parseInt(student.total) || 0).toLocaleString()}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">実際の請求金額</span>
+                  <span class="detail-value price">¥${billedAmount.toLocaleString()}</span>
+                </div>
+                ${discountDetail ? `
+                <div class="detail-item">
+                  <span class="detail-label">適用割引</span>
+                  <span class="detail-value discount">${discountDetail}</span>
+                </div>
+                ` : ''}
+              </div>
+              
+              ${latestInvoice ? `
+              <div class="detail-section">
+                <div class="detail-section-title">
+                  <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+                  請求期間
+                </div>
+                <div class="detail-item">
+  <span class="detail-label">期間</span>
+  <span class="detail-value">${formatBillingPeriod(latestInvoice['請求期間開始'])} 〜 ${formatBillingPeriod(latestInvoice['請求期間終了'])}</span>
+</div>
+                <div class="detail-item">
+                  <span class="detail-label">総合型コマ数</span>
+                  <span class="detail-value">${latestInvoice['総合型コマ数'] || 0}コマ</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">ENGLISHコマ数</span>
+                  <span class="detail-value">${latestInvoice['ENGLISHコマ数'] || 0}コマ</span>
+                </div>
+              </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+      lucide.createIcons();
+    }
+
+    function closeInvoiceDetail() {
+      const modal = document.getElementById('invoice-detail-modal');
+      if (modal) modal.remove();
+    }
+
+    // ===== 着金確認メールモーダルを開く =====
+function openPaymentConfirmModal(studentId) {
+  const student = students.find(s => String(s.studentId) === String(studentId));
+  if (!student) return;
+
+  // 次回更新月をフォーマット
+  let nextRenewalDisplay = '次回更新時';
+  if (student.nextRenewalMonth) {
+    const monthStr = String(student.nextRenewalMonth);
+    if (monthStr.length === 6) {
+      // YYYYMM形式
+      const year = monthStr.slice(0, 4);
+      const month = parseInt(monthStr.slice(4));
+      nextRenewalDisplay = `${year}年${month}月`;
+    } else if (monthStr.includes('-')) {
+      // YYYY-MM形式
+      const [year, month] = monthStr.split('-');
+      nextRenewalDisplay = `${year}年${parseInt(month)}月`;
+    }
+  }
+
+  const email = student.parentEmail || student.studentEmail || '';
+  const subject = `【EQAO】ご入金確認のお知らせ（${student.studentName}様）`;
+  const body = `${student.studentName} 様
+
+平素より大変お世話になっております。
+株式会社EQAO教育グループでございます。
+
+この度は、ご入金をいただき誠にありがとうございます。
+お客様からのご入金を無事に確認いたしましたので、ご連絡申し上げます。
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+■ 次回ご請求について
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+次回のご請求は、${nextRenewalDisplay}頃にご案内させていただく予定です。
+
+請求月数の変更をご希望の場合は、
+EQAO公式LINEよりお気軽にお知らせください。
+
+▼ EQAO公式LINE
+https://lin.ee/Zu2Gb05
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+今後ともどうぞよろしくお願いいたします。
+
+---
+株式会社EQAO教育グループ
+経理担当
+Email: globalsight.official@gmail.com`;
+
+  // モーダルに値をセット
+  document.getElementById('email-to').value = email;
+  document.getElementById('email-subject').value = subject;
+  document.getElementById('email-body').value = body;
+
+  // プレビュー更新
+  updateEmailPreview();
+
+  // 送信ボタンを着金確認用に変更
+  const sendBtn = document.querySelector('#email-modal .action-btn.send');
+  if (sendBtn) {
+    sendBtn.onclick = () => sendPaymentConfirmEmail(studentId);
+    sendBtn.innerHTML = '<i data-lucide="mail-check" style="width:16px;height:16px;"></i> 着金確認を送信';
+  }
+
+  // 添付ファイル表示を非表示に
+  const attachmentEl = document.querySelector('#email-modal .email-attachment');
+  if (attachmentEl) {
+    attachmentEl.style.display = 'none';
+  }
+
+  // モーダル表示
+  document.getElementById('email-modal').classList.add('show');
+  lucide.createIcons();
+}
+
+// ===== 着金確認メール送信 =====
+async function sendPaymentConfirmEmail(studentId) {
+  const student = students.find(s => String(s.studentId) === String(studentId));
+  if (!student) return;
+
+  const email = document.getElementById('email-to').value;
+  const subject = document.getElementById('email-subject').value;
+  const body = document.getElementById('email-body').value;
+
+  if (!email) {
+    showToast('送信先メールアドレスがありません', 'error');
+    return;
+  }
+
+  if (!confirm(`${email} に着金確認メールを送信しますか？`)) return;
+
+  try {
+    showToast('メールを送信中...', 'info');
+    closeEmailModal();
+
+    const response = await fetch(GAS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'sendPaymentConfirm',
+        studentId: student.studentId,
+        email: email,
+        emailSubject: subject,
+        emailBody: body,
+        studentName: student.studentName
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      showToast('着金確認メールを送信しました', 'success');
+    } else {
+      throw new Error(result.message);
+    }
+  } catch (error) {
+    console.error('送信エラー:', error);
+    showToast('送信に失敗しました: ' + error.message, 'error');
+  }
+}
+
+function closeEmailModal() {
+  document.getElementById('email-modal').classList.remove('show');
+  
+  // 添付ファイル表示をリセット（次回開いた時のため）
+  const attachmentEl = document.querySelector('#email-modal .email-attachment');
+  if (attachmentEl) {
+    attachmentEl.style.display = 'flex';
+  }
+}
+
   </script>
 </body>
 
