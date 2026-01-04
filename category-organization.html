@@ -164,6 +164,41 @@
       transition: color 0.2s;
     }
 
+    /* グレーアウト（準備中） */
+    .btn-card.disabled {
+      background: #f9fafb;
+      border-color: #e5e5e5;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-card.disabled:hover {
+      border-color: #e5e5e5;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-card.disabled .btn-icon {
+      background: #f3f4f6;
+      color: #9ca3af;
+    }
+
+    .btn-card.disabled .btn-title {
+      color: #9ca3af;
+    }
+
+    .btn-card.disabled .btn-desc {
+      color: #d1d5db;
+    }
+
+    .btn-card.disabled .btn-arrow {
+      color: #e5e7eb;
+    }
+
+    .btn-card.disabled:hover .btn-arrow {
+      color: #e5e7eb;
+    }
+
     .btn-card:hover .btn-arrow {
       color: #ec4899;
     }
@@ -377,7 +412,7 @@
     </div>
 
     <div class="button-grid">
-      <a href="#" class="btn-card">
+      <a href="org-chart.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="git-branch" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">組織図</div>
@@ -386,16 +421,16 @@
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="award" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">バッジ・ポイント</div>
           <div class="btn-desc">個人の獲得状況</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <a href="staff-price-simulator.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="calculator" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">料金シミュレーター</div>
@@ -404,7 +439,7 @@
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
 
-      <a href="#" class="btn-card">
+      <a href="staff-stats.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="bar-chart-2" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">数字で見るエカオ</div>
@@ -413,28 +448,28 @@
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="message-square" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">代表面談フォーム</div>
           <div class="btn-desc">代表との面談申請</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="user-circle" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">担任一覧</div>
           <div class="btn-desc">担任スタッフ一覧</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
     </div>
   </main>
 
   <footer class="footer">
-    <p class="footer-text">© 2025 EQAO Education Group</p>
+    <p class="footer-text">© 2026 EQAO Education Group</p>
   </footer>
 
   <script>

@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>スタッフルール | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* メインコンテナ */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* 検索・フィルターエリア */
+    .filter-area {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-bar:focus-within {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+      background: white;
+    }
+
+    .search-bar .search-icon {
+      color: #999;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-family: inherit;
+      background: transparent;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    .search-clear {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      display: none;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .search-clear:hover {
+      background: #e5e5e5;
+    }
+
+    .search-clear.show {
+      display: flex;
+    }
+
+    /* カテゴリタブ */
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .category-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .category-tab:hover {
+      border-color: #f59e0b;
+      color: #d97706;
+    }
+
+    .category-tab.active {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: white;
+    }
+
+    .category-tab .count {
+      font-size: 11px;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .category-tab.active .count {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 検索結果情報 */
+    .search-results-info {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ルールカード */
+    .rules-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rule-card {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .rule-card:hover {
+      border-color: #fcd34d;
+    }
+
+    .rule-header {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      cursor: pointer;
+      gap: 14px;
+      transition: background 0.2s;
+    }
+
+    .rule-header:hover {
+      background: #fffbeb;
+    }
+
+    .rule-category-badge {
+      padding: 4px 10px;
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .rule-category-badge.executive {
+      background: #fce7f3;
+      color: #9d174d;
+    }
+
+    .rule-category-badge.accounting {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .rule-title-area {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .rule-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .rule-toggle {
+      color: #ccc;
+      transition: transform 0.3s, color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .rule-header:hover .rule-toggle {
+      color: #f59e0b;
+    }
+
+    .rule-card.open .rule-toggle {
+      transform: rotate(180deg);
+      color: #f59e0b;
+    }
+
+    .rule-content {
+      display: none;
+      padding: 0 20px 20px 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .rule-card.open .rule-content {
+      display: block;
+    }
+
+    .rule-text {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #444;
+      padding-top: 16px;
+      white-space: pre-wrap;
+    }
+
+    .rule-text p {
+      margin-bottom: 12px;
+    }
+
+    .rule-text ul {
+      margin: 8px 0 12px 20px;
+    }
+
+    .rule-text li {
+      margin-bottom: 6px;
+      line-height: 1.7;
+    }
+
+    /* ハイライト */
+    .highlight {
+      background: #fde68a;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    /* ローディング */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #fef3c7;
+      border-top-color: #f59e0b;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* エラー */
+    .error-message {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      color: #dc2626;
+    }
+
+    .error-message .retry-btn {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .error-message .retry-btn:hover {
+      background: #d97706;
+    }
+
+    /* 空状態 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+    }
+
+    .empty-state .empty-icon {
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    /* 統計バー */
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .stats-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stats-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stats-item strong {
+      color: #d97706;
+    }
+
+    /* 表示件数選択 */
+    .per-page-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .per-page-select label {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .per-page-select select {
+      padding: 6px 10px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .per-page-select select:focus {
+      border-color: #f59e0b;
+    }
+
+    /* ページネーション */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 16px;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+    }
+
+    .pagination-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      background: white;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      border-color: #f59e0b;
+      color: #d97706;
+      background: #fffbeb;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn.active {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: white;
+    }
+
+    .pagination-number {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      background: white;
+      color: #666;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .pagination-number:hover {
+      border-color: #f59e0b;
+      color: #d97706;
+    }
+
+    .pagination-number.active {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: white;
+    }
+
+    .pagination-ellipsis {
+      color: #999;
+      padding: 0 4px;
+    }
+
+    .pagination-info {
+      margin-left: 16px;
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 20px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 16px;
+      }
+
+      .header-title {
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 24px 16px 40px;
+      }
+
+      .page-header {
+        margin-bottom: 20px;
+      }
+
+      .page-title {
+        font-size: 20px;
+      }
+
+      .filter-area {
+        padding: 16px;
+      }
+
+      .category-tabs {
+        gap: 6px;
+      }
+
+      .category-tab {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      .rule-header {
+        padding: 14px 16px;
+      }
+
+      .rule-content {
+        padding: 0 16px 16px;
+      }
+
+      .rule-title {
+        font-size: 14px;
+      }
+
+      .stats-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .pagination {
+        flex-wrap: wrap;
+      }
+
+      .pagination-info {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-rules.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">スタッフルール</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="scroll" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">スタッフルール</h1>
+      <p class="page-desc">スタッフの行動規範・業務ルールを確認できます</p>
+    </div>
+
+    <!-- 検索・フィルターエリア -->
+    <div class="filter-area">
+      <div class="search-bar">
+        <i data-lucide="search" class="search-icon" style="width:20px;height:20px;"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="キーワードで検索...">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+
+      <div class="category-tabs" id="categoryTabs">
+        <!-- JSで生成 -->
+      </div>
+    </div>
+
+    <!-- 検索結果情報 -->
+    <div class="search-results-info" id="searchResultsInfo" style="display: none;">
+      <i data-lucide="search" style="width:18px;height:18px;"></i>
+      <span id="searchResultsText"></span>
+    </div>
+
+    <!-- 統計バー -->
+    <div class="stats-bar" id="statsBar" style="display: none;">
+      <div class="stats-left">
+        <div class="stats-item">
+          <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+          表示: <strong id="displayRange">0</strong>
+        </div>
+        <div class="stats-item">
+          <i data-lucide="layers" style="width:16px;height:16px;"></i>
+          全<strong id="totalCount">0</strong>件
+        </div>
+      </div>
+      <div class="per-page-select">
+        <label for="perPageSelect">表示件数:</label>
+        <select id="perPageSelect" onchange="changePerPage(this.value)">
+          <option value="20">20件</option>
+          <option value="50">50件</option>
+          <option value="100">100件</option>
+          <option value="all">すべて</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">ルールを読み込んでいます...</p>
+    </div>
+
+    <!-- ルールコンテナ -->
+    <div id="rulesContainer" class="rules-container"></div>
+
+    <!-- ページネーション -->
+    <div id="pagination" class="pagination" style="display: none;"></div>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    // ========================================
+    // 設定
+    // ========================================
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+
+    // ========================================
+    // 状態管理
+    // ========================================
+    let allRules = [];
+    let allCategories = [];
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let searchTimeout = null;
+    let currentPage = 1;
+    let perPage = 20;
+
+    // カテゴリ別の色分け
+    const categoryColors = {
+      'スタッフルール': '',
+      '幹部ルール': 'executive',
+      '経理ルール': 'accounting'
+    };
+
+    // ========================================
+    // 初期化
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function () {
+      loadRules();
+      setupSearch();
+      lucide.createIcons();
+    });
+
+    // ========================================
+    // データ読み込み
+    // ========================================
+    async function loadRules() {
+      try {
+        const response = await fetch(`${API_URL}?action=getStaffRules`);
+        const data = await response.json();
+
+        if (data.success) {
+          allRules = data.rules;
+          allCategories = data.categories;
+
+          renderCategoryTabs();
+          renderRules();
+
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('statsBar').style.display = 'flex';
+          document.getElementById('totalCount').textContent = allRules.length;
+        } else {
+          showError('データの取得に失敗しました');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showError('データの読み込みに失敗しました');
+      }
+    }
+
+    // ========================================
+    // カテゴリタブ
+    // ========================================
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+
+      // カテゴリごとの件数をカウント（複数カテゴリ対応）
+      const categoryCounts = {};
+      allRules.forEach(rule => {
+        allCategories.forEach(cat => {
+          if (rule.category.includes(cat)) {
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          }
+        });
+      });
+
+      let html = `
+        <button class="category-tab active" onclick="selectCategory('all')">
+          <i data-lucide="layers" style="width:14px;height:14px;"></i>
+          すべて
+          <span class="count">${allRules.length}</span>
+        </button>
+      `;
+
+      allCategories.forEach(cat => {
+        const colorClass = categoryColors[cat] || '';
+        html += `
+          <button class="category-tab" onclick="selectCategory('${cat}')">
+            ${cat}
+            <span class="count">${categoryCounts[cat] || 0}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function selectCategory(category) {
+      currentCategory = category;
+      currentPage = 1; // カテゴリ変更時は1ページ目に戻る
+
+      // タブのアクティブ状態更新
+      document.querySelectorAll('.category-tab').forEach((tab, index) => {
+        if (category === 'all' && index === 0) {
+          tab.classList.add('active');
+        } else if (tab.textContent.includes(category)) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      renderRules();
+    }
+
+    // ========================================
+    // 表示件数変更
+    // ========================================
+    function changePerPage(value) {
+      if (value === 'all') {
+        perPage = Infinity;
+      } else {
+        perPage = parseInt(value);
+      }
+      currentPage = 1;
+      renderRules();
+    }
+
+    // ========================================
+    // ルール表示
+    // ========================================
+    function renderRules() {
+      const container = document.getElementById('rulesContainer');
+
+      // フィルタリング
+      let filteredRules = allRules;
+
+      if (currentCategory !== 'all') {
+        filteredRules = filteredRules.filter(r => r.category.includes(currentCategory));
+      }
+
+      if (searchQuery) {
+        const terms = searchQuery.toLowerCase().split(/\s+/);
+        filteredRules = filteredRules.filter(r => {
+          const text = (r.title + ' ' + r.content + ' ' + r.category).toLowerCase();
+          return terms.every(term => text.includes(term));
+        });
+
+        // 検索結果情報を表示
+        document.getElementById('searchResultsInfo').style.display = 'flex';
+        document.getElementById('searchResultsText').textContent =
+          `「${searchQuery}」の検索結果: ${filteredRules.length}件`;
+      } else {
+        document.getElementById('searchResultsInfo').style.display = 'none';
+      }
+
+      // ページネーション計算
+      const totalItems = filteredRules.length;
+      const totalPages = perPage === Infinity ? 1 : Math.ceil(totalItems / perPage);
+
+      // ページ番号が範囲外なら調整
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      // 表示する範囲を計算
+      const startIndex = perPage === Infinity ? 0 : (currentPage - 1) * perPage;
+      const endIndex = perPage === Infinity ? totalItems : Math.min(startIndex + perPage, totalItems);
+      const displayedRules = filteredRules.slice(startIndex, endIndex);
+
+      // 表示件数更新
+      if (totalItems === 0) {
+        document.getElementById('displayRange').textContent = '0件';
+      } else {
+        document.getElementById('displayRange').textContent =
+          `${startIndex + 1}-${endIndex}件`;
+      }
+      document.getElementById('totalCount').textContent = totalItems;
+
+      if (filteredRules.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="search-x" class="empty-icon" style="width:48px;height:48px;"></i>
+            <p>該当するルールが見つかりませんでした</p>
+          </div>
+        `;
+        document.getElementById('pagination').style.display = 'none';
+        lucide.createIcons();
+        return;
+      }
+
+      let html = '';
+
+      displayedRules.forEach(rule => {
+        const colorClass = categoryColors[rule.category] || '';
+        const title = highlightText(rule.title, searchQuery);
+        const content = formatContent(rule.content, searchQuery);
+
+        html += `
+          <div class="rule-card" onclick="toggleRule(this)">
+            <div class="rule-header">
+              <span class="rule-category-badge ${colorClass}">${rule.category}</span>
+              <div class="rule-title-area">
+                <div class="rule-title">${title}</div>
+              </div>
+              <i data-lucide="chevron-down" class="rule-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="rule-content">
+              <div class="rule-text">${content}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      // ページネーション表示
+      renderPagination(totalPages, totalItems);
+
+      lucide.createIcons();
+    }
+
+    // ========================================
+    // ページネーション表示
+    // ========================================
+    function renderPagination(totalPages, totalItems) {
+      const container = document.getElementById('pagination');
+
+      // 1ページしかない、または「すべて」の場合は非表示
+      if (totalPages <= 1 || perPage === Infinity) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'flex';
+
+      let html = '';
+
+      // 前へボタン
+      html += `
+        <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+          <i data-lucide="chevron-left" style="width:18px;height:18px;"></i>
+        </button>
+      `;
+
+      // ページ番号
+      const pageNumbers = getPageNumbers(currentPage, totalPages);
+      pageNumbers.forEach(num => {
+        if (num === '...') {
+          html += `<span class="pagination-ellipsis">...</span>`;
+        } else {
+          html += `
+            <button class="pagination-number ${num === currentPage ? 'active' : ''}" onclick="goToPage(${num})">
+              ${num}
+            </button>
+          `;
+        }
+      });
+
+      // 次へボタン
+      html += `
+        <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+          <i data-lucide="chevron-right" style="width:18px;height:18px;"></i>
+        </button>
+      `;
+
+      // ページ情報
+      html += `<span class="pagination-info">${currentPage} / ${totalPages} ページ</span>`;
+
+      container.innerHTML = html;
+    }
+
+    // ページ番号の配列を生成（省略記号付き）
+    function getPageNumbers(current, total) {
+      const pages = [];
+
+      if (total <= 7) {
+        // 7ページ以下なら全部表示
+        for (let i = 1; i <= total; i++) {
+          pages.push(i);
+        }
+      } else {
+        // 最初のページ
+        pages.push(1);
+
+        if (current > 3) {
+          pages.push('...');
+        }
+
+        // 現在ページ周辺
+        const start = Math.max(2, current - 1);
+        const end = Math.min(total - 1, current + 1);
+
+        for (let i = start; i <= end; i++) {
+          pages.push(i);
+        }
+
+        if (current < total - 2) {
+          pages.push('...');
+        }
+
+        // 最後のページ
+        pages.push(total);
+      }
+
+      return pages;
+    }
+
+    // ページ移動
+    function goToPage(page) {
+      currentPage = page;
+      renderRules();
+
+      // ページトップにスクロール
+      document.getElementById('rulesContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleRule(element) {
+      element.classList.toggle('open');
+    }
+
+    function formatContent(content, query) {
+      if (!content) return '<p style="color:#999;">内容がありません</p>';
+
+      // 改行を処理
+      let html = escapeHtml(content);
+
+      // 改行を<br>に変換
+      html = html.replace(/\n/g, '<br>');
+
+      // 検索ハイライト
+      if (query) {
+        const terms = query.split(/\s+/);
+        terms.forEach(term => {
+          if (term) {
+            const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+            html = html.replace(regex, '<span class="highlight">$1</span>');
+          }
+        });
+      }
+
+      return html;
+    }
+
+    function highlightText(text, query) {
+      if (!query || !text) return escapeHtml(text || '');
+
+      let result = escapeHtml(text);
+      const terms = query.split(/\s+/);
+      terms.forEach(term => {
+        if (term) {
+          const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+          result = result.replace(regex, '<span class="highlight">$1</span>');
+        }
+      });
+      return result;
+    }
+
+    // ========================================
+    // 検索
+    // ========================================
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('searchClear');
+
+      input.addEventListener('input', function () {
+        clearBtn.classList.toggle('show', this.value.length > 0);
+
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          searchQuery = this.value.trim();
+          currentPage = 1; // 検索時は1ページ目に戻る
+          renderRules();
+        }, 300);
+      });
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClear').classList.remove('show');
+      searchQuery = '';
+      currentPage = 1;
+      renderRules();
+    }
+
+    // ========================================
+    // ユーティリティ
+    // ========================================
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function escapeRegex(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function showError(message) {
+      document.getElementById('loading').innerHTML = `
+        <div class="error-message">
+          <i data-lucide="alert-circle" style="width:40px;height:40px;margin-bottom:12px;"></i>
+          <p>${message}</p>
+          <button onclick="location.reload()" class="retry-btn">再読み込み</button>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+  </script>
+</body>
+
+</html>

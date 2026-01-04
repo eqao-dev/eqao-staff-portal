@@ -168,6 +168,22 @@
       color: #f59e0b;
     }
 
+    .btn-card.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .btn-card.disabled:hover {
+      border-color: #e5e5e5;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-card.disabled .btn-desc {
+      color: #aaa;
+    }
+
     .footer {
       text-align: center;
       padding: 32px 24px;
@@ -377,7 +393,7 @@
     </div>
 
     <div class="button-grid">
-      <a href="#" class="btn-card">
+      <a href="staff-rules.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="scroll" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">スタッフルール</div>
@@ -386,16 +402,16 @@
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">生徒/保護者ルール</div>
-          <div class="btn-desc">生徒・保護者向けルール</div>
+          <div class="btn-desc">準備中</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <a href="staff-basic-rules.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="file-text" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">基本事項規定書</div>
@@ -404,41 +420,42 @@
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="clipboard-list" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">マニュアル</div>
-          <div class="btn-desc">業務マニュアル一覧</div>
+          <div class="btn-desc">準備中</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="school" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">研修プログラム</div>
-          <div class="btn-desc">スタッフ研修一覧</div>
+          <div class="btn-desc">準備中</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="book-marked" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">スタッフが読むべき本</div>
-          <div class="btn-desc">おすすめ書籍一覧</div>
+          <div class="btn-desc">準備中</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
 
-      <a href="#" class="btn-card">
+      <div class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="briefcase" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">部署別業務一覧</div>
-          <div class="btn-desc">各部署の業務内容</div>
+          <div class="btn-desc">準備中</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-      </a>
+      </div>
+    </div>
     </div>
   </main>
 

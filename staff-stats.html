@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>数字で見るEQAO | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #374151;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* メインコンテンツ */
+    .main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 16px 60px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      background: #fce7f3;
+      color: #be185d;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* セクション */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .section-icon.rose { background: linear-gradient(135deg, #be185d, #9d174d); }
+    .section-icon.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .section-icon.orange { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+    .section-icon.purple { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    /* 満足度・継続率カード */
+    .stats-highlight-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e5e5;
+      margin-bottom: 24px;
+    }
+
+    .stats-highlight-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stats-highlight-item {
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .stats-highlight-item.rose-bg {
+      background: linear-gradient(135deg, #9d174d 0%, #be185d 100%);
+      color: white;
+    }
+
+    .stats-highlight-item.green-bg {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: white;
+    }
+
+    .stats-highlight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .stats-highlight-value {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .stats-highlight-number {
+      font-size: 52px;
+      font-weight: bold;
+      line-height: 1;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .stats-highlight-unit {
+      font-size: 20px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .stats-highlight-stars {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      margin-top: 8px;
+    }
+
+    .stats-highlight-stars svg {
+      color: #fbbf24;
+      width: 18px;
+      height: 18px;
+      fill: #fbbf24;
+    }
+
+    .stats-highlight-footer {
+      text-align: center;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    }
+
+    .stats-highlight-footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .stats-highlight-footer-icon {
+      font-size: 20px;
+    }
+
+    .stats-highlight-footer-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    @media (max-width: 480px) {
+      .stats-highlight-number {
+        font-size: 40px;
+      }
+      .stats-highlight-unit {
+        font-size: 16px;
+      }
+      .stats-highlight-item {
+        padding: 20px 12px;
+      }
+    }
+
+    /* ハイライトカード（横長デザイン） */
+    .highlight-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .highlight-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid #e5e5e5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    .highlight-card.rose::before { background: linear-gradient(180deg, #be185d, #9d174d); }
+    .highlight-card.green::before { background: linear-gradient(180deg, #22c55e, #16a34a); }
+    .highlight-card.purple::before { background: linear-gradient(180deg, #8b5cf6, #6366f1); }
+    .highlight-card.orange::before { background: linear-gradient(180deg, #f59e0b, #ea580c); }
+    .highlight-card.pink::before { background: linear-gradient(180deg, #ec4899, #db2777); }
+    .highlight-card.teal::before { background: linear-gradient(180deg, #14b8a6, #0d9488); }
+
+    .highlight-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .highlight-card.rose .highlight-icon { background: #fdf2f8; color: #be185d; }
+    .highlight-card.green .highlight-icon { background: #f0fdf4; color: #22c55e; }
+    .highlight-card.purple .highlight-icon { background: #f5f3ff; color: #8b5cf6; }
+    .highlight-card.orange .highlight-icon { background: #fff7ed; color: #f59e0b; }
+    .highlight-card.pink .highlight-icon { background: #fdf2f8; color: #ec4899; }
+    .highlight-card.teal .highlight-icon { background: #f0fdfa; color: #14b8a6; }
+
+    .highlight-content {
+      flex: 1;
+    }
+
+    .highlight-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .highlight-value {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .highlight-number {
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .highlight-card.rose .highlight-number { color: #9d174d; }
+    .highlight-card.green .highlight-number { color: #16a34a; }
+    .highlight-card.purple .highlight-number { color: #6366f1; }
+    .highlight-card.orange .highlight-number { color: #ea580c; }
+    .highlight-card.pink .highlight-number { color: #db2777; }
+    .highlight-card.teal .highlight-number { color: #0d9488; }
+
+    .highlight-unit {
+      font-size: 16px;
+      font-weight: 700;
+      color: #6b7280;
+    }
+
+    /* 横並び小カード */
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mini-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      border: 1px solid #e5e5e5;
+    }
+
+    .mini-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 8px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .mini-icon.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .mini-icon.orange { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+    .mini-icon.pink { background: linear-gradient(135deg, #ec4899, #db2777); }
+
+    .mini-number {
+      font-size: 22px;
+      font-weight: bold;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .mini-unit {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .mini-label {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* 注釈 */
+    .footnote {
+      margin-top: 32px;
+      padding: 16px;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      border-left: 3px solid #d1d5db;
+    }
+
+    .footnote-title {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .footnote-text {
+      font-size: 11px;
+      color: #9ca3af;
+      line-height: 1.7;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 20px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* レスポンシブ */
+    @media (min-width: 600px) {
+      .highlight-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .highlight-number {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mini-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .mini-card {
+        padding: 12px 8px;
+      }
+      .mini-number {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-organization.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">数字で見るEQAO</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="bar-chart-3" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">数字で見るEQAO</h1>
+      <p class="page-subtitle">EQAOの実績・満足度・コンテンツを<br>数字でご紹介します</p>
+    </div>
+
+    <!-- 満足度セクション -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon rose">
+          <i data-lucide="thumbs-up" style="width:16px;height:16px;"></i>
+        </div>
+        <h2 class="section-title">満足度・継続率</h2>
+      </div>
+
+      <div class="stats-highlight-card">
+        <div class="stats-highlight-row">
+          <div class="stats-highlight-item rose-bg">
+            <div class="stats-highlight-badge">
+              <i data-lucide="star" style="width:14px;height:14px;"></i>
+              授業満足度
+            </div>
+            <div class="stats-highlight-value">
+              <span class="stats-highlight-number">98.2</span>
+              <span class="stats-highlight-unit">%</span>
+            </div>
+            <div class="stats-highlight-stars">
+              <i data-lucide="star" style="fill:#fbbf24;"></i>
+              <i data-lucide="star" style="fill:#fbbf24;"></i>
+              <i data-lucide="star" style="fill:#fbbf24;"></i>
+              <i data-lucide="star" style="fill:#fbbf24;"></i>
+              <i data-lucide="star" style="fill:#fbbf24;"></i>
+            </div>
+          </div>
+          <div class="stats-highlight-item green-bg">
+            <div class="stats-highlight-badge">
+              <i data-lucide="shield-check" style="width:14px;height:14px;"></i>
+              途中退塾率
+            </div>
+            <div class="stats-highlight-value">
+              <span class="stats-highlight-number">2</span>
+              <span class="stats-highlight-unit">%未満</span>
+            </div>
+          </div>
+        </div>
+        <div class="stats-highlight-footer">
+          <div class="stats-highlight-footer-content">
+            <span class="stats-highlight-footer-icon">🏆</span>
+            <span class="stats-highlight-footer-text">業界トップクラスの継続率を実現！</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- コンテンツセクション -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon purple">
+          <i data-lucide="library" style="width:16px;height:16px;"></i>
+        </div>
+        <h2 class="section-title">学習コンテンツ</h2>
+      </div>
+
+      <div class="highlight-grid">
+        <div class="highlight-card purple">
+          <div class="highlight-icon">
+            <i data-lucide="file-text" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">コラム記事</p>
+            <div class="highlight-value">
+              <span class="highlight-number">1,100</span>
+              <span class="highlight-unit">以上</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card orange">
+          <div class="highlight-icon">
+            <i data-lucide="play-circle" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">動画教材</p>
+            <div class="highlight-value">
+              <span class="highlight-number">200</span>
+              <span class="highlight-unit">以上</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 実績セクション -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon green">
+          <i data-lucide="trophy" style="width:16px;height:16px;"></i>
+        </div>
+        <h2 class="section-title">指導実績</h2>
+      </div>
+
+      <div class="highlight-grid">
+        <div class="highlight-card teal">
+          <div class="highlight-icon">
+            <i data-lucide="users" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">個別指導実績</p>
+            <div class="highlight-value">
+              <span class="highlight-number">1,000</span>
+              <span class="highlight-unit">人以上</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card rose">
+          <div class="highlight-icon">
+            <i data-lucide="graduation-cap" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">在籍者出身校</p>
+            <div class="highlight-value">
+              <span class="highlight-number">120</span>
+              <span class="highlight-unit">校以上</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card green">
+          <div class="highlight-icon">
+            <i data-lucide="map-pin" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">全国から参加</p>
+            <div class="highlight-value">
+              <span class="highlight-number">26</span>
+              <span class="highlight-unit">都道府県</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card pink">
+          <div class="highlight-icon">
+            <i data-lucide="globe" style="width:26px;height:26px;"></i>
+          </div>
+          <div class="highlight-content">
+            <p class="highlight-label">海外からの参加者も</p>
+            <div class="highlight-value">
+              <span class="highlight-number">対応可能</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- その他の数字 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon orange">
+          <i data-lucide="trending-up" style="width:16px;height:16px;"></i>
+        </div>
+        <h2 class="section-title">その他の数字</h2>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini-card">
+          <div class="mini-icon green">
+            <i data-lucide="monitor" style="width:18px;height:18px;"></i>
+          </div>
+          <div class="mini-number">約8割</div>
+          <div class="mini-label">オンライン受講率</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-icon orange">
+            <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          </div>
+          <div class="mini-number">8コマ</div>
+          <div class="mini-unit">/ 月</div>
+          <div class="mini-label">月平均授業数</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-icon pink">
+            <i data-lucide="users-2" style="width:18px;height:18px;"></i>
+          </div>
+          <div class="mini-number">4:6</div>
+          <div class="mini-label">男女比</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 注釈 -->
+    <div class="footnote">
+      <p class="footnote-title">データについて</p>
+      <p class="footnote-text">
+        ・都道府県、オンライン受講率、月平均授業数、男女比は2025年1月〜11月のデータです<br>
+        ・個別指導実績、出身校数、コラム・動画数はこれまでの累計です
+      </p>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

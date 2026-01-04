@@ -41,6 +41,13 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .back-btn {
@@ -137,12 +144,25 @@
       text-decoration: none;
       color: inherit;
       transition: all 0.2s;
+      cursor: pointer;
     }
 
     .btn-card:hover {
       border-color: #14b8a6;
       box-shadow: 0 4px 12px rgba(20, 184, 166, 0.15);
       transform: translateY(-2px);
+    }
+
+    .btn-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-card.disabled:hover {
+      border-color: #e5e5e5;
+      box-shadow: none;
+      transform: none;
     }
 
     .btn-icon {
@@ -188,16 +208,17 @@
     }
 
     .link-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 10px;
     }
 
     .link-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      padding: 10px 16px;
+      padding: 14px 16px;
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
@@ -206,6 +227,7 @@
       font-size: 13px;
       font-weight: 500;
       transition: all 0.2s;
+      text-align: center;
     }
 
     .link-btn:hover {
@@ -213,6 +235,34 @@
       background: #111;
       color: #fff;
     }
+
+    .link-btn:hover .icon-line { color: #fff; }
+    .link-btn:hover .icon-web { color: #fff; }
+    .link-btn:hover .icon-youtube { color: #fff; }
+    .link-btn:hover .icon-drama { color: #fff; }
+
+    .link-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .link-btn.disabled:hover {
+      border-color: #e5e5e5;
+      background: #fff;
+      color: #333;
+    }
+
+    /* ブランドカラー */
+    .icon-line { color: #06C755; }
+    .icon-web { color: #0d9488; }
+    .icon-youtube { color: #FF0000; }
+    .icon-instagram { color: #E4405F; }
+    .icon-tiktok { color: #000000; }
+    .icon-drama { color: #8B5CF6; }
+    .icon-corporate { color: #3B82F6; }
+    .icon-recruit { color: #F59E0B; }
+    .icon-external { color: #6B7280; }
 
     .footer {
       text-align: center;
@@ -236,16 +286,6 @@
     }
 
     /* ユーザーメニュー */
-    .header-content {
-      justify-content: space-between;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
     .user-menu {
       position: relative;
     }
@@ -372,6 +412,95 @@
         display: none;
       }
     }
+
+    /* モーダル */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      padding: 24px;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #000;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 900px;
+      overflow: hidden;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: #111;
+      border-bottom: 1px solid #333;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-body {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+    }
+
+    .modal-body iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 
@@ -429,59 +558,59 @@
         広報素材
       </div>
       <div class="button-grid">
-        <a href="#" class="btn-card">
-          <div class="btn-icon"><i data-lucide="book-open" style="width:20px;height:20px;"></i></div>
+        <div class="btn-card disabled">
+          <div class="btn-icon gray"><i data-lucide="book-open" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">パンフレット</div>
             <div class="btn-desc">会社パンフレット</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
 
-        <a href="#" class="btn-card">
+        <div class="btn-card" onclick="openVideoModal()">
           <div class="btn-icon"><i data-lucide="video" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">PV動画</div>
             <div class="btn-desc">プロモーション動画</div>
           </div>
-          <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+          <i data-lucide="play-circle" class="btn-arrow" style="width:18px;height:18px;"></i>
+        </div>
 
-        <a href="#" class="btn-card">
-          <div class="btn-icon"><i data-lucide="headphones" style="width:20px;height:20px;"></i></div>
+        <div class="btn-card disabled">
+          <div class="btn-icon gray"><i data-lucide="headphones" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">サポート体制動画</div>
             <div class="btn-desc">サポート紹介動画</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
 
-        <a href="#" class="btn-card">
-          <div class="btn-icon"><i data-lucide="book-text" style="width:20px;height:20px;"></i></div>
+        <div class="btn-card disabled">
+          <div class="btn-icon gray"><i data-lucide="book-text" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">カリキュラム動画文章</div>
             <div class="btn-desc">動画用スクリプト</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
 
-        <a href="#" class="btn-card">
-          <div class="btn-icon"><i data-lucide="newspaper" style="width:20px;height:20px;"></i></div>
+        <div class="btn-card disabled">
+          <div class="btn-icon gray"><i data-lucide="newspaper" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">コラム一覧</div>
             <div class="btn-desc">公開コラム</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
 
-        <a href="#" class="btn-card">
-          <div class="btn-icon"><i data-lucide="user-circle" style="width:20px;height:20px;"></i></div>
+        <div class="btn-card disabled">
+          <div class="btn-icon gray"><i data-lucide="user-circle" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">スタッフ紹介動画</div>
             <div class="btn-desc">エカオで働くスタッフ</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -492,23 +621,23 @@
         競合情報
       </div>
       <div class="button-grid">
-        <a href="#" class="btn-card">
+        <div class="btn-card disabled">
           <div class="btn-icon gray"><i data-lucide="target" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">競合一覧</div>
             <div class="btn-desc">競合他社リスト</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
 
-        <a href="#" class="btn-card">
+        <div class="btn-card disabled">
           <div class="btn-icon gray"><i data-lucide="youtube" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">競合YouTube一覧</div>
             <div class="btn-desc">競合のYouTubeチャンネル</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -519,53 +648,75 @@
         公式リンク・SNS
       </div>
       <div class="link-grid">
-        <a href="#" class="link-btn">
-          <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
+        <a href="https://lin.ee/amn2FRV" target="_blank" class="link-btn">
+          <i data-lucide="message-circle" class="icon-line" style="width:16px;height:16px;"></i>
           公式LINE（スタッフ用）
         </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
+        <span class="link-btn disabled">
+          <i data-lucide="message-circle" class="icon-line" style="width:16px;height:16px;"></i>
           公式LINE（顧客用）
-        </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="globe" style="width:16px;height:16px;"></i>
+        </span>
+        <a href="https://www.eqao.co.jp/" target="_blank" class="link-btn">
+          <i data-lucide="globe" class="icon-web" style="width:16px;height:16px;"></i>
           ホームページ
         </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="building-2" style="width:16px;height:16px;"></i>
+        <span class="link-btn disabled">
+          <i data-lucide="building-2" class="icon-corporate" style="width:16px;height:16px;"></i>
           コーポレートサイト
-        </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="user-plus" style="width:16px;height:16px;"></i>
+        </span>
+        <span class="link-btn disabled">
+          <i data-lucide="user-plus" class="icon-recruit" style="width:16px;height:16px;"></i>
           採用ページ
-        </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="youtube" style="width:16px;height:16px;"></i>
+        </span>
+        <a href="https://www.youtube.com/@eq_ao" target="_blank" class="link-btn">
+          <i data-lucide="youtube" class="icon-youtube" style="width:16px;height:16px;"></i>
           YouTube
         </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="instagram" style="width:16px;height:16px;"></i>
+        <span class="link-btn disabled">
+          <i data-lucide="instagram" class="icon-instagram" style="width:16px;height:16px;"></i>
           Instagram
-        </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="music" style="width:16px;height:16px;"></i>
+        </span>
+        <span class="link-btn disabled">
+          <i data-lucide="music" class="icon-tiktok" style="width:16px;height:16px;"></i>
           TikTok
-        </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="clapperboard" style="width:16px;height:16px;"></i>
+        </span>
+        <a href="https://www.ao-senbatsu.jp/" target="_blank" class="link-btn">
+          <i data-lucide="clapperboard" class="icon-drama" style="width:16px;height:16px;"></i>
           ショートドラマ
         </a>
-        <a href="#" class="link-btn">
-          <i data-lucide="external-link" style="width:16px;height:16px;"></i>
+        <span class="link-btn disabled">
+          <i data-lucide="external-link" class="icon-external" style="width:16px;height:16px;"></i>
           MCFF
-        </a>
+        </span>
       </div>
     </div>
   </main>
 
   <footer class="footer">
-    <p class="footer-text">© 2025 EQAO Education Group</p>
+    <p class="footer-text">© 2026 EQAO Education Group</p>
   </footer>
+
+  <!-- PV動画モーダル -->
+  <div class="modal-overlay" id="videoModal" onclick="closeVideoModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="video" style="width:20px;height:20px;"></i>
+          PV動画
+        </div>
+        <button class="modal-close" onclick="closeVideoModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe id="videoIframe" 
+          src="" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -606,6 +757,32 @@
     function handleLogout() {
       if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
     }
+
+    // 動画モーダル
+    function openVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('videoIframe');
+      iframe.src = 'https://www.youtube.com/embed/Mq5gDtpVKsQ?autoplay=1';
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closeVideoModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('videoIframe');
+      modal.classList.remove('show');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    // ESCキーでモーダルを閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeVideoModal();
+      }
+    });
   </script>
 </body>
 
