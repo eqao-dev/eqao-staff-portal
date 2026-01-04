@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>受験スケジュール管理 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* メイン */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-title-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #00695C 0%, #00897B 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* 生徒選択エリア */
+    .student-selector {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .selector-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .selector-icon {
+      width: 40px;
+      height: 40px;
+      background: #E8F5E9;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2E7D32;
+    }
+
+    .selector-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .selector-controls {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .control-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .control-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .control-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-select:focus {
+      outline: none;
+      border-color: #00897B;
+    }
+
+    .control-select:hover {
+      border-color: #BDBDBD;
+    }
+
+    .btn-load {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #00695C 0%, #00897B 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-load:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 137, 123, 0.3);
+    }
+
+    .btn-load:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* 選択された生徒情報 */
+    .selected-student-info {
+      display: none;
+      background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+
+    .selected-student-info.show {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      background: #00897B;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .student-details {
+      flex: 1;
+    }
+
+    .student-name-large {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1B5E20;
+    }
+
+    .student-meta {
+      font-size: 13px;
+      color: #2E7D32;
+      margin-top: 2px;
+    }
+
+    /* コンテンツエリア */
+    .content-area {
+      display: none;
+    }
+
+    .content-area.show {
+      display: block;
+    }
+
+    /* タブナビゲーション */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      background: #fff;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 14px 20px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #00695C 0%, #00897B 100%);
+      color: #fff;
+    }
+
+    /* タブコンテンツ */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* セクションカード */
+    .section-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .section-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      background: #E0F2F1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00695C;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    /* 学年・月セレクター */
+    .grade-month-selector {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .grade-btn {
+      padding: 8px 20px;
+      border: 2px solid #00897B;
+      background: #fff;
+      color: #00897B;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .grade-btn.active {
+      background: #00897B;
+      color: #fff;
+    }
+
+    .grade-btn:hover:not(.active) {
+      background: #E0F2F1;
+    }
+
+    .month-select {
+      padding: 8px 16px;
+      border: 2px solid #E0E0E0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .month-select:focus {
+      outline: none;
+      border-color: #00897B;
+    }
+
+    /* 講師指示セクション */
+    .instructor-notes-area {
+      background: #FAFAFA;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .notes-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #7B1FA2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-add-note {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #7B1FA2 0%, #9C27B0 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-add-note:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
+    }
+
+    .btn-refresh {
+      padding: 8px 12px;
+      background: #fff;
+      color: #666;
+      border: 2px solid #E0E0E0;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-refresh:hover {
+      border-color: #00897B;
+      color: #00897B;
+      background: #E0F2F1;
+    }
+
+    .btn-refresh.loading svg {
+      animation: spin 1s linear infinite;
+    }
+
+    /* 指示リスト */
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .note-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border-left: 4px solid #9C27B0;
+    }
+
+    .note-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #9C27B0;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s;
+    }
+
+    .note-checkbox.checked {
+      background: #9C27B0;
+    }
+
+    .note-checkbox.checked svg {
+      color: #fff;
+    }
+
+    .note-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .note-text {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .note-item.completed .note-text {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .note-deadline {
+      font-size: 12px;
+      color: #E65100;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .note-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .note-action-btn {
+      width: 32px;
+      height: 32px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .note-action-btn:hover {
+      background: #eee;
+      color: #333;
+    }
+
+    .note-action-btn.delete:hover {
+      background: #FFEBEE;
+      color: #C62828;
+    }
+
+    .notes-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .notes-empty svg {
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    /* 目標表示エリア */
+    .goals-display {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      min-height: 120px;
+    }
+
+    .goals-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #333;
+      white-space: pre-wrap;
+    }
+
+    .goals-empty {
+      color: #999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* 志望校テーブル */
+    .schools-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .schools-table th,
+    .schools-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .schools-table th {
+      background: #FAFAFA;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .schools-table td {
+      font-size: 14px;
+    }
+
+    .schools-table tr:hover td {
+      background: #FAFAFA;
+    }
+
+    .school-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #00897B;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .school-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .school-badge.sengan {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .school-badge.heigan {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+
+    /* パターンタブ */
+    .pattern-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .pattern-tab {
+      padding: 10px 20px;
+      border: 2px solid #E0E0E0;
+      background: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .pattern-tab:hover {
+      border-color: #00897B;
+    }
+
+    .pattern-tab.active {
+      background: #00897B;
+      border-color: #00897B;
+      color: #fff;
+    }
+
+    .pattern-icons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .pattern-icons .check {
+      color: #4CAF50;
+    }
+
+    .pattern-icons .cross {
+      color: #EF5350;
+    }
+
+    .pattern-tab.active .pattern-icons .check {
+      color: #A5D6A7;
+    }
+
+    .pattern-tab.active .pattern-icons .cross {
+      color: #FFCDD2;
+    }
+
+    /* 進捗バー */
+    .progress-section {
+      margin-bottom: 24px;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .progress-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #00897B;
+    }
+
+    .progress-bar-bg {
+      height: 12px;
+      background: #E0E0E0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00897B 0%, #4DB6AC 100%);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .progress-stat {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .progress-stat strong {
+      color: #00897B;
+    }
+
+    /* ローディング */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #E0E0E0;
+      border-top-color: #00897B;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* モーダル */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-title svg {
+      color: #7B1FA2;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #eee;
+      color: #333;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #7B1FA2;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      padding: 12px 24px;
+      background: #f5f5f5;
+      color: #666;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-cancel:hover {
+      background: #eee;
+    }
+
+    .btn-save {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #7B1FA2 0%, #9C27B0 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .header-nav {
+        display: none;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .selector-controls {
+        flex-direction: column;
+      }
+
+      .control-group {
+        width: 100%;
+      }
+
+      .tab-nav {
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        flex: 1 1 45%;
+      }
+
+      .schools-table {
+        font-size: 12px;
+      }
+
+      .schools-table th,
+      .schools-table td {
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="logo">
+          <img src="logo.png" alt="EQAO">
+        </div>
+        <span class="brand-name">EQAO Staff Portal</span>
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">
+          <i data-lucide="home" style="width:18px;height:18px;"></i>
+          ホーム
+        </a>
+        <a href="staff-students.html" class="nav-item">
+          <i data-lucide="users" style="width:18px;height:18px;"></i>
+          生徒一覧
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メイン -->
+  <main class="main">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-title-area">
+        <div class="page-icon">
+          <i data-lucide="calendar-check" style="width:28px;height:28px;"></i>
+        </div>
+        <div>
+          <h1 class="page-title">受験スケジュール管理</h1>
+          <p class="page-subtitle">生徒の受験スケジュールを閲覧・講師指示を入力</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 生徒選択エリア -->
+    <div class="student-selector">
+      <div class="selector-header">
+        <div class="selector-icon">
+          <i data-lucide="user-search" style="width:20px;height:20px;"></i>
+        </div>
+        <span class="selector-title">生徒を選択</span>
+      </div>
+
+      <div class="selector-controls">
+        <div class="control-group">
+          <label class="control-label">生徒番号または氏名</label>
+          <select id="studentSelect" class="control-select">
+            <option value="">生徒を選択してください</option>
+          </select>
+        </div>
+        <button class="btn-load" id="loadBtn" onclick="loadStudentData()" disabled>
+          <i data-lucide="download" style="width:18px;height:18px;"></i>
+          データを読み込む
+        </button>
+      </div>
+
+      <!-- 選択された生徒情報 -->
+      <div class="selected-student-info" id="selectedStudentInfo">
+        <div class="student-avatar" id="studentAvatar">田</div>
+        <div class="student-details">
+          <div class="student-name-large" id="studentNameLarge">田中 太郎</div>
+          <div class="student-meta" id="studentMetaInfo">生徒番号: 0001 / 高校2年</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- コンテンツエリア -->
+    <div class="content-area" id="contentArea">
+      <!-- タブナビゲーション -->
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('schedule')" data-tab="schedule">
+          <i data-lucide="list-checks" style="width:18px;height:18px;"></i>
+          私のスケジュール
+        </button>
+        <button class="tab-btn" onclick="switchTab('progress')" data-tab="progress">
+          <i data-lucide="bar-chart-2" style="width:18px;height:18px;"></i>
+          進捗状況
+        </button>
+        <button class="tab-btn" onclick="switchTab('schools')" data-tab="schools">
+          <i data-lucide="school" style="width:18px;height:18px;"></i>
+          志望校
+        </button>
+      </div>
+
+      <!-- タブ: 私のスケジュール -->
+      <div class="tab-content active" id="tab-schedule">
+        <!-- 学年・月セレクター -->
+        <div class="section-card">
+          <div class="grade-month-selector">
+            <button class="grade-btn active" data-grade="高1" onclick="selectGrade('高1')">高1</button>
+            <button class="grade-btn" data-grade="高2" onclick="selectGrade('高2')">高2</button>
+            <button class="grade-btn" data-grade="高3" onclick="selectGrade('高3')">高3</button>
+            <select class="month-select" id="monthSelect" onchange="selectMonth(this.value)">
+              <option value="4">4月</option>
+              <option value="5">5月</option>
+              <option value="6">6月</option>
+              <option value="7">7月</option>
+              <option value="8">8月</option>
+              <option value="9">9月</option>
+              <option value="10">10月</option>
+              <option value="11">11月</option>
+              <option value="12" selected>12月</option>
+              <option value="1">1月</option>
+              <option value="2">2月</option>
+              <option value="3">3月</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 生徒の目標 -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title-area">
+              <div class="section-icon">
+                <i data-lucide="target" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <div class="section-title">生徒の目標（この月にやること）</div>
+                <div class="section-subtitle">生徒が自分で入力した内容</div>
+              </div>
+            </div>
+          </div>
+          <div class="goals-display" id="goalsDisplay">
+            <div class="goals-empty">データを読み込んでください</div>
+          </div>
+        </div>
+
+        <!-- 講師の指示 -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title-area">
+              <div class="section-icon" style="background: #F3E5F5; color: #7B1FA2;">
+                <i data-lucide="message-square-text" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <div class="section-title">講師の指示</div>
+                <div class="section-subtitle">講師が入力・生徒に表示される内容</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="instructor-notes-area">
+            <div class="notes-header">
+              <div class="notes-title">
+                <i data-lucide="clipboard-list" style="width:18px;height:18px;"></i>
+                <span id="notesMonthLabel">12月の指示</span>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-refresh" onclick="refreshNotes()" title="最新の状態に更新">
+                  <i data-lucide="refresh-cw" style="width:16px;height:16px;"></i>
+                </button>
+                <button class="btn-add-note" onclick="openNoteModal()">
+                  <i data-lucide="plus" style="width:16px;height:16px;"></i>
+                  指示を追加
+                </button>
+              </div>
+            </div>
+
+            <div class="notes-list" id="notesList">
+              <div class="notes-empty">
+                <i data-lucide="inbox" style="width:40px;height:40px;"></i>
+                <p>この月の指示はありません</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- タブ: 進捗状況 -->
+      <div class="tab-content" id="tab-progress">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title-area">
+              <div class="section-icon">
+                <i data-lucide="trending-up" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <div class="section-title">総合進捗状況</div>
+                <div class="section-subtitle">チェックリストの達成状況</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-section">
+            <div class="progress-header">
+              <span class="progress-label">全体の達成率</span>
+              <span class="progress-value" id="totalProgressValue">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-stats">
+              <div class="progress-stat">高1: <strong id="progress1">0/30</strong></div>
+              <div class="progress-stat">高2: <strong id="progress2">0/29</strong></div>
+              <div class="progress-stat">高3: <strong id="progress3">0/50</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- タブ: 志望校 -->
+      <div class="tab-content" id="tab-schools">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title-area">
+              <div class="section-icon">
+                <i data-lucide="graduation-cap" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <div class="section-title">志望校／併願校</div>
+                <div class="section-subtitle">生徒が登録した志望校情報</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- パターンタブ -->
+          <div class="pattern-tabs">
+            <button class="pattern-tab active" data-pattern="A" onclick="selectPattern('A')">
+              <span>パターンA</span>
+              <div class="pattern-icons">
+                <i data-lucide="check-circle" class="check" style="width:14px;height:14px;"></i>
+                <i data-lucide="check-circle" class="check" style="width:14px;height:14px;"></i>
+              </div>
+            </button>
+            <button class="pattern-tab" data-pattern="B" onclick="selectPattern('B')">
+              <span>パターンB</span>
+              <div class="pattern-icons">
+                <i data-lucide="check-circle" class="check" style="width:14px;height:14px;"></i>
+                <i data-lucide="x-circle" class="cross" style="width:14px;height:14px;"></i>
+              </div>
+            </button>
+            <button class="pattern-tab" data-pattern="C" onclick="selectPattern('C')">
+              <span>パターンC</span>
+              <div class="pattern-icons">
+                <i data-lucide="x-circle" class="cross" style="width:14px;height:14px;"></i>
+                <i data-lucide="check-circle" class="check" style="width:14px;height:14px;"></i>
+              </div>
+            </button>
+            <button class="pattern-tab" data-pattern="D" onclick="selectPattern('D')">
+              <span>パターンD</span>
+              <div class="pattern-icons">
+                <i data-lucide="x-circle" class="cross" style="width:14px;height:14px;"></i>
+                <i data-lucide="x-circle" class="cross" style="width:14px;height:14px;"></i>
+              </div>
+            </button>
+          </div>
+
+          <!-- 志望校テーブル -->
+          <div style="overflow-x: auto;">
+            <table class="schools-table" id="schoolsTable">
+              <thead>
+                <tr>
+                  <th style="width:60px;">順位</th>
+                  <th>大学名</th>
+                  <th>学部</th>
+                  <th>区分</th>
+                  <th>英語要件</th>
+                  <th>評定</th>
+                </tr>
+              </thead>
+              <tbody id="schoolsTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center;color:#999;padding:40px;">データを読み込んでください</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p>© 2026 EQAO Education Group.</p>
+  </footer>
+
+  <!-- ローディング -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- 講師指示追加モーダル -->
+  <div class="modal-overlay" id="noteModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="message-square-plus" style="width:22px;height:22px;"></i>
+          講師の指示を追加
+        </div>
+        <button class="modal-close" onclick="closeNoteModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">指示内容 *</label>
+          <textarea class="form-textarea" id="noteText" placeholder="生徒への指示内容を入力..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">期限（任意）</label>
+          <input type="date" class="form-input" id="noteDeadline">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeNoteModal()">キャンセル</button>
+        <button class="btn-save" onclick="saveNote()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // API設定
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyXdCxzPU6oXAm2Mi9mfMDeNvQAyE0mmTOABA2EOYelvX6J2Rr48VcizS0vMgIS7Qc7/exec';
+
+    // 状態管理
+    let allStudents = [];
+    let selectedStudentId = null;
+    let selectedGrade = '高2';
+    let selectedMonth = '12';
+    let selectedPattern = 'A';
+
+    // データ保持
+    let studentData = {
+      goals: {},
+      instructorNotes: [],
+      checklistState: {},
+      schools: {}
+    };
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStudentList();
+
+      // 生徒選択変更イベント
+      document.getElementById('studentSelect').addEventListener('change', (e) => {
+        const btn = document.getElementById('loadBtn');
+        btn.disabled = !e.target.value;
+      });
+
+      // 現在の月を設定
+      const now = new Date();
+      selectedMonth = String(now.getMonth() + 1);
+      document.getElementById('monthSelect').value = selectedMonth;
+    });
+
+    // 生徒一覧を読み込み
+    async function loadStudentList() {
+      try {
+        showLoading(true);
+
+        const response = await fetch(`${API_URL}?action=getAllStudents`);
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          allStudents = data;
+          renderStudentSelect();
+        }
+      } catch (error) {
+        console.error('生徒一覧読み込みエラー:', error);
+        alert('生徒一覧の読み込みに失敗しました');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 生徒選択ドロップダウンを描画
+    function renderStudentSelect() {
+      const select = document.getElementById('studentSelect');
+      let html = '<option value="">生徒を選択してください</option>';
+
+      allStudents.forEach(student => {
+        const id = String(student.studentId).padStart(4, '0');
+        html += `<option value="${id}">${id} - ${student.studentName}</option>`;
+      });
+
+      select.innerHTML = html;
+    }
+
+    // 生徒データを読み込み
+    async function loadStudentData() {
+      const select = document.getElementById('studentSelect');
+      selectedStudentId = select.value;
+
+      if (!selectedStudentId) {
+        alert('生徒を選択してください');
+        return;
+      }
+
+      try {
+        showLoading(true);
+
+        // 生徒情報を表示
+        const student = allStudents.find(s => String(s.studentId).padStart(4, '0') === selectedStudentId);
+        if (student) {
+          document.getElementById('studentAvatar').textContent = (student.studentName || '?').charAt(0);
+          document.getElementById('studentNameLarge').textContent = student.studentName || '-';
+          document.getElementById('studentMetaInfo').textContent = `生徒番号: ${selectedStudentId}`;
+          document.getElementById('selectedStudentInfo').classList.add('show');
+        }
+
+        // 各データを並行して読み込み
+        await Promise.all([
+          loadGoals(),
+          loadInstructorNotes(),
+          loadChecklistState(),
+          loadSchools()
+        ]);
+
+        // コンテンツエリアを表示
+        document.getElementById('contentArea').classList.add('show');
+
+        // 表示を更新
+        renderGoals();
+        renderNotes();
+        renderProgress();
+        renderSchools();
+
+      } catch (error) {
+        console.error('データ読み込みエラー:', error);
+        alert('データの読み込みに失敗しました');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 目標を読み込み
+    async function loadGoals() {
+      try {
+        const url = `${API_URL}?action=getGoals&studentId=${selectedStudentId}&grade=${selectedGrade}&month=${selectedMonth}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const key = `${selectedGrade}_${selectedMonth}`;
+        studentData.goals[key] = data.content || '';
+      } catch (error) {
+        console.error('目標読み込みエラー:', error);
+      }
+    }
+
+    // 講師指示を読み込み
+    async function loadInstructorNotes() {
+      try {
+        const url = `${API_URL}?action=getInstructorNotes&studentId=${selectedStudentId}&grade=${selectedGrade}&month=${selectedMonth}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        studentData.instructorNotes = Array.isArray(data) ? data : [];
+      } catch (error) {
+        console.error('講師指示読み込みエラー:', error);
+        studentData.instructorNotes = [];
+      }
+    }
+
+    // チェックリスト状態を読み込み
+    async function loadChecklistState() {
+      try {
+        const url = `${API_URL}?action=getChecklistState&studentId=${selectedStudentId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        studentData.checklistState = data.checkState || {};
+      } catch (error) {
+        console.error('チェックリスト読み込みエラー:', error);
+        studentData.checklistState = {};
+      }
+    }
+
+    // 志望校を読み込み
+    async function loadSchools() {
+      try {
+        const url = `${API_URL}?action=getSchoolData&studentId=${selectedStudentId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // パターン別オブジェクトの場合
+        if (data && typeof data === 'object' && (data.A || data.B || data.C || data.D)) {
+          studentData.schools = data;
+        } else if (Array.isArray(data)) {
+          // 旧形式（配列）の場合
+          studentData.schools = { A: data, B: [], C: [], D: [] };
+        } else {
+          studentData.schools = { A: [], B: [], C: [], D: [] };
+        }
+      } catch (error) {
+        console.error('志望校読み込みエラー:', error);
+        studentData.schools = { A: [], B: [], C: [], D: [] };
+      }
+    }
+
+    // 目標を描画
+    function renderGoals() {
+      const container = document.getElementById('goalsDisplay');
+      const key = `${selectedGrade}_${selectedMonth}`;
+      const goals = studentData.goals[key];
+
+      if (goals && goals.trim()) {
+        container.innerHTML = `<div class="goals-text">${escapeHtml(goals)}</div>`;
+      } else {
+        container.innerHTML = '<div class="goals-empty">この月の目標は未入力です</div>';
+      }
+    }
+
+    // 講師指示を描画
+    function renderNotes() {
+      const container = document.getElementById('notesList');
+      const label = document.getElementById('notesMonthLabel');
+      label.textContent = `${selectedMonth}月の指示`;
+
+      const notes = studentData.instructorNotes;
+
+      if (!notes || notes.length === 0) {
+        container.innerHTML = `
+          <div class="notes-empty">
+            <i data-lucide="inbox" style="width:40px;height:40px;"></i>
+            <p>この月の指示はありません</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      let html = '';
+      notes.forEach((note, index) => {
+        const completedClass = note.completed ? 'completed' : '';
+        const checkedClass = note.completed ? 'checked' : '';
+
+        html += `
+          <div class="note-item ${completedClass}">
+            <div class="note-checkbox ${checkedClass}" onclick="toggleNoteComplete(${index})" title="完了/未完了を切り替え">
+              ${note.completed ? '<i data-lucide="check" style="width:14px;height:14px;"></i>' : ''}
+            </div>
+            <div class="note-content">
+              <div class="note-text">${escapeHtml(note.text || '')}</div>
+              ${note.deadline ? `
+                <div class="note-deadline">
+                  <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                  期限: ${note.deadline}
+                </div>
+              ` : ''}
+            </div>
+            <div class="note-actions">
+              <button class="note-action-btn" onclick="editNote(${index})" title="編集">
+                <i data-lucide="pencil" style="width:16px;height:16px;"></i>
+              </button>
+              <button class="note-action-btn delete" onclick="deleteNote(${index})" title="削除">
+                <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // 進捗を描画
+    function renderProgress() {
+      const state = studentData.checklistState;
+      const count1 = (state['高1'] || []).length;
+      const count2 = (state['高2'] || []).length;
+      const count3 = (state['高3'] || []).length;
+      const total = 109;
+      const totalChecked = count1 + count2 + count3;
+      const percent = Math.round((totalChecked / total) * 100);
+
+      document.getElementById('totalProgressValue').textContent = percent + '%';
+      document.getElementById('progressBarFill').style.width = percent + '%';
+      document.getElementById('progress1').textContent = count1 + '/30';
+      document.getElementById('progress2').textContent = count2 + '/29';
+      document.getElementById('progress3').textContent = count3 + '/50';
+    }
+
+    // 志望校を描画
+    function renderSchools() {
+      const tbody = document.getElementById('schoolsTableBody');
+      const schools = studentData.schools[selectedPattern] || [];
+
+      if (schools.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;padding:40px;">このパターンに登録された志望校はありません</td></tr>';
+        return;
+      }
+
+      let html = '';
+      schools.forEach((school, index) => {
+        const badgeClass = school.applicationType === '専願' ? 'sengan' : 'heigan';
+        html += `
+          <tr>
+            <td><span class="school-rank">${index + 1}</span></td>
+            <td><strong>${escapeHtml(school.universityName || '-')}</strong></td>
+            <td>${escapeHtml(school.faculty || '-')}</td>
+            <td>${school.applicationType ? `<span class="school-badge ${badgeClass}">${escapeHtml(school.applicationType)}</span>` : '-'}</td>
+            <td>${escapeHtml(school.englishReq || '-')}</td>
+            <td>${escapeHtml(school.gpaReq || '-')}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    // タブ切り替え
+    function switchTab(tabName) {
+      // ボタンのアクティブ状態を更新
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
+      });
+
+      // コンテンツの表示切り替え
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === `tab-${tabName}`);
+      });
+    }
+
+    // 学年選択
+    async function selectGrade(grade) {
+      selectedGrade = grade;
+
+      document.querySelectorAll('.grade-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.grade === grade);
+      });
+
+      if (selectedStudentId) {
+        showLoading(true);
+        await Promise.all([loadGoals(), loadInstructorNotes()]);
+        renderGoals();
+        renderNotes();
+        showLoading(false);
+      }
+    }
+
+    // 月選択
+    async function selectMonth(month) {
+      selectedMonth = month;
+
+      if (selectedStudentId) {
+        showLoading(true);
+        await Promise.all([loadGoals(), loadInstructorNotes()]);
+        renderGoals();
+        renderNotes();
+        showLoading(false);
+      }
+    }
+
+    // パターン選択
+    function selectPattern(pattern) {
+      selectedPattern = pattern;
+
+      document.querySelectorAll('.pattern-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.pattern === pattern);
+      });
+
+      renderSchools();
+    }
+
+    // 編集中のノートID（新規の場合はnull）
+    let editingNoteId = null;
+
+    // 講師指示モーダルを開く（新規）
+    function openNoteModal() {
+      editingNoteId = null;
+      document.getElementById('noteText').value = '';
+      document.getElementById('noteDeadline').value = '';
+      document.querySelector('#noteModal .modal-title').innerHTML = `
+        <i data-lucide="message-square-plus" style="width:22px;height:22px;"></i>
+        講師の指示を追加
+      `;
+      document.getElementById('noteModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    // 講師指示モーダルを閉じる
+    function closeNoteModal() {
+      document.getElementById('noteModal').classList.remove('show');
+      editingNoteId = null;
+    }
+
+    // 講師指示を保存（新規・更新共通）
+    async function saveNote() {
+      const text = document.getElementById('noteText').value.trim();
+      const deadline = document.getElementById('noteDeadline').value;
+
+      if (!text) {
+        alert('指示内容を入力してください');
+        return;
+      }
+
+      try {
+        showLoading(true);
+
+        let url;
+        if (editingNoteId) {
+          // 更新
+          url = `${API_URL}?action=updateInstructorNote&noteId=${encodeURIComponent(editingNoteId)}&text=${encodeURIComponent(text)}&deadline=${encodeURIComponent(deadline)}&completed=false`;
+        } else {
+          // 新規
+          url = `${API_URL}?action=saveInstructorNote&studentId=${selectedStudentId}&grade=${encodeURIComponent(selectedGrade)}&month=${encodeURIComponent(selectedMonth)}&text=${encodeURIComponent(text)}&deadline=${encodeURIComponent(deadline)}`;
+        }
+
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          closeNoteModal();
+          // データを再読み込み
+          await loadInstructorNotes();
+          renderNotes();
+          alert(editingNoteId ? '指示を更新しました' : '指示を追加しました');
+        } else {
+          alert('保存に失敗しました: ' + (result.error || '不明なエラー'));
+        }
+      } catch (error) {
+        console.error('保存エラー:', error);
+        alert('保存に失敗しました');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 講師指示を編集
+    function editNote(index) {
+      const note = studentData.instructorNotes[index];
+      if (!note) return;
+
+      editingNoteId = note.id;
+      document.getElementById('noteText').value = note.text || '';
+      
+      // 期限日をyyyy-MM-dd形式に変換
+      let deadlineValue = '';
+      if (note.deadline) {
+        // "M/d" 形式から変換を試みる
+        const parts = note.deadline.split('/');
+        if (parts.length === 2) {
+          const month = parts[0].padStart(2, '0');
+          const day = parts[1].padStart(2, '0');
+          const year = new Date().getFullYear();
+          deadlineValue = `${year}-${month}-${day}`;
+        }
+      }
+      document.getElementById('noteDeadline').value = deadlineValue;
+      
+      document.querySelector('#noteModal .modal-title').innerHTML = `
+        <i data-lucide="pencil" style="width:22px;height:22px;"></i>
+        講師の指示を編集
+      `;
+      document.getElementById('noteModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    // 講師指示を削除
+    async function deleteNote(index) {
+      const note = studentData.instructorNotes[index];
+      if (!note || !note.id) {
+        alert('削除できません');
+        return;
+      }
+
+      if (!confirm('この指示を削除しますか？\n\n「' + (note.text || '').substring(0, 30) + '...」')) return;
+
+      try {
+        showLoading(true);
+
+        const url = `${API_URL}?action=deleteInstructorNote&noteId=${encodeURIComponent(note.id)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          // データを再読み込み
+          await loadInstructorNotes();
+          renderNotes();
+          alert('指示を削除しました');
+        } else {
+          alert('削除に失敗しました: ' + (result.error || '不明なエラー'));
+        }
+      } catch (error) {
+        console.error('削除エラー:', error);
+        alert('削除に失敗しました');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 完了状態を切り替え
+    async function toggleNoteComplete(index) {
+      const note = studentData.instructorNotes[index];
+      if (!note || !note.id) return;
+
+      try {
+        showLoading(true);
+
+        const newCompleted = !note.completed;
+        const url = `${API_URL}?action=updateInstructorNote&noteId=${encodeURIComponent(note.id)}&text=${encodeURIComponent(note.text)}&deadline=${encodeURIComponent(note.deadline || '')}&completed=${newCompleted}`;
+        
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          await loadInstructorNotes();
+          renderNotes();
+        } else {
+          alert('更新に失敗しました');
+        }
+      } catch (error) {
+        console.error('更新エラー:', error);
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 講師指示を最新に更新
+    async function refreshNotes() {
+      if (!selectedStudentId) return;
+
+      const btn = document.querySelector('.btn-refresh');
+      btn.classList.add('loading');
+
+      try {
+        await loadInstructorNotes();
+        renderNotes();
+      } catch (error) {
+        console.error('リフレッシュエラー:', error);
+        alert('更新に失敗しました');
+      } finally {
+        btn.classList.remove('loading');
+      }
+    }
+
+    // ローディング表示
+    function showLoading(show) {
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.classList.toggle('show', show);
+    }
+
+    // HTMLエスケープ
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+  </script>
+</body>
+
+</html>
