@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,55 +10,551 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Noto Sans JP', sans-serif; background: #f8f9fa; min-height: 100vh; color: #333; }
-    
-    .header { background: #111; padding: 0 24px; height: 64px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
-    .header-content { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 16px; }
-    .back-btn { display: flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 14px; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
-    .back-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
-    .header-divider { width: 1px; height: 20px; background: #444; }
-    .header-title { font-size: 16px; font-weight: 600; color: #fff; }
-    
-    .main { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-    
-    .page-header { margin-bottom: 32px; }
-    .page-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: #d1fae5; color: #059669; }
-    .page-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
-    .page-desc { font-size: 14px; color: #666; }
-    
-    .button-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
-    
-    .btn-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; transition: all 0.2s; }
-    .btn-card:hover { border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15); transform: translateY(-2px); }
-    .btn-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #d1fae5; color: #059669; flex-shrink: 0; }
-    .btn-content { flex: 1; }
-    .btn-title { font-size: 14px; font-weight: 600; color: #111; }
-    .btn-desc { font-size: 12px; color: #888; margin-top: 2px; }
-    .btn-arrow { color: #ccc; transition: color 0.2s; }
-    .btn-card:hover .btn-arrow { color: #10b981; }
-    
-    .footer { text-align: center; padding: 32px 24px; margin-top: 40px; }
-    .footer-text { font-size: 13px; color: #999; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .btn-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-card:hover {
+      border-color: #10b981;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #d1fae5;
+      color: #059669;
+      flex-shrink: 0;
+    }
+
+    .btn-content {
+      flex: 1;
+    }
+
+    .btn-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .btn-desc {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .btn-arrow {
+      color: #ccc;
+      transition: color 0.2s;
+    }
+
+    .btn-card:hover .btn-arrow {
+      color: #10b981;
+    }
+
+    /* 準備中ボタン */
+    .btn-card.disabled {
+      background: #f5f5f5;
+      border-color: #e0e0e0;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    .btn-card.disabled .btn-icon {
+      background: #e0e0e0;
+      color: #999;
+    }
+
+    .btn-card.disabled .btn-title {
+      color: #999;
+    }
+
+    .btn-card.disabled .btn-desc {
+      color: #bbb;
+    }
+
+    .btn-card.disabled .btn-arrow {
+      color: #ddd;
+    }
+
+    .coming-soon-badge {
+      font-size: 10px;
+      font-weight: 600;
+      color: #999;
+      background: #e0e0e0;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
     @media (max-width: 768px) {
-      .main { padding: 24px 16px; }
-      .button-grid { grid-template-columns: 1fr; }
+      .main {
+        padding: 24px 16px;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* モーダル */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 400px;
+      width: 90%;
+      transform: scale(0.95);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #d1fae5;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .modal-subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .credential-box {
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .credential-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .credential-row:first-child {
+      border-bottom: 1px solid #e5e5e5;
+      padding-top: 0;
+    }
+
+    .credential-row:last-child {
+      padding-bottom: 0;
+    }
+
+    .credential-label {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .credential-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-note {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .modal-btn.secondary {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      color: #666;
+    }
+
+    .modal-btn.secondary:hover {
+      background: #eee;
+    }
+
+    .modal-btn.primary {
+      background: #059669;
+      border: none;
+      color: #fff;
+    }
+
+    .modal-btn.primary:hover {
+      background: #047857;
+    }
+
+    /* ユーザーメニュー */
+    .header-content {
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .user-name {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="header-content">
-      <a href="index.html" class="back-btn">
-        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
-        ポータルに戻る
-      </a>
-      <div class="header-divider"></div>
-      <span class="header-title">生徒管理</span>
+      <div class="header-left">
+        <a href="index.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">生徒管理</span>
+      </div>
+      <!-- ユーザーメニュー -->
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-email" id="dropdownEmail">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
-  
+
   <main class="main">
     <div class="page-header">
       <div class="page-icon">
@@ -66,9 +563,9 @@
       <h1 class="page-title">生徒管理</h1>
       <p class="page-desc">生徒情報・担任一覧・進捗状況などを確認できます</p>
     </div>
-    
+
     <div class="button-grid">
-      <a href="#" class="btn-card">
+      <a href="#" class="btn-card" onclick="showPortalModal(event)">
         <div class="btn-icon"><i data-lucide="layout-dashboard" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">生徒ポータル</div>
@@ -76,8 +573,8 @@
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="staff-students.html" class="btn-card">
         <div class="btn-icon"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
           <div class="btn-title">生徒保護者一覧</div>
@@ -85,67 +582,191 @@
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="user-check" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">担任・メンター一覧</div>
+          <div class="btn-title">担任・メンター一覧<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">生徒の担任・メンター確認</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="trending-up" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">生徒進捗状況一覧</div>
+          <div class="btn-title">生徒進捗状況一覧<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">学習進捗・達成度の確認</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="map" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">受験戦略スケジュール</div>
+          <div class="btn-title">受験戦略スケジュール<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">受験に向けた計画を確認</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="library" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">自習室状況</div>
+          <div class="btn-title">自習室状況<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">自習室の利用状況を確認</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="list-checks" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">チェックリスト</div>
+          <div class="btn-title">チェックリスト<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">業務・確認事項のチェック</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
-      
-      <a href="#" class="btn-card">
+
+      <a href="#" class="btn-card disabled">
         <div class="btn-icon"><i data-lucide="user-plus" style="width:20px;height:20px;"></i></div>
         <div class="btn-content">
-          <div class="btn-title">講師推薦フォーム</div>
+          <div class="btn-title">講師推薦フォーム<span class="coming-soon-badge">準備中</span></div>
           <div class="btn-desc">生徒を講師に推薦</div>
         </div>
         <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
       </a>
     </div>
   </main>
-  
+
   <footer class="footer">
     <p class="footer-text">© 2025 EQAO Education Group</p>
   </footer>
-  
-  <script>lucide.createIcons();</script>
+
+  <script>
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      checkLoginStatus();
+    });
+
+    // ログイン状態チェック
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const data = JSON.parse(session);
+        
+        if (Date.now() > data.expiresAt) {
+          localStorage.removeItem('eqao_staff_session');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        displayUserInfo(data);
+      } catch {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // ユーザー情報表示
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    // ユーザーメニュー開閉
+    function toggleUserMenu() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // メニュー外クリックで閉じる
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      
+      if (userMenu && !userMenu.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    // ログアウト
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // ポータルモーダル
+    function showPortalModal(event) {
+      event.preventDefault();
+      document.getElementById('portalModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeModal(event) {
+      if (!event || event.target === event.currentTarget) {
+        document.getElementById('portalModal').classList.remove('show');
+      }
+    }
+
+    // ESCキーで閉じる
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+  <!-- ポータルログインモーダル -->
+  <div class="modal-overlay" id="portalModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-icon">
+          <i data-lucide="key" style="width:24px;height:24px;"></i>
+        </div>
+        <div>
+          <div class="modal-title">デモ用ログイン情報</div>
+          <div class="modal-subtitle">生徒ポータルへのアクセス</div>
+        </div>
+      </div>
+
+      <div class="credential-box">
+        <div class="credential-row">
+          <span class="credential-label">生徒番号</span>
+          <span class="credential-value">5999</span>
+        </div>
+        <div class="credential-row">
+          <span class="credential-label">パスワード</span>
+          <span class="credential-value">20040707</span>
+        </div>
+      </div>
+
+      <p class="modal-note">
+        ※ これはデモ用のアカウントです。<br>
+        ※ 実際の生徒情報とは異なります。
+      </p>
+
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="closeModal()">キャンセル</button>
+        <a href="https://eqao-portal.pages.dev/" target="_blank" class="modal-btn primary"
+          onclick="closeModal()">ポータルを開く</a>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

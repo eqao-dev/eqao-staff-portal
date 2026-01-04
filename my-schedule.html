@@ -65,18 +65,18 @@
     .back-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      color: #fff;
+      gap: 6px;
+      color: #aaa;
       text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
       transition: all 0.2s;
     }
 
     .back-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .header-info {
@@ -1205,6 +1205,134 @@
       color: #888;
       margin-bottom: 10px;
     }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name-menu {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .user-name-menu {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -1214,7 +1342,8 @@
     <div class="header-content">
       <div class="header-left">
         <a href="category-schedule.html" class="back-btn">
-          <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
         </a>
         <div class="header-info">
           <div class="header-icon">
@@ -1227,6 +1356,30 @@
         <div class="user-badge" id="userBadge" style="display:none;">
           <i data-lucide="user" style="width:16px;height:16px;"></i>
           <span id="userName">-</span>
+        </div>
+        <div class="user-menu">
+          <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="userAvatar">-</div>
+            <span class="user-name-menu" id="userNameMenu">ログイン中</span>
+            <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+          </button>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="dropdown-header">
+              <div class="dropdown-name" id="dropdownName">-</div>
+              <div class="dropdown-email" id="dropdownEmail">-</div>
+            </div>
+            <div class="dropdown-menu">
+              <a href="index.html" class="dropdown-item">
+                <i data-lucide="home" style="width:16px;height:16px;"></i>
+                ホーム
+              </a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item danger" onclick="handleLogout()">
+                <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+                ログアウト
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1901,6 +2054,43 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ===== ログインチェック =====
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserMenuInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function displayUserMenuInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userNameMenu').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    // ページ読み込み時にログインチェック
+    checkLoginStatus();
     // ===== 設定 =====
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
 
@@ -2517,146 +2707,6 @@
 
     // 履歴モーダル外クリックで閉じる
     document.getElementById('historyModal').addEventListener('click', function (e) {
-      if (e.target === this) closeHistoryModal();
-    });
-
-    // ===== 履歴モーダル =====
-    let historyStudentId = null;
-    let historyData = [];
-    let historyDisplayCount = 5;
-
-    function openHistoryModal(studentId, studentName) {
-      historyStudentId = studentId;
-      historyData = [];
-      historyDisplayCount = 5;
-
-      document.getElementById('historyTitle').textContent = `${studentId} - ${studentName} の授業履歴`;
-      document.getElementById('historyModal').classList.add('show');
-
-      loadHistory(studentId);
-      lucide.createIcons();
-    }
-
-    function closeHistoryModal() {
-      document.getElementById('historyModal').classList.remove('show');
-      historyStudentId = null;
-      historyData = [];
-    }
-
-    async function loadHistory(studentId) {
-      const content = document.getElementById('historyContent');
-      content.innerHTML = `
-    <div class="loading">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">読み込み中...</div>
-    </div>
-  `;
-
-      try {
-        const url = `${GAS_API_URL}?action=getStudentHistory&studentId=${encodeURIComponent(studentId)}`;
-        const response = await fetch(url);
-        const result = await response.json();
-
-        if (result.success) {
-          historyData = result.data || [];
-          renderHistory();
-        } else {
-          throw new Error(result.message);
-        }
-      } catch (error) {
-        console.error('履歴取得エラー:', error);
-        content.innerHTML = `
-      <div class="history-empty">
-        <div class="history-empty-icon">
-          <i data-lucide="alert-circle" style="width:24px;height:24px;"></i>
-        </div>
-        <div>履歴を取得できませんでした</div>
-      </div>
-    `;
-        lucide.createIcons();
-      }
-    }
-
-    function renderHistory() {
-      const content = document.getElementById('historyContent');
-
-      if (historyData.length === 0) {
-        content.innerHTML = `
-      <div class="history-empty">
-        <div class="history-empty-icon">
-          <i data-lucide="inbox" style="width:24px;height:24px;"></i>
-        </div>
-        <div>まだ授業履歴がありません</div>
-      </div>
-    `;
-        lucide.createIcons();
-        return;
-      }
-
-      const displayData = historyData.slice(0, historyDisplayCount);
-
-      let html = '<div class="history-list">';
-
-      displayData.forEach(item => {
-        html += `
-      <div class="history-item">
-        <div class="history-header">
-          <div class="history-date">${item.lessonDate || '-'} ${item.lessonTime || ''}</div>
-          <div class="history-teacher">${item.teacherName || '-'}</div>
-        </div>
-        <div class="history-content">
-          ${item.steps ? `
-          <div class="history-row">
-            <div class="history-label">取り組み</div>
-            <div class="history-value">${item.steps}</div>
-          </div>
-          ` : ''}
-          ${item.homework ? `
-          <div class="history-row">
-            <div class="history-label">宿題</div>
-            <div class="history-value">${item.homework}</div>
-          </div>
-          ` : ''}
-          ${item.futurePlan ? `
-          <div class="history-row">
-            <div class="history-label">今後予定</div>
-            <div class="history-value">${item.futurePlan}</div>
-          </div>
-          ` : ''}
-          ${item.message ? `
-          <div class="history-row">
-            <div class="history-label">伝達</div>
-            <div class="history-value">${item.message}</div>
-          </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-      });
-
-      html += '</div>';
-
-      // もっと見るボタン
-      if (historyData.length > historyDisplayCount) {
-        const remaining = historyData.length - historyDisplayCount;
-        html += `
-      <button class="load-more-btn" onclick="loadMoreHistory()">
-        さらに表示（残り${remaining}件）
-      </button>
-    `;
-      }
-
-      content.innerHTML = html;
-      lucide.createIcons();
-    }
-
-    function loadMoreHistory() {
-      historyDisplayCount += 5;
-      renderHistory();
-    }
-
-    // 履歴モーダル外クリックで閉じる
-    document.getElementById('historyModal')?.addEventListener('click', function (e) {
       if (e.target === this) closeHistoryModal();
     });
 

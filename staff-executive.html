@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +15,14 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: #f8f9fa;
       min-height: 100vh;
       color: #333;
     }
-    
+
     /* ヘッダー */
     .header {
       background: #111;
@@ -33,7 +34,7 @@
       top: 0;
       z-index: 100;
     }
-    
+
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
@@ -42,13 +43,13 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    
+
     .back-btn {
       display: flex;
       align-items: center;
@@ -60,24 +61,24 @@
       border-radius: 8px;
       transition: all 0.2s;
     }
-    
+
     .back-btn:hover {
       color: #fff;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
     }
-    
+
     .header-divider {
       width: 1px;
       height: 20px;
       background: #444;
     }
-    
+
     .header-title {
       font-size: 16px;
       font-weight: 600;
       color: #fff;
     }
-    
+
     .logout-btn {
       display: flex;
       align-items: center;
@@ -92,20 +93,20 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-    
+
     .logout-btn:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
       border-color: #666;
     }
-    
+
     /* メイン */
     .main {
       max-width: 1200px;
       margin: 0 auto;
       padding: 40px 24px;
     }
-    
+
     /* ログインオーバーレイ */
     .login-overlay {
       position: fixed;
@@ -120,11 +121,11 @@
       z-index: 1000;
       padding: 20px;
     }
-    
+
     .login-overlay.hidden {
       display: none;
     }
-    
+
     .login-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -133,9 +134,9 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     }
-    
+
     .login-icon {
       width: 72px;
       height: 72px;
@@ -147,30 +148,30 @@
       margin: 0 auto 24px;
       color: #fff;
     }
-    
+
     .login-title {
       font-size: 24px;
       font-weight: 700;
       color: #111;
       margin-bottom: 8px;
     }
-    
+
     .login-subtitle {
       font-size: 14px;
       color: #666;
       margin-bottom: 32px;
     }
-    
+
     .login-form {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-    
+
     .input-group {
       position: relative;
     }
-    
+
     .input-group input {
       width: 100%;
       padding: 16px 20px 16px 48px;
@@ -182,17 +183,17 @@
       font-family: inherit;
       transition: all 0.2s;
     }
-    
+
     .input-group input:focus {
       outline: none;
       border-color: #111;
       background: #fff;
     }
-    
+
     .input-group input::placeholder {
       color: #999;
     }
-    
+
     .input-group .input-icon {
       position: absolute;
       left: 16px;
@@ -200,7 +201,7 @@
       transform: translateY(-50%);
       color: #999;
     }
-    
+
     .login-btn {
       width: 100%;
       padding: 16px;
@@ -219,11 +220,11 @@
       gap: 8px;
       margin-top: 8px;
     }
-    
+
     .login-btn:hover {
       background: #333;
     }
-    
+
     .login-error {
       background: #fef2f2;
       border: 1px solid #fecaca;
@@ -233,11 +234,11 @@
       font-size: 13px;
       display: none;
     }
-    
+
     .login-error.show {
       display: block;
     }
-    
+
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -248,25 +249,25 @@
       margin-top: 24px;
       transition: color 0.2s;
     }
-    
+
     .back-link:hover {
       color: #111;
     }
-    
+
     /* コンテンツエリア */
     .content {
       display: none;
     }
-    
+
     .content.show {
       display: block;
     }
-    
+
     /* ページヘッダー */
     .page-header {
       margin-bottom: 32px;
     }
-    
+
     .page-title {
       font-size: 28px;
       font-weight: 700;
@@ -276,19 +277,19 @@
       align-items: center;
       gap: 12px;
     }
-    
+
     .page-subtitle {
       font-size: 14px;
       color: #666;
     }
-    
+
     /* カードグリッド */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
     }
-    
+
     /* カード */
     .card {
       background: #fff;
@@ -303,7 +304,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .card::before {
       content: '';
       position: absolute;
@@ -312,33 +313,33 @@
       right: 0;
       height: 4px;
     }
-    
+
     .card.schedule::before {
       background: #0ea5e9;
     }
-    
+
     .card.accounting::before {
       background: #eab308;
     }
-    
+
     .card:hover {
       border-color: #ccc;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
-    
+
     .card.disabled {
       opacity: 0.5;
       pointer-events: none;
     }
-    
+
     .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 16px;
     }
-    
+
     .card-icon {
       width: 52px;
       height: 52px;
@@ -347,22 +348,22 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .card.schedule .card-icon {
       background: #e0f2fe;
       color: #0284c7;
     }
-    
+
     .card.accounting .card-icon {
       background: #fef9c3;
       color: #a16207;
     }
-    
+
     .card.disabled .card-icon {
       background: #f5f5f5;
       color: #999;
     }
-    
+
     .card-arrow {
       width: 36px;
       height: 36px;
@@ -374,12 +375,12 @@
       color: #999;
       transition: all 0.2s;
     }
-    
+
     .card:hover .card-arrow {
       background: #111;
       color: #fff;
     }
-    
+
     .card-status {
       display: inline-flex;
       align-items: center;
@@ -390,50 +391,185 @@
       font-weight: 600;
       margin-bottom: 12px;
     }
-    
+
     .card-status.active {
       background: #dcfce7;
       color: #15803d;
     }
-    
+
     .card-status.coming {
       background: #f5f5f5;
       color: #666;
     }
-    
+
     .card-title {
       font-size: 18px;
       font-weight: 700;
       color: #111;
       margin-bottom: 8px;
     }
-    
+
     .card-desc {
       font-size: 14px;
       color: #666;
       line-height: 1.6;
     }
-    
+
     /* レスポンシブ */
     @media (max-width: 768px) {
       .main {
         padding: 24px 16px;
       }
-      
+
       .page-title {
         font-size: 24px;
       }
-      
+
       .card-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .login-card {
         padding: 28px 20px;
       }
     }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .user-name {
+        display: none;
+      }
+    }
   </style>
 </head>
+
 <body>
   <!-- ログインオーバーレイ -->
   <div class="login-overlay" id="login-overlay">
@@ -443,7 +579,7 @@
       </div>
       <h1 class="login-title">幹部ページ</h1>
       <p class="login-subtitle">パスワードを入力してください</p>
-      
+
       <form class="login-form" onsubmit="handleLogin(event)">
         <div class="input-group">
           <i data-lucide="key" class="input-icon" style="width:20px;height:20px;"></i>
@@ -457,34 +593,60 @@
           ログイン
         </button>
       </form>
-      
+
       <a href="staff-portal.html" class="back-link">
         <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
         ポータルに戻る
       </a>
     </div>
   </div>
-  
+
   <!-- メインコンテンツ -->
   <div class="content" id="main-content">
     <!-- ヘッダー -->
     <header class="header">
       <div class="header-content">
         <div class="header-left">
-          <a href="staff-portal.html" class="back-btn">
+          <a href="index.html" class="back-btn">
             <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
-            ポータル
+            戻る
           </a>
           <div class="header-divider"></div>
           <span class="header-title">幹部ページ</span>
         </div>
-        <button class="logout-btn" onclick="handleLogout()">
-          <i data-lucide="log-out" style="width:14px;height:14px;"></i>
-          ログアウト
-        </button>
+        <div class="header-right">
+          <button class="logout-btn" onclick="handleExecutiveLogout()">
+            <i data-lucide="log-out" style="width:14px;height:14px;"></i>
+            幹部ログアウト
+          </button>
+          <div class="user-menu">
+            <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+              <div class="user-avatar" id="userAvatar">-</div>
+              <span class="user-name" id="userName">ログイン中</span>
+              <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+              <div class="dropdown-header">
+                <div class="dropdown-name" id="dropdownName">-</div>
+                <div class="dropdown-email" id="dropdownEmail">-</div>
+              </div>
+              <div class="dropdown-menu">
+                <a href="my-schedule.html" class="dropdown-item">
+                  <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                  マイスケジュール
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item danger" onclick="handleStaffLogout()">
+                  <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+                  ログアウト
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
-    
+
     <!-- メイン -->
     <main class="main">
       <div class="page-header">
@@ -494,7 +656,7 @@
         </h1>
         <p class="page-subtitle">各部署の管理ツールにアクセスできます</p>
       </div>
-      
+
       <div class="card-grid">
         <!-- 入塾手続き -->
         <a href="staff-schedule.html" class="card schedule">
@@ -515,7 +677,7 @@
             新規生徒の入塾手続き、スケジュール調整、講師アテンド管理を行います。
           </div>
         </a>
-        
+
         <!-- 経理担当 -->
         <a href="staff-accounting.html" class="card accounting">
           <div class="card-header">
@@ -535,7 +697,7 @@
             請求書発行、入金確認、料金管理を行います。
           </div>
         </a>
-        
+
         <!-- 入塾データ管理（準備中） -->
         <a href="#" class="card disabled">
           <div class="card-header">
@@ -555,7 +717,7 @@
             入塾申込データの確認・編集を行います。
           </div>
         </a>
-        
+
         <!-- 設定（準備中） -->
         <a href="#" class="card disabled">
           <div class="card-header">
@@ -578,33 +740,71 @@
       </div>
     </main>
   </div>
-  
+
   <script>
-    // 設定
     const CORRECT_PASSWORD = 'eqao2025';
-    const SESSION_KEY = 'eqao_executive_session';
-    
-    // 初期化
+    const SESSION_KEY = 'eqao_executive_auth';
+
+    lucide.createIcons();
+
     document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
+      checkStaffLogin();
       checkSession();
     });
-    
-    // セッション確認
+
+    // スタッフログインチェック
+    function checkStaffLogin() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    // ユーザー情報表示
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    // ユーザーメニュー開閉
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    // スタッフログアウト
+    function handleStaffLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    // 幹部セッション確認
     function checkSession() {
       const session = sessionStorage.getItem(SESSION_KEY);
       if (session === 'authenticated') {
         showContent();
       }
     }
-    
-    // ログイン処理
+
+    // 幹部ログイン処理
     function handleLogin(event) {
       event.preventDefault();
-      
+
       const password = document.getElementById('password-input').value;
       const errorEl = document.getElementById('login-error');
-      
+
       if (password === CORRECT_PASSWORD) {
         sessionStorage.setItem(SESSION_KEY, 'authenticated');
         showContent();
@@ -612,22 +812,22 @@
         errorEl.classList.add('show');
         document.getElementById('password-input').value = '';
         document.getElementById('password-input').focus();
-        
+
         setTimeout(() => {
           errorEl.classList.remove('show');
         }, 3000);
       }
     }
-    
+
     // コンテンツ表示
     function showContent() {
       document.getElementById('login-overlay').classList.add('hidden');
       document.getElementById('main-content').classList.add('show');
       lucide.createIcons();
     }
-    
-    // ログアウト
-    function handleLogout() {
+
+    // 幹部ログアウト
+    function handleExecutiveLogout() {
       sessionStorage.removeItem(SESSION_KEY);
       document.getElementById('login-overlay').classList.remove('hidden');
       document.getElementById('main-content').classList.remove('show');
@@ -635,4 +835,5 @@
     }
   </script>
 </body>
+
 </html>

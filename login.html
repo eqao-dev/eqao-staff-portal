@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン - EQAO PORTAL for staff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* ロゴエリア */
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      background: #fff;
+      border-radius: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .brand-title .subtitle {
+      font-size: 18px;
+      font-weight: 500;
+      margin-left: 10px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ログインカード */
+    .login-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* フォーム */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .form-label i {
+      color: #888;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      font-size: 17px;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: #fafafa;
+      text-align: center;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #10b981;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #aaa;
+    }
+
+    /* パスワード入力エリア */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrapper .form-input {
+      padding-right: 48px;
+      padding-left: 48px;
+    }
+
+    /* パスワード表示トグル */
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-toggle:hover {
+      color: #666;
+    }
+
+    /* エラーメッセージ */
+    .error-message {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .error-message.show {
+      display: flex;
+    }
+
+    /* ログインボタン */
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      background: #111;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .login-btn:hover {
+      background: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .login-btn .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .login-btn.loading .spinner {
+      display: block;
+    }
+
+    .login-btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* リンク */
+    .login-links {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .login-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #666;
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .login-link:hover {
+      color: #111;
+      text-decoration: underline;
+    }
+
+    /* フッター */
+    .login-footer {
+      text-align: center;
+      margin-top: 32px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+    }
+
+    /* =================================
+       パスワードリセットモーダル
+    ================================= */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 14px;
+      background: #111;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .modal-btn:hover {
+      background: #333;
+    }
+
+    .modal-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .modal-btn.secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .modal-btn.secondary:hover {
+      background: #e5e7eb;
+    }
+
+    /* 成功メッセージ */
+    .success-message {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #059669;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .success-message.show {
+      display: flex;
+    }
+
+    /* ステップ表示 */
+    .reset-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .step-item.active {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .step-item.completed {
+      color: #10b981;
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .step-item.active .step-number {
+      background: #111;
+      color: #fff;
+    }
+
+    .step-item.completed .step-number {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .step-line {
+      width: 32px;
+      height: 2px;
+      background: #e5e5e5;
+    }
+
+    .step-line.completed {
+      background: #10b981;
+    }
+
+    /* =================================
+       パスワード変更モーダル
+    ================================= */
+    .password-requirements {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+    }
+
+    .requirements-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .requirement-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 4px;
+    }
+
+    .requirement-item.valid {
+      color: #10b981;
+    }
+
+    .requirement-item i {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 28px 24px;
+      }
+
+      .brand-title {
+        font-size: 18px;
+      }
+
+      .brand-title .subtitle {
+        font-size: 14px;
+        display: block;
+        margin-left: 0;
+        margin-top: 4px;
+      }
+
+      .modal-content {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <!-- ロゴ -->
+    <div class="logo-area">
+      <div class="logo">
+        <img src="/logo.png" alt="EQAO">
+      </div>
+      <div class="brand-title">EQAO PORTAL <span class="subtitle">for staff</span></div>
+    </div>
+
+    <!-- ログインカード -->
+    <div class="login-card">
+      <h1 class="login-title">ログイン</h1>
+
+      <div class="error-message" id="errorMessage">
+        <i data-lucide="alert-circle" style="width:18px;height:18px;flex-shrink:0;"></i>
+        <span id="errorText">エラーが発生しました</span>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">
+            <i data-lucide="user" style="width:16px;height:16px;"></i>
+            従業員番号
+          </label>
+          <input type="text" class="form-input" id="employeeId" placeholder="例: 001" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i data-lucide="lock" style="width:16px;height:16px;"></i>
+            パスワード
+          </label>
+          <div class="password-wrapper">
+            <input type="password" class="form-input" id="password" placeholder="パスワードを入力" required
+              autocomplete="current-password">
+            <button type="button" class="password-toggle" id="togglePassword">
+              <i data-lucide="eye" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">ログイン</span>
+          <div class="spinner"></div>
+        </button>
+      </form>
+
+      <div class="login-links">
+        <a href="#" class="login-link" id="forgotPasswordLink">
+          <i data-lucide="key" style="width:14px;height:14px;"></i>
+          パスワードを忘れた方
+        </a>
+      </div>
+    </div>
+
+    <div class="login-footer">
+      © 2026 EQAO Education Group.
+    </div>
+  </div>
+
+  <!-- パスワードリセットモーダル -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">パスワードリセット</h2>
+        <button class="modal-close" id="closeResetModal">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+
+      <!-- ステップ1: 従業員番号入力 -->
+      <div id="resetStep1">
+        <div class="reset-steps">
+          <div class="step-item active">
+            <span class="step-number">1</span>
+            <span>従業員番号</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item">
+            <span class="step-number">2</span>
+            <span>メール送信</span>
+          </div>
+        </div>
+
+        <p class="modal-desc">
+          登録されているメールアドレスにパスワードリセット用のリンクをお送りします。
+        </p>
+
+        <div class="error-message" id="resetError">
+          <i data-lucide="alert-circle" style="width:18px;height:18px;flex-shrink:0;"></i>
+          <span id="resetErrorText">エラー</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i data-lucide="user" style="width:16px;height:16px;"></i>
+            従業員番号
+          </label>
+          <input type="text" class="form-input" id="resetEmployeeId" placeholder="例: 001" required>
+        </div>
+
+        <button class="modal-btn" id="sendResetLink">
+          <i data-lucide="send" style="width:18px;height:18px;"></i>
+          リセットリンクを送信
+        </button>
+      </div>
+
+      <!-- ステップ2: 送信完了 -->
+      <div id="resetStep2" style="display: none;">
+        <div class="reset-steps">
+          <div class="step-item completed">
+            <span class="step-number"><i data-lucide="check" style="width:14px;height:14px;"></i></span>
+            <span>従業員番号</span>
+          </div>
+          <div class="step-line completed"></div>
+          <div class="step-item active">
+            <span class="step-number">2</span>
+            <span>メール送信</span>
+          </div>
+        </div>
+
+        <div class="success-message show">
+          <i data-lucide="check-circle" style="width:18px;height:18px;flex-shrink:0;"></i>
+          <span>リセットリンクを送信しました</span>
+        </div>
+
+        <p class="modal-desc">
+          <strong id="maskedEmail">***@***.com</strong> にパスワードリセット用のリンクを送信しました。<br><br>
+          メールに記載されたリンクをクリックして、パスワードをリセットしてください。<br><br>
+          ※ リンクの有効期限は <strong>1時間</strong> です。
+        </p>
+
+        <button class="modal-btn secondary" id="closeAfterSend">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- パスワード変更モーダル（リセットリンクからアクセス時） -->
+  <div class="modal-overlay" id="changePasswordModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">新しいパスワードを設定</h2>
+        <button class="modal-close" id="closeChangeModal">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+
+      <div class="error-message" id="changeError">
+        <i data-lucide="alert-circle" style="width:18px;height:18px;flex-shrink:0;"></i>
+        <span id="changeErrorText">エラー</span>
+      </div>
+
+      <div class="success-message" id="changeSuccess">
+        <i data-lucide="check-circle" style="width:18px;height:18px;flex-shrink:0;"></i>
+        <span>パスワードを変更しました</span>
+      </div>
+
+      <div id="changeForm">
+        <div class="password-requirements">
+          <div class="requirements-title">パスワード要件</div>
+          <div class="requirement-item" id="reqLength">
+            <i data-lucide="circle" style="width:14px;height:14px;"></i>
+            <span>8文字以上</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i data-lucide="lock" style="width:16px;height:16px;"></i>
+            新しいパスワード
+          </label>
+          <div class="password-wrapper">
+            <input type="password" class="form-input" id="newPassword" placeholder="新しいパスワードを入力" required>
+            <button type="button" class="password-toggle" id="toggleNewPassword">
+              <i data-lucide="eye" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i data-lucide="lock" style="width:16px;height:16px;"></i>
+            新しいパスワード（確認）
+          </label>
+          <input type="password" class="form-input" id="confirmPassword" placeholder="もう一度入力" required>
+        </div>
+
+        <button class="modal-btn" id="changePasswordBtn">
+          <i data-lucide="check" style="width:18px;height:18px;"></i>
+          パスワードを変更
+        </button>
+      </div>
+
+      <div id="changeComplete" style="display: none;">
+        <p class="modal-desc" style="text-align: center;">
+          パスワードの変更が完了しました。<br>
+          新しいパスワードでログインしてください。
+        </p>
+        <button class="modal-btn" id="goToLogin">
+          ログイン画面へ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API設定
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+
+    // セッション有効期限（24時間）
+    const SESSION_DURATION = 24 * 60 * 60 * 1000;
+
+    // DOMが読み込まれたら実行
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // すでにログイン済みならリダイレクト
+      if (checkSession()) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // URLパラメータをチェック（リセットリンクからのアクセス）
+      const urlParams = new URLSearchParams(window.location.search);
+      const resetToken = urlParams.get('reset');
+      if (resetToken) {
+        showChangePasswordModal(resetToken);
+      }
+
+      // イベントリスナー設定
+      setupEventListeners();
+    });
+
+    // セッションチェック
+    function checkSession() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) return false;
+
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) {
+          localStorage.removeItem('eqao_staff_session');
+          return false;
+        }
+        return true;
+      } catch {
+        localStorage.removeItem('eqao_staff_session');
+        return false;
+      }
+    }
+
+    // イベントリスナー設定
+    function setupEventListeners() {
+      // ログインフォーム
+      document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+      // パスワード表示トグル
+      document.getElementById('togglePassword').addEventListener('click', () => {
+        togglePasswordVisibility('password', 'togglePassword');
+      });
+
+      // パスワードリセットモーダル
+      document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('resetModal').classList.add('show');
+      });
+
+      document.getElementById('closeResetModal').addEventListener('click', () => {
+        closeResetModal();
+      });
+
+      document.getElementById('closeAfterSend').addEventListener('click', () => {
+        closeResetModal();
+      });
+
+      document.getElementById('sendResetLink').addEventListener('click', handleSendResetLink);
+
+      // パスワード変更モーダル
+      document.getElementById('closeChangeModal').addEventListener('click', () => {
+        document.getElementById('changePasswordModal').classList.remove('show');
+        // URLからトークンを削除
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+
+      document.getElementById('toggleNewPassword').addEventListener('click', () => {
+        togglePasswordVisibility('newPassword', 'toggleNewPassword');
+      });
+
+      document.getElementById('newPassword').addEventListener('input', validatePasswordRequirements);
+
+      document.getElementById('changePasswordBtn').addEventListener('click', handleChangePassword);
+
+      document.getElementById('goToLogin').addEventListener('click', () => {
+        document.getElementById('changePasswordModal').classList.remove('show');
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+
+      // モーダル外クリックで閉じる
+      document.getElementById('resetModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeResetModal();
+      });
+
+      document.getElementById('changePasswordModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          document.getElementById('changePasswordModal').classList.remove('show');
+        }
+      });
+    }
+
+    // パスワード表示トグル
+    function togglePasswordVisibility(inputId, buttonId) {
+      const input = document.getElementById(inputId);
+      const button = document.getElementById(buttonId);
+      const icon = button.querySelector('i');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
+    // ログイン処理
+    async function handleLogin(e) {
+      e.preventDefault();
+
+      const employeeId = document.getElementById('employeeId').value.trim();
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      const errorMessage = document.getElementById('errorMessage');
+
+      // エラーを隠す
+      errorMessage.classList.remove('show');
+
+      // ボタンをローディング状態に
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+
+      try {
+        const response = await fetch(`${API_URL}?action=login&employeeId=${encodeURIComponent(employeeId)}&password=${encodeURIComponent(password)}`);
+        const result = await response.json();
+
+        if (result.success) {
+          // セッションを保存
+          const sessionData = {
+            employeeId: result.employeeId,
+            name: result.name,
+            email: result.email,
+            loginAt: Date.now(),
+            expiresAt: Date.now() + SESSION_DURATION
+          };
+          localStorage.setItem('eqao_staff_session', JSON.stringify(sessionData));
+
+          // リダイレクト
+          window.location.href = 'index.html';
+        } else {
+          showError(errorMessage, 'errorText', result.message || 'ログインに失敗しました');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showError(errorMessage, 'errorText', '通信エラーが発生しました。しばらくしてからお試しください。');
+      } finally {
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+      }
+    }
+
+    // リセットリンク送信
+    async function handleSendResetLink() {
+      const employeeId = document.getElementById('resetEmployeeId').value.trim();
+      const sendBtn = document.getElementById('sendResetLink');
+      const errorEl = document.getElementById('resetError');
+
+      if (!employeeId) {
+        showError(errorEl, 'resetErrorText', '従業員番号を入力してください');
+        return;
+      }
+
+      errorEl.classList.remove('show');
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<div class="spinner" style="display:block;width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></div>';
+
+      try {
+        const response = await fetch(`${API_URL}?action=requestReset&employeeId=${encodeURIComponent(employeeId)}`);
+        const result = await response.json();
+
+        if (result.success) {
+          // ステップ2を表示
+          document.getElementById('resetStep1').style.display = 'none';
+          document.getElementById('resetStep2').style.display = 'block';
+          document.getElementById('maskedEmail').textContent = result.maskedEmail || '登録されたメールアドレス';
+          lucide.createIcons();
+        } else {
+          showError(errorEl, 'resetErrorText', result.message || 'リセットリンクの送信に失敗しました');
+        }
+      } catch (error) {
+        console.error('Reset request error:', error);
+        showError(errorEl, 'resetErrorText', '通信エラーが発生しました');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> リセットリンクを送信';
+        lucide.createIcons();
+      }
+    }
+
+    // リセットモーダルを閉じる
+    function closeResetModal() {
+      document.getElementById('resetModal').classList.remove('show');
+      // ステップをリセット
+      setTimeout(() => {
+        document.getElementById('resetStep1').style.display = 'block';
+        document.getElementById('resetStep2').style.display = 'none';
+        document.getElementById('resetEmployeeId').value = '';
+        document.getElementById('resetError').classList.remove('show');
+      }, 300);
+    }
+
+    // パスワード変更モーダルを表示
+    function showChangePasswordModal(token) {
+      document.getElementById('changePasswordModal').classList.add('show');
+      document.getElementById('changePasswordModal').dataset.token = token;
+      lucide.createIcons();
+    }
+
+    // パスワード要件チェック
+    function validatePasswordRequirements() {
+      const password = document.getElementById('newPassword').value;
+      const reqLength = document.getElementById('reqLength');
+
+      // 8文字以上
+      if (password.length >= 8) {
+        reqLength.classList.add('valid');
+        reqLength.querySelector('i').setAttribute('data-lucide', 'check-circle');
+      } else {
+        reqLength.classList.remove('valid');
+        reqLength.querySelector('i').setAttribute('data-lucide', 'circle');
+      }
+
+      lucide.createIcons();
+    }
+
+    // パスワード変更処理
+    async function handleChangePassword() {
+      const token = document.getElementById('changePasswordModal').dataset.token;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorEl = document.getElementById('changeError');
+      const changeBtn = document.getElementById('changePasswordBtn');
+
+      // バリデーション
+      if (newPassword.length < 8) {
+        showError(errorEl, 'changeErrorText', 'パスワードは8文字以上で入力してください');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        showError(errorEl, 'changeErrorText', 'パスワードが一致しません');
+        return;
+      }
+
+      errorEl.classList.remove('show');
+      changeBtn.disabled = true;
+      changeBtn.innerHTML = '<div class="spinner" style="display:block;width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></div>';
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'resetPassword',
+            token: token,
+            newPassword: newPassword
+          })
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          // 成功表示
+          document.getElementById('changeForm').style.display = 'none';
+          document.getElementById('changeComplete').style.display = 'block';
+          document.getElementById('changeSuccess').classList.add('show');
+        } else {
+          showError(errorEl, 'changeErrorText', result.message || 'パスワードの変更に失敗しました');
+        }
+      } catch (error) {
+        console.error('Change password error:', error);
+        showError(errorEl, 'changeErrorText', '通信エラーが発生しました');
+      } finally {
+        changeBtn.disabled = false;
+        changeBtn.innerHTML = '<i data-lucide="check" style="width:18px;height:18px;"></i> パスワードを変更';
+        lucide.createIcons();
+      }
+    }
+
+    // エラー表示
+    function showError(element, textId, message) {
+      document.getElementById(textId).textContent = message;
+      element.classList.add('show');
+    }
+  </script>
+</body>
+
+</html>

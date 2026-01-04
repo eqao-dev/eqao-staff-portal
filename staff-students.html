@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生徒保護者一覧 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* メイン */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-title-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      background: #111;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* 検索エリア */
+    .search-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 320px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #111;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    /* 統計カード */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon.total {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .stat-icon.active {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .stat-icon.inactive {
+      background: #fce4ec;
+      color: #c62828;
+    }
+
+    .stat-icon.graduated {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    /* ローディング・エラー */
+    .loading-state,
+    .error-state,
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: #666;
+    }
+
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #111;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-state {
+      color: #c62828;
+    }
+
+    /* 生徒リスト */
+    .student-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .student-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .student-card:hover {
+      border-color: #ccc;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .student-card.inactive {
+      opacity: 0.6;
+    }
+
+    .student-main {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+    }
+
+    .student-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .student-avatar.male {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .student-avatar.female {
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
+    .student-avatar.other {
+      background: #f5f5f5;
+      color: #666;
+    }
+
+    .student-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .student-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .student-id {
+      font-size: 12px;
+      color: #888;
+      background: #f5f5f5;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .student-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .student-furigana {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .status-badge.active {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .status-badge.inactive {
+      background: #fce4ec;
+      color: #c62828;
+    }
+
+    .status-badge.pending {
+      background: #fff3e0;
+      color: #ef6c00;
+    }
+
+    .student-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+      color: #666;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .expand-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .expand-btn:hover {
+      background: #111;
+      color: #fff;
+    }
+
+    .expand-btn.expanded {
+      background: #111;
+      color: #fff;
+    }
+
+    .expand-btn svg {
+      transition: transform 0.2s;
+    }
+
+    .expand-btn.expanded svg {
+      transform: rotate(180deg);
+    }
+
+    /* 詳細パネル */
+    .student-details {
+      display: none;
+      border-top: 1px solid #eee;
+      padding: 20px 24px;
+      background: #fafafa;
+    }
+
+    .student-details.show {
+      display: block;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .detail-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #eee;
+    }
+
+    .detail-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #666;
+    }
+
+    .detail-value {
+      color: #111;
+      font-weight: 500;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    .detail-value.empty {
+      color: #ccc;
+    }
+
+    /* 備考セクション */
+    .notes-section {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+    }
+
+    .notes-content {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 12px 14px;
+      }
+
+      .stat-value {
+        font-size: 20px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+      }
+
+      .stat-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .student-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .expand-btn {
+        align-self: flex-end;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 注意書き */
+    .notice-bar {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #6d5c00;
+    }
+
+    .notice-bar i {
+      flex-shrink: 0;
+    }
+
+    /* ヘッダー左側 */
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .user-name {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-students.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">生徒保護者一覧</span>
+      </div>
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-email" id="dropdownEmail">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- メイン -->
+  <main class="main">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-title-area">
+        <div class="page-icon">
+          <i data-lucide="users" style="width:28px;height:28px;"></i>
+        </div>
+        <div>
+          <h1 class="page-title">生徒保護者一覧</h1>
+          <p class="page-subtitle">授業担当スタッフ向け生徒情報</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 注意書き -->
+    <div class="notice-bar">
+      <i data-lucide="info" style="width:18px;height:18px;"></i>
+      <span>この情報は入塾同意書から読み込んでいます。</span>
+    </div>
+
+    <!-- 統計カード -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <i data-lucide="users" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <div class="stat-label">全生徒数</div>
+          <div class="stat-value" id="totalCount">-</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon active">
+          <i data-lucide="user-check" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <div class="stat-label">在籍</div>
+          <div class="stat-value" id="activeCount">-</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon inactive">
+          <i data-lucide="user-x" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <div class="stat-label">退塾</div>
+          <div class="stat-value" id="inactiveCount">-</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon graduated">
+          <i data-lucide="graduation-cap" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <div class="stat-label">卒塾</div>
+          <div class="stat-value" id="graduatedCount">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ローディング -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-spinner"></div>
+      <p>生徒データを読み込んでいます...</p>
+    </div>
+
+    <!-- エラー -->
+    <div class="error-state" id="errorState" style="display:none;">
+      <i data-lucide="alert-circle" style="width:48px;height:48px;margin-bottom:16px;"></i>
+      <p>データの読み込みに失敗しました</p>
+      <p id="errorMessage" style="font-size:13px;margin-top:8px;"></p>
+    </div>
+
+    <!-- 空状態 -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <i data-lucide="inbox" style="width:48px;height:48px;margin-bottom:16px;color:#ccc;"></i>
+      <p>検索結果がありません</p>
+    </div>
+
+    <!-- 検索エリア -->
+    <div class="search-area" id="searchArea" style="display:none; margin-bottom: 20px;">
+      <div class="search-box" style="width: 100%; max-width: 400px;">
+        <i data-lucide="search" class="search-icon" style="width:18px;height:18px;"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="生徒番号・氏名で検索...">
+      </div>
+    </div>
+
+    <!-- 生徒リスト -->
+    <div class="student-list" id="studentList"></div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group.</p>
+  </footer>
+
+  <script>
+    // ===== ログインチェック =====
+    document.addEventListener('DOMContentLoaded', () => {
+      checkLoginStatus();
+    });
+
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+    lucide.createIcons();
+
+    // GAS APIエンドポイント（後で設定）
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec?action=getStudents';
+
+    // グローバル変数
+    let allStudents = [];
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStudents();
+
+      // 検索イベント
+      document.getElementById('searchInput').addEventListener('input', debounce(filterStudents, 300));
+    });
+
+    // デバウンス関数
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    // 生徒データ読み込み
+    async function loadStudents() {
+      try {
+        showLoading(true);
+
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('API Error');
+
+        const result = await response.json();
+        if (result.error) throw new Error(result.error);
+
+        allStudents = result.data || [];
+        updateStats();
+        renderStudents(allStudents);
+
+      } catch (error) {
+        console.error('Load error:', error);
+        showError(error.message);
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 統計更新
+    function updateStats() {
+      const total = allStudents.length;
+      const active = allStudents.filter(s => s.status === '在籍' || !s.status).length;
+      const inactive = allStudents.filter(s => s.status === '退塾').length;
+      const graduated = allStudents.filter(s => s.status === '卒塾').length;
+
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('activeCount').textContent = active;
+      document.getElementById('inactiveCount').textContent = inactive;
+      document.getElementById('graduatedCount').textContent = graduated;
+    }
+
+    // 検索フィルター
+    function filterStudents() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      if (!query) {
+        renderStudents(allStudents);
+        return;
+      }
+
+      const filtered = allStudents.filter(student => {
+        return (
+          String(student.studentId || '').toLowerCase().includes(query) ||
+          String(student.name || '').toLowerCase().includes(query) ||
+          String(student.furigana || '').toLowerCase().includes(query)
+        );
+      });
+
+      renderStudents(filtered);
+    }
+
+    // 生徒リスト描画
+    function renderStudents(students) {
+      const container = document.getElementById('studentList');
+      const emptyState = document.getElementById('emptyState');
+
+      if (students.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      container.innerHTML = students.map((student, index) => {
+        const isInactive = student.status === '退塾';
+        const avatarClass = student.gender === '男' ? 'male' : student.gender === '女' ? 'female' : 'other';
+        const statusClass = isInactive ? 'inactive' : student.status === '手続中' ? 'pending' : 'active';
+        const statusText = student.status || '在籍中';
+        const initial = (student.name || '?').charAt(0);
+
+        return `
+          <div class="student-card ${isInactive ? 'inactive' : ''}" data-index="${index}">
+            <div class="student-main" onclick="toggleDetails(${index})">
+              <div class="student-avatar ${avatarClass}">${initial}</div>
+              <div class="student-info">
+                <div class="student-header">
+                  <span class="student-id">${student.studentId || '-'}</span>
+                  <span class="student-name">${student.name || '不明'}</span>
+                  <span class="student-furigana">${student.furigana || ''}</span>
+                  <span class="status-badge ${statusClass}">${statusText}</span>
+                </div>
+                <div class="student-meta">
+                  <span class="meta-item">
+                    <i data-lucide="graduation-cap" style="width:14px;height:14px;"></i>
+                    ${student.grade || '-'}
+                  </span>
+                  <span class="meta-item">
+                    <i data-lucide="school" style="width:14px;height:14px;"></i>
+                    ${student.school || '-'}
+                  </span>
+                  ${student.courses ? `
+                  <span class="meta-item">
+                    <i data-lucide="book-open" style="width:14px;height:14px;"></i>
+                    ${student.courses}
+                  </span>
+                  ` : ''}
+                </div>
+              </div>
+              <button class="expand-btn" id="expandBtn-${index}">
+                <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+              </button>
+            </div>
+            <div class="student-details" id="details-${index}">
+              <div class="detail-grid">
+                <!-- 基本情報 -->
+                <div class="detail-section">
+                  <div class="detail-title">
+                    <i data-lucide="user" style="width:14px;height:14px;"></i>
+                    基本情報
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">生年月日</span>
+                    <span class="detail-value ${!student.birthday ? 'empty' : ''}">${student.birthday || '未登録'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">学校種別</span>
+                    <span class="detail-value ${!student.schoolType ? 'empty' : ''}">${student.schoolType || '未登録'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">附属校</span>
+                    <span class="detail-value ${!student.affiliated ? 'empty' : ''}">${student.affiliated || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">通信制</span>
+                    <span class="detail-value ${!student.correspondence ? 'empty' : ''}">${student.correspondence || '-'}</span>
+                  </div>
+                </div>
+                
+                <!-- 保護者情報 -->
+                <div class="detail-section">
+                  <div class="detail-title">
+                    <i data-lucide="users" style="width:14px;height:14px;"></i>
+                    保護者情報
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">保護者氏名</span>
+                    <span class="detail-value ${!student.parentName ? 'empty' : ''}">${student.parentName || '未登録'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">保護者メール</span>
+                    <span class="detail-value ${!student.parentEmail ? 'empty' : ''}">${student.parentEmail || '未登録'}</span>
+                  </div>
+                </div>
+                
+                <!-- 受講情報 -->
+               <div class="detail-section">
+                <div class="detail-title">
+                  <i data-lucide="book-open" style="width:14px;height:14px;"></i>
+                  受講情報
+                 </div>
+                <div class="detail-row">
+                <span class="detail-label">総合型コース</span>
+                    <span class="detail-value ${!student.sougouCourse ? 'empty' : ''}">${student.sougouCourse || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">ENGLISH</span>
+                    <span class="detail-value">${student.english || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">対策内容</span>
+                    <span class="detail-value ${!student.taisaku ? 'empty' : ''}">${student.taisaku || '-'}</span>
+                  </div>
+                </div>
+                
+                <!-- 志望校情報 -->
+                <div class="detail-section">
+                  <div class="detail-title">
+                    <i data-lucide="target" style="width:14px;height:14px;"></i>
+                    志望校情報
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">第一志望大学</span>
+                    <span class="detail-value ${!student.firstChoiceUniv ? 'empty' : ''}">${student.firstChoiceUniv || '未定'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">学部</span>
+                    <span class="detail-value ${!student.firstChoiceFaculty ? 'empty' : ''}">${student.firstChoiceFaculty || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">学科</span>
+                    <span class="detail-value ${!student.firstChoiceDept ? 'empty' : ''}">${student.firstChoiceDept || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">現在評定</span>
+                    <span class="detail-value ${!student.currentGpa ? 'empty' : ''}">${student.currentGpa || '-'}</span>
+                  </div>
+                </div>
+                
+                <!-- 指導上の配慮 -->
+                <div class="detail-section">
+                  <div class="detail-title">
+                    <i data-lucide="heart" style="width:14px;height:14px;"></i>
+                    指導上の配慮
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">思考スタイル</span>
+                    <span class="detail-value ${!student.thinkingStyle ? 'empty' : ''}">${student.thinkingStyle || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">学習スタイル</span>
+                    <span class="detail-value ${!student.learningStyle ? 'empty' : ''}">${student.learningStyle || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">厳しさ</span>
+                    <span class="detail-value ${!student.strictness ? 'empty' : ''}">${student.strictness || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">宿題量</span>
+                    <span class="detail-value ${!student.homeworkAmount ? 'empty' : ''}">${student.homeworkAmount || '-'}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">講師性別希望</span>
+                    <span class="detail-value ${!student.preferredTeacherGender ? 'empty' : ''}">${student.preferredTeacherGender || '-'}</span>
+                  </div>
+                </div>
+                
+                <!-- 備考 -->
+                ${student.notes ? `
+                <div class="detail-section notes-section">
+                  <div class="detail-title">
+                    <i data-lucide="sticky-note" style="width:14px;height:14px;"></i>
+                    備考
+                  </div>
+                  <div class="notes-content">${student.notes}</div>
+                </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // 詳細パネル開閉
+    function toggleDetails(index) {
+      const details = document.getElementById(`details-${index}`);
+      const btn = document.getElementById(`expandBtn-${index}`);
+
+      if (details.classList.contains('show')) {
+        details.classList.remove('show');
+        btn.classList.remove('expanded');
+      } else {
+        details.classList.add('show');
+        btn.classList.add('expanded');
+      }
+    }
+
+    // ローディング表示
+    function showLoading(show) {
+      document.getElementById('loadingState').style.display = show ? 'block' : 'none';
+      document.getElementById('searchArea').style.display = show ? 'none' : 'block';
+    }
+
+    // エラー表示
+    function showError(message) {
+      document.getElementById('errorState').style.display = 'block';
+      document.getElementById('errorMessage').textContent = message;
+    }
+  </script>
+</body>
+
+</html>

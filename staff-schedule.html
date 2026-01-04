@@ -63,18 +63,18 @@
     .back-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      color: #fff;
+      gap: 6px;
+      color: #aaa;
       text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
       transition: all 0.2s;
     }
 
     .back-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .header-info {
@@ -1151,6 +1151,140 @@
         height: 24px;
       }
     }
+
+    /* ユーザーメニュー */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .user-name {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -1160,7 +1294,8 @@
     <div class="header-content">
       <div class="header-left">
         <a href="staff-executive.html" class="back-btn">
-          <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
         </a>
         <div class="header-info">
           <div class="header-icon">
@@ -1169,10 +1304,36 @@
           <div class="header-title">スケジュール管理</div>
         </div>
       </div>
-      <button class="refresh-btn" onclick="loadData()">
-        <i data-lucide="refresh-cw" style="width:16px;height:16px;"></i>
-        <span>更新</span>
-      </button>
+      <div class="header-right">
+        <button class="refresh-btn" onclick="loadData()">
+          <i data-lucide="refresh-cw" style="width:16px;height:16px;"></i>
+          <span>更新</span>
+        </button>
+        <div class="user-menu">
+          <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="userAvatar">-</div>
+            <span class="user-name" id="userName">ログイン中</span>
+            <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+          </button>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="dropdown-header">
+              <div class="dropdown-name" id="dropdownName">-</div>
+              <div class="dropdown-email" id="dropdownEmail">-</div>
+            </div>
+            <div class="dropdown-menu">
+              <a href="my-schedule.html" class="dropdown-item">
+                <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                マイスケジュール
+              </a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item danger" onclick="handleLogout()">
+                <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+                ログアウト
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -1316,6 +1477,44 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ===== ログインチェック =====
+    document.addEventListener('DOMContentLoaded', () => {
+      checkLoginStatus();
+    });
+
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
     // 設定
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
 
