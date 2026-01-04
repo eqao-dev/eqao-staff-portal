@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>各自のスケジュール | EQAO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --primary-light: #e0f2fe;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --danger: #ef4444;
+      --danger-light: #fee2e2;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 14px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    /* メイン */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* テスト用入力エリア */
+    .test-input-area {
+      background: #fffbeb;
+      border: 2px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .test-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #92400e;
+    }
+
+    .test-input {
+      padding: 10px 14px;
+      border: 2px solid #fbbf24;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      width: 140px;
+    }
+
+    .test-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+    }
+
+    .test-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: #f59e0b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .test-btn:hover {
+      background: #d97706;
+    }
+
+    .test-note {
+      font-size: 12px;
+      color: #a16207;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    /* 警告バナー */
+    .warning-banner {
+      background: var(--warning-light);
+      border: 1px solid var(--warning);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: none;
+    }
+
+    .warning-banner.show {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .warning-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--warning);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .warning-content {
+      flex: 1;
+    }
+
+    .warning-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 2px;
+    }
+
+    .warning-text {
+      font-size: 13px;
+      color: #a16207;
+    }
+
+    /* タブ切り替え */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 6px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* スケジュールリスト */
+    .schedule-section {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .month-header {
+      background: #f8f9fa;
+      padding: 14px 20px;
+      border-bottom: 1px solid #e5e5e5;
+      font-size: 15px;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.2s;
+    }
+
+    .schedule-item:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-item:hover {
+      background: #f8f9fa;
+    }
+
+    .schedule-date {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .schedule-day {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1;
+    }
+
+    .schedule-weekday {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .schedule-weekday.saturday {
+      color: var(--primary);
+    }
+
+    .schedule-weekday.sunday {
+      color: var(--danger);
+    }
+
+    .schedule-time {
+      width: 70px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      flex-shrink: 0;
+    }
+
+    .schedule-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .schedule-student {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 4px;
+    }
+
+    .schedule-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .schedule-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .schedule-tag.type-online {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .schedule-tag.type-offline {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .schedule-tag.lesson-type {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .schedule-action {
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .report-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .report-btn.pending {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .report-btn.pending:hover {
+      background: var(--primary-dark);
+    }
+
+    .report-btn.disabled {
+      background: #e5e5e5;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    .report-btn.overdue {
+      background: var(--danger);
+      color: #fff;
+      animation: pulse 2s infinite;
+    }
+
+    .report-btn.overdue:hover {
+      background: #dc2626;
+    }
+
+    .report-btn.completed {
+      background: var(--success-light);
+      color: var(--success);
+      cursor: default;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    /* 初期状態・空状態 */
+    .initial-state,
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .initial-icon,
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      background: #f0f9ff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--primary);
+    }
+
+    .initial-title,
+    .empty-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .initial-text,
+    .empty-text {
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* ローディング */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e5e5e5;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* ========================================
+       授業報告モーダル
+    ======================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 640px;
+      margin: 40px 0;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 10;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #eee;
+      color: #333;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+    }
+
+    .modal-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-btn.cancel {
+      background: #f5f5f5;
+      color: #666;
+    }
+
+    .modal-btn.cancel:hover {
+      background: #eee;
+    }
+
+    .modal-btn.submit {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .modal-btn.submit:hover {
+      background: var(--primary-dark);
+    }
+
+    .modal-btn.submit:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* 授業報告フォーム */
+    .report-info {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .report-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .report-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .report-info-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .report-info-label {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .report-info-value {
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* フォームセクション */
+    .form-section {
+      margin-bottom: 24px;
+    }
+
+    .form-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-section-title .required {
+      font-size: 11px;
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    /* ラジオボタングループ */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .radio-option {
+      position: relative;
+    }
+
+    .radio-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-option label {
+      display: inline-block;
+      padding: 10px 16px;
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .radio-option input:checked+label {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .radio-option label:hover {
+      border-color: #ccc;
+    }
+
+    /* 5段階評価 */
+    .rating-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .rating-option {
+      position: relative;
+    }
+
+    .rating-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rating-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .rating-option input:checked+label {
+      border-color: var(--warning);
+      background: var(--warning-light);
+      color: #b45309;
+    }
+
+    .rating-option label:hover {
+      border-color: #fbbf24;
+    }
+
+    /* テキストエリア */
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 80px;
+      transition: all 0.2s;
+    }
+
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-textarea::placeholder {
+      color: #aaa;
+    }
+
+    /* 繰越理由（条件表示） */
+    .conditional-field {
+      display: none;
+      margin-top: 12px;
+    }
+
+    .conditional-field.show {
+      display: block;
+    }
+
+    /* アコーディオン（授業ステップ） */
+    .accordion {
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: #f8f9fa;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover {
+      background: #f0f0f0;
+    }
+
+    .accordion-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .accordion-count {
+      font-size: 12px;
+      color: #fff;
+      background: var(--primary);
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .accordion-count.show {
+      display: inline-block;
+    }
+
+    .accordion-icon {
+      color: #888;
+      transition: transform 0.2s;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 12px 16px;
+      background: #fff;
+    }
+
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+
+    /* チェックボックス */
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .checkbox-option input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+    }
+
+    .checkbox-option label {
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    /* トースト */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 300;
+      opacity: 0;
+      transition: all 0.3s;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--success);
+    }
+
+    .toast.error {
+      background: var(--danger);
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 16px;
+      }
+
+      .test-input-area {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .test-input {
+        width: 100%;
+      }
+
+      .schedule-item {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .schedule-date {
+        width: 60px;
+      }
+
+      .schedule-time {
+        width: auto;
+      }
+
+      .schedule-info {
+        width: 100%;
+        order: 3;
+      }
+
+      .schedule-action {
+        margin-left: auto;
+      }
+
+      .user-badge span {
+        display: none;
+      }
+
+      .modal {
+        margin: 20px 0;
+      }
+
+      .report-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .radio-group {
+        flex-direction: column;
+      }
+
+      .radio-option label {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* 検索・フィルター */
+    .filter-area {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .search-input::placeholder {
+      color: #aaa;
+    }
+
+    .month-filter {
+      flex-shrink: 0;
+    }
+
+    .filter-select {
+      padding: 10px 14px;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      cursor: pointer;
+      min-width: 140px;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* 履歴ボタン */
+    .history-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #666;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .history-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* 履歴モーダル */
+    .history-modal {
+      max-width: 600px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .history-item {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .history-date {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .history-teacher {
+      font-size: 13px;
+      color: #666;
+      background: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .history-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .history-row {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .history-label {
+      flex-shrink: 0;
+      width: 80px;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .history-value {
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .history-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+    }
+
+    .history-empty-icon {
+      width: 60px;
+      height: 60px;
+      background: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      color: #aaa;
+    }
+
+    .load-more-btn {
+      width: 100%;
+      padding: 12px;
+      border: 2px dashed #e5e5e5;
+      background: #fff;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .load-more-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .schedule-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    /* フォームヒント */
+    .form-hint {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-schedule.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+        </a>
+        <div class="header-info">
+          <div class="header-icon">
+            <i data-lucide="calendar-check" style="width:20px;height:20px;"></i>
+          </div>
+          <h1 class="header-title">各自のスケジュール</h1>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="user-badge" id="userBadge" style="display:none;">
+          <i data-lucide="user" style="width:16px;height:16px;"></i>
+          <span id="userName">-</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- メイン -->
+  <main class="main">
+    <!-- テスト用入力エリア -->
+    <div class="test-input-area">
+      <div class="test-label">
+        <i data-lucide="flask-conical" style="width:16px;height:16px;"></i>
+        テスト用：従業員番号
+      </div>
+      <input type="text" class="test-input" id="testEmployeeId" placeholder="例: 24">
+      <button class="test-btn" onclick="loadWithEmployeeId()">
+        <i data-lucide="search" style="width:16px;height:16px;"></i>
+        読み込み
+      </button>
+      <div class="test-note">
+        ※ 本番ではログイン情報から自動取得されます
+      </div>
+    </div>
+
+    <!-- 未送信警告バナー -->
+    <div class="warning-banner" id="warningBanner">
+      <div class="warning-icon">
+        <i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>
+      </div>
+      <div class="warning-content">
+        <div class="warning-title">未送信の授業報告があります</div>
+        <div class="warning-text" id="warningText">3件の授業報告が未送信です</div>
+      </div>
+    </div>
+
+    <!-- タブ切り替え -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="upcoming" onclick="switchTab('upcoming')">
+        <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+        今後の予定
+      </button>
+      <button class="tab-btn" data-tab="past" onclick="switchTab('past')">
+        <i data-lucide="history" style="width:16px;height:16px;"></i>
+        過去の授業
+      </button>
+    </div>
+
+    <!-- 検索・フィルター -->
+    <div class="filter-area">
+      <div class="search-box">
+        <i data-lucide="search" style="width:18px;height:18px;color:#888;"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="生徒番号・名前で検索" oninput="applyFilters()">
+      </div>
+      <div class="month-filter">
+        <select class="filter-select" id="monthFilter" onchange="applyFilters()">
+          <option value="">すべての月</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- スケジュール一覧 -->
+    <div class="schedule-section" id="scheduleSection">
+      <div class="initial-state">
+        <div class="initial-icon">
+          <i data-lucide="user-search" style="width:40px;height:40px;"></i>
+        </div>
+        <div class="initial-title">従業員番号を入力してください</div>
+        <div class="initial-text">上のフォームに従業員番号を入力して「読み込み」を押してください</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 授業報告モーダル -->
+  <div class="modal-overlay" id="reportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="file-text" style="width:20px;height:20px;color:var(--primary);"></i>
+          授業報告
+        </div>
+        <button class="modal-close" onclick="closeReportModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 授業情報（自動転記） -->
+        <div class="report-info">
+          <div class="report-info-grid">
+            <div class="report-info-item">
+              <span class="report-info-label">日時</span>
+              <span class="report-info-value" id="reportDate">-</span>
+            </div>
+            <div class="report-info-item">
+              <span class="report-info-label">授業種類</span>
+              <span class="report-info-value" id="reportLessonType">-</span>
+            </div>
+            <div class="report-info-item">
+              <span class="report-info-label">生徒番号</span>
+              <span class="report-info-value" id="reportStudentId">-</span>
+            </div>
+            <div class="report-info-item">
+              <span class="report-info-label">生徒氏名</span>
+              <span class="report-info-value" id="reportStudentName">-</span>
+            </div>
+          </div>
+        </div>
+
+        <form id="reportForm">
+          <!-- 実施状況 -->
+          <div class="form-section">
+            <div class="form-section-title">
+              実施状況 <span class="required">必須</span>
+            </div>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" name="status" id="status-done" value="実施" required>
+                <label for="status-done">実施</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" name="status" id="status-cancel" value="キャンセル">
+                <label for="status-cancel">キャンセル（生徒消費）</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" name="status" id="status-postpone" value="講師判断による繰越">
+                <label for="status-postpone">講師判断による繰越</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" name="status" id="status-absent" value="無断欠席">
+                <label for="status-absent">無断欠席</label>
+              </div>
+            </div>
+            <div class="conditional-field" id="postponeReasonField">
+              <textarea class="form-textarea" name="postponeReason" placeholder="繰越の理由を入力してください"></textarea>
+            </div>
+          </div>
+
+          <!-- 以下は「実施」選択時のみ表示 -->
+          <div id="executionFields">
+            <!-- コマ数 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                授業コマ数 <span class="required">必須</span>
+              </div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" name="lessonCount" id="count-1" value="1" checked>
+                  <label for="count-1">1コマ</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="lessonCount" id="count-2" value="2">
+                  <label for="count-2">2コマ（連続）</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 指名授業 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                指名授業 <span class="required">必須</span>
+              </div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" name="nomination" id="nom-no" value="いいえ" checked>
+                  <label for="nom-no">いいえ（通常の授業）</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="nomination" id="nom-yes" value="はい">
+                  <label for="nom-yes">はい（生徒からの指名）</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 遅刻状況 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                生徒の遅刻状況 <span class="required">必須</span>
+              </div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" name="lateness" id="late-none" value="遅れなし" checked>
+                  <label for="late-none">遅れなし</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="lateness" id="late-under10" value="10分未満">
+                  <label for="late-under10">10分未満の遅刻</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="lateness" id="late-over10" value="10分以上">
+                  <label for="late-over10">10分以上の遅刻</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 授業態度 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                授業態度（5段階評価） <span class="required">必須</span>
+              </div>
+              <div class="form-hint">5:積極的・集中 → 1:改善が必要</div>
+              <div class="rating-group">
+                <div class="rating-option">
+                  <input type="radio" name="attitude" id="att-1" value="1">
+                  <label for="att-1">1</label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" name="attitude" id="att-2" value="2">
+                  <label for="att-2">2</label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" name="attitude" id="att-3" value="3" checked>
+                  <label for="att-3">3</label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" name="attitude" id="att-4" value="4">
+                  <label for="att-4">4</label>
+                </div>
+                <div class="rating-option">
+                  <input type="radio" name="attitude" id="att-5" value="5">
+                  <label for="att-5">5</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 行動パターン -->
+            <div class="form-section">
+              <div class="form-section-title">
+                授業の行動パターン <span class="required">必須</span>
+              </div>
+              <div class="form-hint">※交通費は1日1回分として自動処理されます</div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" name="commute" id="commute-online" value="オンライン" checked>
+                  <label for="commute-online">オンライン</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="commute" id="commute-home" value="自宅⇄校舎">
+                  <label for="commute-home">自宅 ⇄ 校舎</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" name="commute" id="commute-univ" value="大学→校舎→自宅">
+                  <label for="commute-univ">大学 → 校舎 → 自宅</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 今日取り組んだこと（授業ステップ） -->
+            <div class="form-section">
+              <div class="form-section-title">
+                今日の授業で取り組んだこと
+              </div>
+              <div class="accordion" id="lessonStepsAccordion">
+                <!-- 大科目①：全体像理解・進路理解 -->
+                <div class="accordion-item" data-category="1">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ①全体像理解・進路理解
+                      <span class="accordion-count" id="count-cat1">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-1-1" value="総合型選抜の全体理解">
+                        <label for="step-1-1">総合型選抜の全体理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-1-2" value="評定平均と英語資格の位置づけ理解">
+                        <label for="step-1-2">評定平均と英語資格の位置づけ理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-1-3" value="志望校・併願校の探索方法">
+                        <label for="step-1-3">志望校・併願校の探索方法</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-1-4" value="教授研究・授業内容の調べ方">
+                        <label for="step-1-4">教授研究・授業内容の調べ方</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-1-5" value="年間ロードマップの構築">
+                        <label for="step-1-5">年間ロードマップの構築</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目②：自己分析・現状把握 -->
+                <div class="accordion-item" data-category="2">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ②自己分析・現状把握・原材料抽出
+                      <span class="accordion-count" id="count-cat2">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-1" value="過去の振り返り（ライフライン分析）">
+                        <label for="step-2-1">過去の振り返り（ライフライン分析）</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-2" value="現在の自己理解と価値観整理">
+                        <label for="step-2-2">現在の自己理解と価値観整理</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-3" value="アイデンティティ確立">
+                        <label for="step-2-3">アイデンティティ確立</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-4" value="評定・英語資格の現状整理と目標設定">
+                        <label for="step-2-4">評定・英語資格の現状整理と目標設定</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-5" value="活動歴の棚卸し">
+                        <label for="step-2-5">活動歴の棚卸し</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-2-6" value="研究テーマに繋がる素材抽出">
+                        <label for="step-2-6">研究テーマに繋がる素材抽出</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目③：研究テーマ・志望校マッチング -->
+                <div class="accordion-item" data-category="3">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ③研究テーマ・志望校マッチング
+                      <span class="accordion-count" id="count-cat3">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-1" value="合格者事例の理解">
+                        <label for="step-3-1">合格者事例の理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-2" value="研究テーマの意義理解">
+                        <label for="step-3-2">研究テーマの意義理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-3" value="研究テーマ探索/深掘り">
+                        <label for="step-3-3">研究テーマ探索/深掘り</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-4" value="研究ツールの使い方">
+                        <label for="step-3-4">研究ツールの使い方</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-5" value="仮説検証とテーマ深掘り">
+                        <label for="step-3-5">仮説検証とテーマ深掘り</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-6" value="大学・学部・教授とのマッチング精査">
+                        <label for="step-3-6">大学・学部・教授とのマッチング精査</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-3-7" value="併願校の戦略設計">
+                        <label for="step-3-7">併願校の戦略設計</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目④：研究実践 -->
+                <div class="accordion-item" data-category="4">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ④研究実践
+                      <span class="accordion-count" id="count-cat4">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-4-1" value="研究テーマの実践">
+                        <label for="step-4-1">研究テーマの実践</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-4-2" value="先行研究・論文・書籍の読み込み">
+                        <label for="step-4-2">先行研究・論文・書籍の読み込み</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-4-3" value="ポートフォリオ・プロフィール整理">
+                        <label for="step-4-3">ポートフォリオ・プロフィール整理</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑤：小論文準備 -->
+                <div class="accordion-item" data-category="5">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑤小論文準備
+                      <span class="accordion-count" id="count-cat5">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-1" value="小論文の本質理解">
+                        <label for="step-5-1">小論文の本質理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-2" value="小論文でやってはいけないこと">
+                        <label for="step-5-2">小論文でやってはいけないこと</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-3" value="小論文テクニック">
+                        <label for="step-5-3">小論文テクニック（段落構成・型理解）</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-4" value="小論文基礎演習">
+                        <label for="step-5-4">小論文基礎演習</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-5" value="小論文応用演習">
+                        <label for="step-5-5">小論文応用演習</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-5-6" value="小論文過去問演習">
+                        <label for="step-5-6">小論文過去問演習</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑥：書類作成 -->
+                <div class="accordion-item" data-category="6">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑥書類作成（志望理由書・自己推薦書）
+                      <span class="accordion-count" id="count-cat6">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-1" value="志望理由書の本質理解">
+                        <label for="step-6-1">志望理由書の本質理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-2" value="志望理由書の禁止事項理解">
+                        <label for="step-6-2">志望理由書の禁止事項理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-3" value="志望理由書テクニック">
+                        <label for="step-6-3">志望理由書テクニック（構成・段落）</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-4" value="大学調査（教授・授業・理念）">
+                        <label for="step-6-4">大学調査（教授・授業・理念）</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-5" value="志望理由書実践と修正">
+                        <label for="step-6-5">志望理由書実践と修正</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-6" value="自己推薦書の構成理解">
+                        <label for="step-6-6">自己推薦書の構成理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-7" value="自己推薦書の禁止事項">
+                        <label for="step-6-7">自己推薦書の禁止事項</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-8" value="自己アピール技法">
+                        <label for="step-6-8">自己アピール技法</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-6-9" value="自己推薦書実践と修正">
+                        <label for="step-6-9">自己推薦書実践と修正</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑦：課題レポート -->
+                <div class="accordion-item" data-category="7">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑦課題レポート
+                      <span class="accordion-count" id="count-cat7">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-7-1" value="課題レポートの本質理解">
+                        <label for="step-7-1">課題レポートの本質理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-7-2" value="課題レポートの禁止事項">
+                        <label for="step-7-2">課題レポートの禁止事項</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-7-3" value="課題レポートの構成技法">
+                        <label for="step-7-3">課題レポートの構成技法</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-7-4" value="課題レポートの資料読解と要点抽出">
+                        <label for="step-7-4">課題レポートの資料読解と要点抽出</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-7-5" value="課題レポートの実践と修正">
+                        <label for="step-7-5">課題レポートの実践と修正</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑧：プレゼン -->
+                <div class="accordion-item" data-category="8">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑧プレゼンテーション
+                      <span class="accordion-count" id="count-cat8">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-8-1" value="プレゼンテーション本質理解">
+                        <label for="step-8-1">プレゼンテーション本質理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-8-2" value="プレゼン資料の構造・デザイン">
+                        <label for="step-8-2">プレゼン資料の構造・デザイン</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-8-3" value="非言語コミュニケーション">
+                        <label for="step-8-3">非言語コミュニケーション</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-8-4" value="プレゼン原稿の作成と暗記">
+                        <label for="step-8-4">プレゼン原稿の作成と暗記</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑨：面接 -->
+                <div class="accordion-item" data-category="9">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑨面接
+                      <span class="accordion-count" id="count-cat9">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-9-1" value="面接の本質理解">
+                        <label for="step-9-1">面接の本質理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-9-2" value="面接禁止事項理解">
+                        <label for="step-9-2">面接禁止事項理解</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-9-3" value="面接基礎100問の言語化">
+                        <label for="step-9-3">面接基礎100問の言語化</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-9-4" value="圧迫面接・深掘り/口頭試問対策">
+                        <label for="step-9-4">圧迫面接・深掘り/口頭試問対策</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-9-5" value="発声・表情・視線のコントロール">
+                        <label for="step-9-5">発声・表情・視線のコントロール</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 大科目⑩：最終確認 -->
+                <div class="accordion-item" data-category="10">
+                  <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">
+                      ⑩最終確認・調整
+                      <span class="accordion-count" id="count-cat10">0</span>
+                    </div>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="checkbox-list">
+                      <div class="checkbox-option">
+                        <input type="checkbox" name="steps" id="step-10-1" value="最終確認と調整・メンタルケア">
+                        <label for="step-10-1">最終確認と調整・メンタルケア</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 出した宿題 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                今日の授業で出した宿題（次回までの課題）
+              </div>
+              <textarea class="form-textarea" name="homework" placeholder="次回までにやってきてほしいことを入力"></textarea>
+            </div>
+
+            <!-- 今後の予定 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                今後取り組むこと（予定）
+              </div>
+              <textarea class="form-textarea" name="futurePlan" placeholder="今後の授業で予定していることを入力"></textarea>
+            </div>
+
+            <!-- 次回講師への伝達 -->
+            <div class="form-section">
+              <div class="form-section-title">
+                次回の講師に向けてメッセージや伝達
+              </div>
+              <textarea class="form-textarea" name="message" placeholder="引き継ぎ事項や注意点など"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeReportModal()">キャンセル</button>
+        <button class="modal-btn submit" onclick="submitReport()" id="submitBtn">
+          <i data-lucide="send" style="width:16px;height:16px;"></i>
+          送信
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 履歴モーダル -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal history-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="history" style="width:20px;height:20px;color:var(--primary);"></i>
+          <span id="historyTitle">授業履歴</span>
+        </div>
+        <button class="modal-close" onclick="closeHistoryModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="historyContent">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">読み込み中...</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeHistoryModal()">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- トースト -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== 設定 =====
+    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+
+    // ===== 状態管理 =====
+    let currentUser = null;
+    let scheduleData = [];
+    let currentTab = 'upcoming';
+    let currentReportData = null; // 報告対象の授業データ
+
+    // ===== 初期化 =====
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // Enterキーで読み込み
+      document.getElementById('testEmployeeId').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          loadWithEmployeeId();
+        }
+      });
+
+      // 実施状況の変更監視
+      document.querySelectorAll('input[name="status"]').forEach(radio => {
+        radio.addEventListener('change', handleStatusChange);
+      });
+
+      // チェックボックスの変更監視（カウント更新）
+      document.querySelectorAll('input[name="steps"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateStepCounts);
+      });
+    });
+
+    // ===== 従業員番号で読み込み =====
+    function loadWithEmployeeId() {
+      const employeeId = document.getElementById('testEmployeeId').value.trim();
+
+      if (!employeeId) {
+        showToast('従業員番号を入力してください', 'error');
+        return;
+      }
+
+      currentUser = {
+        employeeId: employeeId,
+        name: employeeId
+      };
+
+      document.getElementById('userName').textContent = currentUser.employeeId;
+      document.getElementById('userBadge').style.display = 'flex';
+
+      loadSchedule();
+    }
+
+    // ===== スケジュール読み込み =====
+    async function loadSchedule() {
+      const section = document.getElementById('scheduleSection');
+      section.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">読み込み中...</div>
+        </div>
+      `;
+
+      try {
+        const url = `${GAS_API_URL}?action=getMySchedule&employeeId=${encodeURIComponent(currentUser.employeeId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          scheduleData = result.data || [];
+          renderSchedule();
+          checkOverdueReports();
+          updateMonthFilterOptions();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('スケジュール取得エラー:', error);
+        section.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i data-lucide="alert-circle" style="width:40px;height:40px;"></i>
+            </div>
+            <div class="empty-title">読み込みに失敗しました</div>
+            <div class="empty-text">${error.message || '通信エラーが発生しました'}</div>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+    }
+
+    // ===== スケジュール表示 =====
+    function renderSchedule() {
+      const section = document.getElementById('scheduleSection');
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      // 検索キーワード取得
+      const searchKeyword = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+      const monthFilter = document.getElementById('monthFilter')?.value || '';
+
+      let filtered = scheduleData.filter(item => {
+        const itemDate = parseDate(item.date);
+
+        // タブフィルター
+        if (currentTab === 'upcoming') {
+          if (itemDate < today) return false;
+        } else {
+          if (itemDate >= today) return false;
+        }
+
+        // 月フィルター
+        if (monthFilter) {
+          const itemMonth = `${itemDate.getFullYear()}/${String(itemDate.getMonth() + 1).padStart(2, '0')}`;
+          if (itemMonth !== monthFilter) return false;
+        }
+
+        // キーワード検索（生徒番号・名前）
+        if (searchKeyword) {
+          const studentId = String(item.studentId || '').toLowerCase();
+          const studentName = (item.studentName || '').toLowerCase();
+          if (!studentId.includes(searchKeyword) && !studentName.includes(searchKeyword)) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return currentTab === 'upcoming' ? dateA - dateB : dateB - dateA;
+      });
+
+      if (filtered.length === 0) {
+        section.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i data-lucide="calendar-x" style="width:40px;height:40px;"></i>
+            </div>
+            <div class="empty-title">${currentTab === 'upcoming' ? '今後の予定はありません' : '過去の授業履歴はありません'}</div>
+            <div class="empty-text">${currentTab === 'upcoming' ? '新しい授業が割り当てられると表示されます' : ''}</div>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      const grouped = {};
+      filtered.forEach(item => {
+        const date = parseDate(item.date);
+        const yearKey = `${date.getFullYear()}年`;
+        if (!grouped[yearKey]) grouped[yearKey] = [];
+        grouped[yearKey].push(item);
+      });
+
+      let html = '';
+      for (const [year, items] of Object.entries(grouped)) {
+        html += `<div class="month-header"><i data-lucide="calendar" style="width:18px;height:18px;"></i>${year}</div>`;
+        items.forEach(item => {
+          html += renderScheduleItem(item, now);
+        });
+      }
+
+      section.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function renderScheduleItem(item, now) {
+      const date = parseDate(item.date);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekdayNames = ['日', '月', '火', '水', '木', '金', '土'];
+      const weekday = weekdayNames[date.getDay()];
+      const weekdayClass = date.getDay() === 0 ? 'sunday' : date.getDay() === 6 ? 'saturday' : '';
+
+      const [hours, minutes] = (item.startTime || '00:00').split(':').map(Number);
+      const lessonStart = new Date(date);
+      lessonStart.setHours(hours, minutes, 0, 0);
+
+      const nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + 1);
+      nextDay.setHours(0, 0, 0, 0);
+
+      let btnClass = 'disabled';
+      let btnText = '報告';
+      let btnDisabled = true;
+
+      if (item.reportSent) {
+        btnClass = 'completed';
+        btnText = '送信済';
+        btnDisabled = true;
+      } else if (now >= nextDay) {
+        btnClass = 'overdue';
+        btnText = '未送信';
+        btnDisabled = false;
+      } else if (now >= lessonStart) {
+        btnClass = 'pending';
+        btnText = '報告';
+        btnDisabled = false;
+      }
+
+      const typeClass = item.format === 'オンライン' ? 'type-online' : 'type-offline';
+
+      // itemをJSON文字列にしてdata属性に保存
+      const itemJson = encodeURIComponent(JSON.stringify(item));
+
+      return `
+        <div class="schedule-item">
+          <div class="schedule-date">
+            <div class="schedule-day">${month}/${day}</div>
+            <div class="schedule-weekday ${weekdayClass}">${weekday}曜日</div>
+          </div>
+          <div class="schedule-time">${item.startTime || '-'}</div>
+          <div class="schedule-info">
+            <div class="schedule-student">${item.studentId ? `${item.studentId} - ` : ''}${item.studentName || '-'}</div>
+            <div class="schedule-tags">
+              <span class="schedule-tag ${typeClass}">${item.format || '-'}</span>
+              <span class="schedule-tag lesson-type">${item.lessonType || '-'}</span>
+            </div>
+          </div>
+          <div class="schedule-actions">
+  <button class="history-btn" onclick="openHistoryModal('${item.studentId}', '${item.studentName}')">
+    <i data-lucide="history" style="width:14px;height:14px;"></i>
+    履歴
+  </button>
+  <button class="report-btn ${btnClass}"
+                    onclick="openReportModal('${itemJson}')"
+                    ${btnDisabled ? 'disabled' : ''}>
+              <i data-lucide="${item.reportSent ? 'check-circle' : 'send'}" style="width:14px;height:14px;"></i>
+              ${btnText}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ===== 未送信チェック =====
+    function checkOverdueReports() {
+      const now = new Date();
+
+      const overdue = scheduleData.filter(item => {
+        if (item.reportSent) return false;
+        const date = parseDate(item.date);
+        const nextDay = new Date(date);
+        nextDay.setDate(nextDay.getDate() + 1);
+        return now >= nextDay;
+      });
+
+      const banner = document.getElementById('warningBanner');
+      if (overdue.length > 0) {
+        document.getElementById('warningText').textContent = `${overdue.length}件の授業報告が未送信です`;
+        banner.classList.add('show');
+      } else {
+        banner.classList.remove('show');
+      }
+      lucide.createIcons();
+    }
+
+    // ===== タブ切り替え =====
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      renderSchedule();
+    }
+
+    // ===== 授業報告モーダル =====
+    function openReportModal(itemJson) {
+      const item = JSON.parse(decodeURIComponent(itemJson));
+      currentReportData = item;
+
+      // 授業情報を表示
+      const dateObj = parseDate(item.date);
+      const weekdayNames = ['日', '月', '火', '水', '木', '金', '土'];
+      const formatted = `${dateObj.getFullYear()}/${dateObj.getMonth() + 1}/${dateObj.getDate()}（${weekdayNames[dateObj.getDay()]}）${item.startTime || ''}`;
+
+      document.getElementById('reportDate').textContent = formatted;
+      document.getElementById('reportLessonType').textContent = item.lessonType || '-';
+      document.getElementById('reportStudentId').textContent = item.studentId || '-';
+      document.getElementById('reportStudentName').textContent = item.studentName || '-';
+
+      // フォームをリセット
+      document.getElementById('reportForm').reset();
+      document.getElementById('executionFields').style.display = 'block';
+      document.getElementById('postponeReasonField').classList.remove('show');
+
+      // チェックボックスカウントリセット
+      updateStepCounts();
+
+      // モーダル表示
+      document.getElementById('reportModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.remove('show');
+      currentReportData = null;
+    }
+
+    // ===== 実施状況変更時 =====
+    function handleStatusChange(e) {
+      const status = e.target.value;
+      const executionFields = document.getElementById('executionFields');
+      const postponeField = document.getElementById('postponeReasonField');
+
+      if (status === '実施') {
+        executionFields.style.display = 'block';
+        postponeField.classList.remove('show');
+      } else {
+        executionFields.style.display = 'none';
+        if (status === '講師判断による繰越') {
+          postponeField.classList.add('show');
+        } else {
+          postponeField.classList.remove('show');
+        }
+      }
+    }
+
+    // ===== アコーディオン =====
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+      lucide.createIcons();
+    }
+
+    // ===== ステップカウント更新 =====
+    function updateStepCounts() {
+      for (let i = 1; i <= 10; i++) {
+        const accordionItem = document.querySelector(`.accordion-item[data-category="${i}"]`);
+        if (!accordionItem) continue;
+
+        const checkboxes = accordionItem.querySelectorAll('input[name="steps"]:checked');
+        const countEl = document.getElementById(`count-cat${i}`);
+
+        if (checkboxes.length > 0) {
+          countEl.textContent = checkboxes.length;
+          countEl.classList.add('show');
+        } else {
+          countEl.classList.remove('show');
+        }
+      }
+    }
+
+    // ===== 授業報告送信 =====
+    async function submitReport() {
+      const form = document.getElementById('reportForm');
+      const formData = new FormData(form);
+
+      // 必須チェック
+      const status = formData.get('status');
+      if (!status) {
+        showToast('実施状況を選択してください', 'error');
+        return;
+      }
+
+      // 送信データ構築
+      const reportData = {
+        action: 'submitReport',
+        reportId: currentReportData.id,
+        employeeId: currentUser.employeeId,
+        teacherName: currentReportData.teacherName || currentUser.name,
+        studentId: currentReportData.studentId || '',
+        studentName: currentReportData.studentName || '',
+        lessonType: currentReportData.lessonType || '',
+        lessonDate: currentReportData.date || '',
+        lessonTime: currentReportData.startTime || '',
+        status: status,
+        postponeReason: formData.get('postponeReason') || '',
+        lessonCount: formData.get('lessonCount') || '1',
+        nomination: formData.get('nomination') || 'いいえ',
+        lateness: formData.get('lateness') || '遅れなし',
+        attitude: formData.get('attitude') || '3',
+        commute: formData.get('commute') || 'オンライン',
+        steps: formData.getAll('steps').join(', '),
+        homework: formData.get('homework') || '',
+        futurePlan: formData.get('futurePlan') || '',
+        message: formData.get('message') || ''
+      };
+
+      // 送信ボタン無効化
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="loading-spinner" style="width:16px;height:16px;border-width:2px;margin:0;"></div> 送信中...';
+
+      try {
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(reportData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('授業報告を送信しました', 'success');
+          closeReportModal();
+
+          // 該当の授業を送信済みに更新
+          const idx = scheduleData.findIndex(s => s.id === currentReportData.id);
+          if (idx !== -1) {
+            scheduleData[idx].reportSent = true;
+          }
+          renderSchedule();
+          checkOverdueReports();
+          updateMonthFilterOptions();
+        } else {
+          throw new Error(result.message || '送信に失敗しました');
+        }
+      } catch (error) {
+        console.error('送信エラー:', error);
+        showToast(error.message || '送信に失敗しました', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" style="width:16px;height:16px;"></i> 送信';
+        lucide.createIcons();
+      }
+    }
+
+    // ===== ユーティリティ =====
+    function parseDate(dateStr) {
+      if (!dateStr) return new Date();
+      const parts = dateStr.split(/[\/\-]/);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" style="width:18px;height:18px;"></i>
+        ${message}
+      `;
+      toast.classList.add('show');
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // モーダル外クリックで閉じる
+    document.getElementById('reportModal').addEventListener('click', function (e) {
+      if (e.target === this) closeReportModal();
+    });
+
+    // ===== フィルター適用 =====
+    function applyFilters() {
+      renderSchedule();
+    }
+
+    // ===== 月フィルター選択肢を生成 =====
+    function updateMonthFilterOptions() {
+      const months = new Set();
+
+      scheduleData.forEach(item => {
+        const date = parseDate(item.date);
+        const monthKey = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}`;
+        months.add(monthKey);
+      });
+
+      const sortedMonths = Array.from(months).sort().reverse();
+
+      const select = document.getElementById('monthFilter');
+      select.innerHTML = '<option value="">すべての月</option>';
+
+      sortedMonths.forEach(month => {
+        const [year, m] = month.split('/');
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = `${year}年${parseInt(m)}月`;
+        select.appendChild(option);
+      });
+    }
+
+    // ===== 履歴モーダル =====
+    let historyStudentId = null;
+    let historyData = [];
+    let historyDisplayCount = 5;
+
+    function openHistoryModal(studentId, studentName) {
+      historyStudentId = studentId;
+      historyData = [];
+      historyDisplayCount = 5;
+
+      document.getElementById('historyTitle').textContent = `${studentId} - ${studentName} の授業履歴`;
+      document.getElementById('historyModal').classList.add('show');
+
+      loadHistory(studentId);
+      lucide.createIcons();
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('historyModal').classList.remove('show');
+      historyStudentId = null;
+      historyData = [];
+    }
+
+    async function loadHistory(studentId) {
+      const content = document.getElementById('historyContent');
+      content.innerHTML = `
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">読み込み中...</div>
+    </div>
+  `;
+
+      try {
+        const url = `${GAS_API_URL}?action=getStudentHistory&studentId=${encodeURIComponent(studentId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          historyData = result.data || [];
+          renderHistory();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('履歴取得エラー:', error);
+        content.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">
+          <i data-lucide="alert-circle" style="width:24px;height:24px;"></i>
+        </div>
+        <div>履歴を取得できませんでした</div>
+      </div>
+    `;
+        lucide.createIcons();
+      }
+    }
+
+    function renderHistory() {
+      const content = document.getElementById('historyContent');
+
+      if (historyData.length === 0) {
+        content.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">
+          <i data-lucide="inbox" style="width:24px;height:24px;"></i>
+        </div>
+        <div>まだ授業履歴がありません</div>
+      </div>
+    `;
+        lucide.createIcons();
+        return;
+      }
+
+      const displayData = historyData.slice(0, historyDisplayCount);
+
+      let html = '<div class="history-list">';
+
+      displayData.forEach(item => {
+        html += `
+      <div class="history-item">
+        <div class="history-header">
+          <div class="history-date">${item.lessonDate || '-'} ${item.lessonTime || ''}</div>
+          <div class="history-teacher">${item.teacherName || '-'}</div>
+        </div>
+        <div class="history-content">
+          ${item.steps ? `
+          <div class="history-row">
+            <div class="history-label">取り組み</div>
+            <div class="history-value">${item.steps}</div>
+          </div>
+          ` : ''}
+          ${item.homework ? `
+          <div class="history-row">
+            <div class="history-label">宿題</div>
+            <div class="history-value">${item.homework}</div>
+          </div>
+          ` : ''}
+          ${item.futurePlan ? `
+          <div class="history-row">
+            <div class="history-label">今後予定</div>
+            <div class="history-value">${item.futurePlan}</div>
+          </div>
+          ` : ''}
+          ${item.message ? `
+          <div class="history-row">
+            <div class="history-label">伝達</div>
+            <div class="history-value">${item.message}</div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+      });
+
+      html += '</div>';
+
+      // もっと見るボタン
+      if (historyData.length > historyDisplayCount) {
+        const remaining = historyData.length - historyDisplayCount;
+        html += `
+      <button class="load-more-btn" onclick="loadMoreHistory()">
+        さらに表示（残り${remaining}件）
+      </button>
+    `;
+      }
+
+      content.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function loadMoreHistory() {
+      historyDisplayCount += 5;
+      renderHistory();
+    }
+
+    // 履歴モーダル外クリックで閉じる
+    document.getElementById('historyModal').addEventListener('click', function (e) {
+      if (e.target === this) closeHistoryModal();
+    });
+
+  </script>
+</body>
+
+</html>
