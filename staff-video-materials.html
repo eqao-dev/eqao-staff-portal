@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>動画教材 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f8f9fa; min-height: 100vh; color: #333; }
+    
+    /* ヘッダー */
+    .header { background: #111; padding: 0 24px; height: 64px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .header-content { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 16px; }
+    .back-btn { display: flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 14px; padding: 8px 12px; border-radius: 8px; transition: all 0.2s; }
+    .back-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .header-divider { width: 1px; height: 20px; background: #444; }
+    .header-title { font-size: 16px; font-weight: 600; color: #fff; }
+    
+    /* メイン */
+    .main { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    
+    /* ページヘッダー */
+    .page-header { margin-bottom: 32px; }
+    .page-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: #ede9fe; color: #7c3aed; }
+    .page-title { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .page-desc { font-size: 14px; color: #666; }
+
+    /* 統計カード */
+    .stats-card {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stats-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stats-info h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .stats-info p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* セクションヘッダー */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* フィルター */
+    .filter-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-select {
+      padding: 10px 36px 10px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      transition: all 0.2s;
+    }
+    .filter-select:hover { border-color: #8b5cf6; }
+    .filter-select:focus { outline: none; border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); }
+
+    .clear-filter-btn {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .clear-filter-btn:hover { background: #eee; }
+    .clear-filter-btn.show { display: flex; }
+
+    /* 動画グリッド */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    /* 動画カード */
+    .video-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+    }
+    .video-card:hover {
+      border-color: #8b5cf6;
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+      transform: translateY(-4px);
+    }
+
+    /* サムネイル */
+    .video-thumbnail {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+    .video-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .video-card:hover .video-thumbnail img {
+      transform: scale(1.05);
+    }
+    .video-thumbnail-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 100%);
+    }
+
+    /* 再生ボタン */
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .video-play-btn i { color: #7c3aed; margin-left: 2px; }
+    .video-card:hover .video-play-btn {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* カード本体 */
+    .video-card-body { padding: 16px; }
+    .video-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .video-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* ローディング */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e5e5;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 結果なし */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+    }
+    .no-results-icon {
+      width: 64px;
+      height: 64px;
+      background: #f5f5f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #ccc;
+    }
+
+    /* フッター */
+    .footer { text-align: center; padding: 32px 24px; margin-top: 40px; }
+    .footer-text { font-size: 13px; color: #999; }
+
+    @media (max-width: 768px) {
+      .main { padding: 24px 16px; }
+      .video-grid { grid-template-columns: 1fr; gap: 16px; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .filter-wrapper { width: 100%; }
+      .filter-select { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="category-lessons.html" class="back-btn">
+        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+        授業・教材に戻る
+      </a>
+      <div class="header-divider"></div>
+      <span class="header-title">動画教材</span>
+    </div>
+  </header>
+  
+  <main class="main">
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="play-circle" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">動画教材</h1>
+      <p class="page-desc">過去の集団授業動画を確認できます</p>
+    </div>
+
+    <!-- 統計カード -->
+    <div class="stats-card">
+      <div class="stats-icon">
+        <i data-lucide="film" style="width:28px;height:28px;"></i>
+      </div>
+      <div class="stats-info">
+        <h2 id="videoCount">-</h2>
+        <p>本の動画が視聴可能</p>
+      </div>
+    </div>
+
+    <!-- セクションヘッダー -->
+    <div class="section-header">
+      <div class="section-title">
+        <i data-lucide="video" style="width:16px;height:16px;"></i>
+        すべての動画
+      </div>
+      <div class="filter-wrapper">
+        <select class="filter-select" id="videoFilter" onchange="filterVideos()">
+          <option value="">すべての動画を表示</option>
+        </select>
+        <button class="clear-filter-btn" id="clearFilterBtn" onclick="clearFilter()">
+          <i data-lucide="x" style="width:14px;height:14px;"></i>
+          解除
+        </button>
+      </div>
+    </div>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>動画を読み込み中...</p>
+    </div>
+
+    <!-- 動画グリッド -->
+    <div id="videoGrid" class="video-grid" style="display: none;"></div>
+
+    <!-- 結果なし -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <div class="no-results-icon">
+        <i data-lucide="video-off" style="width:28px;height:28px;"></i>
+      </div>
+      <p>動画がありません</p>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <p class="footer-text">© 2025 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    // API設定
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyXdCxzPU6oXAm2Mi9mfMDeNvQAyE0mmTOABA2EOYelvX6J2Rr48VcizS0vMgIS7Qc7/exec';
+
+    // 状態管理
+    let allVideos = [];
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+      loadVideos();
+    });
+
+    // 動画一覧を読み込み
+    async function loadVideos() {
+      try {
+        const url = `${API_URL}?action=getVideos`;
+        const response = await fetch(url);
+        const data = await response.json();
+        allVideos = data || [];
+        populateFilter(allVideos);
+        displayVideos(allVideos);
+      } catch (error) {
+        handleError(error);
+      }
+    }
+
+    // フィルタープルダウンを作成
+    function populateFilter(data) {
+      const filterSelect = document.getElementById('videoFilter');
+      filterSelect.innerHTML = '<option value="">すべての動画を表示</option>';
+      
+      data.forEach((item, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = item.title || `動画 ${index + 1}`;
+        filterSelect.appendChild(option);
+      });
+    }
+
+    // フィルター適用
+    function filterVideos() {
+      const filterValue = document.getElementById('videoFilter').value;
+      const clearBtn = document.getElementById('clearFilterBtn');
+      
+      if (filterValue === '') {
+        displayVideos(allVideos);
+        clearBtn.classList.remove('show');
+      } else {
+        const selectedIndex = parseInt(filterValue);
+        const selectedVideo = allVideos[selectedIndex];
+        displayVideos([selectedVideo]);
+        clearBtn.classList.add('show');
+      }
+    }
+
+    // フィルター解除
+    function clearFilter() {
+      document.getElementById('videoFilter').value = '';
+      document.getElementById('clearFilterBtn').classList.remove('show');
+      displayVideos(allVideos);
+    }
+
+    // 動画を表示
+    function displayVideos(data) {
+      document.getElementById('loading').style.display = 'none';
+      
+      const videoGrid = document.getElementById('videoGrid');
+      videoGrid.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        document.getElementById('noResults').style.display = 'block';
+        videoGrid.style.display = 'none';
+        return;
+      }
+
+      document.getElementById('noResults').style.display = 'none';
+      document.getElementById('videoCount').textContent = allVideos.length;
+      videoGrid.style.display = 'grid';
+
+      data.forEach(function(item) {
+        const videoId = getYoutubeVideoId(item.url || item.link);
+        const thumbnailUrl = videoId 
+          ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
+          : '';
+
+        const card = document.createElement('a');
+        card.className = 'video-card';
+        card.href = item.url || item.link;
+        card.target = '_blank';
+
+        card.innerHTML = `
+          <div class="video-thumbnail">
+            ${thumbnailUrl 
+              ? `<img src="${thumbnailUrl}" alt="${escapeHtml(item.title)}" loading="lazy">`
+              : '<div style="width:100%;height:100%;background:#eee;display:flex;align-items:center;justify-content:center;color:#ccc;"><i data-lucide="video" style="width:32px;height:32px;"></i></div>'
+            }
+            <div class="video-thumbnail-overlay"></div>
+            <div class="video-play-btn">
+              <i data-lucide="play" style="width:24px;height:24px;"></i>
+            </div>
+          </div>
+          <div class="video-card-body">
+            <div class="video-card-title">${escapeHtml(item.title)}</div>
+            <div class="video-card-meta">
+              <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+              <span>クリックして再生</span>
+            </div>
+          </div>
+        `;
+
+        videoGrid.appendChild(card);
+      });
+
+      // アイコンを再描画
+      lucide.createIcons();
+    }
+
+    // YouTubeのVideo IDを抽出
+    function getYoutubeVideoId(url) {
+      if (!url) return null;
+      let match = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+      if (match) return match[1];
+      match = url.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/);
+      if (match) return match[1];
+      match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]+)/);
+      if (match) return match[1];
+      return null;
+    }
+
+    // エラーハンドリング
+    function handleError(error) {
+      document.getElementById('loading').style.display = 'none';
+      const noResults = document.getElementById('noResults');
+      noResults.style.display = 'block';
+      noResults.innerHTML = `
+        <div class="no-results-icon">
+          <i data-lucide="alert-circle" style="width:28px;height:28px;"></i>
+        </div>
+        <p>読み込みに失敗しました</p>
+      `;
+      lucide.createIcons();
+      console.error(error);
+    }
+
+    // HTMLエスケープ
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

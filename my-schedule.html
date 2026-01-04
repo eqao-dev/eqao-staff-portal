@@ -1067,6 +1067,29 @@
       background: var(--primary-light);
     }
 
+    /* ダッシュボードボタン */
+    .dashboard-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      border: 1px solid #5b21b6;
+      background: #5b21b6;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .dashboard-btn:hover {
+      background: #4c1d95;
+      border-color: #4c1d95;
+    }
+
     /* 履歴モーダル */
     .history-modal {
       max-width: 600px;
@@ -2098,7 +2121,11 @@
               <span class="schedule-tag lesson-type">${item.lessonType || '-'}</span>
             </div>
           </div>
-          <div class="schedule-actions">
+         <div class="schedule-actions">
+  <a href="lesson-dashboard.html?studentId=${encodeURIComponent(item.studentId)}" class="dashboard-btn">
+    <i data-lucide="layout-dashboard" style="width:14px;height:14px;"></i>
+    ダッシュボード
+  </a>
   <button class="history-btn" onclick="openHistoryModal('${item.studentId}', '${item.studentName}')">
     <i data-lucide="history" style="width:14px;height:14px;"></i>
     履歴
@@ -2490,6 +2517,146 @@
 
     // 履歴モーダル外クリックで閉じる
     document.getElementById('historyModal').addEventListener('click', function (e) {
+      if (e.target === this) closeHistoryModal();
+    });
+
+    // ===== 履歴モーダル =====
+    let historyStudentId = null;
+    let historyData = [];
+    let historyDisplayCount = 5;
+
+    function openHistoryModal(studentId, studentName) {
+      historyStudentId = studentId;
+      historyData = [];
+      historyDisplayCount = 5;
+
+      document.getElementById('historyTitle').textContent = `${studentId} - ${studentName} の授業履歴`;
+      document.getElementById('historyModal').classList.add('show');
+
+      loadHistory(studentId);
+      lucide.createIcons();
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('historyModal').classList.remove('show');
+      historyStudentId = null;
+      historyData = [];
+    }
+
+    async function loadHistory(studentId) {
+      const content = document.getElementById('historyContent');
+      content.innerHTML = `
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">読み込み中...</div>
+    </div>
+  `;
+
+      try {
+        const url = `${GAS_API_URL}?action=getStudentHistory&studentId=${encodeURIComponent(studentId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          historyData = result.data || [];
+          renderHistory();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('履歴取得エラー:', error);
+        content.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">
+          <i data-lucide="alert-circle" style="width:24px;height:24px;"></i>
+        </div>
+        <div>履歴を取得できませんでした</div>
+      </div>
+    `;
+        lucide.createIcons();
+      }
+    }
+
+    function renderHistory() {
+      const content = document.getElementById('historyContent');
+
+      if (historyData.length === 0) {
+        content.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">
+          <i data-lucide="inbox" style="width:24px;height:24px;"></i>
+        </div>
+        <div>まだ授業履歴がありません</div>
+      </div>
+    `;
+        lucide.createIcons();
+        return;
+      }
+
+      const displayData = historyData.slice(0, historyDisplayCount);
+
+      let html = '<div class="history-list">';
+
+      displayData.forEach(item => {
+        html += `
+      <div class="history-item">
+        <div class="history-header">
+          <div class="history-date">${item.lessonDate || '-'} ${item.lessonTime || ''}</div>
+          <div class="history-teacher">${item.teacherName || '-'}</div>
+        </div>
+        <div class="history-content">
+          ${item.steps ? `
+          <div class="history-row">
+            <div class="history-label">取り組み</div>
+            <div class="history-value">${item.steps}</div>
+          </div>
+          ` : ''}
+          ${item.homework ? `
+          <div class="history-row">
+            <div class="history-label">宿題</div>
+            <div class="history-value">${item.homework}</div>
+          </div>
+          ` : ''}
+          ${item.futurePlan ? `
+          <div class="history-row">
+            <div class="history-label">今後予定</div>
+            <div class="history-value">${item.futurePlan}</div>
+          </div>
+          ` : ''}
+          ${item.message ? `
+          <div class="history-row">
+            <div class="history-label">伝達</div>
+            <div class="history-value">${item.message}</div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+      });
+
+      html += '</div>';
+
+      // もっと見るボタン
+      if (historyData.length > historyDisplayCount) {
+        const remaining = historyData.length - historyDisplayCount;
+        html += `
+      <button class="load-more-btn" onclick="loadMoreHistory()">
+        さらに表示（残り${remaining}件）
+      </button>
+    `;
+      }
+
+      content.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function loadMoreHistory() {
+      historyDisplayCount += 5;
+      renderHistory();
+    }
+
+    // 履歴モーダル外クリックで閉じる
+    document.getElementById('historyModal')?.addEventListener('click', function (e) {
       if (e.target === this) closeHistoryModal();
     });
 

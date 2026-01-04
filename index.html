@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +15,14 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: #f8f9fa;
       min-height: 100vh;
       color: #333;
     }
-    
+
     /* ヘッダー */
     .header {
       background: #111;
@@ -33,7 +34,7 @@
       top: 0;
       z-index: 100;
     }
-    
+
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
@@ -42,13 +43,13 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .logo-area {
       display: flex;
       align-items: center;
       gap: 14px;
     }
-    
+
     .logo {
       width: 38px;
       height: 38px;
@@ -59,25 +60,25 @@
       justify-content: center;
       padding: 6px;
     }
-    
+
     .logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
-    
+
     .brand-name {
       font-size: 18px;
       font-weight: 700;
       color: #fff;
     }
-    
+
     .header-nav {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    
+
     .nav-item {
       display: flex;
       align-items: center;
@@ -89,19 +90,19 @@
       border-radius: 8px;
       transition: all 0.2s;
     }
-    
+
     .nav-item:hover {
       color: #fff;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
     }
-    
+
     /* メイン */
     .main {
       max-width: 1000px;
       margin: 0 auto;
       padding: 40px 24px;
     }
-    
+
     /* お知らせ掲示板 */
     .notice-board {
       background: #fff;
@@ -110,7 +111,7 @@
       padding: 20px;
       margin-bottom: 24px;
     }
-    
+
     .notice-header {
       display: flex;
       align-items: center;
@@ -119,7 +120,7 @@
       padding-bottom: 12px;
       border-bottom: 1px solid #f0f0f0;
     }
-    
+
     .notice-title {
       display: flex;
       align-items: center;
@@ -128,24 +129,31 @@
       font-weight: 700;
       color: #111;
     }
-    
+
     .notice-all {
       font-size: 13px;
       color: #888;
       text-decoration: none;
       transition: color 0.2s;
     }
-    
+
     .notice-all:hover {
       color: #111;
     }
-    
+
     .notice-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    
+
+    .notice-empty {
+      text-align: center;
+      padding: 24px 16px;
+      color: #999;
+      font-size: 14px;
+    }
+
     .notice-item {
       display: flex;
       align-items: center;
@@ -157,19 +165,19 @@
       color: inherit;
       transition: all 0.2s;
     }
-    
+
     .notice-item:hover {
       background: #f0f0f0;
     }
-    
+
     .notice-item.new {
       background: #fef3c7;
     }
-    
+
     .notice-item.new:hover {
       background: #fde68a;
     }
-    
+
     .notice-badge {
       flex-shrink: 0;
       padding: 4px 8px;
@@ -179,11 +187,11 @@
       background: #ef4444;
       color: #fff;
     }
-    
+
     .notice-badge.info {
       background: #6b7280;
     }
-    
+
     .notice-text {
       flex: 1;
       font-size: 13px;
@@ -192,13 +200,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    
+
     .notice-date {
       flex-shrink: 0;
       font-size: 12px;
       color: #999;
     }
-    
+
     /* クイックアクション */
     .quick-actions {
       margin-bottom: 40px;
@@ -207,7 +215,7 @@
       border-radius: 16px;
       border: 1px solid #e5e5e5;
     }
-    
+
     .quick-header {
       display: flex;
       align-items: center;
@@ -217,14 +225,14 @@
       color: #888;
       margin-bottom: 14px;
     }
-    
+
     .quick-buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
     }
-    
+
     .quick-btn {
       display: inline-flex;
       align-items: center;
@@ -238,23 +246,32 @@
       text-decoration: none;
       transition: all 0.2s;
     }
-    
+
     .quick-btn:hover {
       background: #059669;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
-    
+
     .quick-btn.secondary {
       background: #f3f4f6;
       color: #374151;
     }
-    
+
     .quick-btn.secondary:hover {
       background: #e5e7eb;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    
+
+    .quick-btn.highlight {
+      background: #5b21b6;
+    }
+
+    .quick-btn.highlight:hover {
+      background: #4c1d95;
+      box-shadow: 0 4px 12px rgba(91, 33, 182, 0.35);
+    }
+
     /* カテゴリグリッド */
     .category-grid {
       display: grid;
@@ -262,7 +279,7 @@
       gap: 16px;
       margin-bottom: 32px;
     }
-    
+
     /* カテゴリカード */
     .category-card {
       background: #fff;
@@ -277,7 +294,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .category-card::before {
       content: '';
       position: absolute;
@@ -286,88 +303,120 @@
       right: 0;
       height: 4px;
     }
-    
-    .category-card.blue::before { background: #0ea5e9; }
-    .category-card.green::before { background: #10b981; }
-    .category-card.purple::before { background: #8b5cf6; }
-    .category-card.orange::before { background: #f59e0b; }
-    .category-card.pink::before { background: #ec4899; }
-    .category-card.teal::before { background: #14b8a6; }
-    
+
+    .category-card.blue::before {
+      background: #0ea5e9;
+    }
+
+    .category-card.green::before {
+      background: #10b981;
+    }
+
+    .category-card.purple::before {
+      background: #8b5cf6;
+    }
+
+    .category-card.orange::before {
+      background: #f59e0b;
+    }
+
+    .category-card.pink::before {
+      background: #ec4899;
+    }
+
+    .category-card.teal::before {
+      background: #14b8a6;
+    }
+
     .category-card:hover {
       border-color: #ccc;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       transform: translateY(-3px);
     }
-    
+
     .card-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 12px;
     }
-    
+
     .card-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
-    .category-card.blue .card-icon { background: #e0f2fe; color: #0284c7; }
-    .category-card.green .card-icon { background: #d1fae5; color: #059669; }
-    .category-card.purple .card-icon { background: #ede9fe; color: #7c3aed; }
-    .category-card.orange .card-icon { background: #fef3c7; color: #d97706; }
-    .category-card.pink .card-icon { background: #fce7f3; color: #db2777; }
-    .category-card.teal .card-icon { background: #ccfbf1; color: #0d9488; }
-    
+
+    .category-card.blue .card-icon {
+      background: #e0f2fe;
+      color: #0ea5e9;
+    }
+
+    .category-card.green .card-icon {
+      background: #d1fae5;
+      color: #10b981;
+    }
+
+    .category-card.purple .card-icon {
+      background: #ede9fe;
+      color: #8b5cf6;
+    }
+
+    .category-card.orange .card-icon {
+      background: #fef3c7;
+      color: #f59e0b;
+    }
+
+    .category-card.pink .card-icon {
+      background: #fce7f3;
+      color: #ec4899;
+    }
+
+    .category-card.teal .card-icon {
+      background: #ccfbf1;
+      color: #14b8a6;
+    }
+
     .card-arrow {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f5f5f5;
-      color: #999;
+      color: #ccc;
       transition: all 0.2s;
     }
-    
+
     .category-card:hover .card-arrow {
-      background: #111;
-      color: #fff;
+      color: #666;
+      transform: translateX(4px);
     }
-    
+
     .card-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #111;
       margin-bottom: 6px;
     }
-    
+
     .card-desc {
       font-size: 13px;
       color: #666;
-      line-height: 1.5;
+      margin-bottom: 12px;
     }
-    
+
     .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 12px;
     }
-    
+
     .card-tag {
       font-size: 11px;
-      color: #888;
-      background: #f5f5f5;
       padding: 4px 8px;
+      background: #f3f4f6;
+      color: #6b7280;
       border-radius: 4px;
     }
-    
+
     /* 幹部エリア */
     .executive-section {
       background: #fff;
@@ -379,13 +428,13 @@
       justify-content: space-between;
       gap: 20px;
     }
-    
+
     .executive-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-    
+
     .executive-icon {
       width: 52px;
       height: 52px;
@@ -397,19 +446,19 @@
       color: #fff;
       flex-shrink: 0;
     }
-    
+
     .executive-info h2 {
       font-size: 18px;
       font-weight: 700;
       color: #111;
       margin-bottom: 4px;
     }
-    
+
     .executive-info p {
       font-size: 13px;
       color: #666;
     }
-    
+
     .executive-btn {
       display: inline-flex;
       align-items: center;
@@ -424,62 +473,63 @@
       transition: all 0.2s ease;
       white-space: nowrap;
     }
-    
+
     .executive-btn:hover {
       background: #333;
       transform: translateY(-2px);
     }
-    
+
     /* フッター */
     .footer {
       text-align: center;
       padding: 32px 24px;
       margin-top: 20px;
     }
-    
+
     .footer-text {
       font-size: 13px;
       color: #999;
     }
-    
+
     /* レスポンシブ */
     @media (max-width: 768px) {
       .main {
         padding: 24px 16px;
       }
-      
+
       .category-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .quick-actions {
         padding: 16px;
       }
-      
+
       .quick-btn {
         padding: 10px 14px;
         font-size: 13px;
       }
-      
+
       .notice-item {
         padding: 10px 12px;
       }
-      
+
       .notice-text {
         font-size: 12px;
       }
-      
+
       .executive-section {
         flex-direction: column;
         text-align: center;
       }
-      
+
       .executive-left {
         flex-direction: column;
       }
     }
   </style>
 </head>
+
 <body>
   <!-- ヘッダー -->
   <header class="header">
@@ -498,7 +548,7 @@
       </nav>
     </div>
   </header>
-  
+
   <!-- メイン -->
   <main class="main">
     <!-- お知らせ掲示板 -->
@@ -511,24 +561,12 @@
         <a href="#" class="notice-all">すべて見る</a>
       </div>
       <div class="notice-list">
-        <a href="#" class="notice-item new">
-          <span class="notice-badge">NEW</span>
-          <span class="notice-text">【重要】年末年始の営業時間について</span>
-          <span class="notice-date">12/28</span>
-        </a>
-        <a href="#" class="notice-item">
-          <span class="notice-badge info">更新</span>
-          <span class="notice-text">研修プログラムが更新されました</span>
-          <span class="notice-date">12/25</span>
-        </a>
-        <a href="#" class="notice-item">
-          <span class="notice-badge info">共有</span>
-          <span class="notice-text">1月のスケジュールが公開されました</span>
-          <span class="notice-date">12/20</span>
-        </a>
+        <div class="notice-empty">
+          <p>現在、お知らせはありません</p>
+        </div>
       </div>
     </div>
-    
+
     <!-- クイックアクション -->
     <div class="quick-actions">
       <div class="quick-header">
@@ -536,6 +574,10 @@
         クイックメニュー
       </div>
       <div class="quick-buttons">
+        <a href="lesson-dashboard.html" class="quick-btn highlight">
+          <i data-lucide="layout-dashboard" style="width:18px;height:18px;"></i>
+          授業ダッシュボード
+        </a>
         <a href="#" class="quick-btn">
           <i data-lucide="file-check" style="width:18px;height:18px;"></i>
           授業実施報告
@@ -558,7 +600,7 @@
         </a>
       </div>
     </div>
-    
+
     <!-- カテゴリグリッド -->
     <div class="category-grid">
       <!-- スケジュール -->
@@ -579,7 +621,7 @@
           <span class="card-tag">講師稼働</span>
         </div>
       </a>
-      
+
       <!-- 生徒管理 -->
       <a href="category-students.html" class="category-card green">
         <div class="card-header">
@@ -598,7 +640,7 @@
           <span class="card-tag">自習室</span>
         </div>
       </a>
-      
+
       <!-- 授業・教材 -->
       <a href="category-lessons.html" class="category-card purple">
         <div class="card-header">
@@ -610,14 +652,14 @@
           </div>
         </div>
         <div class="card-title">授業・教材</div>
-        <div class="card-desc">授業ステップ・教材・過去問など</div>
+        <div class="card-desc">授業ダッシュボード・教材・過去問など</div>
         <div class="card-tags">
-          <span class="card-tag">個別/集団授業</span>
+          <span class="card-tag">授業ダッシュボード</span>
           <span class="card-tag">動画教材</span>
           <span class="card-tag">過去問</span>
         </div>
       </a>
-      
+
       <!-- ルール・研修 -->
       <a href="category-rules.html" class="category-card orange">
         <div class="card-header">
@@ -636,7 +678,7 @@
           <span class="card-tag">研修</span>
         </div>
       </a>
-      
+
       <!-- 組織・HR -->
       <a href="category-organization.html" class="category-card pink">
         <div class="card-header">
@@ -655,7 +697,7 @@
           <span class="card-tag">数字で見る</span>
         </div>
       </a>
-      
+
       <!-- リソース・リンク -->
       <a href="category-resources.html" class="category-card teal">
         <div class="card-header">
@@ -675,7 +717,7 @@
         </div>
       </a>
     </div>
-    
+
     <!-- 幹部エリア -->
     <div class="executive-section">
       <div class="executive-left">
@@ -693,14 +735,15 @@
       </a>
     </div>
   </main>
-  
+
   <!-- フッター -->
   <footer class="footer">
     <p class="footer-text">© 2025 EQAO Education Group.</p>
   </footer>
-  
+
   <script>
     lucide.createIcons();
   </script>
 </body>
+
 </html>
