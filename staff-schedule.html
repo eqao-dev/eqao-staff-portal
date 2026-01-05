@@ -1522,6 +1522,7 @@
     let currentFilter = 'all';
     let searchQuery = '';
     let currentTab = 'enrollment';
+    let currentTutorialStudentId = null;
 
     // タブ切り替え
     function switchTab(tabId) {
@@ -1542,10 +1543,13 @@
 
     // チュートリアル実施モーダルを開く
     function openTutorialModal(studentId) {
+      console.log('openTutorialModal called with:', studentId);
       const student = students.find(s => String(s.studentId) === String(studentId));
+      console.log('Found student:', student);
       if (!student) return;
 
       currentTutorialStudentId = studentId;
+      console.log('currentTutorialStudentId set to:', currentTutorialStudentId);
 
       document.getElementById('tutorial-student-name').value = student.studentName || '';
       document.getElementById('tutorial-date').value = new Date().toISOString().split('T')[0];
@@ -1563,7 +1567,14 @@
 
     // チュートリアル実施を保存
     async function saveTutorial() {
-      if (!currentTutorialStudentId) return;
+      console.log('saveTutorial called, currentTutorialStudentId:', currentTutorialStudentId);
+
+      if (!currentTutorialStudentId) {
+        console.error('currentTutorialStudentId is null!');
+        return;
+      }
+
+      const studentId = currentTutorialStudentId;
 
       const tutorialDate = document.getElementById('tutorial-date').value;
       const tutorialStaff = document.getElementById('tutorial-staff').value.trim();
@@ -1578,29 +1589,29 @@
         return;
       }
 
-      // ローカルデータ更新
-      const student = students.find(s => String(s.studentId) === String(currentTutorialStudentId));
+      // ローカルデータ更新（studentIdを使用）
+      const student = students.find(s => String(s.studentId) === String(studentId));
       if (student) {
-        student.statusTutorialDone = '完了';
+        student['チュートリアル実施'] = '完了';  
         student.tutorialDate = tutorialDate;
         student.tutorialStaff = tutorialStaff;
       }
 
-      // UI更新
+      // UI更新（studentIdを使用）
       updateStats();
-      const card = document.getElementById(`card-${currentTutorialStudentId}`);
+      const card = document.getElementById(`card-${studentId}`);
       const wasExpanded = card.classList.contains('expanded');
       card.outerHTML = renderStudentCard(student);
       if (wasExpanded) {
-        document.getElementById(`card-${currentTutorialStudentId}`).classList.add('expanded');
+        document.getElementById(`card-${studentId}`).classList.add('expanded');
       }
       lucide.createIcons();
 
       closeTutorialModal();
 
-      // API呼び出し
+      // API呼び出し（studentIdを使用）
       try {
-        const url = `${GAS_API_URL}?action=updateTutorial&studentId=${encodeURIComponent(currentTutorialStudentId)}&date=${encodeURIComponent(tutorialDate)}&staff=${encodeURIComponent(tutorialStaff)}`;
+        const url = `${GAS_API_URL}?action=updateTutorial&studentId=${encodeURIComponent(studentId)}&date=${encodeURIComponent(tutorialDate)}&staff=${encodeURIComponent(tutorialStaff)}`;
         const response = await fetch(url);
         const result = await response.json();
 
@@ -1623,8 +1634,6 @@
       { key: 'スケジュール作成', label: 'スケジュール作成', column: 'スケジュール作成', icon: 'calendar-check' },
       { key: 'ライングループ作成', label: 'ライングループ作成', column: 'ライングループ作成', icon: 'message-circle' }
     ];
-
-    let currentTutorialStudentId = null;
 
     // 初期化
     document.addEventListener('DOMContentLoaded', () => {
