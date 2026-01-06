@@ -2012,6 +2012,1447 @@
       color: #666;
       line-height: 1.6;
     }
+
+    /* ========================================
+       授業書類タブ
+       ======================================== */
+    .materials-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .materials-selector label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .theme-select {
+      flex: 1;
+      min-width: 250px;
+      max-width: 400px;
+      padding: 12px 16px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .theme-select:focus {
+      outline: none;
+      border-color: #1565c0;
+    }
+
+    .theme-load-btn {
+      padding: 12px 20px;
+      background: #0d9488;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .theme-load-btn:hover {
+      background: #0f766e;
+    }
+
+    .theme-load-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* 進捗サマリー */
+    .materials-progress-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .materials-progress-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .materials-progress-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .materials-progress-card.input {
+      border-left: 4px solid #1565c0;
+    }
+
+    .materials-progress-card.quiz {
+      border-left: 4px solid #7b1fa2;
+    }
+
+    .materials-progress-card.output {
+      border-left: 4px solid #e65100;
+    }
+
+    .materials-progress-label {
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .materials-progress-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .materials-progress-value.passed {
+      color: #2e7d32;
+    }
+
+    .materials-progress-value.failed {
+      color: #c62828;
+    }
+
+    .materials-progress-bar {
+      height: 6px;
+      background: #e5e5e5;
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .materials-progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .materials-progress-bar-fill.input {
+      background: linear-gradient(90deg, #1565c0 0%, #42a5f5 100%);
+    }
+
+    .materials-progress-bar-fill.output {
+      background: linear-gradient(90deg, #e65100 0%, #ff9800 100%);
+    }
+
+    /* 3カラムレイアウト */
+    .output-viewer {
+      display: grid;
+      grid-template-columns: 280px 1fr 320px;
+      gap: 20px;
+      min-height: 500px;
+    }
+
+    @media (max-width: 1100px) {
+      .output-viewer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 質問リスト（左） */
+    .output-questions-panel {
+      background: #fafafa;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e5e5e5;
+    }
+
+    .output-questions-header {
+      background: linear-gradient(135deg, #e65100 0%, #ff9800 100%);
+      color: #fff;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .output-questions-list {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .output-category {
+      border-bottom: 1px solid #eee;
+    }
+
+    .output-category:last-child {
+      border-bottom: none;
+    }
+
+    .output-category-header {
+      padding: 12px 16px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .output-category-header:hover {
+      background: #f5f5f5;
+    }
+
+    .output-category-header i {
+      color: #e65100;
+      transition: transform 0.2s;
+    }
+
+    .output-category-header.collapsed i {
+      transform: rotate(-90deg);
+    }
+
+    .output-category-items {
+      display: block;
+    }
+
+    .output-category-header.collapsed+.output-category-items {
+      display: none;
+    }
+
+    .output-question-item {
+      padding: 10px 16px 10px 32px;
+      font-size: 13px;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .output-question-item:hover {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .output-question-item.active {
+      background: #fff3e0;
+      color: #e65100;
+      border-left-color: #e65100;
+      font-weight: 600;
+    }
+
+    .output-question-item.answered {
+      color: #333;
+    }
+
+    .output-question-item.answered::before {
+      content: '✓';
+      color: #4caf50;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .output-question-number {
+      font-weight: 600;
+      color: #e65100;
+      min-width: 28px;
+    }
+
+    .output-question-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 生徒回答（中央） */
+    .output-answer-panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .output-answer-header {
+      background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+      padding: 16px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .output-answer-question-num {
+      font-size: 12px;
+      color: #e65100;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .output-answer-question-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .output-answer-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .output-answer-text {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      min-height: 150px;
+      padding: 16px;
+      background: #fafafa;
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+    }
+
+    .output-answer-empty {
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .output-answer-nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-top: 1px solid #eee;
+      background: #fafafa;
+    }
+
+    .output-nav-btn {
+      padding: 10px 16px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .output-nav-btn:hover:not(:disabled) {
+      border-color: #e65100;
+      color: #e65100;
+    }
+
+    .output-nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 講師コメント（右） */
+    .output-comment-panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .output-comment-header {
+      background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+      color: #fff;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .output-comment-content {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .output-comment-textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 200px;
+      padding: 14px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      line-height: 1.7;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    .output-comment-textarea:focus {
+      outline: none;
+      border-color: #9c27b0;
+    }
+
+    .output-comment-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .comment-save-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .comment-save-btn:hover {
+      box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+    }
+
+    .comment-save-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .comment-status {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .comment-status.saved {
+      color: #4caf50;
+    }
+
+    .materials-empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: #888;
+    }
+
+    .materials-empty i {
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    /* 総合進捗サマリー（目標・指示タブ内） */
+    .progress-summary-mini {
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6faf7 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      border: 1px solid #ccfbf1;
+    }
+
+    .progress-summary-mini-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .progress-summary-mini-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0d9488;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-summary-mini-percent {
+      font-size: 20px;
+      font-weight: 700;
+      color: #115e59;
+    }
+
+    .progress-bar-mini {
+      height: 8px;
+      background: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-summary-mini-detail {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .progress-summary-mini-detail strong {
+      color: #0d9488;
+    }
+
+    /* チェックリスト進捗ヘッダー */
+    .checklist-progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .checklist-progress-text {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .checklist-progress-text strong {
+      color: #0d9488;
+      font-size: 18px;
+    }
+
+    /* 学年別折りたたみ */
+    .progress-grade-accordions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .progress-grade-accordion {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0f2f1;
+    }
+
+    .progress-grade-accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #333;
+      transition: background 0.2s;
+    }
+
+    .progress-grade-accordion-header:hover {
+      background: #f0fdfa;
+    }
+
+    .progress-grade-accordion-header strong {
+      color: #0d9488;
+    }
+
+    .progress-grade-accordion-header i {
+      color: #0d9488;
+      transition: transform 0.2s;
+    }
+
+    .progress-grade-accordion-header.open i {
+      transform: rotate(180deg);
+    }
+
+    .progress-grade-accordion-body {
+      border-top: 1px solid #e0f2f1;
+      background: #fafffe;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .progress-checked-list {
+      padding: 12px;
+    }
+
+    .progress-checked-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #333;
+      background: #fff;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      border-left: 3px solid #0d9488;
+    }
+
+    .progress-checked-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .progress-checked-item i {
+      color: #0d9488;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .progress-checked-empty {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    /* 全項目表示のチェックリスト */
+    .progress-checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #666;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.2s;
+    }
+
+    .progress-checklist-item:last-child {
+      border-bottom: none;
+    }
+
+    .progress-checklist-item:hover {
+      background: #f8f9fa;
+    }
+
+    .progress-checklist-item.checked {
+      background: #f0fdfa;
+      color: #333;
+    }
+
+    .progress-checklist-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d5d5d5;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .progress-checklist-item.checked .progress-checklist-checkbox {
+      background: #0d9488;
+      border-color: #0d9488;
+    }
+
+    .progress-checklist-checkbox i {
+      color: #fff;
+      opacity: 0;
+    }
+
+    .progress-checklist-item.checked .progress-checklist-checkbox i {
+      opacity: 1;
+    }
+
+    .progress-checklist-text {
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* ========================================
+       旧チェックリストタブ（ティール系に統一）
+       ======================================== */
+    .old-checklist-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 24px 32px;
+      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      color: #134e4a;
+      border: 1px solid #99f6e4;
+    }
+
+    .old-checklist-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(#0d9488 0deg,
+          #14b8a6 calc(var(--progress) * 3.6deg),
+          #e5e5e5 calc(var(--progress) * 3.6deg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .old-checklist-circle-inner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .old-checklist-percent {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0d9488;
+    }
+
+    .old-checklist-label {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .old-checklist-stats-group {
+      display: flex;
+      gap: 60px;
+    }
+
+    .old-checklist-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 160px;
+    }
+
+    .old-checklist-stats-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0d9488;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .old-checklist-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .old-checklist-stat i {
+      color: #0d9488;
+      flex-shrink: 0;
+    }
+
+    .old-checklist-stat strong {
+      font-size: 15px;
+      color: #0d9488;
+    }
+
+    .old-checklist-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .old-checklist-empty i {
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    @media (max-width: 768px) {
+      .old-checklist-summary {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .old-checklist-stats-group {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .old-checklist-stats {
+        min-width: auto;
+        align-items: center;
+      }
+
+      .old-checklist-stat {
+        justify-content: center;
+      }
+    }
+
+    /* 大カテゴリ */
+    .old-parent-item {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+    }
+
+    .old-parent-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .old-parent-header:hover {
+      background: #f0fdfa;
+    }
+
+    .old-parent-item.open .old-parent-header {
+      background: #f0fdfa;
+      border-bottom: 1px solid #ccfbf1;
+    }
+
+    .old-parent-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+    }
+
+    /* アイコンカラー（濃淡で区別） */
+    .old-parent-icon.blue {
+      background: linear-gradient(135deg, #134e4a 0%, #115e59 100%);
+    }
+
+    .old-parent-icon.cyan {
+      background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+    }
+
+    .old-parent-icon.purple {
+      background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+    }
+
+    .old-parent-icon.amber {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+    }
+
+    .old-parent-icon.orange {
+      background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+    }
+
+    .old-parent-icon.green {
+      background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    }
+
+    .old-parent-icon.pink {
+      background: linear-gradient(135deg, #be185d 0%, #db2777 100%);
+    }
+
+    .old-parent-icon.red {
+      background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+    }
+
+    .old-parent-icon.indigo {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    }
+
+    .old-parent-icon.brown {
+      background: linear-gradient(135deg, #57534e 0%, #78716c 100%);
+    }
+
+    .old-parent-icon.gray {
+      background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+    }
+
+    .old-parent-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .old-parent-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #134e4a;
+      margin-bottom: 4px;
+    }
+
+    .old-parent-meta {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .old-parent-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .old-parent-progress-bar {
+      width: 60px;
+      height: 6px;
+      background: #e5e5e5;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .old-parent-progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .old-parent-progress-fill.low {
+      background: linear-gradient(90deg, #f87171, #fca5a5);
+    }
+
+    .old-parent-progress-fill.mid {
+      background: linear-gradient(90deg, #fbbf24, #fde047);
+    }
+
+    .old-parent-progress-fill.high {
+      background: linear-gradient(90deg, #34d399, #6ee7b7);
+    }
+
+    .old-parent-progress-fill.complete {
+      background: linear-gradient(90deg, #0d9488, #14b8a6);
+    }
+
+    .old-parent-percent {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0d9488;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .old-parent-arrow {
+      color: #999;
+      transition: transform 0.2s;
+    }
+
+    .old-parent-item.open .old-parent-arrow {
+      transform: rotate(180deg);
+    }
+
+    .old-parent-content {
+      display: none;
+      background: #f8fffe;
+      padding: 12px;
+    }
+
+    .old-parent-item.open .old-parent-content {
+      display: block;
+    }
+
+    /* 中カテゴリ */
+    .old-category-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border: 1px solid #e5e5e5;
+      transition: all 0.2s;
+    }
+
+    .old-category-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .old-category-card:hover {
+      border-color: #99f6e4;
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.1);
+    }
+
+    .old-category-card.completed {
+      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+      border-color: #99f6e4;
+    }
+
+    .old-category-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .old-category-card.completed .old-category-check {
+      background: #0d9488;
+      color: #fff;
+    }
+
+    .old-category-check i {
+      color: #999;
+    }
+
+    .old-category-card.completed .old-category-check i {
+      color: #fff;
+    }
+
+    .old-category-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .old-category-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .old-category-card.completed .old-category-name {
+      color: #115e59;
+    }
+
+    .old-category-count {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .old-category-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .old-category-progress-bar {
+      width: 50px;
+      height: 5px;
+      background: #e5e5e5;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .old-category-progress-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .old-category-progress-fill.low {
+      background: #f87171;
+    }
+
+    .old-category-progress-fill.mid {
+      background: #fbbf24;
+    }
+
+    .old-category-progress-fill.high {
+      background: #34d399;
+    }
+
+    .old-category-progress-fill.complete {
+      background: #0d9488;
+    }
+
+    .old-category-percent {
+      font-size: 12px;
+      font-weight: 600;
+      color: #0d9488;
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* 項目リスト */
+    .old-items-panel {
+      background: #fff;
+      border-radius: 10px;
+      margin-top: 8px;
+      padding: 12px;
+      border: 1px solid #ccfbf1;
+      display: none;
+    }
+
+    .old-items-panel.show {
+      display: block;
+    }
+
+    .old-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .old-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .old-item-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d5d5d5;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .old-item-row.checked .old-item-checkbox {
+      background: #0d9488;
+      border-color: #0d9488;
+    }
+
+    .old-item-checkbox i {
+      color: #fff;
+      opacity: 0;
+    }
+
+    .old-item-row.checked .old-item-checkbox i {
+      opacity: 1;
+    }
+
+    .old-item-text {
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .old-item-row.checked .old-item-text {
+      color: #115e59;
+    }
+
+    @media (max-width: 600px) {
+      .old-checklist-summary {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .old-checklist-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      padding: 28px 48px;
+      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      color: #134e4a;
+      border: 1px solid #99f6e4;
+    }
+
+    .old-checklist-stats-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #0d9488;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .old-checklist-status {
+      flex-shrink: 0;
+    }
+
+    .old-checklist-status-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .old-checklist-status-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 16px;
+      background: #fff;
+      border-radius: 10px;
+      min-width: 70px;
+      border: 1px solid #e5e5e5;
+    }
+
+    .old-checklist-status-item.completed {
+      border-color: #0d9488;
+      background: linear-gradient(135deg, #f0fdfa 0%, #fff 100%);
+    }
+
+    .old-checklist-status-item.in-progress {
+      border-color: #fbbf24;
+      background: linear-gradient(135deg, #fefce8 0%, #fff 100%);
+    }
+
+    .old-checklist-status-item.not-started {
+      border-color: #e5e5e5;
+      background: #fff;
+    }
+
+    .old-checklist-status-count {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .old-checklist-status-item.completed .old-checklist-status-count {
+      color: #0d9488;
+    }
+
+    .old-checklist-status-item.in-progress .old-checklist-status-count {
+      color: #d97706;
+    }
+
+    .old-checklist-status-item.not-started .old-checklist-status-count {
+      color: #9ca3af;
+    }
+
+    .old-checklist-status-label {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .old-checklist-summary {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .old-checklist-status-row {
+        justify-content: center;
+      }
+    }
+
+    /* 確認テスト結果の詳細表示 */
+    .quiz-result-main {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0d9488;
+      line-height: 1;
+    }
+
+    .quiz-result-sub {
+      font-size: 12px;
+      color: #888;
+      margin-top: 6px;
+    }
+
+    .quiz-not-taken {
+      font-size: 28px;
+      font-weight: 700;
+      color: #999;
+    }
+
+    /* 合格・不合格のカード色 */
+    .progress-card.passed {
+      border-color: #0d9488;
+      background: linear-gradient(135deg, #f0fdfa 0%, #fff 100%);
+    }
+
+    .progress-card.passed .progress-card-bar {
+      background: #0d9488;
+    }
+
+    .progress-card.failed {
+      border-color: #f87171;
+      background: linear-gradient(135deg, #fef2f2 0%, #fff 100%);
+    }
+
+    .progress-card.failed .progress-card-bar {
+      background: #f87171;
+    }
+
+    .output-category-header {
+      cursor: pointer;
+    }
+
+    .output-category-header svg {
+      transition: transform 0.2s;
+    }
+
+    .output-category-header:not(.collapsed) svg {
+      transform: rotate(0deg);
+    }
+
+    .output-category-header.collapsed svg {
+      transform: rotate(-90deg);
+    }
+
+    .output-answer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .output-answer-question-text {
+      flex: 1;
+    }
+
+    .answer-refresh-btn {
+      background: none;
+      border: none;
+      color: #0d9488;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .answer-refresh-btn:hover {
+      background: rgba(13, 148, 136, 0.1);
+    }
+
+    .answer-refresh-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .answer-refresh-btn.loading i,
+    .answer-refresh-btn.loading svg {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 複数コメント表示 */
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+    }
+
+    .comment-item {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 12px;
+      border-left: 3px solid #9c27b0;
+    }
+
+    .comment-item.mine {
+      border-left-color: #0d9488;
+    }
+
+    .comment-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .comment-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .comment-item-teacher {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .comment-item-date {
+      color: #999;
+    }
+
+    .comment-item-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .comment-action-btn {
+      padding: 4px 8px;
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .comment-action-btn:hover {
+      background: #e5e5e5;
+      color: #333;
+    }
+
+    .comment-action-btn.delete:hover {
+      background: #ffebee;
+      color: #e53935;
+    }
+
+    .comment-item-text {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .comment-empty {
+      text-align: center;
+      padding: 24px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .comment-empty i {
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
+    .new-comment-section {
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
+
+    .new-comment-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7b1fa2;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
   </style>
 </head>
 
@@ -2039,12 +3480,12 @@
         <i data-lucide="user" style="width:18px;height:18px;"></i>
         生徒を選択
       </div>
-      <select id="studentSelect" class="student-select">
+      <select id="studentSelect" class="student-select" onchange="onStudentSelectChange()">
         <option value="">-- 生徒を選択してください --</option>
       </select>
       <button class="load-btn" onclick="loadStudentData()">
-        <i data-lucide="download" style="width:18px;height:18px;"></i>
-        データを読み込む
+        <i data-lucide="refresh-cw" style="width:18px;height:18px;"></i>
+        更新
       </button>
     </div>
 
@@ -2085,24 +3526,24 @@
     <!-- タブナビゲーション -->
     <div class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('schedule')">
-        <i data-lucide="calendar-check" style="width:18px;height:18px;"></i>
-        <span>スケジュール</span>
+        <i data-lucide="target" style="width:18px;height:18px;"></i>
+        <span>目標・指示</span>
       </button>
       <button class="tab-btn" onclick="switchTab('progress')">
-        <i data-lucide="check-circle" style="width:18px;height:18px;"></i>
-        <span>進捗</span>
+        <i data-lucide="check-square" style="width:18px;height:18px;"></i>
+        <span>チェックリスト</span>
       </button>
       <button class="tab-btn" onclick="switchTab('schools')">
         <i data-lucide="school" style="width:18px;height:18px;"></i>
         <span>志望校</span>
       </button>
+      <button class="tab-btn" onclick="switchTab('materials')">
+        <i data-lucide="book-open" style="width:18px;height:18px;"></i>
+        <span>授業書類</span>
+      </button>
       <button class="tab-btn" onclick="switchTab('history')">
         <i data-lucide="history" style="width:18px;height:18px;"></i>
         <span>授業履歴</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('documents')">
-        <i data-lucide="file-text" style="width:18px;height:18px;"></i>
-        <span>書類</span>
       </button>
       <button class="tab-btn" onclick="confirmNavigateToSchedule()">
         <i data-lucide="edit-3" style="width:18px;height:18px;"></i>
@@ -2111,13 +3552,67 @@
     </div>
 
     <!-- タブコンテンツ -->
-    <!-- スケジュールタブ -->
+    <!-- 目標・指示タブ -->
     <div id="tab-schedule" class="tab-content active">
       <div class="content-card">
         <div class="card-header">
           <div class="card-title">
-            <i data-lucide="calendar-check" style="width:20px;height:20px;"></i>
-            私のスケジュール
+            <i data-lucide="target" style="width:20px;height:20px;"></i>
+            目標・指示
+          </div>
+        </div>
+
+        <!-- 総合進捗サマリー -->
+        <!-- 総合進捗サマリー -->
+        <div class="progress-summary-mini">
+          <div class="progress-summary-mini-header">
+            <div class="progress-summary-mini-title">
+              <i data-lucide="trending-up" style="width:16px;height:16px;"></i>
+              総合進捗状況
+            </div>
+            <div class="progress-summary-mini-percent" id="totalProgressPercentMini">0%</div>
+          </div>
+          <div class="progress-bar-mini">
+            <div class="progress-bar-mini-fill" id="totalProgressBarMini" style="width:0%"></div>
+          </div>
+
+          <!-- 学年別の折りたたみ -->
+          <div class="progress-grade-accordions">
+            <div class="progress-grade-accordion">
+              <div class="progress-grade-accordion-header" onclick="toggleProgressAccordion(this, '高1')">
+                <span>高1: <strong id="progressMini1">0</strong>/30</span>
+                <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+              </div>
+              <div class="progress-grade-accordion-body" id="progressAccordion1" style="display:none;">
+                <div class="progress-checked-list" id="progressCheckedList1">
+                  <!-- JSで描画 -->
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-grade-accordion">
+              <div class="progress-grade-accordion-header" onclick="toggleProgressAccordion(this, '高2')">
+                <span>高2: <strong id="progressMini2">0</strong>/29</span>
+                <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+              </div>
+              <div class="progress-grade-accordion-body" id="progressAccordion2" style="display:none;">
+                <div class="progress-checked-list" id="progressCheckedList2">
+                  <!-- JSで描画 -->
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-grade-accordion">
+              <div class="progress-grade-accordion-header" onclick="toggleProgressAccordion(this, '高3')">
+                <span>高3: <strong id="progressMini3">0</strong>/50</span>
+                <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+              </div>
+              <div class="progress-grade-accordion-body" id="progressAccordion3" style="display:none;">
+                <div class="progress-checked-list" id="progressCheckedList3">
+                  <!-- JSで描画 -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2210,47 +3705,62 @@
       </div>
     </div>
 
-    <!-- 進捗タブ -->
+    <!-- チェックリストタブ -->
     <div id="tab-progress" class="tab-content">
       <div class="content-card">
         <div class="card-header">
           <div class="card-title">
-            <i data-lucide="check-circle" style="width:20px;height:20px;"></i>
-            総合進捗状況
+            <i data-lucide="check-square" style="width:20px;height:20px;"></i>
+            チェックリスト（生徒の進捗確認）
           </div>
         </div>
 
-        <div class="progress-summary">
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill" id="totalProgressBar" style="width:0%"></div>
+        <!-- 全体進捗 -->
+        <div class="old-checklist-summary" id="oldChecklistSummary" style="display:none;">
+          <div class="old-checklist-circle" id="oldChecklistCircle" style="--progress: 0;">
+            <div class="old-checklist-circle-inner">
+              <span class="old-checklist-percent" id="oldChecklistPercent">0%</span>
+              <span class="old-checklist-label">完了</span>
+            </div>
           </div>
-          <div class="progress-stats">
-            <span class="progress-percent" id="totalProgressPercent">0%</span>
-            <div class="progress-detail">
-              <div class="progress-grade-stat">
-                <span class="progress-grade-label">高1:</span>
-                <span class="progress-grade-count" id="progress1Count">0/30</span>
+          <div class="old-checklist-stats-group">
+            <div class="old-checklist-stats">
+              <div class="old-checklist-stats-title">全体進捗</div>
+              <div class="old-checklist-stat">
+                <i data-lucide="check-circle" style="width:16px;height:16px;"></i>
+                <span><strong id="oldChecklistCompleted">0</strong> / <span id="oldChecklistTotal">0</span>
+                  カテゴリ完了</span>
               </div>
-              <div class="progress-grade-stat">
-                <span class="progress-grade-label">高2:</span>
-                <span class="progress-grade-count" id="progress2Count">0/29</span>
+              <div class="old-checklist-stat">
+                <i data-lucide="list-checks" style="width:16px;height:16px;"></i>
+                <span><strong id="oldChecklistItems">0</strong> / <span id="oldChecklistItemsTotal">0</span>
+                  項目チェック済</span>
               </div>
-              <div class="progress-grade-stat">
-                <span class="progress-grade-label">高3:</span>
-                <span class="progress-grade-count" id="progress3Count">0/50</span>
+            </div>
+            <div class="old-checklist-stats">
+              <div class="old-checklist-stats-title">カテゴリ状況</div>
+              <div class="old-checklist-stat">
+                <i data-lucide="circle-check" style="width:16px;height:16px;color:#0d9488;"></i>
+                <span>完了: <strong id="oldStatusCompleted">0</strong></span>
+              </div>
+              <div class="old-checklist-stat">
+                <i data-lucide="loader" style="width:16px;height:16px;color:#d97706;"></i>
+                <span>進行中: <strong id="oldStatusInProgress" style="color:#d97706;">0</strong></span>
+              </div>
+              <div class="old-checklist-stat">
+                <i data-lucide="circle-dashed" style="width:16px;height:16px;color:#9ca3af;"></i>
+                <span>未着手: <strong id="oldStatusNotStarted" style="color:#9ca3af;">0</strong></span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="checklist-tabs">
-          <button class="checklist-tab active" data-grade="高1" onclick="selectChecklistGrade('高1')">高1（30項目）</button>
-          <button class="checklist-tab" data-grade="高2" onclick="selectChecklistGrade('高2')">高2（29項目）</button>
-          <button class="checklist-tab" data-grade="高3" onclick="selectChecklistGrade('高3')">高3（50項目）</button>
-        </div>
-
-        <div class="checklist-items" id="checklistItems">
-          <!-- JSで描画 -->
+        <!-- 大カテゴリアコーディオン -->
+        <div class="old-checklist-accordion" id="oldChecklistAccordion">
+          <div class="old-checklist-empty" id="oldChecklistEmpty">
+            <i data-lucide="clipboard-list" style="width:48px;height:48px;"></i>
+            <p>生徒を選択してデータを読み込んでください</p>
+          </div>
         </div>
       </div>
     </div>
@@ -2310,6 +3820,145 @@
       </div>
     </div>
 
+    <!-- 授業書類タブ -->
+    <div id="tab-materials" class="tab-content">
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            授業書類
+          </div>
+        </div>
+
+        <!-- テーマ選択 -->
+        <div class="materials-selector">
+          <label>テーマ選択:</label>
+          <select id="themeSelect" class="theme-select">
+            <option value="">-- テーマを選択 --</option>
+            <option value="1" disabled>テーマ1: 総合型選抜の本質と基礎原則（準備中）</option>
+            <option value="2">テーマ2: 「すき」を見つけ、伸ばし、学問に繋げる</option>
+            <option value="3" disabled>テーマ3: 併願校／志望校戦略の本質理解（準備中）</option>
+            <option value="4" disabled>テーマ4: 志望理由書の本質理解から実践（準備中）</option>
+            <option value="5" disabled>テーマ5: 自己推薦書の本質理解から実践（準備中）</option>
+            <option value="6" disabled>テーマ6: レポートの本質理解から実践（準備中）</option>
+            <option value="7" disabled>テーマ7: 小論文の本質理解から実践（準備中）</option>
+            <option value="8" disabled>テーマ8: 面接の本質理解から実践（準備中）</option>
+            <option value="9" disabled>テーマ9: プレゼンテーションの本質理解から実践（準備中）</option>
+          </select>
+          <button class="theme-load-btn" onclick="loadThemeData()">
+            <i data-lucide="download" style="width:16px;height:16px;"></i>
+            読み込む
+          </button>
+        </div>
+
+        <!-- 進捗サマリー（読み込み後に表示） -->
+        <div class="materials-progress-summary" id="materialsProgressSummary" style="display:none;">
+          <div class="materials-progress-card input">
+            <div class="materials-progress-label">インプット進捗</div>
+            <div class="materials-progress-value" id="inputProgressValue">0/31</div>
+            <div class="materials-progress-bar">
+              <div class="materials-progress-bar-fill input" id="inputProgressBar" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="materials-progress-card quiz">
+            <div class="materials-progress-label">確認テスト</div>
+            <div class="materials-progress-value" id="quizProgressValue">未受験</div>
+          </div>
+          <div class="materials-progress-card output">
+            <div class="materials-progress-label">アウトプット進捗</div>
+            <div class="materials-progress-value" id="outputProgressValue">0/50</div>
+            <div class="materials-progress-bar">
+              <div class="materials-progress-bar-fill output" id="outputProgressBar" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- アウトプットビューア（3カラム） -->
+        <div class="output-viewer" id="outputViewer" style="display:none;">
+          <!-- 左: 質問リスト -->
+          <div class="output-questions-panel">
+            <div class="output-questions-header">
+              <i data-lucide="list" style="width:18px;height:18px;"></i>
+              質問一覧
+            </div>
+            <div class="output-questions-list" id="outputQuestionsList">
+              <!-- JSで描画 -->
+            </div>
+          </div>
+
+          <!-- 中央: 生徒回答 -->
+          <div class="output-answer-panel">
+            <div class="output-answer-header">
+              <div class="output-answer-question-num" id="currentQuestionNum">Q1</div>
+              <div class="output-answer-question-text" id="currentQuestionText">質問を選択してください</div>
+              <button class="answer-refresh-btn" onclick="refreshStudentAnswer()" title="生徒の回答を更新">
+                <i data-lucide="refresh-cw" id="answerRefreshIcon"></i>
+              </button>
+            </div>
+            <div class="output-answer-content">
+              <div class="output-answer-text" id="currentAnswerText">
+                <div class="output-answer-empty">左の質問一覧から質問を選択してください</div>
+              </div>
+            </div>
+            <div class="output-answer-nav">
+              <button class="output-nav-btn" onclick="prevQuestion()" id="prevQuestionBtn" disabled>
+                <i data-lucide="chevron-left" style="width:16px;height:16px;"></i>
+                前へ
+              </button>
+              <button class="output-nav-btn" onclick="nextQuestion()" id="nextQuestionBtn" disabled>
+                次へ
+                <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 右: 講師コメント -->
+          <div class="output-comment-panel">
+            <div class="output-comment-header">
+              <i data-lucide="message-square" style="width:18px;height:18px;"></i>
+              講師コメント
+              <button class="answer-refresh-btn" onclick="refreshTeacherComments()" title="コメントを更新"
+                style="margin-left:auto;">
+                <i data-lucide="refresh-cw" id="commentRefreshIcon"></i>
+              </button>
+            </div>
+            <div class="output-comment-content">
+              <!-- コメント一覧 -->
+              <div class="comment-list" id="commentList">
+                <div class="comment-empty" id="commentEmpty">
+                  <i data-lucide="message-circle" style="width:32px;height:32px;"></i>
+                  <p>コメントはまだありません</p>
+                </div>
+              </div>
+
+              <!-- 新規コメント入力 -->
+              <div class="new-comment-section">
+                <div class="new-comment-label">
+                  <i data-lucide="plus-circle" style="width:14px;height:14px;"></i>
+                  新しいコメントを追加
+                </div>
+                <textarea class="output-comment-textarea" id="teacherCommentTextarea"
+                  placeholder="この回答へのコメント・改善点を入力..."></textarea>
+                <div class="output-comment-actions">
+                  <button class="comment-save-btn" onclick="saveTeacherComment()">
+                    <i data-lucide="send" style="width:14px;height:14px;"></i>
+                    投稿
+                  </button>
+                </div>
+                <div class="comment-status" id="commentStatus"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 空状態（初期表示） -->
+        <div class="materials-empty" id="materialsEmpty">
+          <i data-lucide="book-open" style="width:48px;height:48px;"></i>
+          <p>生徒を選択し、テーマを選んでデータを読み込んでください</p>
+        </div>
+      </div>
+    </div>
+
     <!-- 授業履歴タブ -->
     <div id="tab-history" class="tab-content">
       <div class="content-card">
@@ -2330,24 +3979,6 @@
         <button class="load-more-btn" id="loadMoreLessons" style="display:none;" onclick="loadMoreLessons()">
           さらに表示
         </button>
-      </div>
-    </div>
-
-    <!-- 書類タブ -->
-    <div id="tab-documents" class="tab-content">
-      <div class="content-card">
-        <div class="card-header">
-          <div class="card-title">
-            <i data-lucide="file-text" style="width:20px;height:20px;"></i>
-            生徒書類
-          </div>
-        </div>
-
-        <div class="placeholder-message">
-          <i data-lucide="construction" style="width:48px;height:48px;"></i>
-          <h3>準備中</h3>
-          <p>書類管理機能は現在開発中です</p>
-        </div>
       </div>
     </div>
 
@@ -2378,6 +4009,31 @@
       </div>
     </div>
   </main>
+
+  <!-- コメント編集モーダル -->
+    <div class="modal-overlay" id="commentEditModal">
+      <div class="modal">
+        <div class="modal-header" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">
+          <div class="modal-title">
+            <i data-lucide="pencil" style="width:20px;height:20px;"></i>
+            コメントを編集
+          </div>
+          <button class="modal-close" onclick="closeCommentEditModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">コメント内容</label>
+            <textarea class="form-textarea" id="editCommentText" placeholder="コメントを入力..." style="min-height:150px;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel" onclick="closeCommentEditModal()">キャンセル</button>
+          <button class="modal-btn save" onclick="submitCommentEdit()" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">保存</button>
+        </div>
+      </div>
+    </div>
 
   <!-- 講師指示追加モーダル -->
   <div class="modal-overlay" id="noteModal">
@@ -2676,6 +4332,14 @@
       return `高${newGradeNum}`;
     }
 
+    // プルダウン選択時の処理
+    function onStudentSelectChange() {
+      const select = document.getElementById('studentSelect');
+      if (select.value) {
+        loadStudentData();
+      }
+    }
+
     // 生徒データを読み込み
     async function loadStudentData() {
       const select = document.getElementById('studentSelect');
@@ -2730,6 +4394,8 @@
         updateScheduleUI();
         renderChecklist();
         renderSchools();
+        updateTotalProgress();
+        loadOldChecklist();
 
       } catch (error) {
         console.error('Error loading student data:', error);
@@ -3157,18 +4823,8 @@
 
     // 進捗表示を更新
     function updateProgressDisplay() {
-      const count1 = (studentData.checklist["高1"] || []).length;
-      const count2 = (studentData.checklist["高2"] || []).length;
-      const count3 = (studentData.checklist["高3"] || []).length;
-      const total = 109;
-      const totalChecked = count1 + count2 + count3;
-      const percent = Math.round((totalChecked / total) * 100);
-
-      document.getElementById('totalProgressBar').style.width = percent + '%';
-      document.getElementById('totalProgressPercent').textContent = percent + '%';
-      document.getElementById('progress1Count').textContent = `${count1}/30`;
-      document.getElementById('progress2Count').textContent = `${count2}/29`;
-      document.getElementById('progress3Count').textContent = `${count3}/50`;
+      // updateTotalProgress に統合したので、そちらを呼び出す
+      updateTotalProgress();
     }
 
     // 志望校: パターン選択
@@ -3579,6 +5235,939 @@
       }
     }
 
+    // ========================================
+    // 旧チェックリスト機能
+    // ========================================
+
+    let oldChecklistMaster = null;
+    let oldChecklistState = {};
+
+    // 大カテゴリのアイコン設定
+    const OLD_PARENT_ICONS = {
+      '基礎理解・マインドセット': { icon: 'lightbulb', color: 'blue' },
+      '自己分析・研究テーマ': { icon: 'brain', color: 'cyan' },
+      '書類作成': { icon: 'file-edit', color: 'purple' },
+      '出願・試験当日': { icon: 'send', color: 'amber' },
+      '小論文対策': { icon: 'file-text', color: 'orange' },
+      '面接対策': { icon: 'mic', color: 'green' },
+      'レポート作成': { icon: 'clipboard', color: 'pink' },
+      'プレゼンテーション・GD対策': { icon: 'presentation', color: 'red' },
+      '志望校・併願校戦略': { icon: 'school', color: 'indigo' },
+      '日常学習・保護者向け': { icon: 'users', color: 'brown' },
+      'default': { icon: 'list', color: 'gray' }
+    };
+
+    // 旧チェックリストを読み込み
+    async function loadOldChecklist() {
+      if (!selectedStudentId) {
+        return; // エラーを出さずに終了
+      }
+
+      try {
+        // マスターデータを取得（キャッシュがなければ）
+        if (!oldChecklistMaster) {
+          const masterRes = await fetch('checklist_master.json?t=' + Date.now());
+          if (!masterRes.ok) {
+            console.error('checklist_master.json の読み込みに失敗');
+            return;
+          }
+          oldChecklistMaster = await masterRes.json();
+        }
+
+        // 生徒のチェック状態を取得
+        const stateRes = await fetch(`${API_URL}?action=getChecklistStateOld&studentId=${selectedStudentId}`);
+        const stateData = await stateRes.json();
+
+        if (stateData.success) {
+          oldChecklistState = stateData.checkState || {};
+        } else {
+          oldChecklistState = {};
+        }
+
+        // UIを描画
+        renderOldChecklist();
+
+        // DOM要素が存在するか確認してから表示
+        const summaryEl = document.getElementById('oldChecklistSummary');
+        const emptyEl = document.getElementById('oldChecklistEmpty');
+
+        if (summaryEl) summaryEl.style.display = 'flex';
+        if (emptyEl) emptyEl.style.display = 'none';
+
+      } catch (error) {
+        console.error('Error loading old checklist:', error);
+      }
+    }
+
+    // 旧チェックリストを描画
+    function renderOldChecklist() {
+      if (!oldChecklistMaster) return;
+
+      // 大カテゴリごとに集計
+      const parentMap = {};
+      let totalItems = 0;
+      let totalChecked = 0;
+
+      for (const categoryName in oldChecklistMaster) {
+        const categoryData = oldChecklistMaster[categoryName];
+        const items = categoryData.items || [];
+        const parent = categoryData.parent || '未分類';
+        const categoryState = oldChecklistState[categoryName] || {};
+
+        if (!parentMap[parent]) {
+          parentMap[parent] = {
+            name: parent,
+            categories: [],
+            totalItems: 0,
+            checkedItems: 0
+          };
+        }
+
+        let checked = 0;
+        items.forEach(item => {
+          if (categoryState[item.no]) {
+            checked++;
+          }
+        });
+
+        totalItems += items.length;
+        totalChecked += checked;
+        parentMap[parent].totalItems += items.length;
+        parentMap[parent].checkedItems += checked;
+
+        const percent = items.length > 0 ? Math.round((checked / items.length) * 100) : 0;
+
+        parentMap[parent].categories.push({
+          name: categoryName,
+          items: items,
+          checked: checked,
+          total: items.length,
+          percent: percent
+        });
+      }
+
+      // 全体進捗を更新
+      const totalPercent = totalItems > 0 ? Math.round((totalChecked / totalItems) * 100) : 0;
+      document.getElementById('oldChecklistCircle').style.setProperty('--progress', totalPercent);
+      document.getElementById('oldChecklistPercent').textContent = totalPercent + '%';
+
+      // カテゴリ状況を計算
+      let completedCategories = 0;
+      let inProgressCategories = 0;
+      let notStartedCategories = 0;
+      let totalCategories = 0;
+
+      for (const parent in parentMap) {
+        parentMap[parent].categories.forEach(cat => {
+          totalCategories++;
+          if (cat.percent >= 100) {
+            completedCategories++;
+          } else if (cat.percent > 0) {
+            inProgressCategories++;
+          } else {
+            notStartedCategories++;
+          }
+        });
+        parentMap[parent].percent = parentMap[parent].totalItems > 0
+          ? Math.round((parentMap[parent].checkedItems / parentMap[parent].totalItems) * 100)
+          : 0;
+      }
+
+      // 全体進捗を更新
+      document.getElementById('oldChecklistCompleted').textContent = completedCategories;
+      document.getElementById('oldChecklistTotal').textContent = totalCategories;
+      document.getElementById('oldChecklistItems').textContent = totalChecked;
+      document.getElementById('oldChecklistItemsTotal').textContent = totalItems;
+
+      // カテゴリ状況を更新
+      document.getElementById('oldStatusCompleted').textContent = completedCategories;
+      document.getElementById('oldStatusInProgress').textContent = inProgressCategories;
+      document.getElementById('oldStatusNotStarted').textContent = notStartedCategories;
+
+      // 大カテゴリを描画
+      const container = document.getElementById('oldChecklistAccordion');
+      let html = '';
+
+      for (const parentName in parentMap) {
+        const parent = parentMap[parentName];
+        const iconConfig = OLD_PARENT_ICONS[parentName] || OLD_PARENT_ICONS['default'];
+        const fillClass = getFillClass(parent.percent);
+
+        html += `
+          <div class="old-parent-item" data-parent="${escapeHtml(parentName)}">
+            <div class="old-parent-header" onclick="toggleOldParent(this)">
+              <div class="old-parent-icon ${iconConfig.color}">
+                <i data-lucide="${iconConfig.icon}" style="width:20px;height:20px;"></i>
+              </div>
+              <div class="old-parent-info">
+                <div class="old-parent-name">${escapeHtml(parentName)}</div>
+                <div class="old-parent-meta">${parent.categories.filter(c => c.percent >= 100).length}/${parent.categories.length} カテゴリ完了</div>
+              </div>
+              <div class="old-parent-progress">
+                <div class="old-parent-progress-bar">
+                  <div class="old-parent-progress-fill ${fillClass}" style="width:${parent.percent}%"></div>
+                </div>
+                <span class="old-parent-percent">${parent.percent}%</span>
+              </div>
+              <i data-lucide="chevron-down" class="old-parent-arrow" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="old-parent-content">
+              ${renderOldCategories(parent.categories)}
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // 中カテゴリを描画
+    function renderOldCategories(categories) {
+      let html = '';
+
+      categories.forEach((cat, index) => {
+        const fillClass = getFillClass(cat.percent);
+        const isCompleted = cat.percent >= 100;
+
+        html += `
+          <div class="old-category-card ${isCompleted ? 'completed' : ''}" onclick="toggleOldItems(this, '${escapeHtml(cat.name)}')">
+            <div class="old-category-check">
+              <i data-lucide="${isCompleted ? 'check' : 'circle'}" style="width:14px;height:14px;"></i>
+            </div>
+            <div class="old-category-info">
+              <div class="old-category-name">${escapeHtml(cat.name)}</div>
+              <div class="old-category-count">${cat.checked}/${cat.total} 項目完了</div>
+            </div>
+            <div class="old-category-progress">
+              <div class="old-category-progress-bar">
+                <div class="old-category-progress-fill ${fillClass}" style="width:${cat.percent}%"></div>
+              </div>
+              <span class="old-category-percent">${cat.percent}%</span>
+            </div>
+          </div>
+          <div class="old-items-panel" id="oldItems_${index}">
+            ${renderOldItems(cat.name, cat.items)}
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
+    // 項目を描画
+    function renderOldItems(categoryName, items) {
+      const categoryState = oldChecklistState[categoryName] || {};
+      let html = '';
+
+      items.forEach(item => {
+        const isChecked = categoryState[item.no] === true;
+        html += `
+          <div class="old-item-row ${isChecked ? 'checked' : ''}">
+            <div class="old-item-checkbox">
+              <i data-lucide="check" style="width:12px;height:12px;"></i>
+            </div>
+            <div class="old-item-text">${escapeHtml(item.name)}</div>
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
+    // 進捗バーのクラスを取得
+    function getFillClass(percent) {
+      if (percent >= 100) return 'complete';
+      if (percent >= 70) return 'high';
+      if (percent >= 30) return 'mid';
+      return 'low';
+    }
+
+    // 大カテゴリの開閉
+    function toggleOldParent(header) {
+      const item = header.closest('.old-parent-item');
+      item.classList.toggle('open');
+      lucide.createIcons();
+    }
+
+    // 中カテゴリの項目表示切り替え
+    function toggleOldItems(card, categoryName) {
+      const panel = card.nextElementSibling;
+      if (panel && panel.classList.contains('old-items-panel')) {
+        panel.classList.toggle('show');
+        lucide.createIcons();
+      }
+    }
+
+    // 総合進捗の折りたたみ開閉
+    function toggleProgressAccordion(header, grade) {
+      header.classList.toggle('open');
+
+      const gradeNum = grade.replace('高', '');
+      const body = document.getElementById('progressAccordion' + gradeNum);
+
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        renderProgressCheckedList(grade);
+      } else {
+        body.style.display = 'none';
+      }
+
+      lucide.createIcons();
+    }
+
+    // チェックリスト全項目を描画（チェック状態付き）
+    function renderProgressCheckedList(grade) {
+      const gradeNum = grade.replace('高', '');
+      const container = document.getElementById('progressCheckedList' + gradeNum);
+
+      if (!container) return;
+
+      const checkedIndexes = studentData.checklist[grade] || [];
+      const items = checklistData[grade] || [];
+
+      if (items.length === 0) {
+        container.innerHTML = '<div class="progress-checked-empty">項目がありません</div>';
+        return;
+      }
+
+      let html = '';
+      items.forEach((itemText, index) => {
+        const isChecked = checkedIndexes.includes(index);
+        html += `
+          <div class="progress-checklist-item ${isChecked ? 'checked' : ''}">
+            <div class="progress-checklist-checkbox">
+              <i data-lucide="check" style="width:14px;height:14px;"></i>
+            </div>
+            <span class="progress-checklist-text">${index + 1}. ${escapeHtml(itemText)}</span>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // 総合進捗更新
+    function updateTotalProgress() {
+      const count1 = (studentData.checklist["高1"] || []).length;
+      const count2 = (studentData.checklist["高2"] || []).length;
+      const count3 = (studentData.checklist["高3"] || []).length;
+      const total = 109;
+      const totalChecked = count1 + count2 + count3;
+      const percent = Math.round((totalChecked / total) * 100);
+
+      // 進捗バー更新
+      const barMini = document.getElementById('totalProgressBarMini');
+      const percentMini = document.getElementById('totalProgressPercentMini');
+      if (barMini) barMini.style.width = percent + '%';
+      if (percentMini) percentMini.textContent = percent + '%';
+
+      // 各学年の数値更新
+      const mini1 = document.getElementById('progressMini1');
+      const mini2 = document.getElementById('progressMini2');
+      const mini3 = document.getElementById('progressMini3');
+      if (mini1) mini1.textContent = count1;
+      if (mini2) mini2.textContent = count2;
+      if (mini3) mini3.textContent = count3;
+    }
+
+    // ========================================
+    // 授業書類機能
+    // ========================================
+
+    let selectedThemeId = null;
+    let currentQuestionIndex = 1;
+
+    // 授業書類データ
+    let materialsData = {
+      inputProgress: { checked: 0, total: 31 },
+      quizResult: null,
+      outputAnswers: {},
+      teacherComments: {}
+    };
+
+    // テーマ2のアウトプット質問データ（50問）
+    const theme2OutputQuestions = [
+      { id: 1, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "長く続けている趣味、または今ハマっていることはありますか？" },
+      { id: 2, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "本を読むのは好きですか？" },
+      { id: 3, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "どんなジャンルの本をよく読みますか？" },
+      { id: 4, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "なぜ、その本・ジャンルが好きなのだと思いますか？" },
+      { id: 5, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "漫画・アニメ・ゲーム・映画・音楽などで、強く影響を受けたものはありますか？" },
+      { id: 6, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "「時間を忘れて没頭してしまうこと」は何ですか？" },
+      { id: 7, category: "Ⅰ．興味・関心・好きなことの棚卸し", question: "気づいたら調べてしまう分野はありますか？" },
+      { id: 8, category: "Ⅱ．心が動いた経験（原体験・感情）", question: "過去を振り返って、強く心が動いた経験はありますか？" },
+      { id: 9, category: "Ⅱ．心が動いた経験（原体験・感情）", question: "その出来事は、今でも少し心に残っていますか？なぜ忘れていないのだと思いますか？" },
+      { id: 10, category: "Ⅱ．心が動いた経験（原体験・感情）", question: "過去のトラウマ的な経験はありますか？" },
+      { id: 11, category: "Ⅱ．心が動いた経験（原体験・感情）", question: "その経験は、あなたの考え方や行動にどんな影響を与えていますか？" },
+      { id: 12, category: "Ⅱ．心が動いた経験（原体験・感情）", question: "「おかしい」「納得できない」と強く感じた出来事はありますか？" },
+      { id: 13, category: "Ⅲ．性格・強み・弱みの理解", question: "周囲の人から、どのような性格だと言われることが多いですか？" },
+      { id: 14, category: "Ⅲ．性格・強み・弱みの理解", question: "自分では、自分をどのような性格だと思いますか？" },
+      { id: 15, category: "Ⅲ．性格・強み・弱みの理解", question: "自分の長所だと思う点を、具体例とともに挙げてください。" },
+      { id: 16, category: "Ⅲ．性格・強み・弱みの理解", question: "逆に、短所・苦手な点は何だと思いますか？" },
+      { id: 17, category: "Ⅲ．性格・強み・弱みの理解", question: "周囲と比べて「ここは優れている」「ここは明らかに違う」と感じる点はありますか？" },
+      { id: 18, category: "Ⅲ．性格・強み・弱みの理解", question: "失敗したとき、あなたはどう立て直すタイプですか？" },
+      { id: 19, category: "Ⅳ．環境・バックグラウンド", question: "家庭環境で、周囲と異なる点はありますか？" },
+      { id: 20, category: "Ⅳ．環境・バックグラウンド", question: "「自分だからこそ語れる」と思える背景はありますか？" },
+      { id: 21, category: "Ⅳ．環境・バックグラウンド", question: "家族・身近な人の生き方で、影響を受けたものはありますか？" },
+      { id: 22, category: "Ⅳ．環境・バックグラウンド", question: "身の回りで起きた、大きな出来事（事故・病気・別れ・感動）はありますか？" },
+      { id: 23, category: "Ⅴ．活動経験・評価された経験", question: "これまでの活動で、社会的に評価された経験はありますか？" },
+      { id: 24, category: "Ⅴ．活動経験・評価された経験", question: "結果が出なかったが、強く印象に残っている活動はありますか？" },
+      { id: 25, category: "Ⅴ．活動経験・評価された経験", question: "学校の総合探究で取り組んでいる（取り組んだ）テーマは何ですか？" },
+      { id: 26, category: "Ⅴ．活動経験・評価された経験", question: "そのテーマを選んだ理由は何ですか？" },
+      { id: 27, category: "Ⅴ．活動経験・評価された経験", question: "活動を通して、自分の限界を感じた経験はありますか？" },
+      { id: 28, category: "Ⅵ．社会への問題意識", question: "ニュース・新聞・テレビを見ていて、強い違和感や怒りを覚えた問題はありますか？" },
+      { id: 29, category: "Ⅵ．社会への問題意識", question: "「自分が何とかしたい」と感じた社会問題はありますか？" },
+      { id: 30, category: "Ⅵ．社会への問題意識", question: "助けたいと思う対象はいますか？" },
+      { id: 31, category: "Ⅵ．社会への問題意識", question: "なぜ、その対象に関心を持ったのだと思いますか？" },
+      { id: 32, category: "Ⅵ．社会への問題意識", question: "社会問題に関わりたいと思いますか？それとも距離を取りたいですか？" },
+      { id: 33, category: "Ⅶ．国際性・文化・地域", question: "海外に行った経験、または特別な地域体験はありますか？" },
+      { id: 34, category: "Ⅶ．国際性・文化・地域", question: "自分しかあまり訪れていない、または珍しい場所の経験はありますか？" },
+      { id: 35, category: "Ⅶ．国際性・文化・地域", question: "特定の国・地域にルーツがありますか？その国について語る「当事者性」はありますか？" },
+      { id: 36, category: "Ⅶ．国際性・文化・地域", question: "将来、海外で生活することを考えていますか？" },
+      { id: 37, category: "Ⅶ．国際性・文化・地域", question: "英語を使った仕事に興味はありますか？" },
+      { id: 38, category: "Ⅶ．国際性・文化・地域", question: "日本で暮らすなら、都市部と地方、どちらを選びたいですか？" },
+      { id: 39, category: "Ⅷ．仕事観・将来像", question: "将来、どのような仕事に関わりたいですか？" },
+      { id: 40, category: "Ⅷ．仕事観・将来像", question: "現場で手を動かしたいですか？それとも全体を動かす立場ですか？" },
+      { id: 41, category: "Ⅷ．仕事観・将来像", question: "リーダーとして前に立ちたいですか？それとも支える役割が合っていますか？" },
+      { id: 42, category: "Ⅷ．仕事観・将来像", question: "起業や大きな挑戦に興味はありますか？" },
+      { id: 43, category: "Ⅷ．仕事観・将来像", question: "安定を重視する生き方と、挑戦を重視する生き方、どちらに近いですか？" },
+      { id: 44, category: "Ⅷ．仕事観・将来像", question: "最先端技術と、文学・教育・伝統文化、どちらに惹かれますか？" },
+      { id: 45, category: "Ⅸ．人物像・ロールモデル", question: "憧れの人、尊敬する人、ロールモデルはいますか？" },
+      { id: 46, category: "Ⅹ．総合整理・次のステップ", question: "ここまでの回答を見返して、何度も出てきたキーワードは何ですか？" },
+      { id: 47, category: "Ⅹ．総合整理・次のステップ", question: "自分の中で「一貫しているテーマ」は何だと思いますか？" },
+      { id: 48, category: "Ⅹ．総合整理・次のステップ", question: "これは他の人にはあまり語れない、自分だけの視点だと思えるものは何ですか？" },
+      { id: 49, category: "Ⅹ．総合整理・次のステップ", question: "そのテーマは、どの学問分野と結びつきそうですか？" },
+      { id: 50, category: "Ⅹ．総合整理・次のステップ", question: "その学問を通して、社会とどのように関わりたいですか？" }
+    ];
+
+    // テーマデータを読み込み
+    async function loadThemeData() {
+      const themeId = document.getElementById('themeSelect').value;
+
+      if (!themeId) {
+        alert('テーマを選択してください');
+        return;
+      }
+
+      if (!selectedStudentId) {
+        alert('先に生徒を選択してください');
+        return;
+      }
+
+      selectedThemeId = themeId;
+      showLoading(true);
+
+      try {
+        // インプット進捗を取得
+        const inputUrl = `${API_URL}?action=getInputProgress&studentId=${selectedStudentId}&themeId=${themeId}`;
+        const inputRes = await fetch(inputUrl);
+        const inputData = await inputRes.json();
+
+        materialsData.inputProgress = {
+          checked: inputData.checkedCount || 0,
+          total: inputData.totalItems || 31
+        };
+
+        // 小テスト結果を取得
+        const quizUrl = `${API_URL}?action=getQuizResults&studentId=${selectedStudentId}&themeId=${themeId}`;
+        const quizRes = await fetch(quizUrl);
+        const quizData = await quizRes.json();
+
+        if (quizData.success && quizData.results && quizData.results.length > 0) {
+          const results = quizData.results;
+          const latestQuiz = results[results.length - 1];
+
+          // 最高スコアを計算
+          let bestScore = 0;
+          let bestTotal = 10;
+          results.forEach(r => {
+            if (r.score > bestScore) {
+              bestScore = r.score;
+              bestTotal = r.total;
+            }
+          });
+
+          materialsData.quizResult = {
+            attempts: results.length,
+            bestScore: bestScore,
+            bestTotal: bestTotal,
+            latestScore: latestQuiz.score,
+            latestTotal: latestQuiz.total,
+            passed: results.some(r => r.passed)
+          };
+        } else {
+          materialsData.quizResult = null;
+        }
+
+        // アウトプット回答を取得
+        const outputUrl = `${API_URL}?action=getOutputAnswers&studentId=${selectedStudentId}&themeId=${themeId}`;
+        console.log('Output URL:', outputUrl);
+        const outputRes = await fetch(outputUrl);
+        const outputData = await outputRes.json();
+        console.log('Output API Response:', outputData);
+
+        materialsData.outputAnswers = outputData.answers || {};
+        console.log('Stored answers:', materialsData.outputAnswers);
+
+        // 講師コメントを取得
+        const commentUrl = `${API_URL}?action=getTeacherComments&studentId=${selectedStudentId}&themeId=${themeId}`;
+        const commentRes = await fetch(commentUrl);
+        const commentData = await commentRes.json();
+
+        materialsData.teacherComments = commentData.comments || {};
+
+        // UIを更新
+        renderMaterialsProgress();
+        renderOutputViewer();
+
+        document.getElementById('materialsProgressSummary').style.display = 'grid';
+        document.getElementById('outputViewer').style.display = 'grid';
+        document.getElementById('materialsEmpty').style.display = 'none';
+
+      } catch (error) {
+        console.error('Error loading theme data:', error);
+        alert('データの読み込みに失敗しました');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // 進捗サマリーを描画
+    function renderMaterialsProgress() {
+      // インプット進捗
+      const inputPercent = Math.round((materialsData.inputProgress.checked / materialsData.inputProgress.total) * 100);
+      document.getElementById('inputProgressValue').textContent = `${materialsData.inputProgress.checked}/${materialsData.inputProgress.total}`;
+      document.getElementById('inputProgressBar').style.width = inputPercent + '%';
+
+      // 確認テスト
+      const quizCard = document.getElementById('quizProgressCard');
+      const quizValue = document.getElementById('quizProgressValue');
+      const quizBar = document.getElementById('quizProgressBar');
+
+      if (materialsData.quizResult) {
+        const q = materialsData.quizResult;
+
+        // 表示: 受験回数 / 最高 / 最新
+        let quizHtml = `
+          <div class="quiz-result-main">${q.bestScore}/${q.bestTotal}</div>
+          <div class="quiz-result-sub">受験${q.attempts}回 / 最新${q.latestScore}/${q.latestTotal}</div>
+        `;
+        quizValue.innerHTML = quizHtml;
+
+        // 合格判定でカードの色を変更
+        if (quizCard) {
+          if (q.passed) {
+            quizCard.classList.add('passed');
+            quizCard.classList.remove('failed');
+          } else {
+            quizCard.classList.add('failed');
+            quizCard.classList.remove('passed');
+          }
+        }
+
+        // プログレスバー（最高スコア基準）
+        const percent = Math.round((q.bestScore / q.bestTotal) * 100);
+        if (quizBar) quizBar.style.width = percent + '%';
+      } else {
+        quizValue.innerHTML = '<span class="quiz-not-taken">未受験</span>';
+        if (quizCard) quizCard.classList.remove('passed', 'failed');
+        if (quizBar) quizBar.style.width = '0%';
+      }
+
+      // アウトプット進捗
+      const answeredCount = Object.keys(materialsData.outputAnswers).filter(k => materialsData.outputAnswers[k] && materialsData.outputAnswers[k].trim()).length;
+      const totalQuestions = 50;
+      const outputPercent = Math.round((answeredCount / totalQuestions) * 100);
+      document.getElementById('outputProgressValue').textContent = `${answeredCount}/${totalQuestions}`;
+      document.getElementById('outputProgressBar').style.width = outputPercent + '%';
+    }
+
+    // アウトプットビューアを描画
+    function renderOutputViewer() {
+      const listContainer = document.getElementById('outputQuestionsList');
+
+      // カテゴリごとにグループ化
+      const categories = [];
+      const categoryMap = {};
+
+      theme2OutputQuestions.forEach(q => {
+        if (!categoryMap[q.category]) {
+          categoryMap[q.category] = { category: q.category, questions: [] };
+          categories.push(categoryMap[q.category]);
+        }
+        categoryMap[q.category].questions.push({ id: q.id, text: q.question });
+      });
+
+      let html = '';
+      categories.forEach(category => {
+        html += `
+          <div class="output-category">
+            <div class="output-category-header collapsed" onclick="toggleCategory(this)">
+              <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+              ${escapeHtml(category.category)}
+            </div>
+            <div class="output-category-items" style="display:none;">
+        `;
+
+        category.questions.forEach(q => {
+          const hasAnswer = materialsData.outputAnswers[`q${q.id}`] && materialsData.outputAnswers[`q${q.id}`].trim();
+          html += `
+            <div class="output-question-item ${hasAnswer ? 'answered' : ''}" data-qid="${q.id}" onclick="selectQuestion(${q.id})">
+              <span class="output-question-number">Q${q.id}</span>
+              <span class="output-question-text">${escapeHtml(q.text)}</span>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      listContainer.innerHTML = html;
+      lucide.createIcons();
+
+      // 最初の質問を選択
+      selectQuestion(1);
+
+      lucide.createIcons();
+    }
+
+    // カテゴリの折りたたみ
+    function toggleCategory(header) {
+      const items = header.nextElementSibling;
+
+      if (!items) {
+        console.error('items not found');
+        return;
+      }
+
+      const isCollapsed = items.style.display === 'none';
+
+      if (isCollapsed) {
+        // 開く
+        header.classList.remove('collapsed');
+        items.style.display = 'block';
+      } else {
+        // 閉じる
+        header.classList.add('collapsed');
+        items.style.display = 'none';
+      }
+    }
+
+    // 質問を選択
+    function selectQuestion(qid) {
+      currentQuestionIndex = qid;
+
+      // アクティブ状態を更新
+      document.querySelectorAll('.output-question-item').forEach(item => {
+        item.classList.toggle('active', parseInt(item.dataset.qid) === qid);
+      });
+
+      // 質問を探す
+      const questionObj = theme2OutputQuestions.find(q => q.id === qid);
+      const questionText = questionObj ? questionObj.question : '';
+
+      // 中央パネルを更新
+      document.getElementById('currentQuestionNum').textContent = `Q${qid}`;
+      document.getElementById('currentQuestionText').textContent = questionText;
+
+      // 生徒の回答を表示
+      const answer = materialsData.outputAnswers[`q${qid}`] || '';
+      const answerEl = document.getElementById('currentAnswerText');
+      if (answer.trim()) {
+        answerEl.innerHTML = escapeHtml(answer);
+      } else {
+        answerEl.innerHTML = '<div class="output-answer-empty">未回答</div>';
+      }
+
+      // 講師コメント一覧を表示
+      renderCommentList();
+
+      // 新規コメント欄をクリア
+      document.getElementById('teacherCommentTextarea').value = '';
+
+      // ナビボタンの状態を更新
+      document.getElementById('prevQuestionBtn').disabled = qid <= 1;
+      document.getElementById('nextQuestionBtn').disabled = qid >= 50;
+
+      // コメントステータスをクリア
+      document.getElementById('commentStatus').textContent = '';
+    }
+
+    // 前の質問
+    function prevQuestion() {
+      if (currentQuestionIndex > 1) {
+        selectQuestion(currentQuestionIndex - 1);
+      }
+    }
+
+    // 次の質問
+    function nextQuestion() {
+      if (currentQuestionIndex < 50) {
+        selectQuestion(currentQuestionIndex + 1);
+      }
+    }
+
+    // ログイン中の講師情報を取得
+    function getCurrentTeacher() {
+      try {
+        const sessionStr = localStorage.getItem('eqao_staff_session');
+        if (sessionStr) {
+          const session = JSON.parse(sessionStr);
+          return {
+            teacherId: session.employeeId || '',
+            teacherName: session.name || ''
+          };
+        }
+      } catch (e) {
+        console.error('講師セッション取得エラー:', e);
+      }
+      return { teacherId: '', teacherName: '' };
+    }
+
+    // 講師コメントを保存（新規追加）
+    async function saveTeacherComment() {
+      if (!selectedStudentId || !selectedThemeId) return;
+
+      const comment = document.getElementById('teacherCommentTextarea').value.trim();
+      if (!comment) {
+        alert('コメントを入力してください');
+        return;
+      }
+
+      const btn = document.querySelector('.comment-save-btn');
+      const status = document.getElementById('commentStatus');
+      const teacher = getCurrentTeacher();
+
+      if (!teacher.teacherId || !teacher.teacherName) {
+        alert('講師情報が取得できません。再ログインしてください。');
+        return;
+      }
+
+      btn.disabled = true;
+
+      try {
+        const url = `${API_URL}?action=saveTeacherComment&studentId=${selectedStudentId}&themeId=${selectedThemeId}&questionId=${currentQuestionIndex}&comment=${encodeURIComponent(comment)}&teacherName=${encodeURIComponent(teacher.teacherName)}&teacherId=${encodeURIComponent(teacher.teacherId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          // テキストエリアをクリア
+          document.getElementById('teacherCommentTextarea').value = '';
+
+          // コメント一覧を再読み込み
+          await refreshTeacherComments();
+
+          status.textContent = '✓ 投稿しました';
+          status.classList.add('saved');
+        } else {
+          throw new Error(result.error);
+        }
+
+        setTimeout(() => {
+          status.textContent = '';
+          status.classList.remove('saved');
+        }, 3000);
+
+      } catch (error) {
+        console.error('Error saving comment:', error);
+        status.textContent = '投稿に失敗しました';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+   // 編集中のコメントID
+    let editingCommentId = null;
+
+    // コメント編集モーダルを開く
+    function editTeacherComment(commentId, currentText) {
+      editingCommentId = commentId;
+      document.getElementById('editCommentText').value = currentText;
+      document.getElementById('commentEditModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    // コメント編集モーダルを閉じる
+    function closeCommentEditModal() {
+      document.getElementById('commentEditModal').classList.remove('show');
+      editingCommentId = null;
+    }
+
+    // コメント編集を送信
+    async function submitCommentEdit() {
+      if (!editingCommentId) return;
+
+      const newText = document.getElementById('editCommentText').value.trim();
+      if (!newText) {
+        alert('コメントを入力してください');
+        return;
+      }
+
+      const teacher = getCurrentTeacher();
+
+      try {
+        const url = `${API_URL}?action=updateTeacherComment&commentId=${encodeURIComponent(editingCommentId)}&comment=${encodeURIComponent(newText)}&teacherId=${encodeURIComponent(teacher.teacherId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          closeCommentEditModal();
+          await refreshTeacherComments();
+        } else {
+          alert(result.error || '編集に失敗しました');
+        }
+      } catch (error) {
+        console.error('Error editing comment:', error);
+        alert('編集に失敗しました');
+      }
+    }
+
+    // 講師コメントを削除
+    async function deleteTeacherComment(commentId) {
+      if (!confirm('このコメントを削除しますか？')) return;
+
+      const teacher = getCurrentTeacher();
+
+      try {
+        const url = `${API_URL}?action=deleteTeacherComment&commentId=${encodeURIComponent(commentId)}&teacherId=${encodeURIComponent(teacher.teacherId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          await refreshTeacherComments();
+        } else {
+          alert(result.error || '削除に失敗しました');
+        }
+      } catch (error) {
+        console.error('Error deleting comment:', error);
+        alert('削除に失敗しました');
+      }
+    }
+
+    // 講師コメントを再読み込み
+    async function refreshTeacherComments() {
+      if (!selectedStudentId || !selectedThemeId) return;
+
+      try {
+        const url = `${API_URL}?action=getTeacherComments&studentId=${selectedStudentId}&themeId=${selectedThemeId}`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          materialsData.teacherComments = result.comments || {};
+          renderCommentList();
+        }
+      } catch (error) {
+        console.error('Error refreshing comments:', error);
+      }
+    }
+
+    // コメント一覧を描画
+    function renderCommentList() {
+      const container = document.getElementById('commentList');
+      const key = `q${currentQuestionIndex}`;
+      const comments = materialsData.teacherComments[key] || [];
+      const teacher = getCurrentTeacher();
+
+      if (comments.length === 0) {
+        container.innerHTML = `
+          <div class="comment-empty">
+            <i data-lucide="message-circle" style="width:32px;height:32px;"></i>
+            <p>コメントはまだありません</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      let html = '';
+      comments.forEach(c => {
+        const isMine = String(c.teacherId) === String(teacher.teacherId);
+        const date = new Date(c.createdAt);
+        const dateStr = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+        html += `
+          <div class="comment-item ${isMine ? 'mine' : ''}">
+            <div class="comment-item-header">
+              <div class="comment-item-meta">
+                <span class="comment-item-teacher">${escapeHtml(c.teacherName)}</span>
+                <span class="comment-item-date">${dateStr}</span>
+              </div>
+              ${isMine ? `
+              <div class="comment-item-actions">
+                <button class="comment-action-btn" onclick="editTeacherComment('${c.commentId}', decodeURIComponent('${encodeURIComponent(c.comment)}'))">
+                  <i data-lucide="pencil" style="width:12px;height:12px;"></i>
+                  編集
+                </button>
+                <button class="comment-action-btn delete" onclick="deleteTeacherComment('${c.commentId}')">
+                  <i data-lucide="trash-2" style="width:12px;height:12px;"></i>
+                  削除
+                </button>
+              </div>
+              ` : ''}
+            </div>
+            <div class="comment-item-text">${escapeHtml(c.comment)}</div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // 生徒回答を更新
+    async function refreshStudentAnswer() {
+      const btn = document.querySelector('.answer-refresh-btn');
+      if (btn) btn.classList.add('loading');
+
+      try {
+        // 現在のテーマの回答を再取得
+        const themeId = document.getElementById('themeSelect')?.value || '2';
+        const outputUrl = `${API_URL}?action=getOutputAnswers&studentId=${selectedStudentId}&themeId=${themeId}`;
+        const outputRes = await fetch(outputUrl);
+        const outputData = await outputRes.json();
+
+        if (outputData.success && outputData.answers) {
+          materialsData.outputAnswers = outputData.answers;
+
+          // 質問一覧の回答済みマークを更新
+          document.querySelectorAll('.output-question-item').forEach(item => {
+            const qid = parseInt(item.dataset.qid);
+            const hasAnswer = materialsData.outputAnswers[`q${qid}`] && materialsData.outputAnswers[`q${qid}`].trim();
+            item.classList.toggle('answered', !!hasAnswer);
+          });
+
+          // 進捗サマリーを更新
+          renderMaterialsProgress();
+
+          // 現在表示中の質問を再描画
+          if (currentQuestionIndex) {
+            selectQuestion(currentQuestionIndex);
+          }
+        }
+
+        // 成功フィードバック
+        if (btn) {
+          btn.classList.remove('loading');
+          const icon = btn.querySelector('i');
+          if (icon) {
+            icon.setAttribute('data-lucide', 'check');
+            lucide.createIcons();
+            setTimeout(() => {
+              icon.setAttribute('data-lucide', 'refresh-cw');
+              lucide.createIcons();
+            }, 1500);
+          }
+        }
+      } catch (error) {
+        console.error('回答更新エラー:', error);
+        if (btn) btn.classList.remove('loading');
+      }
+    }
   </script>
 </body>
 
