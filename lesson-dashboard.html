@@ -2330,6 +2330,117 @@
       padding: 40px;
     }
 
+    /* 生徒回答編集モード */
+    .output-answer-edit-mode {
+      display: none;
+    }
+
+    .output-answer-edit-mode.active {
+      display: block;
+    }
+
+    .output-answer-display-mode.hidden {
+      display: none;
+    }
+
+    .output-answer-textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 14px;
+      border: 2px solid #0d9488;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      line-height: 1.8;
+      resize: vertical;
+      background: #f0fdfa;
+    }
+
+    .output-answer-textarea:focus {
+      outline: none;
+      border-color: #0f766e;
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .output-answer-edit-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+
+    .answer-edit-btn {
+      padding: 8px 16px;
+      background: #f0fdfa;
+      border: 1px solid #0d9488;
+      border-radius: 8px;
+      color: #0d9488;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .answer-edit-btn:hover {
+      background: #0d9488;
+      color: #fff;
+    }
+
+    .answer-save-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .answer-save-btn:hover {
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    }
+
+    .answer-save-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .answer-cancel-btn {
+      padding: 10px 20px;
+      background: #e5e5e5;
+      color: #666;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .answer-cancel-btn:hover {
+      background: #d5d5d5;
+    }
+
+    .answer-edit-status {
+      font-size: 12px;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    .answer-edit-status.saved {
+      color: #0d9488;
+    }
+
     .output-answer-nav {
       display: flex;
       justify-content: space-between;
@@ -4272,8 +4383,27 @@
               </button>
             </div>
             <div class="output-answer-content">
-              <div class="output-answer-text" id="currentAnswerText">
-                <div class="output-answer-empty">左の質問一覧から質問を選択してください</div>
+              <!-- 表示モード -->
+              <div class="output-answer-display-mode" id="answerDisplayMode">
+                <div class="output-answer-text" id="currentAnswerText">
+                  <div class="output-answer-empty">左の質問一覧から質問を選択してください</div>
+                </div>
+                <button class="answer-edit-btn" onclick="startEditAnswer()" id="answerEditBtn" style="margin-top:12px;">
+                  <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+                  回答を編集・追記
+                </button>
+              </div>
+              <!-- 編集モード -->
+              <div class="output-answer-edit-mode" id="answerEditMode">
+                <textarea class="output-answer-textarea" id="answerEditTextarea" placeholder="回答を入力..."></textarea>
+                <div class="output-answer-edit-actions">
+                  <button class="answer-cancel-btn" onclick="cancelEditAnswer()">キャンセル</button>
+                  <button class="answer-save-btn" onclick="saveEditedAnswer()" id="answerSaveBtn">
+                    <i data-lucide="save" style="width:14px;height:14px;"></i>
+                    保存
+                  </button>
+                </div>
+                <div class="answer-edit-status" id="answerEditStatus"></div>
               </div>
             </div>
             <div class="output-answer-nav">
