@@ -6592,6 +6592,9 @@
         answerEl.innerHTML = '<div class="output-answer-empty">未回答</div>';
       }
 
+      // 編集モードをリセット
+      cancelEditAnswer();
+
       // 講師コメント一覧を表示
       renderCommentList();
 
@@ -6875,6 +6878,109 @@
       } catch (error) {
         console.error('回答更新エラー:', error);
         if (btn) btn.classList.remove('loading');
+      }
+    }
+
+    // ===== 生徒回答編集機能 =====
+
+    // 編集モード開始
+    function startEditAnswer() {
+      const displayMode = document.getElementById('answerDisplayMode');
+      const editMode = document.getElementById('answerEditMode');
+      const textarea = document.getElementById('answerEditTextarea');
+      
+      // 現在の回答をテキストエリアにセット
+      const currentAnswer = materialsData.outputAnswers[`q${currentQuestionIndex}`] || '';
+      textarea.value = currentAnswer;
+      
+      // モード切り替え
+      displayMode.classList.add('hidden');
+      editMode.classList.add('active');
+      
+      // ステータスクリア
+      document.getElementById('answerEditStatus').textContent = '';
+      
+      textarea.focus();
+      lucide.createIcons();
+    }
+
+    // 編集キャンセル
+    function cancelEditAnswer() {
+      const displayMode = document.getElementById('answerDisplayMode');
+      const editMode = document.getElementById('answerEditMode');
+      
+      displayMode.classList.remove('hidden');
+      editMode.classList.remove('active');
+      
+      document.getElementById('answerEditStatus').textContent = '';
+    }
+
+    // 編集した回答を保存
+    async function saveEditedAnswer() {
+      if (!selectedStudentId || !selectedThemeId) {
+        alert('生徒とテーマを選択してください');
+        return;
+      }
+
+      const textarea = document.getElementById('answerEditTextarea');
+      const newAnswer = textarea.value.trim();
+      const btn = document.getElementById('answerSaveBtn');
+      const status = document.getElementById('answerEditStatus');
+      const teacher = getCurrentTeacher();
+
+      btn.disabled = true;
+      status.textContent = '保存中...';
+      status.classList.remove('saved');
+
+      try {
+        const url = `${API_URL}?action=saveOutputAnswer&studentId=${selectedStudentId}&themeId=${selectedThemeId}&questionId=${currentQuestionIndex}&answer=${encodeURIComponent(newAnswer)}&editorName=${encodeURIComponent(teacher.teacherName)}&editorId=${encodeURIComponent(teacher.teacherId)}`;
+        
+        const response = await fetch(url);
+        const result = await response.json();
+
+        if (result.success) {
+          // ローカルデータを更新
+          materialsData.outputAnswers[`q${currentQuestionIndex}`] = newAnswer;
+          
+          // 表示を更新
+          const answerEl = document.getElementById('currentAnswerText');
+          if (newAnswer) {
+            answerEl.innerHTML = escapeHtml(newAnswer);
+          } else {
+            answerEl.innerHTML = '<div class="output-answer-empty">未回答</div>';
+          }
+          
+          // 質問リストの回答済みマークを更新
+          document.querySelectorAll('.output-question-item').forEach(item => {
+            const qid = parseInt(item.dataset.qid);
+            if (qid === currentQuestionIndex) {
+              item.classList.toggle('answered', !!newAnswer);
+            }
+          });
+          
+          // 進捗サマリーを更新
+          renderMaterialsProgress();
+          
+          // 編集モードを終了
+          cancelEditAnswer();
+          
+          status.textContent = '✓ 保存しました';
+          status.classList.add('saved');
+        } else {
+          throw new Error(result.error || '保存に失敗しました');
+        }
+
+      } catch (error) {
+        console.error('回答保存エラー:', error);
+        status.textContent = '保存に失敗しました';
+        status.classList.remove('saved');
+      } finally {
+        btn.disabled = false;
+        
+        setTimeout(() => {
+          status.textContent = '';
+          status.classList.remove('saved');
+        }, 3000);
       }
     }
 
