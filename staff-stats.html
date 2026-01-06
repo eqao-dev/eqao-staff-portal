@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,10 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background: #f8f9fa;
@@ -134,10 +140,21 @@
       color: white;
     }
 
-    .section-icon.rose { background: linear-gradient(135deg, #be185d, #9d174d); }
-    .section-icon.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
-    .section-icon.orange { background: linear-gradient(135deg, #f59e0b, #ea580c); }
-    .section-icon.purple { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+    .section-icon.rose {
+      background: linear-gradient(135deg, #be185d, #9d174d);
+    }
+
+    .section-icon.green {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .section-icon.orange {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+    }
+
+    .section-icon.purple {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    }
 
     .section-title {
       font-size: 15px;
@@ -184,7 +201,7 @@
       font-size: 11px;
       font-weight: bold;
       margin-bottom: 12px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
       color: white;
     }
 
@@ -201,13 +218,13 @@
       font-weight: bold;
       line-height: 1;
       color: white;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .stats-highlight-unit {
       font-size: 20px;
       font-weight: 700;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .stats-highlight-stars {
@@ -251,9 +268,11 @@
       .stats-highlight-number {
         font-size: 40px;
       }
+
       .stats-highlight-unit {
         font-size: 16px;
       }
+
       .stats-highlight-item {
         padding: 20px 12px;
       }
@@ -274,7 +293,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
       border: 1px solid #e5e5e5;
       position: relative;
       overflow: hidden;
@@ -289,12 +308,29 @@
       width: 4px;
     }
 
-    .highlight-card.rose::before { background: linear-gradient(180deg, #be185d, #9d174d); }
-    .highlight-card.green::before { background: linear-gradient(180deg, #22c55e, #16a34a); }
-    .highlight-card.purple::before { background: linear-gradient(180deg, #8b5cf6, #6366f1); }
-    .highlight-card.orange::before { background: linear-gradient(180deg, #f59e0b, #ea580c); }
-    .highlight-card.pink::before { background: linear-gradient(180deg, #ec4899, #db2777); }
-    .highlight-card.teal::before { background: linear-gradient(180deg, #14b8a6, #0d9488); }
+    .highlight-card.rose::before {
+      background: linear-gradient(180deg, #be185d, #9d174d);
+    }
+
+    .highlight-card.green::before {
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+    }
+
+    .highlight-card.purple::before {
+      background: linear-gradient(180deg, #8b5cf6, #6366f1);
+    }
+
+    .highlight-card.orange::before {
+      background: linear-gradient(180deg, #f59e0b, #ea580c);
+    }
+
+    .highlight-card.pink::before {
+      background: linear-gradient(180deg, #ec4899, #db2777);
+    }
+
+    .highlight-card.teal::before {
+      background: linear-gradient(180deg, #14b8a6, #0d9488);
+    }
 
     .highlight-icon {
       width: 50px;
@@ -306,12 +342,35 @@
       flex-shrink: 0;
     }
 
-    .highlight-card.rose .highlight-icon { background: #fdf2f8; color: #be185d; }
-    .highlight-card.green .highlight-icon { background: #f0fdf4; color: #22c55e; }
-    .highlight-card.purple .highlight-icon { background: #f5f3ff; color: #8b5cf6; }
-    .highlight-card.orange .highlight-icon { background: #fff7ed; color: #f59e0b; }
-    .highlight-card.pink .highlight-icon { background: #fdf2f8; color: #ec4899; }
-    .highlight-card.teal .highlight-icon { background: #f0fdfa; color: #14b8a6; }
+    .highlight-card.rose .highlight-icon {
+      background: #fdf2f8;
+      color: #be185d;
+    }
+
+    .highlight-card.green .highlight-icon {
+      background: #f0fdf4;
+      color: #22c55e;
+    }
+
+    .highlight-card.purple .highlight-icon {
+      background: #f5f3ff;
+      color: #8b5cf6;
+    }
+
+    .highlight-card.orange .highlight-icon {
+      background: #fff7ed;
+      color: #f59e0b;
+    }
+
+    .highlight-card.pink .highlight-icon {
+      background: #fdf2f8;
+      color: #ec4899;
+    }
+
+    .highlight-card.teal .highlight-icon {
+      background: #f0fdfa;
+      color: #14b8a6;
+    }
 
     .highlight-content {
       flex: 1;
@@ -336,12 +395,29 @@
       line-height: 1;
     }
 
-    .highlight-card.rose .highlight-number { color: #9d174d; }
-    .highlight-card.green .highlight-number { color: #16a34a; }
-    .highlight-card.purple .highlight-number { color: #6366f1; }
-    .highlight-card.orange .highlight-number { color: #ea580c; }
-    .highlight-card.pink .highlight-number { color: #db2777; }
-    .highlight-card.teal .highlight-number { color: #0d9488; }
+    .highlight-card.rose .highlight-number {
+      color: #9d174d;
+    }
+
+    .highlight-card.green .highlight-number {
+      color: #16a34a;
+    }
+
+    .highlight-card.purple .highlight-number {
+      color: #6366f1;
+    }
+
+    .highlight-card.orange .highlight-number {
+      color: #ea580c;
+    }
+
+    .highlight-card.pink .highlight-number {
+      color: #db2777;
+    }
+
+    .highlight-card.teal .highlight-number {
+      color: #0d9488;
+    }
 
     .highlight-unit {
       font-size: 16px;
@@ -361,7 +437,7 @@
       border-radius: 12px;
       padding: 16px 12px;
       text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
       border: 1px solid #e5e5e5;
     }
 
@@ -376,9 +452,17 @@
       color: white;
     }
 
-    .mini-icon.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
-    .mini-icon.orange { background: linear-gradient(135deg, #f59e0b, #ea580c); }
-    .mini-icon.pink { background: linear-gradient(135deg, #ec4899, #db2777); }
+    .mini-icon.green {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .mini-icon.orange {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+    }
+
+    .mini-icon.pink {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+    }
 
     .mini-number {
       font-size: 22px;
@@ -441,6 +525,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
+
       .highlight-number {
         font-size: 36px;
       }
@@ -451,15 +536,446 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
       }
+
       .mini-card {
         padding: 12px 8px;
       }
+
       .mini-number {
         font-size: 18px;
       }
     }
+
+    /* ========================================
+   生徒アンケートカード
+======================================== */
+    .survey-hero-card {
+      background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 16px;
+    }
+
+    .survey-hero-main {
+      padding: 28px 24px;
+      text-align: center;
+      color: white;
+    }
+
+    .survey-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .survey-hero-title {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .survey-hero-value {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .survey-hero-number {
+      font-size: 64px;
+      font-weight: bold;
+      line-height: 1;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .survey-hero-unit {
+      font-size: 28px;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    .survey-hero-subtitle {
+      margin-top: 12px;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .survey-hero-footer {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .survey-hero-footer-icon {
+      font-size: 18px;
+    }
+
+    .survey-hero-footer-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    @media (max-width: 480px) {
+      .survey-hero-number {
+        font-size: 52px;
+      }
+
+      .survey-hero-unit {
+        font-size: 22px;
+      }
+    }
+
+    /* ========================================
+   アンケート詳細グリッド
+======================================== */
+    .survey-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .survey-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e5e5e5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .survey-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .survey-card.green::before {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+    }
+
+    .survey-card.orange::before {
+      background: linear-gradient(90deg, #f59e0b, #ea580c);
+    }
+
+    .survey-card.pink::before {
+      background: linear-gradient(90deg, #ec4899, #db2777);
+    }
+
+    .survey-card.purple::before {
+      background: linear-gradient(90deg, #8b5cf6, #6366f1);
+    }
+
+    .survey-card.teal::before {
+      background: linear-gradient(90deg, #14b8a6, #0d9488);
+    }
+
+    .survey-card-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .survey-card.green .survey-card-icon {
+      background: #f0fdf4;
+      color: #22c55e;
+    }
+
+    .survey-card.orange .survey-card-icon {
+      background: #fff7ed;
+      color: #f59e0b;
+    }
+
+    .survey-card.pink .survey-card-icon {
+      background: #fdf2f8;
+      color: #ec4899;
+    }
+
+    .survey-card.purple .survey-card-icon {
+      background: #f5f3ff;
+      color: #8b5cf6;
+    }
+
+    .survey-card.teal .survey-card-icon {
+      background: #f0fdfa;
+      color: #14b8a6;
+    }
+
+    .survey-card-label {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .survey-card-value {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .survey-card-number {
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .survey-card.green .survey-card-number {
+      color: #16a34a;
+    }
+
+    .survey-card.orange .survey-card-number {
+      color: #ea580c;
+    }
+
+    .survey-card.pink .survey-card-number {
+      color: #db2777;
+    }
+
+    .survey-card.purple .survey-card-number {
+      color: #6366f1;
+    }
+
+    .survey-card.teal .survey-card-number {
+      color: #0d9488;
+    }
+
+    .survey-card-unit {
+      font-size: 14px;
+      font-weight: 700;
+      color: #6b7280;
+    }
+
+    .survey-card-stars {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 6px;
+    }
+
+    .survey-card-stars i {
+      color: #fbbf24;
+      width: 16px;
+      height: 16px;
+    }
+
+    .survey-card-stars i.empty {
+      color: #e5e7eb;
+    }
+
+    /* 100%カード特別デザイン */
+    .survey-card.full-width {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 2px solid #86efac;
+    }
+
+    .survey-card.full-width::before {
+      display: none;
+    }
+
+    .survey-card.full-width .survey-card-icon {
+      background: #22c55e;
+      color: white;
+    }
+
+    .survey-card.full-width .survey-card-number {
+      font-size: 48px;
+      color: #16a34a;
+    }
+
+    .survey-card.full-width .survey-card-label {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    @media (max-width: 400px) {
+      .survey-card-number {
+        font-size: 26px;
+      }
+
+      .survey-card.full-width .survey-card-number {
+        font-size: 40px;
+      }
+    }
+
+    /* ========================================
+   アコーディオン - EQAOを選んだ理由
+======================================== */
+    .reason-intro {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e5e5e5;
+    }
+
+    .reason-intro p {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .accordion-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e5e5e5;
+    }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover {
+      background: #f9fafb;
+    }
+
+    .accordion-number {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #be185d, #9d174d);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .accordion-title {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      line-height: 1.4;
+    }
+
+    .accordion-icon {
+      font-size: 20px;
+      color: #9ca3af;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 500px;
+    }
+
+    .accordion-points {
+      padding: 0 16px 12px 56px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .accordion-points li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .accordion-points li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      background: #d1d5db;
+      border-radius: 50%;
+    }
+
+    .accordion-quote {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 0 16px 16px 56px;
+      padding: 12px;
+      background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+      border-radius: 8px;
+      border-left: 3px solid #be185d;
+    }
+
+    .accordion-quote i {
+      color: #be185d;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .accordion-quote p {
+      font-size: 13px;
+      color: #be185d;
+      font-weight: 500;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* セクションアイコン pink追加 */
+    .section-icon.pink {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+    }
+
+    /* セクションアイコン blue追加 */
+    .section-icon.blue {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
   </style>
 </head>
+
 <body>
   <!-- ヘッダー -->
   <header class="header">
@@ -484,6 +1000,120 @@
       </div>
       <h1 class="page-title">数字で見るEQAO</h1>
       <p class="page-subtitle">EQAOの実績・満足度・コンテンツを<br>数字でご紹介します</p>
+    </div>
+
+    <!-- 生徒アンケートセクション -->
+    <div class="section" style="margin-top: 40px;">
+      <div class="section-header">
+        <div class="section-icon blue">
+          <span class="material-icons">forum</span>
+        </div>
+        <h2 class="section-title">生徒アンケート結果</h2>
+      </div>
+
+      <!-- 入塾してよかった（メインカード） -->
+      <div class="survey-hero-card">
+        <div class="survey-hero-main">
+          <div class="survey-hero-badge">
+            <span class="material-icons" style="font-size:14px;">favorite</span>
+            生徒の声
+          </div>
+          <p class="survey-hero-title">「入塾してよかった」と回答</p>
+          <div class="survey-hero-value">
+            <span class="survey-hero-number">97.3</span>
+            <span class="survey-hero-unit">%</span>
+          </div>
+          <p class="survey-hero-subtitle">「とても思う」と回答した生徒の割合</p>
+        </div>
+        <div class="survey-hero-footer">
+          <span class="survey-hero-footer-icon">✨</span>
+          <span class="survey-hero-footer-text">ほぼ全員が「入塾してよかった」と実感！</span>
+        </div>
+      </div>
+
+      <!-- アンケート詳細グリッド -->
+      <div class="survey-grid">
+        <!-- 学びが楽しかった（100%強調） -->
+        <div class="survey-card green full-width">
+          <div class="survey-card-icon">
+            <span class="material-icons">auto_awesome</span>
+          </div>
+          <p class="survey-card-label">「学びが楽しかった」</p>
+          <div class="survey-card-value">
+            <span class="survey-card-number">100</span>
+            <span class="survey-card-unit">%</span>
+          </div>
+        </div>
+
+        <!-- 授業満足度 -->
+        <div class="survey-card orange">
+          <div class="survey-card-icon">
+            <span class="material-icons">star</span>
+          </div>
+          <p class="survey-card-label">授業満足度</p>
+          <div class="survey-card-value">
+            <span class="survey-card-number">4.8</span>
+            <span class="survey-card-unit">/ 5</span>
+          </div>
+          <div class="survey-card-stars">
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+          </div>
+        </div>
+
+        <!-- 全体満足度 -->
+        <div class="survey-card purple">
+          <div class="survey-card-icon">
+            <span class="material-icons">workspace_premium</span>
+          </div>
+          <p class="survey-card-label">全体満足度</p>
+          <div class="survey-card-value">
+            <span class="survey-card-number">4.4</span>
+            <span class="survey-card-unit">/ 5</span>
+          </div>
+          <div class="survey-card-stars">
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons empty">star</span>
+          </div>
+        </div>
+
+        <!-- 講師・スタッフ対応 -->
+        <div class="survey-card teal">
+          <div class="survey-card-icon">
+            <span class="material-icons">support_agent</span>
+          </div>
+          <p class="survey-card-label">講師・スタッフ対応</p>
+          <div class="survey-card-value">
+            <span class="survey-card-number">4.2</span>
+            <span class="survey-card-unit">/ 5</span>
+          </div>
+          <div class="survey-card-stars">
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons">star</span>
+            <span class="material-icons empty">star</span>
+          </div>
+        </div>
+
+        <!-- 紹介したい -->
+        <div class="survey-card pink">
+          <div class="survey-card-icon">
+            <span class="material-icons">share</span>
+          </div>
+          <p class="survey-card-label">友人に紹介したい</p>
+          <div class="survey-card-value">
+            <span class="survey-card-number">91.9</span>
+            <span class="survey-card-unit">%</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 満足度セクション -->
@@ -529,6 +1159,204 @@
           <div class="stats-highlight-footer-content">
             <span class="stats-highlight-footer-icon">🏆</span>
             <span class="stats-highlight-footer-text">業界トップクラスの継続率を実現！</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQAOを選んだ理由セクション -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon pink">
+          <span class="material-icons">volunteer_activism</span>
+        </div>
+        <h2 class="section-title">EQAOを選んだ理由</h2>
+      </div>
+
+      <div class="reason-intro">
+        <p>生徒・保護者の皆さまに聞いた「EQAOを選んだ理由」をご紹介します。</p>
+      </div>
+
+      <div class="accordion-list">
+        <!-- 理由1 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">1</span>
+            <span class="accordion-title">総合型選抜・上智大学に「本当に特化している」</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>総合型選抜専門で、強い実績、高い合格率があった</li>
+              <li>上智大学総合グローバル学部・総合人間科学部など、志望学部との相性が明確だった</li>
+              <li>上智大学の合格率が高く、専門塾として信頼できた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「上智大学を第一志望にしており、実績と専門性の両方が揃っていたのがEQAOだった」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由2 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">2</span>
+            <span class="accordion-title">一人ひとりに合わせた「個別最適な指導」</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>志望校・本人の状況に合わせた完全個別対応</li>
+              <li>授業内容・時間・頻度の柔軟さ</li>
+              <li>オンライン／対面を自由に選べる点</li>
+              <li>通塾日程の融通が利き、継続しやすかった</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「型にはめる指導ではなく、本人に合ったやり方で進めてくれると感じた」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由3 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">3</span>
+            <span class="accordion-title">先生・メンターが親身で、精神面まで支えてくれた</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>悩みや不安を気軽に相談できる距離感</li>
+              <li>メンタルが落ちている時も、授業後には前向きになれていた</li>
+              <li>LINEなどでのこまめな声かけ・フォロー</li>
+              <li>優しく、真摯に向き合ってくれた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「学力だけでなく、気持ちの部分まで支えてくれる塾だった」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由4 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">4</span>
+            <span class="accordion-title">玉村代表の判断力・エネルギー・姿勢への信頼</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>他塾がGOを出す中で、九州大学受験に唯一ストップをかけた判断</li>
+              <li>自信と覚悟を感じる説明・対応</li>
+              <li>この仕事・教育に対する姿勢への共感</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「最後の決め手は、玉村さんの判断力と覚悟だった」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由5 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">5</span>
+            <span class="accordion-title">自分の「強み・個性」を引き出してくれる指導</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>「すきを見つけて、すきを伸ばす」という理念への共感</li>
+              <li>自己推薦書・志望理由書で、自分では気づけない強みを言語化してくれた</li>
+              <li>子どもの自主性を尊重してくれた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「自分自身について深く考え、理解する機会になった」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由6 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">6</span>
+            <span class="accordion-title">実体験に基づいた、質の高い総合型対策</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>実際に総合型選抜を経験したメンターによる指導</li>
+              <li>書類・面接・小論文を細部まで丁寧にチェック</li>
+              <li>直前まで一緒に書類を仕上げてくれた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「机上の空論ではなく、実体験に基づくアドバイスが心強かった」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由7 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">7</span>
+            <span class="accordion-title">思考力・積極性が育つ授業設計</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>時事問題について自分の意見を発表する機会</li>
+              <li>集団授業・合宿で、同じ目標を持つ仲間と出会えた</li>
+              <li>積極性や発信力が身についた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「受験対策を超えて、人として成長できたと感じた」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由8 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">8</span>
+            <span class="accordion-title">オンライン対応・仕組み面の合理性</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>オンラインで完結でき、移動の負担がない</li>
+              <li>書類のクラウド一括管理が非常に効率的</li>
+              <li>未使用コマの返金制度があり安心できた</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「仕組みが整っていて、保護者としても安心できた」</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 理由9 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-number">9</span>
+            <span class="accordion-title">口コミ・紹介・発信コンテンツがきっかけ</span>
+            <span class="material-icons accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <ul class="accordion-points">
+              <li>先輩・知人・塾からの紹介</li>
+              <li>TikTok・YouTubeでの情報発信に魅力を感じた</li>
+              <li>無料体験授業で「ここならいける」と実感</li>
+            </ul>
+            <div class="accordion-quote">
+              <span class="material-icons">format_quote</span>
+              <p>「体験を通して、ここなら合格を目指せると確信できた」</p>
+            </div>
           </div>
         </div>
       </div>
@@ -682,9 +1510,23 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       lucide.createIcons();
     });
   </script>
+  <script>
+    // アコーディオン機能
+    function toggleAccordion(button) {
+      const item = button.parentElement;
+      const isActive = item.classList.contains('active');
+
+      if (isActive) {
+        item.classList.remove('active');
+      } else {
+        item.classList.add('active');
+      }
+    }
+  </script>
 </body>
+
 </html>
