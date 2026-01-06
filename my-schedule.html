@@ -1353,10 +1353,6 @@
         </div>
       </div>
       <div class="header-right">
-        <div class="user-badge" id="userBadge" style="display:none;">
-          <i data-lucide="user" style="width:16px;height:16px;"></i>
-          <span id="userName">-</span>
-        </div>
         <div class="user-menu">
           <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
             <div class="user-avatar" id="userAvatar">-</div>
@@ -1369,9 +1365,13 @@
               <div class="dropdown-email" id="dropdownEmail">-</div>
             </div>
             <div class="dropdown-menu">
-              <a href="index.html" class="dropdown-item">
-                <i data-lucide="home" style="width:16px;height:16px;"></i>
-                ホーム
+              <a href="my-schedule.html" class="dropdown-item">
+                <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                マイスケジュール
+              </a>
+              <a href="change-password.html" class="dropdown-item">
+                <i data-lucide="key" style="width:16px;height:16px;"></i>
+                パスワード変更
               </a>
               <div class="dropdown-divider"></div>
               <button class="dropdown-item danger" onclick="handleLogout()">
@@ -1387,21 +1387,6 @@
 
   <!-- メイン -->
   <main class="main">
-    <!-- テスト用入力エリア -->
-    <div class="test-input-area">
-      <div class="test-label">
-        <i data-lucide="flask-conical" style="width:16px;height:16px;"></i>
-        テスト用：従業員番号
-      </div>
-      <input type="text" class="test-input" id="testEmployeeId" placeholder="例: 24">
-      <button class="test-btn" onclick="loadWithEmployeeId()">
-        <i data-lucide="search" style="width:16px;height:16px;"></i>
-        読み込み
-      </button>
-      <div class="test-note">
-        ※ 本番ではログイン情報から自動取得されます
-      </div>
-    </div>
 
     <!-- 未送信警告バナー -->
     <div class="warning-banner" id="warningBanner">
@@ -1441,12 +1426,9 @@
 
     <!-- スケジュール一覧 -->
     <div class="schedule-section" id="scheduleSection">
-      <div class="initial-state">
-        <div class="initial-icon">
-          <i data-lucide="user-search" style="width:40px;height:40px;"></i>
-        </div>
-        <div class="initial-title">従業員番号を入力してください</div>
-        <div class="initial-text">上のフォームに従業員番号を入力して「読み込み」を押してください</div>
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">読み込み中...</div>
       </div>
     </div>
   </main>
@@ -2062,6 +2044,15 @@
         const data = JSON.parse(session);
         if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
         displayUserMenuInfo(data);
+
+        // ログイン情報からcurrentUserを設定して自動読み込み
+        currentUser = {
+          employeeId: data.employeeId,
+          name: data.name || data.employeeId
+        };
+
+        // スケジュール自動読み込み
+        loadSchedule();
       } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
     }
 
@@ -2089,8 +2080,6 @@
       if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
     }
 
-    // ページ読み込み時にログインチェック
-    checkLoginStatus();
     // ===== 設定 =====
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
 
@@ -2100,16 +2089,12 @@
     let currentTab = 'upcoming';
     let currentReportData = null; // 報告対象の授業データ
 
+    // ページ読み込み時にログインチェック
+    checkLoginStatus();
+
     // ===== 初期化 =====
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-
-      // Enterキーで読み込み
-      document.getElementById('testEmployeeId').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          loadWithEmployeeId();
-        }
-      });
 
       // 実施状況の変更監視
       document.querySelectorAll('input[name="status"]').forEach(radio => {
@@ -2121,26 +2106,6 @@
         checkbox.addEventListener('change', updateStepCounts);
       });
     });
-
-    // ===== 従業員番号で読み込み =====
-    function loadWithEmployeeId() {
-      const employeeId = document.getElementById('testEmployeeId').value.trim();
-
-      if (!employeeId) {
-        showToast('従業員番号を入力してください', 'error');
-        return;
-      }
-
-      currentUser = {
-        employeeId: employeeId,
-        name: employeeId
-      };
-
-      document.getElementById('userName').textContent = currentUser.employeeId;
-      document.getElementById('userBadge').style.display = 'flex';
-
-      loadSchedule();
-    }
 
     // ===== スケジュール読み込み =====
     async function loadSchedule() {
@@ -2259,6 +2224,13 @@
     }
 
     function renderScheduleItem(item, now) {
+      if (!item.id) {
+        const dateStr = (item.date || '').replace(/\//g, '');
+        const timeStr = (item.startTime || '').replace(/:/g, '');
+        const nameStr = (item.studentName || '').replace(/\s/g, '');
+        item.id = `${dateStr}_${timeStr}_${nameStr}`;
+      }
+
       const date = parseDate(item.date);
       const month = date.getMonth() + 1;
       const day = date.getDate();
@@ -2278,9 +2250,17 @@
       let btnText = '報告';
       let btnDisabled = true;
 
+      // 2026年1月以降のみ報告ボタンを有効化（12月以前は旧システム）
+      const cutoffDate = new Date(2026, 0, 1); // 2026年1月1日
+
       if (item.reportSent) {
         btnClass = 'completed';
         btnText = '送信済';
+        btnDisabled = true;
+      } else if (date < cutoffDate) {
+        // 12月以前は報告ボタンを表示しない
+        btnClass = 'disabled';
+        btnText = '-';
         btnDisabled = true;
       } else if (now >= nextDay) {
         btnClass = 'overdue';
@@ -2334,10 +2314,12 @@
     // ===== 未送信チェック =====
     function checkOverdueReports() {
       const now = new Date();
+      const cutoffDate = new Date(2026, 0, 1); // 2026年1月1日
 
       const overdue = scheduleData.filter(item => {
         if (item.reportSent) return false;
         const date = parseDate(item.date);
+        if (date < cutoffDate) return false; // 12月以前は除外
         const nextDay = new Date(date);
         nextDay.setDate(nextDay.getDate() + 1);
         return now >= nextDay;
@@ -2365,6 +2347,15 @@
     // ===== 授業報告モーダル =====
     function openReportModal(itemJson) {
       const item = JSON.parse(decodeURIComponent(itemJson));
+
+      // idがない場合は生成
+      if (!item.id) {
+        const dateStr = (item.date || '').replace(/\//g, '');
+        const timeStr = (item.startTime || '').replace(/:/g, '');
+        const nameStr = (item.studentName || '').replace(/\s/g, '');
+        item.id = `${dateStr}_${timeStr}_${nameStr}`;
+      }
+
       currentReportData = item;
 
       // 授業情報を表示
@@ -2481,23 +2472,34 @@
       submitBtn.innerHTML = '<div class="loading-spinner" style="width:16px;height:16px;border-width:2px;margin:0;"></div> 送信中...';
 
       try {
+        // GASへのPOSTはリダイレクトが発生するため、fetch設定を調整
         const response = await fetch(GAS_API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(reportData)
+          headers: { 'Content-Type': 'text/plain' },  // ← これでプリフライトを回避
+          body: JSON.stringify(reportData),
+          redirect: 'follow'
         });
 
         const result = await response.json();
 
         if (result.success) {
           showToast('授業報告を送信しました', 'success');
-          closeReportModal();
 
-          // 該当の授業を送信済みに更新
-          const idx = scheduleData.findIndex(s => s.id === currentReportData.id);
+          // 該当の授業を送信済みに更新（日付・時間・生徒名で特定）
+          const targetDate = currentReportData.date;
+          const targetTime = currentReportData.startTime;
+          const targetStudent = currentReportData.studentName;
+
+          const idx = scheduleData.findIndex(s =>
+            s.date === targetDate &&
+            s.startTime === targetTime &&
+            s.studentName === targetStudent
+          );
           if (idx !== -1) {
             scheduleData[idx].reportSent = true;
           }
+
+          closeReportModal();
           renderSchedule();
           checkOverdueReports();
           updateMonthFilterOptions();
@@ -2648,13 +2650,16 @@
       let html = '<div class="history-list">';
 
       displayData.forEach(item => {
+        const hasContent = item.steps || item.homework || item.futurePlan || item.message;
+
         html += `
-      <div class="history-item">
-        <div class="history-header">
-          <div class="history-date">${item.lessonDate || '-'} ${item.lessonTime || ''}</div>
-          <div class="history-teacher">${item.teacherName || '-'}</div>
-        </div>
-        <div class="history-content">
+    <div class="history-item">
+      <div class="history-header">
+        <div class="history-date">${item.lessonDate || '-'} ${item.lessonTime || ''}</div>
+        <div class="history-teacher">${item.teacherName || '-'}</div>
+      </div>
+      <div class="history-content">
+        ${hasContent ? `
           ${item.steps ? `
           <div class="history-row">
             <div class="history-label">取り組み</div>
@@ -2679,9 +2684,14 @@
             <div class="history-value">${item.message}</div>
           </div>
           ` : ''}
-        </div>
+        ` : `
+          <div class="history-row">
+            <div class="history-value" style="color: #aaa; font-style: italic;">詳細データなし（旧システム）</div>
+          </div>
+        `}
       </div>
-    `;
+    </div>
+  `;
       });
 
       html += '</div>';

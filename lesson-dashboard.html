@@ -5839,25 +5839,29 @@
           stepsHtml = stepsArray.map(step => `<span class="step-tag">${escapeHtml(step)}</span>`).join('');
         }
 
+        // 詳細データがあるかチェック
+        const hasContent = item.steps || item.homework || item.futurePlan || item.message;
+
         html += `
-      <div class="lesson-item">
-        <div class="lesson-header" onclick="toggleLesson(this)">
-          <div class="lesson-toggle">
-            <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
-          </div>
-          <div class="lesson-date-wrapper">
-            <div class="lesson-date">
-              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
-              ${escapeHtml(item.lessonDate || '-')}
-            </div>
-            <div class="lesson-weekday">${escapeHtml(item.lessonTime || '')}</div>
-          </div>
-          <div class="lesson-teacher">
-            <i data-lucide="user" style="width:14px;height:14px;"></i>
-            ${escapeHtml(item.teacherName || '-')}
-          </div>
+    <div class="lesson-item">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-toggle">
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
         </div>
-        <div class="lesson-body">
+        <div class="lesson-date-wrapper">
+          <div class="lesson-date">
+            <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+            ${escapeHtml(item.lessonDate || '-')}
+          </div>
+          <div class="lesson-weekday">${escapeHtml(item.lessonTime || '')}</div>
+        </div>
+        <div class="lesson-teacher">
+          <i data-lucide="user" style="width:14px;height:14px;"></i>
+          ${escapeHtml(item.teacherName || '-')}
+        </div>
+      </div>
+      <div class="lesson-body">
+        ${hasContent ? `
           ${stepsHtml ? `
           <div class="lesson-section">
             <div class="lesson-section-title">
@@ -5897,9 +5901,16 @@
             <div class="lesson-section-content">${escapeHtml(item.message)}</div>
           </div>
           ` : ''}
-        </div>
+        ` : `
+          <div class="lesson-section">
+            <div class="lesson-section-content" style="color: #aaa; font-style: italic; padding: 20px; text-align: center;">
+              詳細データなし（旧システム）
+            </div>
+          </div>
+        `}
       </div>
-    `;
+    </div>
+  `;
       });
 
       container.innerHTML = html;
