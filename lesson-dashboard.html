@@ -3453,6 +3453,164 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* ヘッダーユーザー表示 */
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      font-size: 13px;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .header-user {
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+
+      .header-user i {
+        width: 14px !important;
+        height: 14px !important;
+      }
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 600px) {
+      .user-name {
+        display: none;
+      }
+
+      .user-btn {
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 
@@ -3460,14 +3618,39 @@
   <!-- ヘッダー -->
   <header class="header">
     <div class="header-content">
-      <a href="category-lessons.html" class="back-btn">
-        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+      <a href="index.html" class="back-btn">
+        <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
         戻る
       </a>
       <div class="header-divider"></div>
       <div class="header-title">
-        <i data-lucide="layout-dashboard" style="width:22px;height:22px;"></i>
+        <i data-lucide="layout-dashboard"></i>
         授業ダッシュボード
+      </div>
+      <!-- ユーザーメニュー -->
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="headerUserName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-email" id="dropdownEmail">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -4011,29 +4194,31 @@
   </main>
 
   <!-- コメント編集モーダル -->
-    <div class="modal-overlay" id="commentEditModal">
-      <div class="modal">
-        <div class="modal-header" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">
-          <div class="modal-title">
-            <i data-lucide="pencil" style="width:20px;height:20px;"></i>
-            コメントを編集
-          </div>
-          <button class="modal-close" onclick="closeCommentEditModal()">
-            <i data-lucide="x" style="width:18px;height:18px;"></i>
-          </button>
+  <div class="modal-overlay" id="commentEditModal">
+    <div class="modal">
+      <div class="modal-header" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">
+        <div class="modal-title">
+          <i data-lucide="pencil" style="width:20px;height:20px;"></i>
+          コメントを編集
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-label">コメント内容</label>
-            <textarea class="form-textarea" id="editCommentText" placeholder="コメントを入力..." style="min-height:150px;"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="modal-btn cancel" onclick="closeCommentEditModal()">キャンセル</button>
-          <button class="modal-btn save" onclick="submitCommentEdit()" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">保存</button>
+        <button class="modal-close" onclick="closeCommentEditModal()">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">コメント内容</label>
+          <textarea class="form-textarea" id="editCommentText" placeholder="コメントを入力..."
+            style="min-height:150px;"></textarea>
         </div>
       </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeCommentEditModal()">キャンセル</button>
+        <button class="modal-btn save" onclick="submitCommentEdit()"
+          style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);">保存</button>
+      </div>
     </div>
+  </div>
 
   <!-- 講師指示追加モーダル -->
   <div class="modal-overlay" id="noteModal">
@@ -4220,8 +4405,34 @@
 
     // 初期化
     document.addEventListener('DOMContentLoaded', async function () {
-      lucide.createIcons();
+      lucide.createIcons();  
+
       await loadStudentList();
+
+      // ヘッダーに講師名を表示
+      const teacher = getCurrentTeacher();
+      const headerUserName = document.getElementById('headerUserName');
+      const userAvatar = document.getElementById('userAvatar');
+      const dropdownName = document.getElementById('dropdownName');
+      const dropdownEmail = document.getElementById('dropdownEmail');
+
+      if (teacher.teacherName) {
+        const initial = teacher.teacherName.charAt(0);
+        if (headerUserName) headerUserName.textContent = teacher.teacherName;
+        if (userAvatar) userAvatar.textContent = initial;
+        if (dropdownName) dropdownName.textContent = teacher.teacherName;
+      }
+
+      // メールアドレスも取得して表示
+      try {
+        const sessionStr = localStorage.getItem('eqao_staff_session');
+        if (sessionStr) {
+          const session = JSON.parse(sessionStr);
+          if (dropdownEmail && session.email) {
+            dropdownEmail.textContent = session.email;
+          }
+        }
+      } catch (e) { }
 
       // 現在の月を設定
       const currentMonth = String(new Date().getMonth() + 1);
@@ -5980,7 +6191,7 @@
       }
     }
 
-   // 編集中のコメントID
+    // 編集中のコメントID
     let editingCommentId = null;
 
     // コメント編集モーダルを開く
@@ -6166,6 +6377,30 @@
       } catch (error) {
         console.error('回答更新エラー:', error);
         if (btn) btn.classList.remove('loading');
+      }
+    }
+
+    // ===== ユーザーメニュー開閉 =====
+    function toggleUserMenu() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // メニュー外クリックで閉じる
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+
+      if (userMenu && dropdown && !userMenu.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    // ===== ログアウト =====
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
       }
     }
   </script>
