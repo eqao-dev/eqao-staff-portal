@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタッフが読むべき本 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .book-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .book-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .book-card:hover {
+      border-color: #fcd34d;
+    }
+
+    .book-card.open {
+      border-color: #f59e0b;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);
+    }
+
+    .book-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .book-header:hover {
+      background: #fffbeb;
+    }
+
+    .book-number {
+      width: 40px;
+      height: 40px;
+      background: #f59e0b;
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .book-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .book-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .book-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #d97706;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .book-link:hover {
+      text-decoration: underline;
+    }
+
+    .book-toggle {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .book-card.open .book-toggle {
+      transform: rotate(180deg);
+      color: #f59e0b;
+    }
+
+    .book-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .book-card.open .book-body {
+      max-height: 2000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    .book-content {
+      padding: 0 20px 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .book-overview {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.8;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .book-points {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 16px;
+    }
+
+    .point-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #f9fafb;
+      border-radius: 10px;
+      border-left: 3px solid #f59e0b;
+    }
+
+    .point-icon {
+      width: 22px;
+      height: 22px;
+      background: #fef3c7;
+      color: #d97706;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .point-content {
+      flex: 1;
+    }
+
+    .point-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 3px;
+    }
+
+    .point-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .book-header {
+        padding: 16px;
+        gap: 14px;
+      }
+
+      .book-number {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+
+      .book-title {
+        font-size: 16px;
+      }
+
+      .user-name {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-rules.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">スタッフが読むべき本</span>
+      </div>
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-email" id="dropdownEmail">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="book-marked" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">スタッフが読むべき本</h1>
+      <p class="page-desc">メンター・講師として常時保有・朗読していただく書物です</p>
+    </div>
+
+    <div class="book-list">
+      <!-- 書籍1: 慶應メンタル -->
+      <div class="book-card" data-book="1">
+        <div class="book-header" onclick="toggleBook(1)">
+          <div class="book-number">1</div>
+          <div class="book-info">
+            <h2 class="book-title">慶應メンタル</h2>
+            <a href="https://x.gd/srW87" target="_blank" class="book-link" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+              書籍を見る
+            </a>
+          </div>
+          <div class="book-toggle">
+            <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+          </div>
+        </div>
+        <div class="book-body">
+          <div class="book-content">
+            <p class="book-overview">
+              アドラー心理学に基づいた対人関係と自己実現についての書籍です。人生の課題はすべて対人関係に関連しており、自分らしく生きるための考え方を学べます。
+            </p>
+            <div class="book-points">
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="users" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">人はすべての問題を対人関係の問題として捉えるべき</div>
+                  <div class="point-desc">人生の課題はすべて対人関係に関連しており、自己実現も他者との関係性の中で成し遂げられます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="split" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">「課題の分離」を理解する</div>
+                  <div class="point-desc">自分の課題と他人の課題を区別し、自分にできることに集中することが重要です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="trending-up" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">劣等感は成長の源</div>
+                  <div class="point-desc">劣等感を否定的に捉えず、それを克服しようとする動機が成長につながります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="target" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">「人生の目的」を見つける</div>
+                  <div class="point-desc">自分の価値観や興味を理解し、それに基づいて目的を見つけることが大切です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="shield" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">勇気を持って生きる</div>
+                  <div class="point-desc">他人からの評価を恐れず、自分らしい生き方を選択することが真の自己実現につながります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="heart-handshake" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">コミュニティ感の重要性</div>
+                  <div class="point-desc">他者と共感し協力することで自己実現が可能になります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="clock" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">過去ではなく、今を生きる</div>
+                  <div class="point-desc">現在に集中することが幸せへの鍵です。現在の行動が未来を作ります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="heart" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">自己受容</div>
+                  <div class="point-desc">自分自身をありのままに受け入れることが幸せへの第一歩です。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 書籍2: 人は聞き方が9割 -->
+      <div class="book-card" data-book="2">
+        <div class="book-header" onclick="toggleBook(2)">
+          <div class="book-number">2</div>
+          <div class="book-info">
+            <h2 class="book-title">人は聞き方が9割</h2>
+            <a href="https://x.gd/SCFsV" target="_blank" class="book-link" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+              書籍を見る
+            </a>
+          </div>
+          <div class="book-toggle">
+            <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+          </div>
+        </div>
+        <div class="book-body">
+          <div class="book-content">
+            <p class="book-overview">
+              コミュニケーションにおいて「聞く力」がいかに重要かを解説した書籍です。相手の話を積極的に聞くことで信頼関係を築く方法を学べます。
+            </p>
+            <div class="book-points">
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="ear" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">相手の話を積極的に聞くことの重要性</div>
+                  <div class="point-desc">相手が自分の話に耳を傾けてくれていると感じると、信頼関係が築きやすくなります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="headphones" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">「アクティブリスニング」の技術</div>
+                  <div class="point-desc">相槌を打ったり適切な質問をして、相手が話に集中していると感じさせます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="help-circle" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">質問の力</div>
+                  <div class="point-desc">適切な質問をすることで相手に深く考えさせ、本当に伝えたいことを引き出せます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="hand-heart" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">エンパシー（共感）の示し方</div>
+                  <div class="point-desc">相手の感情や立場に寄り添うことで、より深いレベルでの理解が可能になります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="shield-check" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">批判や否定を避ける</div>
+                  <div class="point-desc">理解しようとする姿勢を保つことで対話が建設的なものになります。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="rotate-ccw" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">リフレーミングの技術</div>
+                  <div class="point-desc">相手の言葉をポジティブな枠組みで再解釈し、新たな視点を提供できます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="door-open" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">聞き手としての姿勢</div>
+                  <div class="point-desc">オープンでジャッジせず、全ての情報を受け入れる用意があることを示します。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="pause" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">沈黙の価値</div>
+                  <div class="point-desc">沈黙を保つことで相手に思考の時間を与え、話を促すことができます。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 書籍3: 人は話し方が9割 -->
+      <div class="book-card" data-book="3">
+        <div class="book-header" onclick="toggleBook(3)">
+          <div class="book-number">3</div>
+          <div class="book-info">
+            <h2 class="book-title">人は話し方が9割</h2>
+            <a href="https://x.gd/zCrDB" target="_blank" class="book-link" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+              書籍を見る
+            </a>
+          </div>
+          <div class="book-toggle">
+            <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+          </div>
+        </div>
+        <div class="book-body">
+          <div class="book-content">
+            <p class="book-overview">
+              効果的なコミュニケーションのための「話し方」の技術を解説した書籍です。相手に伝わる話し方のポイントを学べます。
+            </p>
+            <div class="book-points">
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="sparkles" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">相手の興味を引くオープニング</div>
+                  <div class="point-desc">興味深い事実や質問、ストーリーを用いて聞き手の関心を引きつけます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="minimize-2" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">クリアで簡潔なコミュニケーション</div>
+                  <div class="point-desc">余分な情報は避け、ポイントを絞って話しましょう。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="eye" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">聞き手の視点に立つ</div>
+                  <div class="point-desc">聞き手の立場やニーズを理解し、メッセージを調整することが大切です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="book-open" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">ストーリーテリングの活用</div>
+                  <div class="point-desc">ストーリーを取り入れることでメッセージを記憶に残りやすくします。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="hand" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">非言語コミュニケーションの重要性</div>
+                  <div class="point-desc">身振り手振り、表情、声のトーンも大きな影響を与えます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="message-circle" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">フィードバックの活用</div>
+                  <div class="point-desc">相手の反応を見てメッセージを調整することが重要です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="link" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">感情的なコネクションの構築</div>
+                  <div class="point-desc">共感を示し、相手の感情に寄り添いましょう。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="smile" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">ポジティブな言葉遣い</div>
+                  <div class="point-desc">批判やネガティブな言葉は避け、積極的な言葉を選びましょう。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 書籍4: コーチングが人を活かす -->
+      <div class="book-card" data-book="4">
+        <div class="book-header" onclick="toggleBook(4)">
+          <div class="book-number">4</div>
+          <div class="book-info">
+            <h2 class="book-title">コーチングが人を活かす</h2>
+            <a href="https://x.gd/xb2f3" target="_blank" class="book-link" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+              書籍を見る
+            </a>
+          </div>
+          <div class="book-toggle">
+            <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+          </div>
+        </div>
+        <div class="book-body">
+          <div class="book-content">
+            <p class="book-overview">
+              コーチングの基本的な考え方と実践方法を解説したビジネス書です。指示や命令ではなく、相手の可能性を引き出すコミュニケーション手法を学べます。著者の鈴木義幸は日本におけるコーチングの第一人者です。
+            </p>
+            <div class="book-points">
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="compass" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">コーチングとは何か？</div>
+                  <div class="point-desc">質問を通じて相手の思考を促し、自発的な行動を生み出すコミュニケーション手法です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="ear" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">傾聴</div>
+                  <div class="point-desc">相手の話を深く聞き、共感を示すスキル。信頼関係を築く基本です。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="message-square" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">質問</div>
+                  <div class="point-desc">相手が気づいていない可能性を引き出す問いかけをするスキルです。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="award" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">承認</div>
+                  <div class="point-desc">相手の強みや成果を認め、自己肯定感を高めるスキルです。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="users" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">ビジネスシーンでの活用</div>
+                  <div class="point-desc">部下の成長支援、会議やチームマネジメント、目標設定に活かせます。</div>
+                </div>
+              </div>
+              <div class="point-item">
+                <div class="point-icon"><i data-lucide="key" style="width:12px;height:12px;"></i></div>
+                <div class="point-content">
+                  <div class="point-title">成功のポイント</div>
+                  <div class="point-desc">信頼関係を築くことが最優先。長期的な成長を重視します。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">© 2025 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      checkLoginStatus();
+    });
+
+    function toggleBook(bookNum) {
+      const card = document.querySelector(`[data-book="${bookNum}"]`);
+      card.classList.toggle('open');
+    }
+
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+  </script>
+</body>
+
+</html>

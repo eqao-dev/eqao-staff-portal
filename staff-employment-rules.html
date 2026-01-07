@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>就業規則・雇用契約 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .header-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* 検索バー */
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .search-clear.show {
+      display: block;
+    }
+
+    .search-clear:hover {
+      color: #666;
+      background: #f0f0f0;
+    }
+
+    .search-results-info {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #666;
+      display: none;
+    }
+
+    .search-results-info.show {
+      display: block;
+    }
+
+    .highlight {
+      background: #fef08a;
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+
+    /* タブ */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: #fff;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .tab:hover {
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .tab.active {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    /* コンテンツカード */
+    .content-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* 目次 */
+    .toc {
+      padding: 20px 24px;
+      background: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .toc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toc-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .toc-item {
+      padding: 6px 12px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .toc-item:hover {
+      border-color: #f59e0b;
+      color: #d97706;
+      background: #fffbeb;
+    }
+
+    /* 規則本文 */
+    .rules-content {
+      padding: 32px 24px;
+    }
+
+    .chapter {
+      margin-bottom: 32px;
+    }
+
+    .chapter:last-child {
+      margin-bottom: 0;
+    }
+
+    .chapter-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f59e0b;
+      margin-bottom: 20px;
+    }
+
+    .article {
+      margin-bottom: 24px;
+    }
+
+    .article:last-child {
+      margin-bottom: 0;
+    }
+
+    .article-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .article-number {
+      background: #f3f4f6;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .article-body {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .article-body p {
+      margin-bottom: 12px;
+    }
+
+    .article-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .article-list {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+
+    .article-list li {
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+
+    .article-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .note {
+      background: #fffbeb;
+      border-left: 3px solid #f59e0b;
+      padding: 12px 16px;
+      margin-top: 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #92400e;
+    }
+
+    .contact-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .contact-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+
+    .contact-box-content {
+      font-size: 13px;
+      color: #15803d;
+      line-height: 1.7;
+    }
+
+    /* 労働条件通知書のテーブル風表示 */
+    .info-table {
+      margin: 16px 0;
+    }
+
+    .info-row {
+      display: flex;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 12px 0;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      width: 140px;
+      flex-shrink: 0;
+      font-weight: 600;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .info-value {
+      flex: 1;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* 印刷スタイル */
+    @media print {
+      .header,
+      .search-bar,
+      .tabs,
+      .toc,
+      .footer {
+        display: none !important;
+      }
+
+      .main {
+        padding: 0;
+        max-width: none;
+      }
+
+      .content-card {
+        border: none;
+        box-shadow: none;
+      }
+
+      .tab-content {
+        display: block !important;
+        page-break-after: always;
+      }
+
+      .tab-content:last-child {
+        page-break-after: auto;
+      }
+
+      .rules-content {
+        padding: 20px 0;
+      }
+
+      .chapter {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        padding: 10px 14px;
+      }
+
+      .toc-list {
+        flex-direction: column;
+      }
+
+      .toc-item {
+        text-align: center;
+      }
+
+      .info-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .info-label {
+        width: auto;
+        font-size: 12px;
+        color: #888;
+      }
+
+      .rules-content {
+        padding: 24px 16px;
+      }
+
+      .chapter-title {
+        font-size: 16px;
+      }
+
+      .article-title {
+        font-size: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .header-btn span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-rules.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">就業規則・雇用契約</span>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" onclick="window.print()">
+          <i data-lucide="printer" style="width:16px;height:16px;"></i>
+          <span>印刷</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="file-text" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">就業規則・雇用契約</h1>
+      <p class="page-desc">株式会社EQAO教育グループの就業規則・労働条件通知書・秘密保持契約書</p>
+    </div>
+
+    <!-- 検索バー -->
+    <div class="search-bar">
+      <div class="search-input-wrapper">
+        <i data-lucide="search" class="search-icon" style="width:18px;height:18px;"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="条文を検索...（例：賃金、休日、秘密保持）">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">
+          <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+      <div class="search-results-info" id="searchResultsInfo"></div>
+    </div>
+
+    <!-- タブ -->
+    <div class="tabs">
+      <button class="tab active" data-tab="rules" onclick="switchTab('rules')">就業規則</button>
+      <button class="tab" data-tab="conditions" onclick="switchTab('conditions')">労働条件通知書</button>
+      <button class="tab" data-tab="confidential" onclick="switchTab('confidential')">秘密保持契約</button>
+    </div>
+
+    <div class="content-card">
+      <!-- 第1部：就業規則 -->
+      <div class="tab-content active" id="tab-rules">
+        <div class="toc">
+          <div class="toc-title">
+            <i data-lucide="list" style="width:14px;height:14px;"></i>
+            目次
+          </div>
+          <div class="toc-list">
+            <a href="#chapter1" class="toc-item">第1章 総則</a>
+            <a href="#chapter2" class="toc-item">第2章 雇用・契約・退職</a>
+            <a href="#chapter3" class="toc-item">第3章 勤務時間・シフト</a>
+            <a href="#chapter4" class="toc-item">第4章 賃金・手当</a>
+            <a href="#chapter5" class="toc-item">第5章 サービス方針</a>
+            <a href="#chapter6" class="toc-item">第6章 ハラスメント防止</a>
+            <a href="#chapter7" class="toc-item">第7章 リモートワーク</a>
+            <a href="#chapter8" class="toc-item">第8章 懲戒・表彰</a>
+            <a href="#chapter9" class="toc-item">第9章 雑則</a>
+          </div>
+        </div>
+
+        <div class="rules-content">
+          <!-- 第1章 -->
+          <div class="chapter" id="chapter1">
+            <h2 class="chapter-title">第1章 総則</h2>
+
+            <div class="article" id="article1">
+              <h3 class="article-title">
+                <span class="article-number">第1条</span>
+                目的
+              </h3>
+              <div class="article-body">
+                <p>本規則は、株式会社EQAO教育グループ（以下「甲」という。）に勤務する従業員（特にアルバイトおよびインターンシップを含む）の労働条件および就業に関する事項を定め、職場秩序の維持と業務の円滑な運営を図ることを目的とする。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article2">
+              <h3 class="article-title">
+                <span class="article-number">第2条</span>
+                適用範囲
+              </h3>
+              <div class="article-body">
+                <p>本規則は、甲に雇用されるアルバイトおよびインターンシップ従業員に適用する。正社員・契約社員等には別途定める就業規則を適用する。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第2章 -->
+          <div class="chapter" id="chapter2">
+            <h2 class="chapter-title">第2章 雇用・契約・退職</h2>
+
+            <div class="article" id="article3">
+              <h3 class="article-title">
+                <span class="article-number">第3条</span>
+                雇用形態と労働条件の明示
+              </h3>
+              <div class="article-body">
+                <p>雇用契約締結時には、以下の項目を記載した雇用契約書を交付し、書面または電子契約により締結するものとする。</p>
+                <ul class="article-list">
+                  <li>雇用期間</li>
+                  <li>業務内容および就業場所</li>
+                  <li>始業・終業時刻、休憩時間、休日・休暇</li>
+                  <li>賃金の額およびその計算方法</li>
+                  <li>支払方法、締日および支払日</li>
+                  <li>雇用保険・労災保険の適用有無</li>
+                </ul>
+                <p>また、労働条件通知書を併せて交付する。これらに加え、会社は就業規則・労働条件通知書・雇用契約書・秘密保持契約書を一括して契約書として管理するものとする。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article4">
+              <h3 class="article-title">
+                <span class="article-number">第4条</span>
+                雇用期間
+              </h3>
+              <div class="article-body">
+                <p>雇用契約の期間は、原則として1か月以上6か月以内の有期契約とし、契約満了時に甲乙双方の合意に基づき更新できるものとする。契約更新は最長で1年を上限とする。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article5">
+              <h3 class="article-title">
+                <span class="article-number">第5条</span>
+                退職
+              </h3>
+              <div class="article-body">
+                <p>乙が自己都合で退職する場合は、原則として14日前までに申し出ること。やむを得ない事情がある場合は、協議の上柔軟に対応する。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第3章 -->
+          <div class="chapter" id="chapter3">
+            <h2 class="chapter-title">第3章 勤務時間・シフト・休憩・休日</h2>
+
+            <div class="article" id="article6">
+              <h3 class="article-title">
+                <span class="article-number">第6条</span>
+                勤務時間およびシフト提出
+              </h3>
+              <div class="article-body">
+                <p>勤務はシフト制とし、乙は希望する授業数（1コマ60分単位）を提出する。</p>
+                <p>翌月分のシフトは、原則として毎月20日までに、Googleフォーム等の所定の方法により提出するものとする。提出が遅れた場合、担当可能な業務が制限される可能性がある。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article7">
+              <h3 class="article-title">
+                <span class="article-number">第7条</span>
+                シフトの確定および変更
+              </h3>
+              <div class="article-body">
+                <p>提出されたシフトは、原則として毎月末日に確定される。</p>
+                <p>シフト確定後の変更は、原則として3日前までに申し出ること。当日の欠勤・変更が生じた場合は、速やかにLINE連絡および電話にて報告を行うこと。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article8">
+              <h3 class="article-title">
+                <span class="article-number">第8条</span>
+                休憩時間
+              </h3>
+              <div class="article-body">
+                <p>1日の勤務が6時間を超える場合は45分以上、8時間を超える場合は60分の休憩を与える。</p>
+                <p>また、1コマ（60分）の授業終了ごとに10分間の休憩時間を設ける。その他の時間については、各自の裁量で適宜休憩を取るものとする。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article9">
+              <h3 class="article-title">
+                <span class="article-number">第9条</span>
+                休日
+              </h3>
+              <div class="article-body">
+                <p>休日は乙のシフト提出に基づいて付与される。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第4章 -->
+          <div class="chapter" id="chapter4">
+            <h2 class="chapter-title">第4章 賃金・手当</h2>
+
+            <div class="article" id="article10">
+              <h3 class="article-title">
+                <span class="article-number">第10条</span>
+                賃金の構成
+              </h3>
+              <div class="article-body">
+                <p>賃金は時間給制とし、以下の通りとする。</p>
+                <ul class="article-list">
+                  <li>基本時給：1,200円〜4,000円（業務内容・評価に応じて会社が定める）</li>
+                  <li>深夜割増手当（22時〜翌5時）：通常時給の25％増</li>
+                  <li>時間外割増手当：法定通り</li>
+                  <li>通勤手当：実費支給</li>
+                </ul>
+                <div class="note">※昇給あり。昇給の有無および金額は、人事部署および代表による評価をもとに決定される。</div>
+              </div>
+            </div>
+
+            <div class="article" id="article11">
+              <h3 class="article-title">
+                <span class="article-number">第11条</span>
+                支払方法
+              </h3>
+              <div class="article-body">
+                <ul class="article-list">
+                  <li>締日：毎月末日</li>
+                  <li>支払日：翌月10日</li>
+                  <li>支払方法：乙の指定する銀行口座へ振込</li>
+                </ul>
+                <p>通勤手当を含め、賃金は給与と同時に支払うものとする。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第5章 -->
+          <div class="chapter" id="chapter5">
+            <h2 class="chapter-title">第5章 サービス方針・行動規範</h2>
+
+            <div class="article" id="article12">
+              <h3 class="article-title">
+                <span class="article-number">第12条</span>
+                基本理念と行動規範
+              </h3>
+              <div class="article-body">
+                <ul class="article-list">
+                  <li>生徒をパートナーと捉え、「共育・協育」の姿勢を持つこと</li>
+                  <li>丁寧な言葉遣い、迅速なレスポンス、ホスピタリティを重視すること</li>
+                  <li>チームとしての連携を大切にし、利他的な行動を心がけること</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第6章 -->
+          <div class="chapter" id="chapter6">
+            <h2 class="chapter-title">第6章 ハラスメント防止</h2>
+
+            <div class="article" id="article13">
+              <h3 class="article-title">
+                <span class="article-number">第13条</span>
+                ハラスメントの禁止
+              </h3>
+              <div class="article-body">
+                <p>パワーハラスメント、セクシュアルハラスメント、モラルハラスメント、マタニティハラスメント、アルコールハラスメント等、すべてのハラスメントを禁止する。</p>
+                <p>上下関係を利用した不適切な言動、排除、暴力などが認められた場合は、厳重に対処する。詳細は「株式会社EQAO教育グループハラスメントガイドライン」に基づく。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article14">
+              <h3 class="article-title">
+                <span class="article-number">第14条</span>
+                相談窓口
+              </h3>
+              <div class="article-body">
+                <p>ハラスメントに関する相談・通報は、下記の窓口まで速やかに行うこと（匿名可）。</p>
+                <div class="contact-box">
+                  <div class="contact-box-title">相談窓口</div>
+                  <div class="contact-box-content">
+                    相談責任者：玉村ナオ<br>
+                    連絡方法：電話 090-5241-7068 または玉村のLINE<br>
+                    受付時間：10:00〜19:00（緊急時は24時間対応）
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第7章 -->
+          <div class="chapter" id="chapter7">
+            <h2 class="chapter-title">第7章 リモートワークガイドライン</h2>
+
+            <div class="article" id="article15">
+              <h3 class="article-title">
+                <span class="article-number">第15条</span>
+                適用
+              </h3>
+              <div class="article-body">
+                <p>リモートワークは、業務内容および乙の状況を踏まえ、会社が許可した場合に限り実施可能とする。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article16">
+              <h3 class="article-title">
+                <span class="article-number">第16条</span>
+                実施ルール
+              </h3>
+              <div class="article-body">
+                <ul class="article-list">
+                  <li>授業開始5分前までにZoomを起動すること</li>
+                  <li>ネット環境が安定し、静かで声が出せる場所（自宅等）で実施すること</li>
+                  <li>カフェや公共施設等での実施は禁止する</li>
+                  <li>毎月、担当授業数と運営から依頼された業務時間を所定フォームに申請すること</li>
+                </ul>
+                <div class="note">虚偽申請または提出遅延があった場合、給与支払が遅延する可能性がある</div>
+              </div>
+            </div>
+
+            <div class="article" id="article17">
+              <h3 class="article-title">
+                <span class="article-number">第17条</span>
+                進捗報告
+              </h3>
+              <div class="article-body">
+                <p>週1回以上、所定フォーム・LINE・Zoom等を用いて、業務進捗・学び・課題を報告すること。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第8章 -->
+          <div class="chapter" id="chapter8">
+            <h2 class="chapter-title">第8章 懲戒・表彰</h2>
+
+            <div class="article" id="article18">
+              <h3 class="article-title">
+                <span class="article-number">第18条</span>
+                懲戒
+              </h3>
+              <div class="article-body">
+                <p>以下の行為に該当した場合、指導・減給・契約解除などの懲戒処分を行うことがある。</p>
+                <ul class="article-list">
+                  <li>無断欠勤・遅刻の常習</li>
+                  <li>ハラスメント行為</li>
+                  <li>個人情報・社内情報の漏洩</li>
+                  <li>生徒・保護者との私的連絡・金銭授受</li>
+                  <li>他スタッフへの嫌がらせ</li>
+                  <li>会社の信用を損ねる行動や社内秩序の妨害行為</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="article" id="article19">
+              <h3 class="article-title">
+                <span class="article-number">第19条</span>
+                表彰
+              </h3>
+              <div class="article-body">
+                <p>生徒への貢献、チームとの連携、提案活動などにおいて顕著な実績がある従業員を表彰する。（例：月間MVP制度、推薦制度による社内表彰）</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第9章 -->
+          <div class="chapter" id="chapter9">
+            <h2 class="chapter-title">第9章 雑則</h2>
+
+            <div class="article" id="article20">
+              <h3 class="article-title">
+                <span class="article-number">第20条</span>
+                規則の改定
+              </h3>
+              <div class="article-body">
+                <p>本規則は、法令の変更または業務運営上の必要に応じて、会社の判断により改定されることがある。改定時は速やかに全従業員に通知する。</p>
+              </div>
+            </div>
+
+            <div class="article" id="article21">
+              <h3 class="article-title">
+                <span class="article-number">第21条</span>
+                施行日
+              </h3>
+              <div class="article-body">
+                <p>本規則は、乙が本契約書に署名（または電子同意）した時点より効力を発する。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第2部：労働条件通知書 -->
+      <div class="tab-content" id="tab-conditions">
+        <div class="toc">
+          <div class="toc-title">
+            <i data-lucide="list" style="width:14px;height:14px;"></i>
+            労働条件通知書 兼 雇用契約の基本条項
+          </div>
+        </div>
+
+        <div class="rules-content">
+          <div class="chapter">
+            <h2 class="chapter-title">労働条件通知書 兼 雇用契約の基本条項</h2>
+            <p style="font-size:14px;color:#666;margin-bottom:24px;">アルバイトおよびインターンシップ対象</p>
+
+            <div class="info-table">
+              <div class="info-row">
+                <div class="info-label">雇用形態</div>
+                <div class="info-value">アルバイト／インターンシップ</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">契約更新</div>
+                <div class="info-value">有</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">就業場所</div>
+                <div class="info-value">
+                  以下のいずれか、または甲が指定するその他の場所（リモート勤務を含む）とする。<br>
+                  ・東京都港区芝大門2-8-9 芝大門KSビル3階<br>
+                  ・東京都港区芝大門2-7-10 中島ナカヤビル3階
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">業務内容</div>
+                <div class="info-value">
+                  総合型選抜対策に関する指導、教育支援業務（面談、授業、事務、企画補助等）を行う。なお、すべての業務を一律に行うものではなく、乙の所属する部門により担当業務は異なる。乙は自身が希望する業務を基本とし、甲の一方的な指示により強制されることはない。
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">労働時間</div>
+                <div class="info-value">週1コマ（60分）から勤務可能とし、規定の労働時間は設けない。乙の希望する勤務時間に基づきシフトが設定される。</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">休憩時間</div>
+                <div class="info-value">1コマ（60分）の授業終了ごとに10分間の休憩を設ける。その他の時間については、授業担当外において各自が適宜休憩を取るものとする。</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">休日</div>
+                <div class="info-value">乙が提出するシフトに基づき休日を付与する。</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">賃金</div>
+                <div class="info-value">
+                  時給1,200円～4,000円（乙の評価および職務内容に応じて、甲が定める）<br>
+                  昇給あり。昇給の有無および金額は、人事部署および代表による評価・審査を経て決定される。
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">割増賃金</div>
+                <div class="info-value">22:00〜翌5:00の深夜勤務および法定時間外労働に対しては、法定の割増賃金率を適用する。</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">通勤手当</div>
+                <div class="info-value">
+                  実費支給とする。<br>
+                  交通費は原則として賃金と同様に、毎月末日を締日とし、翌月10日に乙の指定口座へ賃金と併せて振込むものとする。
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">締日・支払日</div>
+                <div class="info-value">
+                  締日：毎月末日<br>
+                  支払日：翌月10日<br>
+                  支払方法：乙の指定する銀行口座への振込
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">加入保険</div>
+                <div class="info-value">労災保険に加入する。雇用保険については、法定の加入要件を満たす場合に適用する。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第3部：秘密保持契約 -->
+      <div class="tab-content" id="tab-confidential">
+        <div class="toc">
+          <div class="toc-title">
+            <i data-lucide="list" style="width:14px;height:14px;"></i>
+            目次
+          </div>
+          <div class="toc-list">
+            <a href="#chapter10" class="toc-item">第10章 秘密保持義務</a>
+          </div>
+        </div>
+
+        <div class="rules-content">
+          <div class="chapter" id="chapter10">
+            <h2 class="chapter-title">第10章 秘密保持義務</h2>
+
+            <div class="article" id="article22">
+              <h3 class="article-title">
+                <span class="article-number">第22条</span>
+                秘密保持
+              </h3>
+              <div class="article-body">
+                <p>乙は、甲の業務に従事する過程において知り得た以下の情報を含む一切の機密情報について、甲の書面による事前承諾がない限り、在職中はもちろん、退職後も第三者に漏洩または開示してはならないものとする。</p>
+                <ul class="article-list">
+                  <li>生徒に関する個人情報（氏名、連絡先、成績、志望校、学習履歴等）</li>
+                  <li>保護者に関する個人情報（氏名、連絡先、経済状況等）</li>
+                  <li>会社内部の運営情報（経営上の意思決定、業務上の課題、トラブル、契約情報等）</li>
+                  <li>従業員に関する個人情報（氏名、住所、連絡先、評価内容等）</li>
+                  <li>会社の事業戦略、営業方針、採用基準その他の経営機密</li>
+                  <li>会社が独自に作成・使用している教材、カリキュラム、指導メソッド等の知的財産</li>
+                  <li>その他、甲が機密性が高いと合理的に判断する一切の情報</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="article" id="article23">
+              <h3 class="article-title">
+                <span class="article-number">第23条</span>
+                秘密保持義務違反に対する措置
+              </h3>
+              <div class="article-body">
+                <p>乙が前条に違反した場合、甲は当該行為の重大性に応じて、以下の措置を講じることができる。</p>
+                <ul class="article-list">
+                  <li>即時解雇を含む懲戒処分</li>
+                  <li>民事上の損害賠償請求</li>
+                  <li>刑事告訴等を含む法的措置の実施</li>
+                </ul>
+                <p>甲は、必要に応じて顧問弁護士である弁護士法人えそら（第一東京弁護士会所属）を通じて、当該違反行為に対し法的措置を行うものとし、乙はこれに同意する。</p>
+                <div class="note">また、乙の行為により甲に損害が発生した場合、乙はその損害の全額を賠償する責任を負うものとする。</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 同意文 -->
+          <div class="chapter">
+            <h2 class="chapter-title">同意事項</h2>
+            <div class="article-body" style="background:#f9fafb;padding:20px;border-radius:10px;border:1px solid #e5e5e5;">
+              <p>私（乙）は、本書に含まれる就業規則、労働条件通知書兼雇用契約書、および秘密保持契約書のすべての内容について、十分に確認・理解したうえで、これに同意いたします。</p>
+              <p style="margin-top:12px;">特に、秘密保持義務については、雇用契約の有効期間中のみならず、契約終了後も引き続き効力を有するものであり、甲の書面による事前の承諾がない限り、在職中に知り得た業務上の機密情報を第三者に開示または漏洩しないことをここに誓約いたします。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">© 2025 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // 検索入力イベント
+      document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+      // アンカーリンクのスムーズスクロール
+      document.querySelectorAll('.toc-item').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
+
+    // タブ切り替え
+    function switchTab(tabId) {
+      // タブボタンの状態更新
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.tab === tabId) {
+          tab.classList.add('active');
+        }
+      });
+
+      // タブコンテンツの表示切替
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById('tab-' + tabId).classList.add('active');
+
+      // 検索結果をクリア
+      clearSearch();
+    }
+
+    // 検索機能
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const clearBtn = document.getElementById('searchClear');
+      const resultsInfo = document.getElementById('searchResultsInfo');
+
+      // クリアボタンの表示制御
+      if (query.length > 0) {
+        clearBtn.classList.add('show');
+      } else {
+        clearBtn.classList.remove('show');
+        resultsInfo.classList.remove('show');
+        removeHighlights();
+        return;
+      }
+
+      if (query.length < 2) {
+        resultsInfo.classList.remove('show');
+        removeHighlights();
+        return;
+      }
+
+      // ハイライトを削除
+      removeHighlights();
+
+      // 検索実行
+      let matchCount = 0;
+      const articles = document.querySelectorAll('.article, .info-row');
+
+      articles.forEach(article => {
+        const text = article.textContent.toLowerCase();
+        if (text.includes(query)) {
+          matchCount++;
+          highlightText(article, query);
+        }
+      });
+
+      // 結果表示
+      resultsInfo.textContent = `「${query}」で ${matchCount} 件の条項がヒットしました`;
+      resultsInfo.classList.add('show');
+
+      // 最初のハイライトにスクロール
+      const firstHighlight = document.querySelector('.highlight');
+      if (firstHighlight) {
+        firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // テキストハイライト
+    function highlightText(element, query) {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+
+      while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+      }
+
+      textNodes.forEach(node => {
+        const text = node.textContent;
+        const lowerText = text.toLowerCase();
+        const index = lowerText.indexOf(query);
+
+        if (index !== -1) {
+          const span = document.createElement('span');
+          span.className = 'highlight';
+          span.textContent = text.substring(index, index + query.length);
+
+          const before = document.createTextNode(text.substring(0, index));
+          const after = document.createTextNode(text.substring(index + query.length));
+
+          const parent = node.parentNode;
+          parent.insertBefore(before, node);
+          parent.insertBefore(span, node);
+          parent.insertBefore(after, node);
+          parent.removeChild(node);
+        }
+      });
+    }
+
+    // ハイライト削除
+    function removeHighlights() {
+      document.querySelectorAll('.highlight').forEach(el => {
+        const parent = el.parentNode;
+        parent.replaceChild(document.createTextNode(el.textContent), el);
+        parent.normalize();
+      });
+    }
+
+    // 検索クリア
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClear').classList.remove('show');
+      document.getElementById('searchResultsInfo').classList.remove('show');
+      removeHighlights();
+    }
+  </script>
+</body>
+
+</html>

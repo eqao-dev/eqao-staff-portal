@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>競合一覧 | EQAO スタッフポータル</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-email {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* 統計カード */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon.youtube {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .stat-icon.company {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* タブ */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #e5e5e5;
+      padding-bottom: 12px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .tab-btn.active {
+      background: #111;
+      color: #fff;
+    }
+
+    .tab-count {
+      font-size: 12px;
+      padding: 2px 8px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .tab-btn.active .tab-count {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 検索 */
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #111;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+    /* コンテンツエリア */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* カードグリッド共通 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    /* クリッカブルカード */
+    .clickable-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .clickable-card:hover {
+      border-color: #111;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .card-num {
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      color: #6b7280;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .card-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-url {
+      font-size: 11px;
+      color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    .card-arrow {
+      color: #ccc;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    .clickable-card:hover .card-arrow {
+      color: #111;
+    }
+
+    /* YouTubeカード特有 */
+    .clickable-card.youtube .card-num {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    /* 企業カード特有 */
+    .clickable-card.company .card-num {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+
+
+    /* 空の状態 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+    }
+
+    .empty-state i {
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .youtube-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .tab-btn {
+        white-space: nowrap;
+      }
+
+      .company-table {
+        font-size: 13px;
+      }
+
+      .company-table th,
+      .company-table td {
+        padding: 10px 12px;
+      }
+
+      .user-name {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-resources.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">競合一覧</span>
+      </div>
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-email" id="dropdownEmail">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-icon">
+        <i data-lucide="target" style="width:28px;height:28px;"></i>
+      </div>
+      <h1 class="page-title">競合他社一覧</h1>
+      <p class="page-desc">総合型選抜塾の競合情報をまとめています</p>
+    </div>
+
+    <!-- 統計 -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon youtube">
+          <i data-lucide="youtube" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">21</div>
+          <div class="stat-label">YouTubeチャンネル</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon company">
+          <i data-lucide="building-2" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">66</div>
+          <div class="stat-label">企業・塾</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タブ -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('youtube')">
+        <i data-lucide="youtube" style="width:18px;height:18px;"></i>
+        YouTubeチャンネル
+        <span class="tab-count">21</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('company')">
+        <i data-lucide="building-2" style="width:18px;height:18px;"></i>
+        企業・塾一覧
+        <span class="tab-count">66</span>
+      </button>
+    </div>
+
+    <!-- 検索 -->
+    <div class="search-bar">
+      <div class="search-input-wrapper">
+        <i data-lucide="search" style="width:18px;height:18px;"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="検索..." oninput="handleSearch()">
+      </div>
+    </div>
+
+    <!-- YouTube一覧 -->
+    <div class="tab-content active" id="youtubeContent">
+      <div class="card-grid" id="youtubeGrid">
+        <!-- 動的に生成 -->
+      </div>
+    </div>
+
+    <!-- 企業一覧 -->
+    <div class="tab-content" id="companyContent">
+      <div class="card-grid" id="companyGrid">
+        <!-- 動的に生成 -->
+      </div>
+    </div>
+
+    <!-- 空の状態 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <i data-lucide="search-x" style="width:48px;height:48px;"></i>
+      <p>検索結果が見つかりませんでした</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group</p>
+  </footer>
+
+  <script>
+    // データ
+    const youtubeChannels = [
+      { num: 1, name: '城南推薦塾', url: 'https://youtube.com/@johnansuisen' },
+      { num: 2, name: '毎日学習会', url: 'https://youtu.be/1vb2Ve6ba7o' },
+      { num: 3, name: '家庭教師のカカオ', url: 'https://www.youtube.com/@cacao.nyushi' },
+      { num: 4, name: 'KOSSUN教育ラボ', url: 'https://www.youtube.com/@KOSSUN_channel' },
+      { num: 5, name: 'リザプロ', url: 'https://www.youtube.com/@%E3%83%AA%E3%82%B6%E3%83%97%E3%83%AD%E6%8E%A8%E8%96%A6%E3%83%81%E3%83%A3%E3%83%B3%E3%83%8D%E3%83%AB' },
+      { num: 6, name: 'BLUE ACADEMY', url: 'https://youtube.com/@blueacademy327' },
+      { num: 7, name: 'れいなお塾', url: 'https://youtube.com/@reinao-salon' },
+      { num: 8, name: 'カドデ推薦塾', url: 'https://youtube.com/@ao_goukaku' },
+      { num: 9, name: '総合型選抜専門塾 ニッコマ', url: 'https://youtube.com/@nikkoma_ao_university' },
+      { num: 10, name: '推進塾', url: 'https://youtube.com/@suishinjuku' },
+      { num: 11, name: 'KOSKOS', url: 'https://www.youtube.com/@koskos.channel' },
+      { num: 12, name: '洋々', url: 'https://www.youtube.com/@youyoucorp/videos' },
+      { num: 13, name: 'ルークス志塾', url: 'https://www.youtube.com/@ao-loohcs5476' },
+      { num: 14, name: '二重まる学習塾', url: 'https://www.youtube.com/@ao-nijumaru' },
+      { num: 15, name: 'yours', url: 'https://www.youtube.com/@yours.online_official/shorts' },
+      { num: 16, name: 'モチベーションアカデミア', url: 'https://www.youtube.com/@macademiacojp' },
+      { num: 17, name: '総合型選抜入試専門塾AOI', url: 'https://youtube.com/@ao_aoi_ch' },
+      { num: 18, name: '潜龍舎', url: 'https://youtube.com/channel/UChFGOxJeOYjpc3MRrU_z5Ew' },
+      { num: 19, name: '総合型選抜合格チャンネル byはたらく部', url: 'https://www.youtube.com/@sougougatasenbatsu_success' },
+      { num: 20, name: 'スカイ予備校チャンネル', url: 'https://www.youtube.com/@%E3%82%B9%E3%82%AB%E3%82%A4%E4%BA%88%E5%82%99%E6%A0%A1%E3%83%81%E3%83%A3%E3%83%B3%E3%83%8D%E3%83%AB/videos' },
+      { num: 21, name: 'ホワイトアカデミー', url: 'https://www.youtube.com/@white_academy_highschoool' }
+    ];
+
+    const companies = [
+      { name: 'ココラボ', url: 'https://line.me/R/ti/p/@484faztm' },
+      { name: 'リザプロ株式会社', url: 'https://rizapuro.net/' },
+      { name: 'STカレッジ', url: 'https://stcollege.steducation.jp/' },
+      { name: 'ヘルメスゼミ', url: 'https://sogosuisen.com/' },
+      { name: 'あいり先生', url: 'https://www.instagram.com/airisensei.juken' },
+      { name: 'AOI塾', url: 'https://aoaoi.jp' },
+      { name: '洋々', url: 'https://you2.jp/' },
+      { name: 'ルークス志塾', url: 'https://loohcs-shijuku.com' },
+      { name: 'ホワイトアカデミー高等部', url: 'https://whiteacademy-ao.com/' },
+      { name: 'モチベーションアカデミア', url: 'https://motivation-academia.com/' },
+      { name: 'ニッコマ', url: 'https://nikkoma.com/' },
+      { name: 'オンラインプロ教師メガスタ', url: 'https://megastudy.jp/' },
+      { name: 'Blue Academy', url: 'https://blueacademyonline.com/' },
+      { name: '早稲田塾', url: 'https://www.wasedajuku.com/' },
+      { name: 'KOSKOS', url: 'https://koskos.net/' },
+      { name: 'yours', url: 'https://yours-online.com/' },
+      { name: '城南推薦塾', url: 'https://ao-suisenjuku.jp/' },
+      { name: 'トフルゼミナール', url: 'https://tofl.jp' },
+      { name: 'SS義塾', url: 'https://ss-gijuku.com/' },
+      { name: 'AOG', url: 'https://www.academicopengate.com/' },
+      { name: '総合型選抜塾 Rigel', url: 'https://www.tiktok.com/@rigel_me' },
+      { name: '総合型選抜 STカレッジ', url: 'https://stcollege.steducation.jp' },
+      { name: '総合型選抜塾Noll', url: 'https://pumped-rover-b44.notion.site/Noll-b8bcfc20f4994575a6ded7ae203a1600' },
+      { name: '総合型選抜塾PLATZ', url: 'https://4790n.hp.peraichi.com/' },
+      { name: '推進塾', url: 'https://suishinjuku.jp' },
+      { name: '総合型選抜塾Manavi', url: 'https://manavi-study.com/' },
+      { name: 'MyAO', url: 'http://myao.nagoya/' },
+      { name: 'Sora塾', url: 'https://www.tiktok.com/@sorastars.juku19' },
+      { name: '雄飛会', url: 'https://www.yu-hikai.com/' },
+      { name: '総合型選抜塾 GAL', url: 'https://gal-aojuku.com/' },
+      { name: 'ココミット', url: 'https://lp02.ceeglass.com/' },
+      { name: 'あぴゅせんせい', url: 'https://apuapuao.studio.site/#access' },
+      { name: 'ロジックリンク', url: 'https://logiclink.net' },
+      { name: 'アマト學舎', url: 'https://www.amato.jp' },
+      { name: 'オルタナティブ・アカデミー', url: 'https://www.alternativeacademy.jp' },
+      { name: 'HOTS academy', url: 'https://hotsacademy.com/global/' },
+      { name: '総合型選抜入試選抜塾エクシオアカデミー', url: 'https://note.com/xio_academy' },
+      { name: '総合型選抜入試塾 START', url: 'https://nbc-test2.com/sub/taniguchi/suisen/' },
+      { name: '生花果AO', url: 'https://1ziku.jp/ao/' },
+      { name: 'OUMEI進学塾', url: 'https://s-oumeishingakujuku.com' },
+      { name: '横浜未来義塾', url: 'https://ymggijuku.com' },
+      { name: 'Knock Learn', url: 'https://knocklearn.com' },
+      { name: '早慶専門ヒロアカ', url: 'https://hiroacademia.jpn.com' },
+      { name: 'シードハウス', url: 'https://seedhouse.co.jp' },
+      { name: 'カンザキジュク', url: 'https://kanzaki-juku.com' },
+      { name: 'STUDY LAB FUKUOKA / スタディラボ福岡', url: 'https://juku.fukuumedia.com' },
+      { name: '春霞塾', url: 'https://shunkajyuku.com' },
+      { name: '東海AOラボ', url: 'https://tokai-ao-lab.com' },
+      { name: 'Recot', url: 'https://recot-sogo.com' },
+      { name: '小論未来塾', url: 'https://www.miraijuku.online' },
+      { name: 'マナビライト', url: 'https://manabiright.com/s/about-manabiright/' },
+      { name: 'れいなお塾', url: 'https://reinao-salon.com' },
+      { name: 'かける塾', url: 'https://www.kakeru-juku.com' },
+      { name: 'AO修慶塾', url: 'https://aosyuukei.com' },
+      { name: 'アレルド', url: 'https://alealudere.jp/' },
+      { name: 'pispis', url: 'https://pispis-sougou.com' },
+      { name: 'SG塾', url: 'https://sg-juku.com/' },
+      { name: '新潟桜塾', url: 'https://www.niigata-sakura.com/about-3' },
+      { name: '小論文のトリセツ', url: 'https://shoronbun.jp' },
+      { name: '学習塾FLAPS', url: 'https://flaps-dream.com/course/ao.html' },
+      { name: 'クベルナレッジアカデミー', url: 'https://kuberu-ac.com/' },
+      { name: '特別選抜ゼミ', url: 'https://tokubetusenbatuzemi.jp/' },
+      { name: '究進塾', url: 'https://kyushinjuku.com/' },
+      { name: 'RETAQ Youth Academy', url: 'http://retaq-youth-academy.com' },
+      { name: '夢ゼミ', url: 'https://yumezemi.jimdofree.com' },
+      { name: 'strix', url: 'https://easier.jp/mavBz8CR/pr/448' }
+    ];
+
+    let currentTab = 'youtube';
+    let filteredYoutube = [...youtubeChannels];
+    let filteredCompanies = [...companies];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      checkLoginStatus();
+      renderYoutube();
+      renderCompanies();
+    });
+
+    function checkLoginStatus() {
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) { window.location.href = 'login.html'; return; }
+      try {
+        const data = JSON.parse(session);
+        if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        displayUserInfo(data);
+      } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const email = data.email || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownEmail').textContent = email;
+    }
+
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+      if (userMenu && !userMenu.contains(e.target)) { dropdown.classList.remove('show'); }
+    });
+
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+        content.style.display = '';  // インラインスタイルをリセット
+      });
+      
+      if (tab === 'youtube') {
+        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+        document.getElementById('youtubeContent').classList.add('active');
+      } else {
+        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+        document.getElementById('companyContent').classList.add('active');
+      }
+      
+      document.getElementById('searchInput').value = '';
+      filteredYoutube = [...youtubeChannels];
+      filteredCompanies = [...companies];
+      renderYoutube();
+      renderCompanies();
+      document.getElementById('emptyState').style.display = 'none';
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      
+      if (currentTab === 'youtube') {
+        filteredYoutube = youtubeChannels.filter(ch => 
+          ch.name.toLowerCase().includes(query)
+        );
+        renderYoutube();
+        
+        if (filteredYoutube.length === 0) {
+          document.getElementById('youtubeContent').style.display = 'none';
+          document.getElementById('emptyState').style.display = 'block';
+        } else {
+          document.getElementById('youtubeContent').style.display = 'block';
+          document.getElementById('emptyState').style.display = 'none';
+        }
+      } else {
+        filteredCompanies = companies.filter(c => 
+          c.name.toLowerCase().includes(query) || 
+          c.url.toLowerCase().includes(query)
+        );
+        renderCompanies();
+        
+        if (filteredCompanies.length === 0) {
+          document.getElementById('companyContent').style.display = 'none';
+          document.getElementById('emptyState').style.display = 'block';
+        } else {
+          document.getElementById('companyContent').style.display = 'block';
+          document.getElementById('emptyState').style.display = 'none';
+        }
+      }
+    }
+
+    function renderYoutube() {
+      const grid = document.getElementById('youtubeGrid');
+      grid.innerHTML = filteredYoutube.map(ch => `
+        <a href="${ch.url}" target="_blank" class="clickable-card youtube">
+          <div class="card-num">${ch.num}</div>
+          <div class="card-content">
+            <div class="card-name">${ch.name}</div>
+          </div>
+          <i data-lucide="external-link" class="card-arrow" style="width:16px;height:16px;"></i>
+        </a>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderCompanies() {
+      const grid = document.getElementById('companyGrid');
+      grid.innerHTML = filteredCompanies.map((c, i) => `
+        <a href="${c.url}" target="_blank" class="clickable-card company">
+          <div class="card-num">${i + 1}</div>
+          <div class="card-content">
+            <div class="card-name">${c.name}</div>
+            <div class="card-url">${new URL(c.url).hostname}</div>
+          </div>
+          <i data-lucide="external-link" class="card-arrow" style="width:16px;height:16px;"></i>
+        </a>
+      `).join('');
+      lucide.createIcons();
+    }
+  </script>
+</body>
+
+</html>

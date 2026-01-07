@@ -133,6 +133,12 @@
       gap: 12px;
     }
 
+    /* 1カラム用 */
+    .button-grid.single {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+
     .btn-card {
       background: #fff;
       border: 1px solid #e5e5e5;
@@ -236,10 +242,21 @@
       color: #fff;
     }
 
-    .link-btn:hover .icon-line { color: #fff; }
-    .link-btn:hover .icon-web { color: #fff; }
-    .link-btn:hover .icon-youtube { color: #fff; }
-    .link-btn:hover .icon-drama { color: #fff; }
+    .link-btn:hover .icon-line {
+      color: #fff;
+    }
+
+    .link-btn:hover .icon-web {
+      color: #fff;
+    }
+
+    .link-btn:hover .icon-youtube {
+      color: #fff;
+    }
+
+    .link-btn:hover .icon-drama {
+      color: #fff;
+    }
 
     .link-btn.disabled {
       opacity: 0.4;
@@ -254,15 +271,41 @@
     }
 
     /* ブランドカラー */
-    .icon-line { color: #06C755; }
-    .icon-web { color: #0d9488; }
-    .icon-youtube { color: #FF0000; }
-    .icon-instagram { color: #E4405F; }
-    .icon-tiktok { color: #000000; }
-    .icon-drama { color: #8B5CF6; }
-    .icon-corporate { color: #3B82F6; }
-    .icon-recruit { color: #F59E0B; }
-    .icon-external { color: #6B7280; }
+    .icon-line {
+      color: #06C755;
+    }
+
+    .icon-web {
+      color: #0d9488;
+    }
+
+    .icon-youtube {
+      color: #FF0000;
+    }
+
+    .icon-instagram {
+      color: #E4405F;
+    }
+
+    .icon-tiktok {
+      color: #000000;
+    }
+
+    .icon-drama {
+      color: #8B5CF6;
+    }
+
+    .icon-corporate {
+      color: #3B82F6;
+    }
+
+    .icon-recruit {
+      color: #F59E0B;
+    }
+
+    .icon-external {
+      color: #6B7280;
+    }
 
     .footer {
       text-align: center;
@@ -488,7 +531,8 @@
 
     .modal-body {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%;
+      /* 16:9 */
       height: 0;
       overflow: hidden;
     }
@@ -620,24 +664,15 @@
         <i data-lucide="target" style="width:14px;height:14px;"></i>
         競合情報
       </div>
-      <div class="button-grid">
-        <div class="btn-card disabled">
-          <div class="btn-icon gray"><i data-lucide="target" style="width:20px;height:20px;"></i></div>
+      <div class="button-grid single">
+        <a href="competitors.html" class="btn-card">
+          <div class="btn-icon"><i data-lucide="target" style="width:20px;height:20px;"></i></div>
           <div class="btn-content">
             <div class="btn-title">競合一覧</div>
-            <div class="btn-desc">競合他社リスト</div>
+            <div class="btn-desc">競合他社・YouTubeチャンネル</div>
           </div>
           <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </div>
-
-        <div class="btn-card disabled">
-          <div class="btn-icon gray"><i data-lucide="youtube" style="width:20px;height:20px;"></i></div>
-          <div class="btn-content">
-            <div class="btn-title">競合YouTube一覧</div>
-            <div class="btn-desc">競合のYouTubeチャンネル</div>
-          </div>
-          <i data-lucide="chevron-right" class="btn-arrow" style="width:18px;height:18px;"></i>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -709,9 +744,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <iframe id="videoIframe" 
-          src="" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        <iframe id="videoIframe" src=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen>
         </iframe>
       </div>
