@@ -5132,19 +5132,21 @@
     }
 
     // 講師指示を描画
+    // 講師指示を描画
     function renderNotes() {
       const container = document.getElementById('notesList');
-      const empty = document.getElementById('notesEmpty');
       const notes = studentData.instructorNotes;
 
       if (!notes || notes.length === 0) {
-        container.innerHTML = '';
-        container.appendChild(empty);
-        empty.style.display = 'block';
+        container.innerHTML = `
+      <div class="notes-empty" id="notesEmpty">
+        <i data-lucide="clipboard-list" style="width:32px;height:32px;"></i>
+        <p>指示はありません</p>
+      </div>
+    `;
+        lucide.createIcons();
         return;
       }
-
-      empty.style.display = 'none';
 
       let html = '';
       notes.forEach((note, index) => {
@@ -5152,26 +5154,25 @@
         const checkedClass = note.completed ? 'checked' : '';
 
         html += `
-          <div class="note-item ${completedClass}">
-            <div class="note-checkbox ${checkedClass}" onclick="toggleNoteComplete(${index})">
-              <i data-lucide="check" style="width:14px;height:14px;"></i>
-            </div>
-            <div class="note-content">
-              <div class="note-text">${escapeHtml(note.text || '')}</div>
-              ${note.deadline ? `<div class="note-deadline"><i data-lucide="clock" style="width:12px;height:12px;"></i>${note.deadline}</div>` : ''}
-            </div>
-            <div class="note-actions">
-              <button class="note-action-btn" onclick="editNote(${index})">
-                <i data-lucide="pencil" style="width:14px;height:14px;"></i>
-              </button>
-              <button class="note-action-btn delete" onclick="deleteNote(${index})">
-                <i data-lucide="trash-2" style="width:14px;height:14px;"></i>
-              </button>
-            </div>
-          </div>
-        `;
+      <div class="note-item ${completedClass}">
+        <div class="note-checkbox ${checkedClass}" onclick="toggleNoteComplete(${index})">
+          <i data-lucide="check" style="width:14px;height:14px;"></i>
+        </div>
+        <div class="note-content">
+          <div class="note-text">${escapeHtml(note.text || '')}</div>
+          ${note.deadline ? `<div class="note-deadline"><i data-lucide="clock" style="width:12px;height:12px;"></i>${note.deadline}</div>` : ''}
+        </div>
+        <div class="note-actions">
+          <button class="note-action-btn" onclick="editNote(${index})">
+            <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+          </button>
+          <button class="note-action-btn delete" onclick="deleteNote(${index})">
+            <i data-lucide="trash-2" style="width:14px;height:14px;"></i>
+          </button>
+        </div>
+      </div>
+    `;
       });
-
       container.innerHTML = html;
       lucide.createIcons();
     }
