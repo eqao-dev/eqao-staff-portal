@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>授業可能数申請 | EQAO Staff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー（staff-schedule.htmlと統一） */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-id {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .dropdown-menu {
+      padding: 8px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .dropdown-item:hover {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .dropdown-item.danger {
+      color: #ef4444;
+    }
+
+    .dropdown-item.danger:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 4px 8px;
+    }
+
+    /* メインコンテンツ */
+    .main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-header-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .page-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .page-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .target-month {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* バナー */
+    .banner {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .banner.closed {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+
+    .banner.edit {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #2563eb;
+    }
+
+    .banner.success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+    }
+
+    .banner-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .banner-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* フォームカード */
+    .form-card {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .form-card h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #667eea;
+    }
+
+    /* フォーム要素 */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .form-label .required {
+      color: #dc2626;
+      margin-left: 4px;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* ラジオボタン */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .radio-option {
+      position: relative;
+    }
+
+    .radio-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .radio-option label {
+      display: block;
+      padding: 10px 18px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .radio-option input:checked+label {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+
+    .radio-option label:hover {
+      border-color: #667eea;
+    }
+
+    /* チェックボックス */
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .checkbox-option {
+      position: relative;
+    }
+
+    .checkbox-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .checkbox-option label {
+      display: block;
+      padding: 10px 16px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox-option input:checked+label {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+
+    .checkbox-option label:hover {
+      border-color: #667eea;
+    }
+
+    /* 数字入力 */
+    .number-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .number-input input {
+      width: 80px;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .number-input input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .number-input span {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* テキストエリア */
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* 条件付き表示エリア */
+    .conditional-section {
+      margin-top: 16px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 10px;
+    }
+
+    /* 送信ボタン */
+    .submit-section {
+      margin-top: 24px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ローディング */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e2e8f0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      margin-top: 16px;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 20px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .user-name {
+        display: none;
+      }
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        gap: 8px;
+      }
+
+      .radio-option label,
+      .checkbox-option label {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+    }
+
+    .info-banner {
+      background: #f8f9fa;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .info-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ローディング -->
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">読み込み中...</div>
+  </div>
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="category-schedule.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">授業可能数申請</span>
+      </div>
+      <!-- ユーザーメニュー -->
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdownName">-</div>
+            <div class="dropdown-id" id="dropdownId">-</div>
+          </div>
+          <div class="dropdown-menu">
+            <a href="my-schedule.html" class="dropdown-item">
+              <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+              マイスケジュール
+            </a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item danger" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div class="page-icon">
+          <i data-lucide="calendar-plus" style="width:24px;height:24px;"></i>
+        </div>
+        <h1 class="page-title">授業可能数申請</h1>
+      </div>
+      <div class="page-meta">
+        <span class="target-month" id="targetMonth">-</span>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <i data-lucide="info" class="info-icon"></i>
+      <span>毎月10日〜15日の間に翌月分の申請をお願いします。締切後の変更はスケジュール担当までご連絡ください。</span>
+    </div>
+
+    <!-- バナー: 受付停止中 -->
+    <div class="banner closed hidden" id="closedBanner">
+      <i data-lucide="lock" class="banner-icon"></i>
+      <span class="banner-text">現在、申請を受け付けていません。次回の受付開始をお待ちください。</span>
+    </div>
+
+    <!-- バナー: 編集モード -->
+    <div class="banner edit hidden" id="editBanner">
+      <i data-lucide="edit" class="banner-icon"></i>
+      <span class="banner-text">既に申請済みです。内容を修正して再送信できます。</span>
+    </div>
+
+    <!-- バナー: 送信完了 -->
+    <div class="banner success hidden" id="successBanner">
+      <i data-lucide="check-circle" class="banner-icon"></i>
+      <span class="banner-text">申請を送信しました！</span>
+    </div>
+
+    <!-- フォーム -->
+    <form id="availabilityForm">
+      <!-- 基本情報 -->
+      <div class="form-card">
+        <h2>担当可否</h2>
+
+        <div class="form-group">
+          <label class="form-label">対象月の授業担当は可能ですか？<span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="canTeach" id="canTeachYes" value="はい" required>
+              <label for="canTeachYes">はい</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="canTeach" id="canTeachNo" value="いいえ">
+              <label for="canTeachNo">いいえ</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="conditional-section hidden" id="cannotTeachSection">
+          <div class="form-group">
+            <label class="form-label">授業を担当できない理由をご記入ください</label>
+            <textarea name="cannotTeachReason" placeholder="例：長期出張のため、試験期間のため等"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- コマ数 -->
+      <div class="form-card" id="lessonCountSection">
+        <h2>希望コマ数</h2>
+
+        <div class="form-group">
+          <label class="form-label">理想的な担当コマ数<span class="required">*</span></label>
+          <div class="number-input">
+            <input type="number" name="idealLessons" min="0" max="100" required>
+            <span>コマ / 月</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">最大担当可能コマ数<span class="required">*</span></label>
+          <div class="number-input">
+            <input type="number" name="maxLessons" min="0" max="100" required>
+            <span>コマ / 月</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">校舎で担当可能な授業数</label>
+          <div class="number-input">
+            <input type="number" name="campusLessons" min="0" max="100" value="0">
+            <span>コマ / 月</span>
+          </div>
+          <p class="form-hint">オンラインのみの場合は0でOKです</p>
+        </div>
+      </div>
+
+      <!-- 授業スタイル -->
+      <div class="form-card" id="styleSection">
+        <h2>授業スタイル</h2>
+
+        <div class="form-group">
+          <label class="form-label">授業スタイルの希望<span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="stylePreference" id="style1" value="できる限り対面" required>
+              <label for="style1">できる限り対面</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="stylePreference" id="style2" value="どちらかといえば対面">
+              <label for="style2">どちらかといえば対面</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="stylePreference" id="style3" value="どちらでも可">
+              <label for="style3">どちらでも可</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="stylePreference" id="style4" value="どちらかといえばオンライン">
+              <label for="style4">どちらかといえばオンライン</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="stylePreference" id="style5" value="できる限りオンライン">
+              <label for="style5">できる限りオンライン</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 担当可能カテゴリ -->
+      <div class="form-card" id="categorySection">
+        <h2>担当可能カテゴリ</h2>
+
+        <div class="form-group">
+          <label class="form-label">担当可能なカテゴリを選択してください（複数選択可）<span class="required">*</span></label>
+          <div class="checkbox-group">
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat1" value="福祉系">
+              <label for="cat1">福祉系</label>
+            </div>
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat2" value="文学系">
+              <label for="cat2">文学系</label>
+            </div>
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat3" value="社会系">
+              <label for="cat3">社会系</label>
+            </div>
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat4" value="法学系">
+              <label for="cat4">法学系</label>
+            </div>
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat5" value="国際系">
+              <label for="cat5">国際系</label>
+            </div>
+            <div class="checkbox-option">
+              <input type="checkbox" name="categories" id="cat6" value="その他">
+              <label for="cat6">その他</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- コース対応 -->
+      <div class="form-card" id="courseSection">
+        <h2>コース対応</h2>
+
+        <div class="form-group">
+          <label class="form-label">EQAO ENGLISHコース対応は可能ですか？<span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="englishAvailable" id="englishYes" value="可能" required>
+              <label for="englishYes">可能</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="englishAvailable" id="englishNo" value="不可">
+              <label for="englishNo">不可</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">EQAO IPPANコース対応は可能ですか？<span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="ippanAvailable" id="ippanYes" value="可能" required>
+              <label for="ippanYes">可能</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="ippanAvailable" id="ippanNo" value="不可">
+              <label for="ippanNo">不可</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生徒数希望 -->
+      <div class="form-card" id="studentSection">
+        <h2>担当生徒について</h2>
+
+        <div class="form-group">
+          <label class="form-label">担当生徒を増やしたいと考えていますか？<span class="required">*</span></label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="wantMoreStudents" id="students1" value="はい" required>
+              <label for="students1">はい</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="wantMoreStudents" id="students2" value="どちらでも良い">
+              <label for="students2">どちらでも良い</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="wantMoreStudents" id="students3" value="現状維持で良い">
+              <label for="students3">現状維持で良い</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="wantMoreStudents" id="students4" value="少し減らしたい">
+              <label for="students4">少し減らしたい</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 備考 -->
+      <div class="form-card" id="notesSection">
+        <h2>その他</h2>
+
+        <div class="form-group">
+          <label class="form-label">特に担当できない内容がある場合</label>
+          <textarea name="cannotTeachContent" placeholder="例：英語系の対策は対応が難しいです"></textarea>
+          <p class="form-hint">基本的には小論文・プレゼン・面接・志望理由書など問わず対応いただきます</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">備考</label>
+          <textarea name="notes" placeholder="その他、スケジュール担当への連絡事項があればご記入ください"></textarea>
+        </div>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div class="submit-section">
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <i data-lucide="send" style="width: 20px; height: 20px;"></i>
+          <span id="submitBtnText">申請を送信</span>
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group.</p>
+  </footer>
+
+  <script>
+    // API設定
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+
+    // ログイン情報
+    let employeeId = '';
+    let employeeName = '';
+    let targetYearMonth = '';
+    let isAccepting = false;
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', async () => {
+      lucide.createIcons();
+
+      // ログイン確認
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const sessionData = JSON.parse(session);
+
+        if (Date.now() > sessionData.expiresAt) {
+          localStorage.removeItem('eqao_staff_session');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        employeeId = sessionData.employeeId;
+        employeeName = sessionData.name;
+
+        displayUserInfo(sessionData);
+      } catch {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // 設定を取得
+      await loadSettings();
+
+      // 既存データを読み込み
+      await loadExistingData();
+
+      // イベント設定
+      setupEventListeners();
+
+      document.getElementById('loading').classList.add('hidden');
+    });
+
+    // ユーザー情報表示
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const initial = name.charAt(0).toUpperCase();
+
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+      document.getElementById('dropdownName').textContent = name;
+      document.getElementById('dropdownId').textContent = `ID: ${data.employeeId}`;
+    }
+
+    // ユーザーメニュー開閉
+    function toggleUserMenu() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // メニュー外クリックで閉じる
+    document.addEventListener('click', (e) => {
+      const userMenu = document.querySelector('.user-menu');
+      const dropdown = document.getElementById('userDropdown');
+
+      if (userMenu && !userMenu.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+
+    // ログアウト
+    function handleLogout() {
+      if (confirm('ログアウトしますか？')) {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // 設定を取得
+    async function loadSettings() {
+      try {
+        const res = await fetch(`${API_URL}?action=getInstructorScheduleSettings`);
+        const data = await res.json();
+
+        if (data.success && data.settings) {
+          const { targetYear, targetMonth, isAccepting: accepting } = data.settings;
+          targetYearMonth = data.settings.targetYearMonth;
+          isAccepting = accepting;
+
+          document.getElementById('targetMonth').textContent = `${targetYear}年${targetMonth}月分`;
+
+          if (!isAccepting) {
+            document.getElementById('closedBanner').classList.remove('hidden');
+            disableAllInputs();
+          }
+        }
+      } catch (e) {
+        console.error('設定取得エラー:', e);
+      }
+    }
+
+    // 既存データを読み込み
+    async function loadExistingData() {
+      try {
+        const res = await fetch(`${API_URL}?action=getInstructorAvailability&employeeId=${employeeId}&yearMonth=${targetYearMonth}`);
+        const data = await res.json();
+
+        if (data.success && data.data) {
+          fillFormData(data.data);
+
+          if (isAccepting) {
+            document.getElementById('editBanner').classList.remove('hidden');
+            document.getElementById('submitBtnText').textContent = '申請を更新';
+          }
+        }
+      } catch (e) {
+        console.error('既存データ取得エラー:', e);
+      }
+    }
+
+    // フォームにデータを反映
+    function fillFormData(data) {
+      // 担当可否
+      if (data.canTeach) {
+        const radio = document.querySelector(`input[name="canTeach"][value="${data.canTeach}"]`);
+        if (radio) radio.checked = true;
+        if (data.canTeach === 'いいえ') {
+          document.getElementById('cannotTeachSection').classList.remove('hidden');
+          hideTeachableSections();
+        }
+      }
+
+      if (data.cannotTeachReason) {
+        document.querySelector('textarea[name="cannotTeachReason"]').value = data.cannotTeachReason;
+      }
+
+      // コマ数
+      if (data.idealLessons !== undefined && data.idealLessons !== '') {
+        document.querySelector('input[name="idealLessons"]').value = data.idealLessons;
+      }
+      if (data.maxLessons !== undefined && data.maxLessons !== '') {
+        document.querySelector('input[name="maxLessons"]').value = data.maxLessons;
+      }
+      if (data.campusLessons !== undefined && data.campusLessons !== '') {
+        document.querySelector('input[name="campusLessons"]').value = data.campusLessons;
+      }
+
+      // 授業スタイル
+      if (data.stylePreference) {
+        const styleRadio = document.querySelector(`input[name="stylePreference"][value="${data.stylePreference}"]`);
+        if (styleRadio) styleRadio.checked = true;
+      }
+
+      // カテゴリ
+      if (data.categories && data.categories.length > 0) {
+        data.categories.forEach(cat => {
+          const checkbox = document.querySelector(`input[name="categories"][value="${cat}"]`);
+          if (checkbox) checkbox.checked = true;
+        });
+      }
+
+      // コース対応
+      if (data.englishAvailable) {
+        const englishRadio = document.querySelector(`input[name="englishAvailable"][value="${data.englishAvailable}"]`);
+        if (englishRadio) englishRadio.checked = true;
+      }
+      if (data.ippanAvailable) {
+        const ippanRadio = document.querySelector(`input[name="ippanAvailable"][value="${data.ippanAvailable}"]`);
+        if (ippanRadio) ippanRadio.checked = true;
+      }
+
+      // 生徒数希望
+      if (data.wantMoreStudents) {
+        const studentsRadio = document.querySelector(`input[name="wantMoreStudents"][value="${data.wantMoreStudents}"]`);
+        if (studentsRadio) studentsRadio.checked = true;
+      }
+
+      // その他
+      if (data.cannotTeachContent) {
+        document.querySelector('textarea[name="cannotTeachContent"]').value = data.cannotTeachContent;
+      }
+      if (data.notes) {
+        document.querySelector('textarea[name="notes"]').value = data.notes;
+      }
+    }
+
+    // イベント設定
+    function setupEventListeners() {
+      // 担当可否の変更
+      document.querySelectorAll('input[name="canTeach"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          if (e.target.value === 'いいえ') {
+            document.getElementById('cannotTeachSection').classList.remove('hidden');
+            hideTeachableSections();
+          } else {
+            document.getElementById('cannotTeachSection').classList.add('hidden');
+            showTeachableSections();
+          }
+        });
+      });
+
+      // フォーム送信
+      document.getElementById('availabilityForm').addEventListener('submit', handleSubmit);
+    }
+
+    // 担当不可時に非表示にするセクション
+    function hideTeachableSections() {
+      ['lessonCountSection', 'styleSection', 'categorySection', 'courseSection', 'studentSection'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+
+      // 必須属性を解除
+      document.querySelector('input[name="idealLessons"]').removeAttribute('required');
+      document.querySelector('input[name="maxLessons"]').removeAttribute('required');
+      document.querySelectorAll('input[name="stylePreference"]').forEach(r => r.removeAttribute('required'));
+      document.querySelectorAll('input[name="englishAvailable"]').forEach(r => r.removeAttribute('required'));
+      document.querySelectorAll('input[name="ippanAvailable"]').forEach(r => r.removeAttribute('required'));
+      document.querySelectorAll('input[name="wantMoreStudents"]').forEach(r => r.removeAttribute('required'));
+    }
+
+    // 担当可能時に表示するセクション
+    function showTeachableSections() {
+      ['lessonCountSection', 'styleSection', 'categorySection', 'courseSection', 'studentSection'].forEach(id => {
+        document.getElementById(id).classList.remove('hidden');
+      });
+
+      // 必須属性を再設定
+      document.querySelector('input[name="idealLessons"]').setAttribute('required', '');
+      document.querySelector('input[name="maxLessons"]').setAttribute('required', '');
+      document.querySelector('input[name="stylePreference"]').setAttribute('required', '');
+      document.querySelector('input[name="englishAvailable"]').setAttribute('required', '');
+      document.querySelector('input[name="ippanAvailable"]').setAttribute('required', '');
+      document.querySelector('input[name="wantMoreStudents"]').setAttribute('required', '');
+    }
+
+    // 全入力を無効化
+    function disableAllInputs() {
+      document.querySelectorAll('input, textarea, button[type="submit"]').forEach(el => {
+        el.disabled = true;
+      });
+    }
+
+    // フォーム送信
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div> 送信中...';
+
+      // カテゴリを取得
+      const categories = [];
+      document.querySelectorAll('input[name="categories"]:checked').forEach(cb => {
+        categories.push(cb.value);
+      });
+
+      const canTeach = form.canTeach.value;
+
+      // カテゴリのバリデーション（担当可能な場合のみ）
+      if (canTeach === 'はい' && categories.length === 0) {
+        alert('担当可能なカテゴリを1つ以上選択してください');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" style="width: 20px; height: 20px;"></i> 申請を送信';
+        lucide.createIcons();
+        return;
+      }
+
+      const payload = {
+        action: 'saveInstructorAvailability',
+        employeeId: employeeId,
+        instructorName: employeeName,
+        yearMonth: targetYearMonth,
+        canTeach: canTeach,
+        cannotTeachReason: form.cannotTeachReason?.value || '',
+        idealLessons: form.idealLessons?.value || '',
+        maxLessons: form.maxLessons?.value || '',
+        campusLessons: form.campusLessons?.value || '0',
+        stylePreference: form.stylePreference?.value || '',
+        categories: categories,
+        englishAvailable: form.englishAvailable?.value || '',
+        ippanAvailable: form.ippanAvailable?.value || '',
+        wantMoreStudents: form.wantMoreStudents?.value || '',
+        cannotTeachContent: form.cannotTeachContent?.value || '',
+        notes: form.notes?.value || ''
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+
+        // no-corsモードでは成功扱い
+        document.getElementById('editBanner').classList.add('hidden');
+        document.getElementById('successBanner').classList.remove('hidden');
+        submitBtn.innerHTML = '<i data-lucide="check" style="width: 20px; height: 20px;"></i> 送信完了';
+        lucide.createIcons();
+
+        // 3秒後にボタンを戻す
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i data-lucide="send" style="width: 20px; height: 20px;"></i> 申請を更新';
+          document.getElementById('editBanner').classList.remove('hidden');
+          document.getElementById('successBanner').classList.add('hidden');
+          lucide.createIcons();
+        }, 3000);
+
+      } catch (error) {
+        alert('エラー: ' + error.message);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" style="width: 20px; height: 20px;"></i> 申請を送信';
+        lucide.createIcons();
+      }
+    }
+  </script>
+</body>
+
+</html>

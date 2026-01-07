@@ -321,6 +321,24 @@
       box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
     }
 
+    .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
     .modal-footer {
       padding: 16px 20px;
       border-top: 1px solid #eee;
@@ -751,12 +769,21 @@
       color: #fff;
     }
 
+    .student-card.expanded {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: #8b5cf6;
+    }
+
+    .student-card.expanded .student-header {
+      background: #ede9fe;
+    }
+
     /* 詳細パネル */
     .student-details {
       display: none;
       border-top: 1px solid #eee;
       padding: 20px;
-      background: #fafafa;
+      background: #f0f1f3;
       border-radius: 0 0 14px 14px;
     }
 
@@ -1285,6 +1312,626 @@
         display: none;
       }
     }
+
+    /* 紫色のテーマ */
+    :root {
+      --purple: #8b5cf6;
+      --purple-light: #ede9fe;
+    }
+
+    .tab-btn.active[data-tab="assignment"] {
+      background: var(--purple);
+    }
+
+    /* 割当サマリー表示 */
+    .assignment-summary {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .assignment-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .assignment-badge.homeroom {
+      background: var(--purple-light);
+      color: var(--purple);
+    }
+
+    .assignment-badge.homeroom.empty {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .assignment-badge.mentor {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .assignment-badge.mentor.empty {
+      background: var(--warning-light);
+      color: #92400e;
+    }
+
+    /* カード状態 */
+    .student-card.no-homeroom {
+      border-left: 4px solid #ef4444;
+    }
+
+    .student-card.no-mentor {
+      border-left: 4px solid var(--warning);
+    }
+
+    .student-card.assigned {
+      border-left: 4px solid var(--success);
+    }
+
+    /* 割当セクション */
+    .assignment-section {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .assignment-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .assignment-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .assignment-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .assignment-section-title.purple {
+      color: var(--purple);
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .add-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .add-btn.purple {
+      background: var(--purple);
+    }
+
+    .add-btn.purple:hover {
+      background: #7c3aed;
+    }
+
+    /* 割当リスト */
+    .assignment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .assignment-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+    }
+
+    .assignment-item.active {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+
+    .assignment-item.ended {
+      background: #f5f5f5;
+      border-color: #ddd;
+      opacity: 0.7;
+    }
+
+    .assignment-item-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .assignment-item-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .assignment-item-avatar.purple {
+      background: var(--purple);
+    }
+
+    .assignment-item-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .assignment-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .assignment-item-date {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .assignment-item-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .assignment-action-btn {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .assignment-action-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .assignment-action-btn.danger:hover {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    .empty-assignment {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* 履歴リンク */
+    .history-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 0;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+
+    .history-link:hover {
+      color: var(--primary-dark);
+    }
+
+    /* 履歴モーダル内 */
+    .history-section {
+      margin-bottom: 24px;
+    }
+
+    .history-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .history-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .history-item {
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+    }
+
+    .history-item.active {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+
+    .history-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .history-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .history-item-status {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .history-item-status.active {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .history-item-status.ended {
+      background: #ddd;
+      color: #666;
+    }
+
+    .history-item-period {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .history-item-note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #eee;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .assignment-summary {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .assignment-badge {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+
+      .assignment-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .assignment-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    /* 未割当がある場合の警告スタイル */
+    .stat-card.pending.has-items .stat-icon {
+      background: #fef3c7;
+      color: #d97706;
+      animation: pulse-warning 2s ease-in-out infinite;
+    }
+
+    .stat-card.pending.has-items .stat-value {
+      color: #d97706;
+    }
+
+    .stat-card.pending.has-items {
+      border: 2px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    /* パルスアニメーション */
+    @keyframes pulse-warning {
+
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+      }
+
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+      }
+    }
+
+    /* メンター別集計ボタン */
+    .mentor-stats-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      margin-left: auto;
+    }
+
+    .mentor-stats-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* メンター集計テーブル */
+    .mentor-stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .mentor-stats-table th,
+    .mentor-stats-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mentor-stats-table th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #666;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .mentor-stats-table tr:hover {
+      background: #f8f9fa;
+    }
+
+    .mentor-stats-table tr.clickable {
+      cursor: pointer;
+    }
+
+    .mentor-stats-table tr.clickable:hover {
+      background: #e0f2fe;
+    }
+
+    .mentor-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mentor-name-cell .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .count-badge.homeroom {
+      background: #ede9fe;
+      color: #7c3aed;
+    }
+
+    .count-badge.mentor {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .count-badge.total {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .count-badge.zero {
+      background: #f3f4f6;
+      color: #9ca3af;
+    }
+
+    /* 集計サマリー */
+    .stats-summary {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stats-summary-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .stats-summary-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stats-summary-label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* 月次集計関連 */
+    .month-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .month-selector label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .month-selector select {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      min-width: 150px;
+    }
+
+    .run-stats-btn {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #10b981;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .run-stats-btn:hover {
+      background: #059669;
+    }
+
+    /* ランキングバッジ */
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .rank-badge.gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+    }
+
+    .rank-badge.silver {
+      background: linear-gradient(135deg, #d1d5db, #9ca3af);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(156, 163, 175, 0.4);
+    }
+
+    .rank-badge.bronze {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
+    }
+
+    .rank-badge.normal {
+      background: #f3f4f6;
+      color: #666;
+    }
+
+    /* 履歴リンク */
+    .history-stats-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      color: #666;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      font-family: inherit;
+      margin-left: 8px;
+    }
+
+    .history-stats-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
   </style>
 </head>
 
@@ -1305,7 +1952,7 @@
         </div>
       </div>
       <div class="header-right">
-        <button class="refresh-btn" onclick="loadData()">
+        <button class="refresh-btn" onclick="loadCurrentTabData()">
           <i data-lucide="refresh-cw" style="width:16px;height:16px;"></i>
           <span>更新</span>
         </button>
@@ -1344,6 +1991,10 @@
       <button class="tab-btn active" data-tab="enrollment" onclick="switchTab('enrollment')">
         <i data-lucide="clipboard-check" style="width:18px;height:18px;"></i>
         入塾手続き
+      </button>
+      <button class="tab-btn" data-tab="assignment" onclick="switchTab('assignment')">
+        <i data-lucide="user-check" style="width:18px;height:18px;"></i>
+        担任・担当割当
       </button>
       <button class="tab-btn disabled" data-tab="scheduling">
         <i data-lucide="calendar-range" style="width:18px;height:18px;"></i>
@@ -1414,6 +2065,85 @@
       </div>
     </div>
 
+    <!-- 担任・担当割当タブ -->
+    <div class="tab-content" id="tab-assignment">
+      <!-- 統計カード -->
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-icon">
+            <i data-lucide="users" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">総生徒数</div>
+            <div class="stat-value" id="assign-stat-total">-</div>
+          </div>
+        </div>
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i data-lucide="user-x" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">担任 未割当</div>
+            <div class="stat-value" id="assign-stat-no-homeroom">-</div>
+          </div>
+        </div>
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i data-lucide="users-round" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">担当 未割当</div>
+            <div class="stat-value" id="assign-stat-no-mentor">-</div>
+          </div>
+        </div>
+        <div class="stat-card done">
+          <div class="stat-icon">
+            <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">両方割当済</div>
+            <div class="stat-value" id="assign-stat-complete">-</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 検索・フィルター -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <i data-lucide="search" style="width:18px;height:18px;"></i>
+          <input type="text" id="assign-search-input" placeholder="生徒/メンター名・IDで検索..." oninput="handleAssignSearch()">
+        </div>
+        <div class="filter-buttons">
+          <span class="filter-label">
+            <i data-lucide="filter" style="width:16px;height:16px;"></i>
+            表示
+          </span>
+          <button class="filter-btn active" data-assign-filter="all" onclick="setAssignFilter('all')">すべて</button>
+          <button class="filter-btn" data-assign-filter="no-homeroom"
+            onclick="setAssignFilter('no-homeroom')">担任未割当</button>
+          <button class="filter-btn" data-assign-filter="no-mentor"
+            onclick="setAssignFilter('no-mentor')">担当未割当</button>
+          <button class="filter-btn" data-assign-filter="complete" onclick="setAssignFilter('complete')">割当済み</button>
+        </div>
+        <button class="mentor-stats-btn" onclick="openMentorStatsModal()">
+          <i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i>
+          メンター別集計
+        </button>
+        <button class="history-stats-link" onclick="openMonthlyStatsModal()">
+          <i data-lucide="history" style="width:16px;height:16px;"></i>
+          月次履歴
+        </button>
+      </div>
+
+      <!-- 生徒リスト -->
+      <div class="student-list" id="assign-student-list">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">読み込み中...</div>
+        </div>
+      </div>
+    </div>
+
     <!-- スケジュール調整タブ -->
     <div class="tab-content" id="tab-scheduling">
       <div class="coming-soon">
@@ -1433,6 +2163,179 @@
         </div>
         <div class="coming-soon-title">消費コマ数管理</div>
         <div class="coming-soon-text">この機能は準備中です</div>
+      </div>
+    </div>
+
+    <!-- 担任割当モーダル -->
+    <div class="modal-overlay" id="homeroom-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="user-check" style="width:20px;height:20px;color:#8b5cf6;"></i>
+            担任割当
+          </div>
+          <button class="modal-close" onclick="closeHomeroomModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">生徒名</label>
+            <input type="text" class="form-input" id="homeroom-student-name" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">担任メンター<span class="required"
+                style="color:#ef4444;margin-left:4px;">*</span></label>
+            <select class="form-select" id="homeroom-mentor-select">
+              <option value="">選択してください</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">開始日<span class="required" style="color:#ef4444;margin-left:4px;">*</span></label>
+            <input type="date" class="form-input" id="homeroom-start-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">備考</label>
+            <textarea class="form-textarea" id="homeroom-note" placeholder="変更理由など（任意）"
+              style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:80px;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn secondary" onclick="closeHomeroomModal()">キャンセル</button>
+          <button class="modal-btn primary" style="background:#8b5cf6;" onclick="saveHomeroomAssignment()">
+            <i data-lucide="check" style="width:16px;height:16px;"></i>
+            割り当てる
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 担当メンター追加モーダル -->
+    <div class="modal-overlay" id="mentor-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="user-plus" style="width:20px;height:20px;color:var(--primary);"></i>
+            担当メンター追加
+          </div>
+          <button class="modal-close" onclick="closeMentorModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">生徒名</label>
+            <input type="text" class="form-input" id="mentor-student-name" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">担当メンター<span class="required"
+                style="color:#ef4444;margin-left:4px;">*</span></label>
+            <select class="form-select" id="mentor-mentor-select">
+              <option value="">選択してください</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">開始日<span class="required" style="color:#ef4444;margin-left:4px;">*</span></label>
+            <input type="date" class="form-input" id="mentor-start-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">備考</label>
+            <textarea class="form-textarea" id="mentor-note" placeholder="役割など（任意）"
+              style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:80px;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn secondary" onclick="closeMentorModal()">完了</button>
+          <button class="modal-btn primary" onclick="saveMentorAssignment()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            追加してもう1人登録
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 割当終了モーダル -->
+    <div class="modal-overlay" id="end-assignment-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="calendar-x" style="width:20px;height:20px;color:#ef4444;"></i>
+            割当終了
+          </div>
+          <button class="modal-close" onclick="closeEndAssignmentModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">メンター名</label>
+            <input type="text" class="form-input" id="end-mentor-name" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">終了日<span class="required" style="color:#ef4444;margin-left:4px;">*</span></label>
+            <input type="date" class="form-input" id="end-date">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn secondary" onclick="closeEndAssignmentModal()">キャンセル</button>
+          <button class="modal-btn primary" style="background:#ef4444;" onclick="saveEndAssignment()">
+            <i data-lucide="check" style="width:16px;height:16px;"></i>
+            終了する
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 履歴モーダル -->
+    <div class="modal-overlay" id="history-modal">
+      <div class="modal" style="max-width:600px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="history" style="width:20px;height:20px;color:var(--primary);"></i>
+            <span id="history-modal-title">割当履歴</span>
+          </div>
+          <button class="modal-close" onclick="closeHistoryModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="history-modal-body">
+          <!-- 動的に生成 -->
+        </div>
+      </div>
+    </div>
+    <!-- メンター別集計モーダル -->
+    <div class="modal-overlay" id="mentor-stats-modal">
+      <div class="modal" style="max-width:700px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="bar-chart-3" style="width:20px;height:20px;color:var(--primary);"></i>
+            メンター別集計
+          </div>
+          <button class="modal-close" onclick="closeMentorStatsModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="mentor-stats-body" style="max-height:70vh;overflow-y:auto;">
+          <!-- 動的に生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 月次集計履歴モーダル -->
+    <div class="modal-overlay" id="monthly-stats-modal">
+      <div class="modal" style="max-width:800px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i data-lucide="calendar-range" style="width:20px;height:20px;color:var(--primary);"></i>
+            月次集計履歴
+          </div>
+          <button class="modal-close" onclick="closeMonthlyStatsModal()">
+            <i data-lucide="x" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="monthly-stats-body" style="max-height:70vh;overflow-y:auto;">
+          <!-- 動的に生成 -->
+        </div>
       </div>
     </div>
   </main>
@@ -1478,6 +2381,7 @@
 
   <script>
     // ===== ログインチェック =====
+    let currentUser = null;
     document.addEventListener('DOMContentLoaded', () => {
       checkLoginStatus();
     });
@@ -1488,6 +2392,7 @@
       try {
         const data = JSON.parse(session);
         if (Date.now() > data.expiresAt) { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; return; }
+        currentUser = data;
         displayUserInfo(data);
       } catch { localStorage.removeItem('eqao_staff_session'); window.location.href = 'login.html'; }
     }
@@ -1523,23 +2428,6 @@
     let searchQuery = '';
     let currentTab = 'enrollment';
     let currentTutorialStudentId = null;
-
-    // タブ切り替え
-    function switchTab(tabId) {
-      currentTab = tabId;
-
-      // タブボタン更新
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tabId);
-      });
-
-      // タブコンテンツ更新
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.toggle('active', content.id === `tab-${tabId}`);
-      });
-
-      lucide.createIcons();
-    }
 
     // チュートリアル実施モーダルを開く
     function openTutorialModal(studentId) {
@@ -1592,7 +2480,7 @@
       // ローカルデータ更新（studentIdを使用）
       const student = students.find(s => String(s.studentId) === String(studentId));
       if (student) {
-        student['チュートリアル実施'] = '完了';  
+        student['チュートリアル実施'] = '完了';
         student.tutorialDate = tutorialDate;
         student.tutorialStaff = tutorialStaff;
       }
@@ -2116,6 +3004,1149 @@
         toast.classList.remove('show');
       }, 3000);
     }
+
+    // 割当タブ用グローバル変数
+    let mentorList = [];
+    let assignmentData = { homeroom: [], mentors: [] };
+    let assignFilter = 'all';
+    let assignSearchQuery = '';
+    let currentAssignStudentId = null;
+    let currentEndAssignment = null;
+
+    // 更新ボタン用：現在のタブに応じたデータ読み込み
+    function loadCurrentTabData() {
+      if (currentTab === 'enrollment') {
+        loadData();
+      } else if (currentTab === 'assignment') {
+        loadAssignmentData();
+      }
+    }
+
+    // タブ切り替え（既存のswitchTab関数を置き換え）
+    function switchTab(tabId) {
+      currentTab = tabId;
+
+      // タブボタン更新
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('active');
+        }
+      });
+
+      // タブコンテンツ更新
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === `tab-${tabId}`);
+      });
+
+      // 割当タブの場合、初回データ読み込み
+      if (tabId === 'assignment' && mentorList.length === 0) {
+        loadAssignmentData();
+      }
+
+      lucide.createIcons();
+    }
+
+    // ===== 割当データ読み込み =====
+    async function loadAssignmentData() {
+      const listEl = document.getElementById('assign-student-list');
+      listEl.innerHTML = `
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">読み込み中...</div>
+  </div>
+  `;
+
+      try {
+        // メンターリストと割当データを並列で取得
+        const [mentorRes, assignRes] = await Promise.all([
+          fetch(`${GAS_API_URL}?action=getMentorList`),
+          fetch(`${GAS_API_URL}?action=getAssignments`)
+        ]);
+
+        const mentorResult = await mentorRes.json();
+        const assignResult = await assignRes.json();
+
+        if (mentorResult.success) {
+          mentorList = mentorResult.data;
+        }
+
+        if (assignResult.success) {
+          assignmentData = {
+            homeroom: assignResult.homeroom || [],
+            mentors: assignResult.mentors || []
+          };
+        }
+
+        // 生徒データがまだ読み込まれていなければ読み込む
+        if (students.length === 0) {
+          const studentRes = await fetch(`${GAS_API_URL}?action=getScheduleData`);
+          const studentResult = await studentRes.json();
+          if (studentResult.success) {
+            students = studentResult.data;
+          }
+        }
+
+        updateAssignStats();
+        renderAssignStudents();
+
+      } catch (error) {
+        console.error('割当データ読み込みエラー:', error);
+        listEl.innerHTML = `
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <i data-lucide="alert-circle" style="width:32px;height:32px;"></i>
+    </div>
+    <div class="empty-state-title">データの読み込みに失敗しました</div>
+    <p>ページを再読み込みしてください</p>
+  </div>
+  `;
+        lucide.createIcons();
+      }
+    }
+
+    // 割当統計更新
+    function updateAssignStats() {
+      const total = students.length;
+
+      // 担任が割り当てられている生徒
+      const studentsWithHomeroom = new Set(
+        assignmentData.homeroom.filter(a => a.isActive).map(a => a.studentId)
+      );
+
+      // 担当メンターが割り当てられている生徒
+      const studentsWithMentor = new Set(
+        assignmentData.mentors.filter(a => a.isActive).map(a => a.studentId)
+      );
+
+      const noHomeroom = total - studentsWithHomeroom.size;
+      const noMentor = total - studentsWithMentor.size;
+
+      // 両方割当済み
+      const complete = students.filter(s =>
+        studentsWithHomeroom.has(String(s.studentId)) &&
+        studentsWithMentor.has(String(s.studentId))
+      ).length;
+
+      document.getElementById('assign-stat-total').textContent = total;
+      document.getElementById('assign-stat-no-homeroom').textContent = noHomeroom;
+      document.getElementById('assign-stat-no-mentor').textContent = noMentor;
+      document.getElementById('assign-stat-complete').textContent = complete;
+
+      // ★ 未割当がある場合にクラスを追加
+      const homeroomCard = document.getElementById('assign-stat-no-homeroom').closest('.stat-card');
+      const mentorCard = document.getElementById('assign-stat-no-mentor').closest('.stat-card');
+
+      homeroomCard.classList.toggle('has-items', noHomeroom > 0);
+      mentorCard.classList.toggle('has-items', noMentor > 0);
+    }
+
+    // フィルター設定
+    function setAssignFilter(filter) {
+      assignFilter = filter;
+      document.querySelectorAll('#tab-assignment .filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.assignFilter === filter);
+      });
+      renderAssignStudents();
+    }
+
+    // 検索
+    function handleAssignSearch() {
+      assignSearchQuery = document.getElementById('assign-search-input').value.trim().toLowerCase();
+      renderAssignStudents();
+    }
+
+    // 生徒の現在の担任を取得
+    function getCurrentHomeroom(studentId) {
+      return assignmentData.homeroom.find(a =>
+        a.studentId === String(studentId) && a.isActive
+      );
+    }
+
+    // 生徒の現在の担当メンターを取得
+    function getCurrentMentors(studentId) {
+      return assignmentData.mentors.filter(a =>
+        a.studentId === String(studentId) && a.isActive
+      );
+    }
+
+    // 割当生徒リスト描画
+    function renderAssignStudents() {
+      const listEl = document.getElementById('assign-student-list');
+
+      let filtered = [...students];
+
+      // 検索フィルター
+      if (assignSearchQuery) {
+        filtered = filtered.filter(s => {
+          const id = String(s.studentId).toLowerCase();
+          const name = (s.studentName || '').toLowerCase();
+          return id.includes(assignSearchQuery) || name.includes(assignSearchQuery);
+        });
+      }
+
+      // 状態フィルター
+      if (assignFilter === 'no-homeroom') {
+        filtered = filtered.filter(s => !getCurrentHomeroom(s.studentId));
+      } else if (assignFilter === 'no-mentor') {
+        filtered = filtered.filter(s => getCurrentMentors(s.studentId).length === 0);
+      } else if (assignFilter === 'complete') {
+        filtered = filtered.filter(s =>
+          getCurrentHomeroom(s.studentId) && getCurrentMentors(s.studentId).length > 0
+        );
+      }
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <i data-lucide="users" style="width:32px;height:32px;"></i>
+    </div>
+    <div class="empty-state-title">該当する生徒がいません</div>
+    <p>条件に一致する生徒データがありません</p>
+  </div>
+  `;
+        lucide.createIcons();
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(student => renderAssignCard(student)).join('');
+      lucide.createIcons();
+    }
+
+    // 割当カード描画
+    function renderAssignCard(student) {
+      const homeroom = getCurrentHomeroom(student.studentId);
+      const mentors = getCurrentMentors(student.studentId);
+      const initial = student.studentName ? student.studentName.charAt(0) : '?';
+
+      // カードの状態を判定
+      let cardClass = 'assigned';
+      if (!homeroom) {
+        cardClass = 'no-homeroom';
+      } else if (mentors.length === 0) {
+        cardClass = 'no-mentor';
+      }
+
+      // 担任バッジ
+      const homeroomBadge = homeroom
+        ? `<div class="assignment-badge homeroom">
+    <i data-lucide="user-check" style="width:12px;height:12px;"></i>
+    担任: ${homeroom.mentorName}
+  </div>`
+        : `<div class="assignment-badge homeroom empty">
+    <i data-lucide="user-x" style="width:12px;height:12px;"></i>
+    担任未割当
+  </div>`;
+
+      // 担当メンターバッジ
+      const mentorBadge = mentors.length > 0
+        ? `<div class="assignment-badge mentor">
+    <i data-lucide="users" style="width:12px;height:12px;"></i>
+    担当: ${mentors.length}名
+  </div>`
+        : `<div class="assignment-badge mentor empty">
+    <i data-lucide="users-round" style="width:12px;height:12px;"></i>
+    担当未割当
+  </div>`;
+
+      // 担任リスト（詳細パネル用）
+      const homeroomList = homeroom
+        ? `<div class="assignment-item active">
+    <div class="assignment-item-info">
+      <div class="assignment-item-avatar purple">${homeroom.mentorName.charAt(0)}</div>
+      <div class="assignment-item-details">
+        <div class="assignment-item-name">${homeroom.mentorName}</div>
+        <div class="assignment-item-date">${homeroom.startDate}〜</div>
+      </div>
+    </div>
+    <div class="assignment-item-actions">
+      <button class="assignment-action-btn"
+        onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
+        <i data-lucide="repeat" style="width:12px;height:12px;"></i>
+        変更
+      </button>
+      <button class="assignment-action-btn danger"
+        onclick="event.stopPropagation(); openEndAssignmentModal('homeroom', ${homeroom.rowIndex}, '${homeroom.mentorName}')">
+        <i data-lucide="x" style="width:12px;height:12px;"></i>
+        終了
+      </button>
+    </div>
+  </div>`
+        : `<div class="empty-assignment">担任が割り当てられていません</div>`;
+
+      // 担当メンターリスト（詳細パネル用）
+      const mentorListHtml = mentors.length > 0
+        ? mentors.map(m => `
+  <div class="assignment-item active">
+    <div class="assignment-item-info">
+      <div class="assignment-item-avatar">${m.mentorName.charAt(0)}</div>
+      <div class="assignment-item-details">
+        <div class="assignment-item-name">${m.mentorName}</div>
+        <div class="assignment-item-date">${m.startDate}〜${m.note ? ' / ' + m.note : ''}</div>
+      </div>
+    </div>
+    <div class="assignment-item-actions">
+      <button class="assignment-action-btn danger"
+        onclick="event.stopPropagation(); openEndAssignmentModal('mentor', ${m.rowIndex}, '${m.mentorName}')">
+        <i data-lucide="x" style="width:12px;height:12px;"></i>
+        終了
+      </button>
+    </div>
+  </div>
+  `).join('')
+        : `<div class="empty-assignment">担当メンターが割り当てられていません</div>`;
+
+      return `
+  <div class="student-card ${cardClass}" id="assign-card-${student.studentId}">
+    <div class="student-header" onclick="toggleAssignCard('${student.studentId}')">
+      <div class="student-info">
+        <div class="student-avatar purple">${initial}</div>
+        <div class="student-main">
+          <div class="student-name">${student.studentName || '名前なし'}</div>
+          <div class="student-meta">
+            <span><i data-lucide="hash" style="width:11px;height:11px;"></i>${student.studentId}</span>
+            <span><i data-lucide="graduation-cap" style="width:11px;height:11px;"></i>${student.grade || '-'}</span>
+            <span class="school-name"><i data-lucide="school" style="width:11px;height:11px;"></i>${student.highSchool
+        || '-'}</span>
+          </div>
+        </div>
+      </div>
+      <div class="assignment-summary">
+        ${homeroomBadge}
+        ${mentorBadge}
+      </div>
+      <button class="expand-btn purple">
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+    <div class="student-details">
+      <!-- 担任セクション -->
+      <div class="assignment-section">
+        <div class="assignment-section-header">
+          <div class="assignment-section-title purple">
+            <i data-lucide="user-check" style="width:18px;height:18px;"></i>
+            担任メンター
+          </div>
+          <button class="add-btn purple" onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
+            <i data-lucide="${homeroom ? 'repeat' : 'plus'}" style="width:14px;height:14px;"></i>
+            ${homeroom ? '変更' : '割当'}
+          </button>
+        </div>
+        <div class="assignment-list">
+          ${homeroomList}
+        </div>
+      </div>
+
+      <!-- 担当メンターセクション -->
+      <div class="assignment-section">
+        <div class="assignment-section-header">
+          <div class="assignment-section-title">
+            <i data-lucide="users" style="width:18px;height:18px;"></i>
+            担当メンター
+          </div>
+          <button class="add-btn" onclick="event.stopPropagation(); openMentorModal('${student.studentId}')">
+            <i data-lucide="plus" style="width:14px;height:14px;"></i>
+            追加
+          </button>
+        </div>
+        <div class="assignment-list">
+          ${mentorListHtml}
+        </div>
+      </div>
+
+      <!-- 履歴リンク -->
+      <button class="history-link"
+        onclick="event.stopPropagation(); openHistoryModal('${student.studentId}', '${student.studentName || ''}')">
+        <i data-lucide="history" style="width:14px;height:14px;"></i>
+        割当履歴を見る
+      </button>
+    </div>
+  </div>
+  `;
+    }
+
+    // 割当カード展開/折りたたみ
+    function toggleAssignCard(studentId) {
+      const card = document.getElementById(`assign-card-${studentId}`);
+      const isExpanding = !card.classList.contains('expanded');
+
+      if (isExpanding) {
+        document.querySelectorAll('#tab-assignment .student-card.expanded').forEach(c => {
+          if (c.id !== `assign-card-${studentId}`) {
+            c.classList.remove('expanded');
+          }
+        });
+      }
+
+      card.classList.toggle('expanded');
+      lucide.createIcons();
+    }
+
+    // ===== 担任割当モーダル =====
+    function openHomeroomModal(studentId) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
+
+      currentAssignStudentId = studentId;
+
+      document.getElementById('homeroom-student-name').value = student.studentName || '';
+      document.getElementById('homeroom-start-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('homeroom-note').value = '';
+
+      // メンター選択肢を設定
+      const select = document.getElementById('homeroom-mentor-select');
+      select.innerHTML = '<option value="">選択してください</option>';
+      mentorList.forEach(m => {
+        select.innerHTML += `<option value="${m.mentorId}">${m.name}</option>`;
+      });
+
+      document.getElementById('homeroom-modal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeHomeroomModal() {
+      document.getElementById('homeroom-modal').classList.remove('show');
+      currentAssignStudentId = null;
+    }
+
+    async function saveHomeroomAssignment() {
+      if (!currentAssignStudentId) return;
+
+      const mentorId = document.getElementById('homeroom-mentor-select').value;
+      const startDate = document.getElementById('homeroom-start-date').value;
+      const note = document.getElementById('homeroom-note').value.trim();
+
+      if (!mentorId) {
+        showToast('担任メンターを選択してください', 'error');
+        return;
+      }
+
+      if (!startDate) {
+        showToast('開始日を入力してください', 'error');
+        return;
+      }
+
+      // ★ 閉じる前にstudentIdを保存！
+      const studentId = currentAssignStudentId;
+
+      closeHomeroomModal();
+
+      try {
+        const params = new URLSearchParams({
+          action: 'assignHomeroom',
+          studentId: studentId,  // ★ 保存した値を使用
+          mentorId: mentorId,
+          startDate: startDate,
+          note: note,
+          updatedBy: currentUser?.name || ''
+        });
+
+        const response = await fetch(`${GAS_API_URL}?${params.toString()}`);
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('担任を割り当てました', 'success');
+          loadAssignmentData();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('担任割当エラー:', error);
+        showToast('割当に失敗しました: ' + error.message, 'error');
+      }
+    }
+
+    // ===== 担当メンター追加モーダル =====
+    function openMentorModal(studentId) {
+      const student = students.find(s => String(s.studentId) === String(studentId));
+      if (!student) return;
+
+      currentAssignStudentId = studentId;
+
+      document.getElementById('mentor-student-name').value = student.studentName || '';
+      document.getElementById('mentor-start-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('mentor-note').value = '';
+
+      // 既に割り当てられているメンターを除外
+      const currentMentorIds = getCurrentMentors(studentId).map(m => m.mentorId);
+
+      const select = document.getElementById('mentor-mentor-select');
+      select.innerHTML = '<option value="">選択してください</option>';
+      mentorList.forEach(m => {
+        if (!currentMentorIds.includes(m.mentorId)) {
+          select.innerHTML += `<option value="${m.mentorId}">${m.name}</option>`;
+        }
+      });
+
+      document.getElementById('mentor-modal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeMentorModal() {
+      document.getElementById('mentor-modal').classList.remove('show');
+      currentAssignStudentId = null;
+    }
+
+    async function saveMentorAssignment() {
+      if (!currentAssignStudentId) return;
+
+      const mentorId = document.getElementById('mentor-mentor-select').value;
+      const startDate = document.getElementById('mentor-start-date').value;
+      const note = document.getElementById('mentor-note').value.trim();
+
+      if (!mentorId) {
+        showToast('担当メンターを選択してください', 'error');
+        return;
+      }
+
+      if (!startDate) {
+        showToast('開始日を入力してください', 'error');
+        return;
+      }
+
+      const studentId = currentAssignStudentId;
+
+      try {
+        const params = new URLSearchParams({
+          action: 'addMentorAssignment',
+          studentId: studentId,
+          mentorId: mentorId,
+          startDate: startDate,
+          note: note,
+          updatedBy: currentUser?.name || ''
+        });
+
+        const response = await fetch(`${GAS_API_URL}?${params.toString()}`);
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('担当メンターを追加しました', 'success');
+
+          // ★ モーダルを閉じずにフォームをリセット
+          document.getElementById('mentor-mentor-select').value = '';
+          document.getElementById('mentor-note').value = '';
+
+          // ★ 追加したメンターを選択肢から除外するため再読み込み
+          await loadAssignmentData();
+
+          // ★ 選択肢を更新（追加済みメンターを除外）
+          updateMentorSelectOptions(studentId);
+
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('担当メンター追加エラー:', error);
+        showToast('追加に失敗しました: ' + error.message, 'error');
+      }
+    }
+
+    // ★ メンター選択肢を更新する関数を追加
+    function updateMentorSelectOptions(studentId) {
+      const currentMentorIds = getCurrentMentors(studentId).map(m => m.mentorId);
+
+      const select = document.getElementById('mentor-mentor-select');
+      select.innerHTML = '<option value="">選択してください</option>';
+
+      mentorList.forEach(m => {
+        if (!currentMentorIds.includes(m.mentorId)) {
+          select.innerHTML += `<option value="${m.mentorId}">${m.name}</option>`;
+        }
+      });
+
+      // 全員割当済みなら自動でモーダルを閉じる
+      if (select.options.length === 1) {
+        showToast('全てのメンターを割り当てました', 'success');
+        closeMentorModal();
+      }
+    }
+
+    // ===== 割当終了モーダル =====
+    function openEndAssignmentModal(type, rowIndex, mentorName) {
+      currentEndAssignment = { type, rowIndex };
+
+      document.getElementById('end-mentor-name').value = mentorName;
+      document.getElementById('end-date').value = new Date().toISOString().split('T')[0];
+
+      document.getElementById('end-assignment-modal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeEndAssignmentModal() {
+      document.getElementById('end-assignment-modal').classList.remove('show');
+      currentEndAssignment = null;
+    }
+
+    async function saveEndAssignment() {
+      if (!currentEndAssignment) return;
+
+      const endDate = document.getElementById('end-date').value;
+
+      if (!endDate) {
+        showToast('終了日を入力してください', 'error');
+        return;
+      }
+
+      // ★ 閉じる前にデータを保存！
+      const type = currentEndAssignment.type;
+      const rowIndex = currentEndAssignment.rowIndex;
+
+      closeEndAssignmentModal();
+
+      try {
+        const params = new URLSearchParams({
+          action: 'endAssignment',
+          type: type,           // ★ 保存した値を使用
+          rowIndex: rowIndex,   // ★ 保存した値を使用
+          endDate: endDate
+        });
+
+        const response = await fetch(`${GAS_API_URL}?${params.toString()}`);
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('割当を終了しました', 'success');
+          loadAssignmentData();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('割当終了エラー:', error);
+        showToast('終了に失敗しました: ' + error.message, 'error');
+      }
+    }
+
+    // ===== 履歴モーダル =====
+    async function openHistoryModal(studentId, studentName) {
+      document.getElementById('history-modal-title').textContent = `${studentName} の割当履歴`;
+      document.getElementById('history-modal-body').innerHTML = `
+  <div class="loading" style="padding:40px;">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">読み込み中...</div>
+  </div>
+  `;
+      document.getElementById('history-modal').classList.add('show');
+      lucide.createIcons();
+
+      try {
+        const response = await fetch(`${GAS_API_URL}?action=getAssignmentHistory&studentId=${encodeURIComponent(studentId)}`);
+        const result = await response.json();
+
+        if (result.success) {
+          renderHistoryModal(result.data);
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('履歴取得エラー:', error);
+        document.getElementById('history-modal-body').innerHTML = `
+  <div class="empty-state" style="padding:40px;">
+    <p>履歴の取得に失敗しました</p>
+  </div>
+  `;
+      }
+    }
+
+    function renderHistoryModal(history) {
+      const homeroomHtml = history.homeroom.length > 0
+        ? history.homeroom.map(h => `
+  <div class="history-item ${h.isActive ? 'active' : ''}">
+    <div class="history-item-header">
+      <div class="history-item-name">${h.mentorName}</div>
+      <span class="history-item-status ${h.isActive ? 'active' : 'ended'}">
+        ${h.isActive ? '現在' : '終了'}
+      </span>
+    </div>
+    <div class="history-item-period">
+      ${h.startDate} 〜 ${h.endDate || '現在'}
+    </div>
+    ${h.note ? `<div class="history-item-note">${h.note}</div>` : ''}
+  </div>
+  `).join('')
+        : '<div class="empty-assignment">履歴がありません</div>';
+
+      const mentorHtml = history.mentors.length > 0
+        ? history.mentors.map(m => `
+  <div class="history-item ${m.isActive ? 'active' : ''}">
+    <div class="history-item-header">
+      <div class="history-item-name">${m.mentorName}</div>
+      <span class="history-item-status ${m.isActive ? 'active' : 'ended'}">
+        ${m.isActive ? '現在' : '終了'}
+      </span>
+    </div>
+    <div class="history-item-period">
+      ${m.startDate} 〜 ${m.endDate || '現在'}
+    </div>
+    ${m.note ? `<div class="history-item-note">${m.note}</div>` : ''}
+  </div>
+  `).join('')
+        : '<div class="empty-assignment">履歴がありません</div>';
+
+      document.getElementById('history-modal-body').innerHTML = `
+  <div class="history-section">
+    <div class="history-section-title" style="color:#8b5cf6;">
+      <i data-lucide="user-check" style="width:16px;height:16px;"></i>
+      担任メンター履歴
+    </div>
+    <div class="history-list">
+      ${homeroomHtml}
+    </div>
+  </div>
+  <div class="history-section">
+    <div class="history-section-title">
+      <i data-lucide="users" style="width:16px;height:16px;"></i>
+      担当メンター履歴
+    </div>
+    <div class="history-list">
+      ${mentorHtml}
+    </div>
+  </div>
+  `;
+      lucide.createIcons();
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('history-modal').classList.remove('show');
+    }
+
+    // モーダル外クリックで閉じる（DOMContentLoadedに追加）
+    document.addEventListener('DOMContentLoaded', () => {
+      // 既存の初期化処理の後に追加
+
+      ['homeroom-modal', 'mentor-modal', 'end-assignment-modal', 'history-modal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+              modal.classList.remove('show');
+            }
+          });
+        }
+      });
+    });
+
+    // ===== 検索機能拡張（メンター名/IDでも検索） =====
+    function handleAssignSearch() {
+      assignSearchQuery = document.getElementById('assign-search-input').value.trim().toLowerCase();
+      renderAssignStudents();
+    }
+
+    // renderAssignStudents関数内の検索フィルター部分を修正
+    // 既存の関数を以下に置き換え
+
+    function renderAssignStudents() {
+      const listEl = document.getElementById('assign-student-list');
+
+      let filtered = [...students];
+
+      // 検索フィルター（生徒名/ID + メンター名/IDに拡張）
+      if (assignSearchQuery) {
+        filtered = filtered.filter(s => {
+          const studentId = String(s.studentId).toLowerCase();
+          const studentName = (s.studentName || '').toLowerCase();
+
+          // 生徒名/IDでマッチ
+          if (studentId.includes(assignSearchQuery) || studentName.includes(assignSearchQuery)) {
+            return true;
+          }
+
+          // 担任メンターでマッチ
+          const homeroom = getCurrentHomeroom(s.studentId);
+          if (homeroom) {
+            const mentorName = (homeroom.mentorName || '').toLowerCase();
+            const mentorId = String(homeroom.mentorId || '').toLowerCase();
+            if (mentorName.includes(assignSearchQuery) || mentorId.includes(assignSearchQuery)) {
+              return true;
+            }
+          }
+
+          // 担当メンターでマッチ
+          const mentors = getCurrentMentors(s.studentId);
+          for (const m of mentors) {
+            const mentorName = (m.mentorName || '').toLowerCase();
+            const mentorId = String(m.mentorId || '').toLowerCase();
+            if (mentorName.includes(assignSearchQuery) || mentorId.includes(assignSearchQuery)) {
+              return true;
+            }
+          }
+
+          return false;
+        });
+      }
+
+      // 状態フィルター
+      if (assignFilter === 'no-homeroom') {
+        filtered = filtered.filter(s => !getCurrentHomeroom(s.studentId));
+      } else if (assignFilter === 'no-mentor') {
+        filtered = filtered.filter(s => getCurrentMentors(s.studentId).length === 0);
+      } else if (assignFilter === 'complete') {
+        filtered = filtered.filter(s =>
+          getCurrentHomeroom(s.studentId) && getCurrentMentors(s.studentId).length > 0
+        );
+      }
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <i data-lucide="users" style="width:32px;height:32px;"></i>
+        </div>
+        <div class="empty-state-title">該当する生徒がいません</div>
+        <p>条件に一致する生徒データがありません</p>
+      </div>
+    `;
+        lucide.createIcons();
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(student => renderAssignCard(student)).join('');
+      lucide.createIcons();
+    }
+
+    // ===== メンター別集計モーダル =====
+    function openMentorStatsModal() {
+      const statsBody = document.getElementById('mentor-stats-body');
+
+      // メンターごとの集計を計算
+      const mentorStats = {};
+
+      // 全メンターを初期化
+      mentorList.forEach(m => {
+        mentorStats[m.mentorId] = {
+          mentorId: m.mentorId,
+          name: m.name,
+          homeroomCount: 0,
+          mentorCount: 0,
+          homeroomStudents: [],
+          mentorStudents: []
+        };
+      });
+
+      // 担任カウント
+      assignmentData.homeroom.filter(a => a.isActive).forEach(a => {
+        if (mentorStats[a.mentorId]) {
+          mentorStats[a.mentorId].homeroomCount++;
+          mentorStats[a.mentorId].homeroomStudents.push(a.studentId);
+        }
+      });
+
+      // 担当メンターカウント
+      assignmentData.mentors.filter(a => a.isActive).forEach(a => {
+        if (mentorStats[a.mentorId]) {
+          mentorStats[a.mentorId].mentorCount++;
+          mentorStats[a.mentorId].mentorStudents.push(a.studentId);
+        }
+      });
+
+      // 配列に変換してソート（担任数 + 担当数の合計順）
+      const sortedStats = Object.values(mentorStats).sort((a, b) =>
+        (b.homeroomCount + b.mentorCount) - (a.homeroomCount + a.mentorCount)
+      );
+
+      // 合計計算
+      const totalHomeroom = sortedStats.reduce((sum, m) => sum + m.homeroomCount, 0);
+      const totalMentor = sortedStats.reduce((sum, m) => sum + m.mentorCount, 0);
+
+      // HTML生成
+      statsBody.innerHTML = `
+    <div class="stats-summary">
+      <div class="stats-summary-item">
+        <div class="stats-summary-value">${mentorList.length}</div>
+        <div class="stats-summary-label">在籍メンター数</div>
+      </div>
+      <div class="stats-summary-item">
+        <div class="stats-summary-value" style="color:#7c3aed;">${totalHomeroom}</div>
+        <div class="stats-summary-label">担任割当数</div>
+      </div>
+      <div class="stats-summary-item">
+        <div class="stats-summary-value" style="color:#2563eb;">${totalMentor}</div>
+        <div class="stats-summary-label">担当割当数</div>
+      </div>
+    </div>
+    
+    <table class="mentor-stats-table">
+      <thead>
+        <tr>
+          <th>メンター</th>
+          <th style="text-align:center;">担任</th>
+          <th style="text-align:center;">担当</th>
+          <th style="text-align:center;">合計</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sortedStats.map(m => `
+          <tr class="clickable" onclick="filterByMentor('${m.mentorId}', '${m.name}')">
+            <td>
+              <div class="mentor-name-cell">
+                <div class="avatar">${m.name.charAt(0)}</div>
+                <div>
+                  <div style="font-weight:600;">${m.name}</div>
+                  <div style="font-size:12px;color:#888;">ID: ${m.mentorId}</div>
+                </div>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge homeroom ${m.homeroomCount === 0 ? 'zero' : ''}">${m.homeroomCount}</span>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge mentor ${m.mentorCount === 0 ? 'zero' : ''}">${m.mentorCount}</span>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge total">${m.homeroomCount + m.mentorCount}</span>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    
+    <p style="margin-top:16px;font-size:12px;color:#888;text-align:center;">
+      <i data-lucide="info" style="width:12px;height:12px;display:inline;vertical-align:middle;"></i>
+      メンターをクリックすると、そのメンターの生徒を絞り込めます
+    </p>
+  `;
+
+      document.getElementById('mentor-stats-modal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeMentorStatsModal() {
+      document.getElementById('mentor-stats-modal').classList.remove('show');
+    }
+
+    // メンターで絞り込み
+    function filterByMentor(mentorId, mentorName) {
+      closeMentorStatsModal();
+
+      // 検索ボックスにメンター名を入力
+      document.getElementById('assign-search-input').value = mentorName;
+      assignSearchQuery = mentorName.toLowerCase();
+
+      // フィルターを「すべて」に戻す
+      setAssignFilter('all');
+
+      showToast(`${mentorName} の生徒を表示中`, 'success');
+    }
+
+    // モーダル外クリックで閉じる（DOMContentLoaded内に追加）
+    document.getElementById('mentor-stats-modal')?.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeMentorStatsModal();
+      }
+    });
+
+    // ===== 月次集計履歴モーダル =====
+    let availableMonths = [];
+
+    async function openMonthlyStatsModal() {
+      const statsBody = document.getElementById('monthly-stats-body');
+      statsBody.innerHTML = `
+    <div class="loading" style="padding:40px;">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">読み込み中...</div>
+    </div>
+  `;
+      document.getElementById('monthly-stats-modal').classList.add('show');
+      lucide.createIcons();
+
+      try {
+        const response = await fetch(`${GAS_API_URL}?action=getMonthlyStats`);
+        const result = await response.json();
+
+        if (result.success) {
+          availableMonths = result.availableMonths || [];
+          renderMonthlyStats(result.yearMonth, result.data);
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('月次集計取得エラー:', error);
+        statsBody.innerHTML = `
+      <div class="empty-state" style="padding:40px;">
+        <p>データの取得に失敗しました</p>
+        <button class="run-stats-btn" style="margin-top:16px;" onclick="runMonthlyStats()">
+          <i data-lucide="play" style="width:14px;height:14px;"></i>
+          今すぐ集計を実行
+        </button>
+      </div>
+    `;
+        lucide.createIcons();
+      }
+    }
+
+    function renderMonthlyStats(yearMonth, data) {
+      const statsBody = document.getElementById('monthly-stats-body');
+
+      // 年月選択オプション
+      const monthOptions = availableMonths.map(m =>
+        `<option value="${m}" ${m === yearMonth ? 'selected' : ''}>${m}</option>`
+      ).join('');
+
+      if (!data || data.length === 0) {
+        statsBody.innerHTML = `
+      <div class="month-selector">
+        <label>年月:</label>
+        <select onchange="loadMonthlyStats(this.value)">
+          ${monthOptions || '<option value="">データなし</option>'}
+        </select>
+        <button class="run-stats-btn" onclick="runMonthlyStats()">
+          <i data-lucide="play" style="width:14px;height:14px;"></i>
+          今すぐ集計
+        </button>
+      </div>
+      <div class="empty-state" style="padding:40px;">
+        <p>${yearMonth ? `${yearMonth}のデータがありません` : 'まだ集計データがありません'}</p>
+      </div>
+    `;
+        lucide.createIcons();
+        return;
+      }
+
+      // ランキング上位を取得
+      const topHomeroom = [...data].sort((a, b) => b.homeroomCount - a.homeroomCount)[0];
+      const topMentor = [...data].sort((a, b) => b.mentorCount - a.mentorCount)[0];
+      const topTotal = data[0]; // 既に合計でソート済み
+
+      // ランクバッジ取得
+      const getRankBadge = (rank) => {
+        if (rank === 1) return '<span class="rank-badge gold">1</span>';
+        if (rank === 2) return '<span class="rank-badge silver">2</span>';
+        if (rank === 3) return '<span class="rank-badge bronze">3</span>';
+        return `<span class="rank-badge normal">${rank}</span>`;
+      };
+
+      statsBody.innerHTML = `
+    <div class="month-selector">
+      <label>年月:</label>
+      <select onchange="loadMonthlyStats(this.value)">
+        ${monthOptions}
+      </select>
+      <button class="run-stats-btn" onclick="runMonthlyStats()">
+        <i data-lucide="play" style="width:14px;height:14px;"></i>
+        今すぐ集計
+      </button>
+    </div>
+    
+    <div class="stats-summary" style="margin-bottom:24px;">
+      <div class="stats-summary-item" style="background:#ede9fe;border-radius:10px;padding:16px;">
+        <div style="font-size:12px;color:#7c3aed;font-weight:600;margin-bottom:8px;">👑 担任数1位</div>
+        <div style="font-size:18px;font-weight:700;color:#333;">${topHomeroom.mentorName}</div>
+        <div style="font-size:24px;font-weight:700;color:#7c3aed;">${topHomeroom.homeroomCount}名</div>
+      </div>
+      <div class="stats-summary-item" style="background:#dbeafe;border-radius:10px;padding:16px;">
+        <div style="font-size:12px;color:#2563eb;font-weight:600;margin-bottom:8px;">👑 担当数1位</div>
+        <div style="font-size:18px;font-weight:700;color:#333;">${topMentor.mentorName}</div>
+        <div style="font-size:24px;font-weight:700;color:#2563eb;">${topMentor.mentorCount}名</div>
+      </div>
+      <div class="stats-summary-item" style="background:#dcfce7;border-radius:10px;padding:16px;">
+        <div style="font-size:12px;color:#16a34a;font-weight:600;margin-bottom:8px;">👑 合計1位</div>
+        <div style="font-size:18px;font-weight:700;color:#333;">${topTotal.mentorName}</div>
+        <div style="font-size:24px;font-weight:700;color:#16a34a;">${topTotal.total}名</div>
+      </div>
+    </div>
+    
+    <table class="mentor-stats-table">
+      <thead>
+        <tr>
+          <th style="width:60px;text-align:center;">順位</th>
+          <th>メンター</th>
+          <th style="text-align:center;">担任</th>
+          <th style="text-align:center;">担当</th>
+          <th style="text-align:center;">合計</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(m => `
+          <tr>
+            <td style="text-align:center;">
+              ${getRankBadge(m.rank)}
+            </td>
+            <td>
+              <div class="mentor-name-cell">
+                <div class="avatar">${m.mentorName.charAt(0)}</div>
+                <div>
+                  <div style="font-weight:600;">${m.mentorName}</div>
+                  <div style="font-size:12px;color:#888;">ID: ${m.mentorId}</div>
+                </div>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge homeroom ${m.homeroomCount === 0 ? 'zero' : ''}">${m.homeroomCount}</span>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge mentor ${m.mentorCount === 0 ? 'zero' : ''}">${m.mentorCount}</span>
+            </td>
+            <td style="text-align:center;">
+              <span class="count-badge total">${m.total}</span>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    
+    <p style="margin-top:16px;font-size:12px;color:#888;text-align:right;">
+      集計日時: ${data[0]?.timestamp || '-'}
+    </p>
+  `;
+      lucide.createIcons();
+    }
+
+    async function loadMonthlyStats(yearMonth) {
+      const statsBody = document.getElementById('monthly-stats-body');
+      statsBody.innerHTML = `
+    <div class="loading" style="padding:40px;">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">読み込み中...</div>
+    </div>
+  `;
+
+      try {
+        const response = await fetch(`${GAS_API_URL}?action=getMonthlyStats&yearMonth=${encodeURIComponent(yearMonth)}`);
+        const result = await response.json();
+
+        if (result.success) {
+          renderMonthlyStats(result.yearMonth, result.data);
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('月次集計取得エラー:', error);
+        showToast('データの取得に失敗しました', 'error');
+      }
+    }
+
+    async function runMonthlyStats() {
+      if (!confirm('現在のデータで月次集計を実行しますか？')) return;
+
+      showToast('集計を実行中...', 'info');
+
+      try {
+        const response = await fetch(`${GAS_API_URL}?action=runMonthlyStats`);
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message, 'success');
+          // モーダルを再読み込み
+          openMonthlyStatsModal();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.error('月次集計実行エラー:', error);
+        showToast('集計の実行に失敗しました', 'error');
+      }
+    }
+
+    function closeMonthlyStatsModal() {
+      document.getElementById('monthly-stats-modal').classList.remove('show');
+    }
+
+    // モーダル外クリックで閉じる
+    document.getElementById('monthly-stats-modal')?.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeMonthlyStatsModal();
+      }
+    });
   </script>
 </body>
 
