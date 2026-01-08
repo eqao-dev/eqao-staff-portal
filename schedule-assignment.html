@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スケジュール割当 | EQAO Staff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: #111;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: #444;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ユーザーメニュー */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* メインコンテンツ */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* ページヘッダー */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .month-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .month-selector select {
+      padding: 10px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: white;
+      cursor: pointer;
+    }
+
+    .month-selector select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* 統計カード */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stat-value.warning {
+      color: #f59e0b;
+    }
+
+    .stat-value.success {
+      color: #10b981;
+    }
+
+    /* フィルター */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: white;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #667eea;
+    }
+
+    .filter-btn.active {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* テーブル */
+    .table-container {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .student-name {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .instructor-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .instructor-tag.designated {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .lessons-cell {
+      text-align: center;
+    }
+
+    .lessons-assigned {
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    .lessons-remaining {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    .lessons-remaining.done {
+      color: #10b981;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-badge.unassigned {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .status-badge.in-progress {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-badge.completed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .edit-btn {
+      padding: 6px 14px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .edit-btn:hover {
+      background: #5a6fd6;
+    }
+
+    /* モーダル */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: all 0.3s;
+    }
+
+    .modal-overlay.show .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: #f1f5f9;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #e2e8f0;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .student-info {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .student-info-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .student-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .student-info-label {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .student-info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .course-section {
+      margin-bottom: 28px;
+    }
+
+    .course-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .course-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .course-title .badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .course-title .badge.normal {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .course-title .badge.english {
+      background: #fce7f3;
+      color: #be185d;
+    }
+
+    .course-stats {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .course-stats span {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .assignment-list {
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .assignment-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .assignment-item:last-child {
+      border-bottom: none;
+    }
+
+    .assignment-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .assignment-instructor {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .assignment-lessons {
+      color: #64748b;
+    }
+
+    .assignment-tag {
+      padding: 2px 8px;
+      background: #fee2e2;
+      color: #dc2626;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .assignment-capacity {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .assignment-capacity.warning {
+      color: #f59e0b;
+    }
+
+    .assignment-delete {
+      padding: 6px;
+      border: none;
+      background: none;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .assignment-delete:hover {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .empty-state {
+      padding: 24px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .add-instructor-btn {
+      width: 100%;
+      padding: 12px;
+      border: 2px dashed #e2e8f0;
+      border-radius: 10px;
+      background: white;
+      color: #64748b;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .add-instructor-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    /* 講師追加フォーム */
+    .add-form {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .add-form.show {
+      display: block;
+    }
+
+    .add-form-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .add-form-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .add-form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .add-form-group select,
+    .add-form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .add-form-group select:focus,
+    .add-form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .add-form-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .add-form-btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .add-form-btn.primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .add-form-btn.primary:hover {
+      background: #5a6fd6;
+    }
+
+    .add-form-btn.secondary {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+
+    .add-form-btn.secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .capacity-warning {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #fef3c7;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #92400e;
+      display: none;
+    }
+
+    .capacity-warning.show {
+      display: block;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #e5e5e5;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-btn.secondary {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+
+    .modal-btn.secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .modal-btn.primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .modal-btn.primary:hover {
+      background: #5a6fd6;
+    }
+
+    /* ローディング */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .loading-overlay.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e2e8f0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      margin-top: 16px;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      margin-top: 20px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main {
+        padding: 24px 16px;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .user-name {
+        display: none;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* 通常コマセクション */
+    .course-section.normal {
+      background: #f0f9ff;
+      border: 2px solid #0ea5e9;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* 英語コマセクション */
+    .course-section.english {
+      background: #fdf2f8;
+      border: 2px solid #ec4899;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* 割当済みリスト */
+    .assignment-list {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    /* 講師追加ボタン */
+    .add-instructor-btn {
+      width: 100%;
+      padding: 12px;
+      border: 2px dashed #94a3b8;
+      border-radius: 10px;
+      background: transparent;
+      color: #64748b;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .add-instructor-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    /* 追加フォーム */
+    .add-form {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .add-form.show {
+      display: block;
+    }
+
+    /* プログレスバー */
+    .progress-cell {
+      min-width: 140px;
+    }
+
+    .progress-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .progress-fill.normal {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    }
+
+    .progress-fill.english {
+      background: linear-gradient(90deg, #ec4899, #f472b6);
+    }
+
+    .progress-fill.complete {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .progress-text span {
+      font-weight: 700;
+      color: #111;
+    }
+
+    .progress-text .remaining {
+      color: #ef4444;
+    }
+
+    .progress-text .done {
+      color: #10b981;
+    }
+
+    .assignment-capacity.not-submitted {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    .assignment-capacity.warning {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    /* 未保存の割当 */
+    .assignment-item.pending {
+      background: #fefce8;
+      border-left: 3px solid #eab308;
+    }
+
+    .pending-mark {
+      background: #eab308;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+
+    /* 保存ボタン */
+    .save-assignments-btn {
+      flex: 1;
+      padding: 14px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      margin-top: 16px;
+    }
+
+    .save-assignments-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .save-assignments-btn.hidden {
+      display: none;
+    }
+
+    /* ページヘッダー右側 */
+    .page-header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* 設定ボタン */
+    .settings-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .settings-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    /* 設定モーダル */
+    .settings-modal .modal {
+      max-width: 500px;
+    }
+
+    .settings-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .settings-select {
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      width: 100%;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .settings-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .settings-select {
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .settings-select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* トグルスイッチ */
+    .toggle-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toggle-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .toggle-desc {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 28px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.3s;
+      border-radius: 28px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-switch input:checked+.toggle-slider {
+      background-color: #10b981;
+    }
+
+    .toggle-switch input:checked+.toggle-slider:before {
+      transform: translateX(22px);
+    }
+
+    .settings-save-btn {
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .settings-save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .settings-save-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .month-label {
+      font-size: 14px;
+      color: #64748b;
+      margin-left: 4px;
+    }
+
+    .settings-hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ローディング -->
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">読み込み中...</div>
+  </div>
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="staff-schedule.html" class="back-btn">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+          戻る
+        </a>
+        <div class="header-divider"></div>
+        <span class="header-title">スケジュール割当</span>
+      </div>
+      <div class="user-menu">
+        <button class="user-btn" id="userBtn">
+          <div class="user-avatar" id="userAvatar">-</div>
+          <span class="user-name" id="userName">ログイン中</span>
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- ページヘッダー -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-icon">
+          <i data-lucide="calendar-check" style="width:24px;height:24px;"></i>
+        </div>
+        <h1 class="page-title">スケジュール割当</h1>
+      </div>
+      <div class="page-header-right">
+        <div class="month-selector">
+          <select id="yearMonth" onchange="loadData()">
+            <!-- 動的に生成 -->
+          </select>
+          <span class="month-label">の割当一覧</span>
+        </div>
+        <button class="settings-btn" onclick="openSettingsModal()">
+          <i data-lucide="settings" style="width:18px;height:18px;"></i>
+          設定
+        </button>
+      </div>
+    </div>
+
+    <!-- 統計カード -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">申請生徒数</div>
+        <div class="stat-value" id="statTotal">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">未割当</div>
+        <div class="stat-value warning" id="statUnassigned">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">割当中</div>
+        <div class="stat-value" id="statInProgress">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">割当完了</div>
+        <div class="stat-value success" id="statCompleted">-</div>
+      </div>
+    </div>
+
+    <!-- フィルター -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全て</button>
+      <button class="filter-btn" data-filter="unassigned" onclick="setFilter('unassigned')">未割当</button>
+      <button class="filter-btn" data-filter="in-progress" onclick="setFilter('in-progress')">割当中</button>
+      <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">割当完了</button>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 生徒名で検索..." oninput="filterTable()">
+      </div>
+    </div>
+
+    <!-- テーブル -->
+    <div class="table-container">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>生徒名</th>
+              <th>指名講師</th>
+              <th>希望講師</th>
+              <th>通常コマ</th>
+              <th>英語コマ</th>
+              <th>状態</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody">
+            <!-- 動的に生成 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">© 2026 EQAO Education Group.</p>
+  </footer>
+
+  <!-- 割当編集モーダル -->
+  <div class="modal-overlay" id="assignmentModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">割当編集</h2>
+        <button class="modal-close" onclick="closeModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 生徒情報 -->
+        <div class="student-info">
+          <div class="student-info-row">
+            <div class="student-info-item">
+              <span class="student-info-label">担任:</span>
+              <span class="student-info-value" id="modalHomeroom">-</span>
+            </div>
+            <div class="student-info-item">
+              <span class="student-info-label">指名講師:</span>
+              <span class="student-info-value" id="modalDesignated">-</span>
+            </div>
+            <div class="student-info-item">
+              <span class="student-info-label">希望講師:</span>
+              <span class="student-info-value" id="modalPreferred">-</span>
+            </div>
+          </div>
+          <div class="student-info-row" id="lastMonthRow" style="margin-top: 12px;">
+            <div class="student-info-item" style="width: 100%;">
+              <span class="student-info-label">先月担当:</span>
+              <span class="student-info-value" id="modalLastMonth">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 通常コマ -->
+        <div class="course-section normal" id="normalSection">
+          <div class="course-header">
+            <div class="course-title">
+              <span class="badge normal">通常</span>
+              通常コマ
+            </div>
+            <div class="course-stats">
+              希望: <span id="normalWanted">0</span> ／
+              割当: <span id="normalAssigned">0</span> ／
+              残り: <span id="normalRemaining">0</span>
+            </div>
+          </div>
+          <div class="assignment-list" id="normalAssignmentList">
+            <div class="empty-state">割当なし</div>
+          </div>
+          <button class="add-instructor-btn" onclick="showAddForm('normal')">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            講師を追加
+          </button>
+          <div class="add-form" id="normalAddForm">
+            <div class="add-form-row">
+              <div class="add-form-group">
+                <label class="add-form-label">講師</label>
+                <select id="normalInstructorSelect" onchange="checkCapacity('normal')">
+                  <option value="">選択してください</option>
+                </select>
+              </div>
+              <div class="add-form-group" style="max-width: 100px;">
+                <label class="add-form-label">コマ数</label>
+                <input type="number" id="normalLessonsInput" min="1" value="1" onchange="checkCapacity('normal')">
+              </div>
+              <div class="add-form-actions">
+                <button class="add-form-btn primary" onclick="addAssignment('normal')">追加</button>
+                <button class="add-form-btn secondary" onclick="hideAddForm('normal')">キャンセル</button>
+              </div>
+            </div>
+            <div class="capacity-warning" id="normalCapacityWarning">
+              ⚠️ この講師は上限を超えています
+            </div>
+          </div>
+        </div>
+
+        <!-- 英語コマ -->
+        <div class="course-section english" id="englishSection">
+          <div class="course-header">
+            <div class="course-title">
+              <span class="badge english">英語</span>
+              英語コマ
+            </div>
+            <div class="course-stats">
+              希望: <span id="englishWanted">0</span> ／
+              割当: <span id="englishAssigned">0</span> ／
+              残り: <span id="englishRemaining">0</span>
+            </div>
+          </div>
+          <div class="assignment-list" id="englishAssignmentList">
+            <div class="empty-state">割当なし</div>
+          </div>
+          <button class="add-instructor-btn" onclick="showAddForm('english')">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            講師を追加
+          </button>
+          <div class="add-form" id="englishAddForm">
+            <div class="add-form-row">
+              <div class="add-form-group">
+                <label class="add-form-label">講師</label>
+                <select id="englishInstructorSelect" onchange="checkCapacity('english')">
+                  <option value="">選択してください</option>
+                </select>
+              </div>
+              <div class="add-form-group" style="max-width: 100px;">
+                <label class="add-form-label">コマ数</label>
+                <input type="number" id="englishLessonsInput" min="1" value="1" onchange="checkCapacity('english')">
+              </div>
+              <div class="add-form-actions">
+                <button class="add-form-btn primary" onclick="addAssignment('english')">追加</button>
+                <button class="add-form-btn secondary" onclick="hideAddForm('english')">キャンセル</button>
+              </div>
+            </div>
+            <div class="capacity-warning" id="englishCapacityWarning">
+              ⚠️ この講師は上限を超えています
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="save-assignments-btn hidden" id="saveAssignmentsBtn" onclick="saveAllAssignments()">
+          <i data-lucide="save" style="width:18px;height:18px;"></i>
+          <span>保存</span>
+        </button>
+        <button class="modal-btn secondary" onclick="closeModal()">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API設定
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyFJMfjgZzOw9v16PEoQQrRqqYe__oSn6zHdajEXdeXaUf6ACxwBhcMaGf449Qju-t-/exec';
+
+    // グローバル変数
+    let currentYearMonth = '';
+    let studentList = [];
+    let instructorCapacity = [];
+    let currentStudent = null;
+    let currentFilter = 'all';
+
+    // ★追加: 一時的な割当データ
+    let pendingAssignments = {
+      normal: [],
+      english: []
+    };
+
+    // 既存割当データ
+    let currentAssignments = {
+      normal: [],
+      english: []
+    };
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', async () => {
+      lucide.createIcons();
+
+      // ログイン確認
+      const session = localStorage.getItem('eqao_staff_session');
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const sessionData = JSON.parse(session);
+        if (Date.now() > sessionData.expiresAt) {
+          localStorage.removeItem('eqao_staff_session');
+          window.location.href = 'login.html';
+          return;
+        }
+        displayUserInfo(sessionData);
+      } catch {
+        localStorage.removeItem('eqao_staff_session');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // 月選択肢を生成
+      generateMonthOptions();
+
+      // データ読み込み
+      await loadData();
+
+      document.getElementById('loading').classList.add('hidden');
+    });
+
+    // ユーザー情報表示
+    function displayUserInfo(data) {
+      const name = data.name || data.employeeId || '-';
+      const initial = name.charAt(0).toUpperCase();
+      document.getElementById('userAvatar').textContent = initial;
+      document.getElementById('userName').textContent = name;
+    }
+
+    // 月選択肢を生成
+    function generateMonthOptions() {
+      const select = document.getElementById('yearMonth');
+      const now = new Date();
+
+      for (let i = -2; i <= 3; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth() + i, 1);
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const value = `${y}-${m}`;
+        const label = `${y}年${date.getMonth() + 1}月`;
+
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+
+        // 翌月をデフォルト選択
+        if (i === 1) {
+          option.selected = true;
+          currentYearMonth = value;
+        }
+
+        select.appendChild(option);
+      }
+    }
+
+    // データ読み込み
+    async function loadData() {
+      const yearMonth = document.getElementById('yearMonth').value;
+      currentYearMonth = yearMonth;
+
+      document.getElementById('loading').classList.remove('hidden');
+
+      try {
+        // 割当一覧を取得
+        const listRes = await fetch(`${API_URL}?action=getAssignmentList&yearMonth=${yearMonth}`);
+        const listData = await listRes.json();
+
+        if (listData.success) {
+          studentList = listData.data;
+          renderTable();
+          updateStats();
+        }
+
+        // 講師キャパシティを取得
+        const capRes = await fetch(`${API_URL}?action=getInstructorCapacity&yearMonth=${yearMonth}`);
+        const capData = await capRes.json();
+
+        if (capData.success) {
+          instructorCapacity = capData.data;
+        }
+
+      } catch (error) {
+        console.error('データ読み込みエラー:', error);
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+    }
+
+    // テーブル描画
+    function renderTable() {
+      const tbody = document.getElementById('studentTableBody');
+      const searchText = document.getElementById('searchInput').value.toLowerCase();
+
+      const filtered = studentList.filter(student => {
+        // フィルター
+        if (currentFilter === 'unassigned' && student.status !== '未割当') return false;
+        if (currentFilter === 'in-progress' && student.status !== '割当中') return false;
+        if (currentFilter === 'completed' && student.status !== '割当完了') return false;
+
+        // 検索
+        if (searchText && !student.studentName.toLowerCase().includes(searchText)) return false;
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="11" style="text-align: center; padding: 40px; color: #94a3b8;">
+              該当する生徒がいません
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(student => {
+        const statusClass = student.status === '未割当' ? 'unassigned' :
+          student.status === '割当中' ? 'in-progress' : 'completed';
+
+        // 通常コマの進捗
+        const normalPercent = student.normalLessonsWanted > 0
+          ? Math.min(100, (student.normalLessonsAssigned / student.normalLessonsWanted) * 100)
+          : 0;
+        const normalComplete = student.normalRemaining === 0 && student.normalLessonsWanted > 0;
+
+        // 英語コマの進捗
+        const englishPercent = student.englishLessonsWanted > 0
+          ? Math.min(100, (student.englishLessonsAssigned / student.englishLessonsWanted) * 100)
+          : 0;
+        const englishComplete = student.englishRemaining === 0 && student.englishLessonsWanted > 0;
+
+        // 通常コマ表示
+        const normalHtml = student.normalLessonsWanted > 0 ? `
+    <div class="progress-wrapper">
+      <div class="progress-bar">
+        <div class="progress-fill ${normalComplete ? 'complete' : 'normal'}" style="width: ${normalPercent}%"></div>
+      </div>
+      <div class="progress-text">
+        <span>${student.normalLessonsAssigned}</span> / ${student.normalLessonsWanted}
+        ${normalComplete ? '<span class="done">✓</span>' : `<span class="remaining">(残${student.normalRemaining})</span>`}
+      </div>
+    </div>
+  ` : '<span style="color:#94a3b8">-</span>';
+
+        // 英語コマ表示
+        const englishHtml = student.englishLessonsWanted > 0 ? `
+    <div class="progress-wrapper">
+      <div class="progress-bar">
+        <div class="progress-fill ${englishComplete ? 'complete' : 'english'}" style="width: ${englishPercent}%"></div>
+      </div>
+      <div class="progress-text">
+        <span>${student.englishLessonsAssigned}</span> / ${student.englishLessonsWanted}
+        ${englishComplete ? '<span class="done">✓</span>' : `<span class="remaining">(残${student.englishRemaining})</span>`}
+      </div>
+    </div>
+  ` : '<span style="color:#94a3b8">-</span>';
+
+        return `
+    <tr>
+      <td class="student-name">${student.studentName}</td>
+      <td>${student.designatedInstructor ? `<span class="instructor-tag designated">${student.designatedInstructor}</span>` : '-'}</td>
+      <td>${student.preferredInstructor ? `<span class="instructor-tag">${student.preferredInstructor}</span>` : '-'}</td>
+      <td class="progress-cell">${normalHtml}</td>
+      <td class="progress-cell">${englishHtml}</td>
+      <td><span class="status-badge ${statusClass}">${student.status}</span></td>
+      <td><button class="edit-btn" onclick="openModal('${student.studentId}')">編集</button></td>
+    </tr>
+  `;
+      }).join('');
+    }
+
+    // 統計更新
+    function updateStats() {
+      const total = studentList.length;
+      const unassigned = studentList.filter(s => s.status === '未割当').length;
+      const inProgress = studentList.filter(s => s.status === '割当中').length;
+      const completed = studentList.filter(s => s.status === '割当完了').length;
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statUnassigned').textContent = unassigned;
+      document.getElementById('statInProgress').textContent = inProgress;
+      document.getElementById('statCompleted').textContent = completed;
+    }
+
+    // フィルター設定
+    function setFilter(filter) {
+      currentFilter = filter;
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+
+      renderTable();
+    }
+
+    // テーブルフィルター
+    function filterTable() {
+      renderTable();
+    }
+
+    // モーダルを開く
+    async function openModal(studentId) {
+      document.getElementById('loading').classList.remove('hidden');
+      pendingAssignments = { normal: [], english: [] };
+      currentStudent = studentList.find(s => s.studentId === studentId);
+      if (!currentStudent) return;
+
+      document.getElementById('modalTitle').textContent = `${currentStudent.studentName} の割当編集`;
+      document.getElementById('modalPreferred').textContent = currentStudent.preferredInstructor || '-';
+      document.getElementById('modalDesignated').textContent = currentStudent.designatedInstructor || '-';
+
+      // 担任と先月担当を並列で取得
+      const [homeroomResult, lastMonthResult] = await Promise.allSettled([
+        fetch(`${API_URL}?action=getStudentHomeroom&studentId=${studentId}`, {
+          method: 'GET',
+          redirect: 'follow'
+        }).then(res => res.json()),
+        fetch(`${API_URL}?action=getLastMonthInstructors&studentId=${studentId}&yearMonth=${currentYearMonth}`, {
+          method: 'GET',
+          redirect: 'follow'
+        }).then(res => res.json())
+      ]);
+
+      // 担任の結果を反映
+      if (homeroomResult.status === 'fulfilled' && homeroomResult.value.success && homeroomResult.value.data) {
+        document.getElementById('modalHomeroom').textContent = homeroomResult.value.data.name;
+      } else {
+        document.getElementById('modalHomeroom').textContent = '-';
+      }
+
+      // 先月担当の結果を反映
+      if (lastMonthResult.status === 'fulfilled' && lastMonthResult.value.success && lastMonthResult.value.data && lastMonthResult.value.data.length > 0) {
+        const lastMonthText = lastMonthResult.value.data.map(i => `${i.name}(${i.courseType}${i.lessons}コマ)`).join('、');
+        document.getElementById('modalLastMonth').textContent = lastMonthText;
+      } else {
+        document.getElementById('modalLastMonth').textContent = 'なし';
+      }
+
+      // コマ数表示
+      document.getElementById('normalWanted').textContent = currentStudent.normalLessonsWanted;
+      document.getElementById('normalAssigned').textContent = currentStudent.normalLessonsAssigned;
+      document.getElementById('normalRemaining').textContent = currentStudent.normalRemaining;
+
+      document.getElementById('englishWanted').textContent = currentStudent.englishLessonsWanted;
+      document.getElementById('englishAssigned').textContent = currentStudent.englishLessonsAssigned;
+      document.getElementById('englishRemaining').textContent = currentStudent.englishRemaining;
+
+      // 英語コマが0なら非表示
+      document.getElementById('englishSection').classList.toggle('hidden', currentStudent.englishLessonsWanted === 0);
+
+      // 割当詳細を取得
+      try {
+        const res = await fetch(`${API_URL}?action=getStudentAssignmentDetail&yearMonth=${currentYearMonth}&studentId=${studentId}`);
+        const data = await res.json();
+
+        if (data.success) {
+          // 現在の割当を保持
+          currentAssignments = {
+            normal: data.data.normal || [],
+            english: data.data.english || []
+          };
+
+          renderAssignmentListWithPending('normal');
+          renderAssignmentListWithPending('english');
+        }
+      } catch (error) {
+        console.error('割当詳細取得エラー:', error);
+      }
+
+      // 講師選択肢を更新
+      updateInstructorSelect('normal');
+      updateInstructorSelect('english');
+
+      // フォームをリセット
+      hideAddForm('normal');
+      hideAddForm('english');
+
+      lucide.createIcons();
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('assignmentModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    // モーダルを閉じる
+    function closeModal() {
+      document.getElementById('assignmentModal').classList.remove('show');
+      currentStudent = null;
+    }
+
+    // 割当リスト描画
+    function renderAssignmentList(courseType, assignments) {
+      const listEl = document.getElementById(`${courseType}AssignmentList`);
+
+      if (!assignments || assignments.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">割当なし</div>';
+        return;
+      }
+
+      listEl.innerHTML = assignments.map(a => {
+        const instructor = instructorCapacity.find(i => String(i.instructorId) === String(a.instructorId));
+
+        // 残りコマ数の表示（未提出の場合は「未提出」と表示）
+        let capacityText = '';
+        let capacityClass = '';
+
+        if (!instructor || !instructor.isSubmitted) {
+          capacityText = '未提出';
+          capacityClass = 'not-submitted';
+        } else if (instructor.remainingLessons < 0) {
+          capacityText = `残り${instructor.remainingLessons}コマ（超過）`;
+          capacityClass = 'warning';
+        } else {
+          capacityText = `残り${instructor.remainingLessons}コマ可能`;
+        }
+
+        return `
+      <div class="assignment-item">
+        <div class="assignment-info">
+          <span class="assignment-instructor">${a.instructorName}</span>
+          <span class="assignment-lessons">${a.assignedLessons}コマ</span>
+          ${a.isDesignated ? '<span class="assignment-tag">指名</span>' : ''}
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="assignment-capacity ${capacityClass}">${capacityText}</span>
+          <button class="assignment-delete" onclick="deleteAssignment(${a.rowIndex}, '${courseType}')">
+            <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+          </button>
+        </div>
+      </div>
+    `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // 割当リスト描画（一時追加を含む）
+    function renderAssignmentListWithPending(courseType) {
+      const listEl = document.getElementById(`${courseType}AssignmentList`);
+
+      // DBから取得した既存の割当
+      const existingAssignments = currentAssignments[courseType] || [];
+
+      // 一時追加分
+      const pending = pendingAssignments[courseType] || [];
+
+      const allAssignments = [...existingAssignments, ...pending];
+
+      if (allAssignments.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">割当なし</div>';
+        return;
+      }
+
+      listEl.innerHTML = allAssignments.map((a, index) => {
+        const instructor = instructorCapacity.find(i => String(i.instructorId) === String(a.instructorId));
+
+        // 残りコマ数の表示
+        let capacityText = '';
+        let capacityClass = '';
+
+        if (!instructor || !instructor.isSubmitted) {
+          capacityText = '未提出';
+          capacityClass = 'not-submitted';
+        } else if (instructor.remainingLessons < 0) {
+          capacityText = `残り${instructor.remainingLessons}コマ（超過）`;
+          capacityClass = 'warning';
+        } else {
+          capacityText = `残り${instructor.remainingLessons}コマ可能`;
+        }
+
+        // 未保存マーク
+        const pendingMark = a.isPending ? '<span class="pending-mark">NEW</span>' : '';
+
+        // 削除ボタン（未保存は一時リストから削除、保存済みはDB削除）
+        const deleteBtn = a.isPending
+          ? `<button class="assignment-delete" onclick="removePendingAssignment('${courseType}', ${index - existingAssignments.length})">
+           <i data-lucide="x" style="width:16px;height:16px;"></i>
+         </button>`
+          : `<button class="assignment-delete" onclick="deleteAssignment(${a.rowIndex}, '${courseType}')">
+           <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+         </button>`;
+
+        return `
+      <div class="assignment-item ${a.isPending ? 'pending' : ''}">
+        <div class="assignment-info">
+          <span class="assignment-instructor">${a.instructorName}</span>
+          <span class="assignment-lessons">${a.assignedLessons}コマ</span>
+          ${a.isDesignated ? '<span class="assignment-tag">指名</span>' : ''}
+          ${pendingMark}
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="assignment-capacity ${capacityClass}">${capacityText}</span>
+          ${deleteBtn}
+        </div>
+      </div>
+    `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // 一時追加を削除
+    function removePendingAssignment(courseType, index) {
+      const removed = pendingAssignments[courseType][index];
+
+      // 更新モードだった場合、元のデータを復元
+      if (removed && removed.isUpdate && removed.originalRowIndex) {
+        currentAssignments[courseType].push({
+          rowIndex: removed.originalRowIndex,
+          instructorId: removed.instructorId,
+          instructorName: removed.instructorName,
+          assignedLessons: removed.originalLessons || removed.assignedLessons,
+          isDesignated: removed.isDesignated,
+          isPending: false
+        });
+      }
+
+      pendingAssignments[courseType].splice(index, 1);
+      renderAssignmentListWithPending(courseType);
+      updatePendingStats(courseType);
+      updateSaveButtonState();
+    }
+
+    // 一時追加分を含めた統計更新
+    function updatePendingStats(courseType) {
+      const existing = currentAssignments[courseType] || [];
+      const pending = pendingAssignments[courseType] || [];
+
+      const existingTotal = existing.reduce((sum, a) => sum + a.assignedLessons, 0);
+      const pendingTotal = pending.reduce((sum, a) => sum + a.assignedLessons, 0);
+      const total = existingTotal + pendingTotal;
+
+      if (courseType === 'normal') {
+        const wanted = currentStudent.normalLessonsWanted;
+        document.getElementById('normalAssigned').textContent = total;
+        document.getElementById('normalRemaining').textContent = Math.max(0, wanted - total);
+      } else {
+        const wanted = currentStudent.englishLessonsWanted;
+        document.getElementById('englishAssigned').textContent = total;
+        document.getElementById('englishRemaining').textContent = Math.max(0, wanted - total);
+      }
+    }
+
+    // 保存ボタンの状態更新
+    function updateSaveButtonState() {
+      const hasPending = pendingAssignments.normal.length > 0 || pendingAssignments.english.length > 0;
+      const saveBtn = document.getElementById('saveAssignmentsBtn');
+
+      if (hasPending) {
+        saveBtn.classList.remove('hidden');
+        saveBtn.textContent = `保存（${pendingAssignments.normal.length + pendingAssignments.english.length}件）`;
+      } else {
+        saveBtn.classList.add('hidden');
+      }
+    }
+
+    // 一括保存
+    async function saveAllAssignments() {
+      const allPending = [
+        ...pendingAssignments.normal.map(a => ({ ...a, courseType: '通常' })),
+        ...pendingAssignments.english.map(a => ({ ...a, courseType: '英語' }))
+      ];
+
+      if (allPending.length === 0) return;
+
+      document.getElementById('loading').classList.remove('hidden');
+
+      try {
+        // 順番に保存
+        for (const assignment of allPending) {
+          const payload = {
+            action: 'saveAssignment',
+            yearMonth: currentYearMonth,
+            studentId: currentStudent.studentId,
+            studentName: currentStudent.studentName,
+            instructorId: assignment.instructorId,
+            instructorName: assignment.instructorName,
+            courseType: assignment.courseType,
+            assignedLessons: assignment.assignedLessons,
+            isDesignated: assignment.isDesignated
+          };
+
+          await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+        }
+
+        // 少し待つ
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // 一時リストをクリア
+        pendingAssignments = { normal: [], english: [] };
+
+        // データ再読み込み
+        await loadData();
+
+        // モーダル更新
+        if (currentStudent) {
+          const updatedStudent = studentList.find(s => s.studentId === currentStudent.studentId);
+          if (updatedStudent) {
+            currentStudent = updatedStudent;
+            await openModal(currentStudent.studentId);
+          }
+        }
+
+      } catch (error) {
+        console.error('一括保存エラー:', error);
+        alert('保存に失敗しました');
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+    }
+
+    // 講師選択肢を更新
+    function updateInstructorSelect(courseType) {
+      const select = document.getElementById(`${courseType}InstructorSelect`);
+
+      select.innerHTML = '<option value="">選択してください</option>';
+
+      // 提出済みと未提出で分ける
+      const submitted = instructorCapacity.filter(i => i.isSubmitted);
+      const notSubmitted = instructorCapacity.filter(i => !i.isSubmitted);
+
+      // 指名講師を先頭に
+      if (currentStudent && currentStudent.designatedInstructorId) {
+        const designated = instructorCapacity.find(i => String(i.instructorId) === String(currentStudent.designatedInstructorId));
+        if (designated) {
+          const option = document.createElement('option');
+          option.value = designated.instructorId;
+          option.dataset.name = designated.instructorName;
+          option.dataset.remaining = designated.remainingLessons ?? 0;
+          option.dataset.ideal = designated.idealLessons ?? 0;
+          option.dataset.max = designated.maxLessons ?? 0;
+
+          if (designated.isSubmitted) {
+            const campusText = designated.campusLessons > 0 ? ` / 校舎${designated.campusLessons}` : ` / 校舎${designated.campusLessons || 0}`;
+            option.textContent = `★ ${designated.instructorName}【指名】（理想${designated.idealLessons} / 上限${designated.maxLessons}${campusText} / 残り${designated.remainingLessons}）`;
+          } else {
+            option.textContent = `★ ${designated.instructorName}【指名】（未提出）`;
+          }
+          option.style.fontWeight = 'bold';
+          option.style.backgroundColor = '#fef2f2';
+          select.appendChild(option);
+        }
+      }
+
+      // 提出済み講師（指名以外）
+      submitted.forEach(instructor => {
+        // 指名講師は既に追加済みなのでスキップ
+        if (currentStudent && String(instructor.instructorId) === String(currentStudent.designatedInstructorId)) return;
+
+        const option = document.createElement('option');
+        option.value = instructor.instructorId;
+        option.dataset.name = instructor.instructorName;
+        option.dataset.remaining = instructor.remainingLessons ?? 0;
+        option.dataset.ideal = instructor.idealLessons ?? 0;
+        option.dataset.max = instructor.maxLessons ?? 0;
+
+        const campusText = ` / 校舎${instructor.campusLessons || 0}`;
+        option.textContent = `${instructor.instructorName}（理想${instructor.idealLessons} / 上限${instructor.maxLessons}${campusText} / 残り${instructor.remainingLessons}）`;
+
+        select.appendChild(option);
+      });
+
+      // 区切り線（未提出がいる場合のみ）
+      if (notSubmitted.length > 0) {
+        const separator = document.createElement('option');
+        separator.disabled = true;
+        separator.textContent = '────── 未提出 ──────';
+        separator.style.color = '#94a3b8';
+        select.appendChild(separator);
+      }
+
+      // 未提出講師
+      notSubmitted.forEach(instructor => {
+        // 指名講師は既に追加済みなのでスキップ
+        if (currentStudent && String(instructor.instructorId) === String(currentStudent.designatedInstructorId)) return;
+
+        const option = document.createElement('option');
+        option.value = instructor.instructorId;
+        option.dataset.name = instructor.instructorName;
+        option.dataset.remaining = '0';
+        option.dataset.ideal = '0';
+        option.dataset.max = '0';
+        option.textContent = `${instructor.instructorName}（未提出）`;
+        option.style.color = '#94a3b8';
+
+        select.appendChild(option);
+      });
+    }
+    // 追加フォーム表示
+    function showAddForm(courseType) {
+      document.getElementById(`${courseType}AddForm`).classList.add('show');
+    }
+
+    // 追加フォーム非表示
+    function hideAddForm(courseType) {
+      document.getElementById(`${courseType}AddForm`).classList.remove('show');
+      document.getElementById(`${courseType}InstructorSelect`).value = '';
+      document.getElementById(`${courseType}LessonsInput`).value = 1;
+      document.getElementById(`${courseType}CapacityWarning`).classList.remove('show');
+    }
+
+    // キャパシティチェック
+    // キャパシティチェック
+    function checkCapacity(courseType) {
+      const select = document.getElementById(`${courseType}InstructorSelect`);
+      const lessonsInput = document.getElementById(`${courseType}LessonsInput`);
+      const warning = document.getElementById(`${courseType}CapacityWarning`);
+
+      const selectedOption = select.options[select.selectedIndex];
+      if (!selectedOption || !selectedOption.value) {
+        warning.classList.remove('show');
+        return;
+      }
+
+      // 未提出講師の場合は警告を出さない
+      const max = selectedOption.dataset.max;
+      if (!max || max === '0' || max === 'null') {
+        warning.classList.remove('show');
+        return;
+      }
+
+      const remaining = parseInt(selectedOption.dataset.remaining) || 0;
+      const lessons = parseInt(lessonsInput.value) || 0;
+
+      if (lessons > remaining) {
+        warning.classList.add('show');
+      } else {
+        warning.classList.remove('show');
+      }
+    }
+
+    // 割当追加（一時リストに追加）
+    function addAssignment(courseType) {
+      const select = document.getElementById(`${courseType}InstructorSelect`);
+      const lessonsInput = document.getElementById(`${courseType}LessonsInput`);
+
+      const instructorId = select.value;
+      const selectedOption = select.options[select.selectedIndex];
+      const instructorName = selectedOption?.dataset?.name || '';
+      const lessons = parseInt(lessonsInput.value) || 0;
+
+      if (!instructorId || lessons <= 0) {
+        alert('講師とコマ数を入力してください');
+        return;
+      }
+
+      const isDesignated = String(currentStudent.designatedInstructorId) === String(instructorId);
+
+      // 既に同じ講師がpendingにあるかチェック → 上書き
+      const existingPendingIndex = pendingAssignments[courseType].findIndex(a => String(a.instructorId) === String(instructorId));
+      if (existingPendingIndex >= 0) {
+        pendingAssignments[courseType][existingPendingIndex].assignedLessons = lessons;
+        renderAssignmentListWithPending(courseType);
+        updatePendingStats(courseType);
+        hideAddForm(courseType);
+        updateSaveButtonState();
+        return;
+      }
+
+      // 既に同じ講師がDBに保存済みかチェック → 更新用にpendingに追加
+      const existingDbIndex = currentAssignments[courseType].findIndex(a => String(a.instructorId) === String(instructorId));
+      if (existingDbIndex >= 0) {
+        const existing = currentAssignments[courseType][existingDbIndex];
+        // pendingに新しいコマ数で追加（更新フラグ付き）
+        pendingAssignments[courseType].push({
+          instructorId: instructorId,
+          instructorName: instructorName,
+          assignedLessons: lessons,
+          isDesignated: isDesignated,
+          isPending: true,
+          isUpdate: true,
+          originalRowIndex: existing.rowIndex,
+          originalLessons: existing.assignedLessons  // ★元のコマ数を保存
+        });
+        // 既存から削除
+        currentAssignments[courseType].splice(existingDbIndex, 1);
+
+        renderAssignmentListWithPending(courseType);
+        updatePendingStats(courseType);
+        hideAddForm(courseType);
+        updateSaveButtonState();
+        return;
+      }
+
+      // 一時リストに追加
+      pendingAssignments[courseType].push({
+        instructorId: instructorId,
+        instructorName: instructorName,
+        assignedLessons: lessons,
+        isDesignated: isDesignated,
+        isPending: true  // 未保存フラグ
+      });
+
+      // 表示を更新
+      renderAssignmentListWithPending(courseType);
+      updatePendingStats(courseType);
+      hideAddForm(courseType);
+
+      // 保存ボタンを有効化
+      updateSaveButtonState();
+    }
+
+    // 割当削除
+    async function deleteAssignment(rowIndex, courseType) {
+      if (!confirm('この割当を削除しますか？')) return;
+
+      const payload = {
+        action: 'deleteAssignment',
+        rowIndex: rowIndex
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+
+        // 少し待ってからデータ再読み込み
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // データ再読み込み
+        await loadData();
+
+        // モーダル更新
+        if (currentStudent) {
+          const updatedStudent = studentList.find(s => s.studentId === currentStudent.studentId);
+          if (updatedStudent) {
+            currentStudent = updatedStudent;
+            openModal(currentStudent.studentId);
+          }
+        }
+
+      } catch (error) {
+        console.error('割当削除エラー:', error);
+        alert('削除に失敗しました');
+      }
+    }
+
+    // 設定モーダルを開く
+    async function openSettingsModal() {
+      document.getElementById('loading').classList.remove('hidden');
+
+      // 対象年月の選択肢を生成
+      const select = document.getElementById('settingsTargetMonth');
+      select.innerHTML = '';
+      const now = new Date();
+
+      for (let i = -2; i <= 6; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth() + i, 1);
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const value = `${y}-${m}`;
+        const label = `${y}年${date.getMonth() + 1}月`;
+
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        select.appendChild(option);
+      }
+
+      // 現在の設定を取得
+      try {
+        const res = await fetch(`${API_URL}?action=getScheduleSettings`, {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // 対象年月を設定
+          const targetMonth = data.data['対象年月'] || '';
+          select.value = targetMonth;
+
+          // 生徒申請のトグル
+          const studentOpen = data.data['申請受付中'];
+          document.getElementById('studentApplicationToggle').checked =
+            studentOpen === true || studentOpen === 'TRUE' || studentOpen === 'true';
+
+          // 講師申請のトグル
+          const instructorOpen = data.data['講師申請受付中'];
+          document.getElementById('instructorApplicationToggle').checked =
+            instructorOpen === true || instructorOpen === 'TRUE' || instructorOpen === 'true';
+        }
+      } catch (error) {
+        console.error('設定取得エラー:', error);
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+      // プレビューを更新
+      updateSettingsPreview();
+      document.getElementById('settingsModal').classList.add('show');
+      lucide.createIcons();
+    }
+
+    // 設定モーダルを閉じる
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('show');
+    }
+
+    // 設定を保存
+    async function saveSettings() {
+      const btn = document.getElementById('settingsSaveBtn');
+      btn.disabled = true;
+      btn.textContent = '保存中...';
+
+      const payload = {
+        action: 'updateScheduleSettings',
+        targetYearMonth: document.getElementById('settingsTargetMonth').value,
+        studentApplicationOpen: document.getElementById('studentApplicationToggle').checked,
+        instructorApplicationOpen: document.getElementById('instructorApplicationToggle').checked
+      };
+
+      console.log('送信データ:', payload);
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        console.log('レスポンス:', response);
+
+        // 少し待つ
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        btn.textContent = '保存しました！';
+
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = '設定を保存';
+          closeSettingsModal();
+
+          // ページの対象月セレクトも更新
+          document.getElementById('yearMonth').value = payload.targetYearMonth;
+          loadData();
+        }, 1000);
+
+      } catch (error) {
+        console.error('設定保存エラー:', error);
+        alert('保存に失敗しました');
+        btn.disabled = false;
+        btn.textContent = '設定を保存';
+      }
+    }
+
+    // 設定プレビューを更新
+    function updateSettingsPreview() {
+      const select = document.getElementById('settingsTargetMonth');
+      const selectedOption = select.options[select.selectedIndex];
+      const monthLabel = selectedOption ? selectedOption.textContent : '';
+
+      document.getElementById('settingsHint').textContent =
+        `${monthLabel}分の申請を受け付けるかどうかを設定します`;
+    }
+
+  </script>
+
+  <!-- 設定モーダル -->
+  <div class="modal-overlay settings-modal" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">スケジュール設定</h2>
+        <button class="modal-close" onclick="closeSettingsModal()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-form">
+          <!-- 対象年月 -->
+          <div class="settings-group">
+            <label class="settings-label">申請受付の対象年月</label>
+            <select class="settings-select" id="settingsTargetMonth" onchange="updateSettingsPreview()">
+              <!-- 動的に生成 -->
+            </select>
+            <p class="settings-hint" id="settingsHint">この月の申請を受け付けるかどうかを設定します</p>
+          </div>
+
+          <!-- 生徒申請 -->
+          <div class="toggle-wrapper">
+            <div class="toggle-info">
+              <span class="toggle-title">生徒スケジュール申請</span>
+              <span class="toggle-desc">生徒が希望日時を申請できるようにする</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="studentApplicationToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- 講師申請 -->
+          <div class="toggle-wrapper">
+            <div class="toggle-info">
+              <span class="toggle-title">講師授業可能数申請</span>
+              <span class="toggle-desc">講師が授業可能数を申請できるようにする</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="instructorApplicationToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- 保存ボタン -->
+          <button class="settings-save-btn" id="settingsSaveBtn" onclick="saveSettings()">
+            設定を保存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

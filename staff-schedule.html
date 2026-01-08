@@ -1994,9 +1994,9 @@
       </button>
       <button class="tab-btn" data-tab="assignment" onclick="switchTab('assignment')">
         <i data-lucide="user-check" style="width:18px;height:18px;"></i>
-        担任・担当割当
+        担任割当
       </button>
-      <button class="tab-btn disabled" data-tab="scheduling">
+      <button class="tab-btn" data-tab="scheduling" onclick="window.location.href='schedule-assignment.html'">
         <i data-lucide="calendar-range" style="width:18px;height:18px;"></i>
         スケジュール調整
       </button>
@@ -2087,21 +2087,12 @@
             <div class="stat-value" id="assign-stat-no-homeroom">-</div>
           </div>
         </div>
-        <div class="stat-card pending">
-          <div class="stat-icon">
-            <i data-lucide="users-round" style="width:24px;height:24px;"></i>
-          </div>
-          <div class="stat-info">
-            <div class="stat-label">担当 未割当</div>
-            <div class="stat-value" id="assign-stat-no-mentor">-</div>
-          </div>
-        </div>
         <div class="stat-card done">
           <div class="stat-icon">
             <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
           </div>
           <div class="stat-info">
-            <div class="stat-label">両方割当済</div>
+            <div class="stat-label">担任割当済</div>
             <div class="stat-value" id="assign-stat-complete">-</div>
           </div>
         </div>
@@ -2120,10 +2111,8 @@
           </span>
           <button class="filter-btn active" data-assign-filter="all" onclick="setAssignFilter('all')">すべて</button>
           <button class="filter-btn" data-assign-filter="no-homeroom"
-            onclick="setAssignFilter('no-homeroom')">担任未割当</button>
-          <button class="filter-btn" data-assign-filter="no-mentor"
-            onclick="setAssignFilter('no-mentor')">担当未割当</button>
-          <button class="filter-btn" data-assign-filter="complete" onclick="setAssignFilter('complete')">割当済み</button>
+            onclick="setAssignFilter('no-homeroom')">未割当</button>
+          <button class="filter-btn" data-assign-filter="complete" onclick="setAssignFilter('complete')">割当済</button>
         </div>
         <button class="mentor-stats-btn" onclick="openMentorStatsModal()">
           <i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i>
@@ -2146,12 +2135,12 @@
 
     <!-- スケジュール調整タブ -->
     <div class="tab-content" id="tab-scheduling">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">
-          <i data-lucide="calendar-range" style="width:40px;height:40px;"></i>
+      <div class="coming-soon" style="cursor:pointer;" onclick="window.location.href='schedule-assignment.html'">
+        <div class="coming-soon-icon" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <i data-lucide="calendar-check" style="width:40px;height:40px;color:#fff;"></i>
         </div>
-        <div class="coming-soon-title">スケジュール調整</div>
-        <div class="coming-soon-text">この機能は準備中です</div>
+        <div class="coming-soon-title">スケジュール割当</div>
+        <div class="coming-soon-text">クリックして割当画面を開く</div>
       </div>
     </div>
 
@@ -2205,50 +2194,6 @@
           <button class="modal-btn primary" style="background:#8b5cf6;" onclick="saveHomeroomAssignment()">
             <i data-lucide="check" style="width:16px;height:16px;"></i>
             割り当てる
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 担当メンター追加モーダル -->
-    <div class="modal-overlay" id="mentor-modal">
-      <div class="modal">
-        <div class="modal-header">
-          <div class="modal-title">
-            <i data-lucide="user-plus" style="width:20px;height:20px;color:var(--primary);"></i>
-            担当メンター追加
-          </div>
-          <button class="modal-close" onclick="closeMentorModal()">
-            <i data-lucide="x" style="width:18px;height:18px;"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-label">生徒名</label>
-            <input type="text" class="form-input" id="mentor-student-name" readonly>
-          </div>
-          <div class="form-group">
-            <label class="form-label">担当メンター<span class="required"
-                style="color:#ef4444;margin-left:4px;">*</span></label>
-            <select class="form-select" id="mentor-mentor-select">
-              <option value="">選択してください</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">開始日<span class="required" style="color:#ef4444;margin-left:4px;">*</span></label>
-            <input type="date" class="form-input" id="mentor-start-date">
-          </div>
-          <div class="form-group">
-            <label class="form-label">備考</label>
-            <textarea class="form-textarea" id="mentor-note" placeholder="役割など（任意）"
-              style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:80px;"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="modal-btn secondary" onclick="closeMentorModal()">完了</button>
-          <button class="modal-btn primary" onclick="saveMentorAssignment()">
-            <i data-lucide="plus" style="width:16px;height:16px;"></i>
-            追加してもう1人登録
           </button>
         </div>
       </div>
@@ -3011,6 +2956,8 @@
     let assignFilter = 'all';
     let assignSearchQuery = '';
     let currentAssignStudentId = null;
+    let latestAssignments = {};
+    let latestAssignmentMonth = '';
     let currentEndAssignment = null;
 
     // 更新ボタン用：現在のタブに応じたデータ読み込み
@@ -3051,17 +2998,18 @@
     async function loadAssignmentData() {
       const listEl = document.getElementById('assign-student-list');
       listEl.innerHTML = `
-  <div class="loading">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">読み込み中...</div>
-  </div>
-  `;
+<div class="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">読み込み中...</div>
+</div>
+`;
 
       try {
-        // メンターリストと割当データを並列で取得
-        const [mentorRes, assignRes] = await Promise.all([
+        // メンターリストと割当データと最新月割当を並列で取得
+        const [mentorRes, assignRes, latestRes] = await Promise.all([
           fetch(`${GAS_API_URL}?action=getMentorList`),
-          fetch(`${GAS_API_URL}?action=getAssignments`)
+          fetch(`${GAS_API_URL}?action=getAssignments`),
+          fetch(`${GAS_API_URL}?action=getLatestMonthAssignments`)
         ]);
 
         const mentorResult = await mentorRes.json();
@@ -3078,6 +3026,11 @@
           };
         }
 
+        const latestResult = await latestRes.json();
+        if (latestResult.success) {
+          latestAssignments = latestResult.data || {};
+          latestAssignmentMonth = latestResult.yearMonth || '';
+        }
         // 生徒データがまだ読み込まれていなければ読み込む
         if (students.length === 0) {
           const studentRes = await fetch(`${GAS_API_URL}?action=getScheduleData`);
@@ -3114,31 +3067,16 @@
         assignmentData.homeroom.filter(a => a.isActive).map(a => a.studentId)
       );
 
-      // 担当メンターが割り当てられている生徒
-      const studentsWithMentor = new Set(
-        assignmentData.mentors.filter(a => a.isActive).map(a => a.studentId)
-      );
-
       const noHomeroom = total - studentsWithHomeroom.size;
-      const noMentor = total - studentsWithMentor.size;
-
-      // 両方割当済み
-      const complete = students.filter(s =>
-        studentsWithHomeroom.has(String(s.studentId)) &&
-        studentsWithMentor.has(String(s.studentId))
-      ).length;
+      const complete = studentsWithHomeroom.size;
 
       document.getElementById('assign-stat-total').textContent = total;
       document.getElementById('assign-stat-no-homeroom').textContent = noHomeroom;
-      document.getElementById('assign-stat-no-mentor').textContent = noMentor;
       document.getElementById('assign-stat-complete').textContent = complete;
 
-      // ★ 未割当がある場合にクラスを追加
+      // 未割当がある場合にクラスを追加
       const homeroomCard = document.getElementById('assign-stat-no-homeroom').closest('.stat-card');
-      const mentorCard = document.getElementById('assign-stat-no-mentor').closest('.stat-card');
-
       homeroomCard.classList.toggle('has-items', noHomeroom > 0);
-      mentorCard.classList.toggle('has-items', noMentor > 0);
     }
 
     // フィルター設定
@@ -3188,12 +3126,8 @@
       // 状態フィルター
       if (assignFilter === 'no-homeroom') {
         filtered = filtered.filter(s => !getCurrentHomeroom(s.studentId));
-      } else if (assignFilter === 'no-mentor') {
-        filtered = filtered.filter(s => getCurrentMentors(s.studentId).length === 0);
       } else if (assignFilter === 'complete') {
-        filtered = filtered.filter(s =>
-          getCurrentHomeroom(s.studentId) && getCurrentMentors(s.studentId).length > 0
-        );
+        filtered = filtered.filter(s => getCurrentHomeroom(s.studentId));
       }
 
       if (filtered.length === 0) {
@@ -3217,152 +3151,138 @@
     // 割当カード描画
     function renderAssignCard(student) {
       const homeroom = getCurrentHomeroom(student.studentId);
-      const mentors = getCurrentMentors(student.studentId);
       const initial = student.studentName ? student.studentName.charAt(0) : '?';
 
+      // 最新月の担当講師を取得
+      const latestInstructors = latestAssignments[String(student.studentId)] || [];
+
       // カードの状態を判定
-      let cardClass = 'assigned';
-      if (!homeroom) {
-        cardClass = 'no-homeroom';
-      } else if (mentors.length === 0) {
-        cardClass = 'no-mentor';
-      }
+      let cardClass = homeroom ? 'assigned' : 'no-homeroom';
 
       // 担任バッジ
       const homeroomBadge = homeroom
         ? `<div class="assignment-badge homeroom">
-    <i data-lucide="user-check" style="width:12px;height:12px;"></i>
-    担任: ${homeroom.mentorName}
-  </div>`
+        <i data-lucide="user-check" style="width:12px;height:12px;"></i>
+        担任: ${homeroom.mentorName}
+      </div>`
         : `<div class="assignment-badge homeroom empty">
-    <i data-lucide="user-x" style="width:12px;height:12px;"></i>
-    担任未割当
-  </div>`;
+        <i data-lucide="user-x" style="width:12px;height:12px;"></i>
+        担任未割当
+      </div>`;
 
-      // 担当メンターバッジ
-      const mentorBadge = mentors.length > 0
+      // 担当講師バッジ（参考表示）
+      const instructorBadge = latestInstructors.length > 0
         ? `<div class="assignment-badge mentor">
-    <i data-lucide="users" style="width:12px;height:12px;"></i>
-    担当: ${mentors.length}名
-  </div>`
-        : `<div class="assignment-badge mentor empty">
-    <i data-lucide="users-round" style="width:12px;height:12px;"></i>
-    担当未割当
-  </div>`;
+        <i data-lucide="users" style="width:12px;height:12px;"></i>
+        担当: ${latestInstructors.length}名
+      </div>`
+        : '';
 
       // 担任リスト（詳細パネル用）
       const homeroomList = homeroom
         ? `<div class="assignment-item active">
-    <div class="assignment-item-info">
-      <div class="assignment-item-avatar purple">${homeroom.mentorName.charAt(0)}</div>
-      <div class="assignment-item-details">
-        <div class="assignment-item-name">${homeroom.mentorName}</div>
-        <div class="assignment-item-date">${homeroom.startDate}〜</div>
-      </div>
-    </div>
-    <div class="assignment-item-actions">
-      <button class="assignment-action-btn"
-        onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
-        <i data-lucide="repeat" style="width:12px;height:12px;"></i>
-        変更
-      </button>
-      <button class="assignment-action-btn danger"
-        onclick="event.stopPropagation(); openEndAssignmentModal('homeroom', ${homeroom.rowIndex}, '${homeroom.mentorName}')">
-        <i data-lucide="x" style="width:12px;height:12px;"></i>
-        終了
-      </button>
-    </div>
-  </div>`
+        <div class="assignment-item-info">
+          <div class="assignment-item-avatar purple">${homeroom.mentorName.charAt(0)}</div>
+          <div class="assignment-item-details">
+            <div class="assignment-item-name">${homeroom.mentorName}</div>
+            <div class="assignment-item-date">${homeroom.startDate}〜</div>
+          </div>
+        </div>
+        <div class="assignment-item-actions">
+          <button class="assignment-action-btn"
+            onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
+            <i data-lucide="repeat" style="width:12px;height:12px;"></i>
+            変更
+          </button>
+          <button class="assignment-action-btn danger"
+            onclick="event.stopPropagation(); openEndAssignmentModal('homeroom', ${homeroom.rowIndex}, '${homeroom.mentorName}')">
+            <i data-lucide="x" style="width:12px;height:12px;"></i>
+            終了
+          </button>
+        </div>
+      </div>`
         : `<div class="empty-assignment">担任が割り当てられていません</div>`;
 
-      // 担当メンターリスト（詳細パネル用）
-      const mentorListHtml = mentors.length > 0
-        ? mentors.map(m => `
-  <div class="assignment-item active">
-    <div class="assignment-item-info">
-      <div class="assignment-item-avatar">${m.mentorName.charAt(0)}</div>
-      <div class="assignment-item-details">
-        <div class="assignment-item-name">${m.mentorName}</div>
-        <div class="assignment-item-date">${m.startDate}〜${m.note ? ' / ' + m.note : ''}</div>
-      </div>
-    </div>
-    <div class="assignment-item-actions">
-      <button class="assignment-action-btn danger"
-        onclick="event.stopPropagation(); openEndAssignmentModal('mentor', ${m.rowIndex}, '${m.mentorName}')">
-        <i data-lucide="x" style="width:12px;height:12px;"></i>
-        終了
-      </button>
-    </div>
-  </div>
-  `).join('')
-        : `<div class="empty-assignment">担当メンターが割り当てられていません</div>`;
+      // 担当講師リスト（参考表示・編集不可）
+      const instructorListHtml = latestInstructors.length > 0
+        ? latestInstructors.map(inst => `
+        <div class="assignment-item" style="background:#f0f9ff;border-color:#bae6fd;">
+          <div class="assignment-item-info">
+            <div class="assignment-item-avatar" style="background:#0ea5e9;">${inst.instructorName.charAt(0)}</div>
+            <div class="assignment-item-details">
+              <div class="assignment-item-name">${inst.instructorName}</div>
+              <div class="assignment-item-date">${inst.courseType} ${inst.assignedLessons}コマ</div>
+            </div>
+          </div>
+        </div>
+      `).join('')
+        : `<div class="empty-assignment">割当データなし</div>`;
 
       return `
-  <div class="student-card ${cardClass}" id="assign-card-${student.studentId}">
-    <div class="student-header" onclick="toggleAssignCard('${student.studentId}')">
-      <div class="student-info">
-        <div class="student-avatar purple">${initial}</div>
-        <div class="student-main">
-          <div class="student-name">${student.studentName || '名前なし'}</div>
-          <div class="student-meta">
-            <span><i data-lucide="hash" style="width:11px;height:11px;"></i>${student.studentId}</span>
-            <span><i data-lucide="graduation-cap" style="width:11px;height:11px;"></i>${student.grade || '-'}</span>
-            <span class="school-name"><i data-lucide="school" style="width:11px;height:11px;"></i>${student.highSchool
-        || '-'}</span>
+    <div class="student-card ${cardClass}" id="assign-card-${student.studentId}">
+      <div class="student-header" onclick="toggleAssignCard('${student.studentId}')">
+        <div class="student-info">
+          <div class="student-avatar purple">${initial}</div>
+          <div class="student-main">
+            <div class="student-name">${student.studentName || '名前なし'}</div>
+            <div class="student-meta">
+              <span><i data-lucide="hash" style="width:11px;height:11px;"></i>${student.studentId}</span>
+              <span><i data-lucide="graduation-cap" style="width:11px;height:11px;"></i>${student.grade || '-'}</span>
+              <span class="school-name"><i data-lucide="school" style="width:11px;height:11px;"></i>${student.highSchool || '-'}</span>
+            </div>
           </div>
         </div>
+        <div class="assignment-summary">
+          ${homeroomBadge}
+          ${instructorBadge}
+        </div>
+        <button class="expand-btn purple">
+          <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+        </button>
       </div>
-      <div class="assignment-summary">
-        ${homeroomBadge}
-        ${mentorBadge}
-      </div>
-      <button class="expand-btn purple">
-        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
-      </button>
-    </div>
-    <div class="student-details">
-      <!-- 担任セクション -->
-      <div class="assignment-section">
-        <div class="assignment-section-header">
-          <div class="assignment-section-title purple">
-            <i data-lucide="user-check" style="width:18px;height:18px;"></i>
-            担任メンター
+      <div class="student-details">
+        <!-- 担任セクション -->
+        <div class="assignment-section">
+          <div class="assignment-section-header">
+            <div class="assignment-section-title purple">
+              <i data-lucide="user-check" style="width:18px;height:18px;"></i>
+              担任メンター
+            </div>
+            <button class="add-btn purple" onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
+              <i data-lucide="${homeroom ? 'repeat' : 'plus'}" style="width:14px;height:14px;"></i>
+              ${homeroom ? '変更' : '割当'}
+            </button>
           </div>
-          <button class="add-btn purple" onclick="event.stopPropagation(); openHomeroomModal('${student.studentId}')">
-            <i data-lucide="${homeroom ? 'repeat' : 'plus'}" style="width:14px;height:14px;"></i>
-            ${homeroom ? '変更' : '割当'}
-          </button>
+          <div class="assignment-list">
+            ${homeroomList}
+          </div>
         </div>
-        <div class="assignment-list">
-          ${homeroomList}
-        </div>
-      </div>
 
-      <!-- 担当メンターセクション -->
-      <div class="assignment-section">
-        <div class="assignment-section-header">
-          <div class="assignment-section-title">
-            <i data-lucide="users" style="width:18px;height:18px;"></i>
-            担当メンター
+        <!-- 担当講師セクション（参考表示） -->
+        <div class="assignment-section" style="background:#f0f9ff;border-color:#bae6fd;">
+          <div class="assignment-section-header">
+            <div class="assignment-section-title" style="color:#0284c7;">
+              <i data-lucide="users" style="width:18px;height:18px;"></i>
+              担当講師（${latestAssignmentMonth || '-'}）
+            </div>
+            <a href="schedule-assignment.html" class="add-btn" style="background:#0ea5e9;font-size:12px;padding:6px 12px;">
+              <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+              編集
+            </a>
           </div>
-          <button class="add-btn" onclick="event.stopPropagation(); openMentorModal('${student.studentId}')">
-            <i data-lucide="plus" style="width:14px;height:14px;"></i>
-            追加
-          </button>
+          <div class="assignment-list">
+            ${instructorListHtml}
+          </div>
         </div>
-        <div class="assignment-list">
-          ${mentorListHtml}
-        </div>
-      </div>
 
-      <!-- 履歴リンク -->
-      <button class="history-link"
-        onclick="event.stopPropagation(); openHistoryModal('${student.studentId}', '${student.studentName || ''}')">
-        <i data-lucide="history" style="width:14px;height:14px;"></i>
-        割当履歴を見る
-      </button>
+        <!-- 履歴リンク -->
+        <button class="history-link"
+          onclick="event.stopPropagation(); openHistoryModal('${student.studentId}', '${student.studentName || ''}')">
+          <i data-lucide="history" style="width:14px;height:14px;"></i>
+          担任履歴を見る
+        </button>
+      </div>
     </div>
-  </div>
   `;
     }
 
@@ -3808,7 +3728,7 @@
     function openMentorStatsModal() {
       const statsBody = document.getElementById('mentor-stats-body');
 
-      // メンターごとの集計を計算
+      // メンターごとの担任数を計算
       const mentorStats = {};
 
       // 全メンターを初期化
@@ -3817,13 +3737,11 @@
           mentorId: m.mentorId,
           name: m.name,
           homeroomCount: 0,
-          mentorCount: 0,
-          homeroomStudents: [],
-          mentorStudents: []
+          homeroomStudents: []
         };
       });
 
-      // 担任カウント
+      // 担任カウント（アクティブのみ）
       assignmentData.homeroom.filter(a => a.isActive).forEach(a => {
         if (mentorStats[a.mentorId]) {
           mentorStats[a.mentorId].homeroomCount++;
@@ -3831,22 +3749,24 @@
         }
       });
 
-      // 担当メンターカウント
-      assignmentData.mentors.filter(a => a.isActive).forEach(a => {
-        if (mentorStats[a.mentorId]) {
-          mentorStats[a.mentorId].mentorCount++;
-          mentorStats[a.mentorId].mentorStudents.push(a.studentId);
-        }
-      });
-
-      // 配列に変換してソート（担任数 + 担当数の合計順）
-      const sortedStats = Object.values(mentorStats).sort((a, b) =>
-        (b.homeroomCount + b.mentorCount) - (a.homeroomCount + a.mentorCount)
-      );
+      // 配列に変換して担任数でソート（降順）
+      const sortedStats = Object.values(mentorStats).sort((a, b) => b.homeroomCount - a.homeroomCount);
 
       // 合計計算
       const totalHomeroom = sortedStats.reduce((sum, m) => sum + m.homeroomCount, 0);
-      const totalMentor = sortedStats.reduce((sum, m) => sum + m.mentorCount, 0);
+
+      // 上位3位までのカウント値を取得（同率考慮）
+      const top3Counts = [...new Set(sortedStats.filter(m => m.homeroomCount > 0).map(m => m.homeroomCount))].slice(0, 3);
+
+      // トロフィー取得
+      const getTrophy = (count) => {
+        if (count === 0) return '';
+        const rank = top3Counts.indexOf(count);
+        if (rank === 0) return '🥇';
+        if (rank === 1) return '🥈';
+        if (rank === 2) return '🥉';
+        return '';
+      };
 
       // HTML生成
       statsBody.innerHTML = `
@@ -3859,29 +3779,27 @@
         <div class="stats-summary-value" style="color:#7c3aed;">${totalHomeroom}</div>
         <div class="stats-summary-label">担任割当数</div>
       </div>
-      <div class="stats-summary-item">
-        <div class="stats-summary-value" style="color:#2563eb;">${totalMentor}</div>
-        <div class="stats-summary-label">担当割当数</div>
-      </div>
     </div>
     
     <table class="mentor-stats-table">
       <thead>
         <tr>
           <th>メンター</th>
-          <th style="text-align:center;">担任</th>
-          <th style="text-align:center;">担当</th>
-          <th style="text-align:center;">合計</th>
+          <th style="text-align:center;">担任数</th>
         </tr>
       </thead>
       <tbody>
-        ${sortedStats.map(m => `
+        ${sortedStats.map(m => {
+        const trophy = getTrophy(m.homeroomCount);
+        return `
           <tr class="clickable" onclick="filterByMentor('${m.mentorId}', '${m.name}')">
             <td>
               <div class="mentor-name-cell">
                 <div class="avatar">${m.name.charAt(0)}</div>
                 <div>
-                  <div style="font-weight:600;">${m.name}</div>
+                  <div style="font-weight:600;">
+                    ${trophy ? `<span style="margin-right:4px;">${trophy}</span>` : ''}${m.name}
+                  </div>
                   <div style="font-size:12px;color:#888;">ID: ${m.mentorId}</div>
                 </div>
               </div>
@@ -3889,14 +3807,8 @@
             <td style="text-align:center;">
               <span class="count-badge homeroom ${m.homeroomCount === 0 ? 'zero' : ''}">${m.homeroomCount}</span>
             </td>
-            <td style="text-align:center;">
-              <span class="count-badge mentor ${m.mentorCount === 0 ? 'zero' : ''}">${m.mentorCount}</span>
-            </td>
-            <td style="text-align:center;">
-              <span class="count-badge total">${m.homeroomCount + m.mentorCount}</span>
-            </td>
           </tr>
-        `).join('')}
+        `}).join('')}
       </tbody>
     </table>
     
@@ -4002,17 +3914,72 @@
         return;
       }
 
-      // ランキング上位を取得
-      const topHomeroom = [...data].sort((a, b) => b.homeroomCount - a.homeroomCount)[0];
-      const topMentor = [...data].sort((a, b) => b.mentorCount - a.mentorCount)[0];
-      const topTotal = data[0]; // 既に合計でソート済み
+      // 担任数TOP3を取得
+      const sortedByHomeroom = [...data].sort((a, b) => b.homeroomCount - a.homeroomCount);
+      const homeroomTop3Counts = [...new Set(sortedByHomeroom.filter(m => m.homeroomCount > 0).map(m => m.homeroomCount))].slice(0, 3);
+      const homeroomTop3 = sortedByHomeroom.filter(m => homeroomTop3Counts.includes(m.homeroomCount)).slice(0, 3);
 
-      // ランクバッジ取得
-      const getRankBadge = (rank) => {
-        if (rank === 1) return '<span class="rank-badge gold">1</span>';
-        if (rank === 2) return '<span class="rank-badge silver">2</span>';
-        if (rank === 3) return '<span class="rank-badge bronze">3</span>';
-        return `<span class="rank-badge normal">${rank}</span>`;
+      // 担当数TOP3を取得
+      const sortedByMentor = [...data].sort((a, b) => b.mentorCount - a.mentorCount);
+      const mentorTop3Counts = [...new Set(sortedByMentor.filter(m => m.mentorCount > 0).map(m => m.mentorCount))].slice(0, 3);
+      const mentorTop3 = sortedByMentor.filter(m => mentorTop3Counts.includes(m.mentorCount)).slice(0, 3);
+
+      // トロフィー取得関数
+      const getTrophy = (index) => {
+        if (index === 0) return '🥇';
+        if (index === 1) return '🥈';
+        if (index === 2) return '🥉';
+        return '';
+      };
+
+      // ランキングカード生成
+      const renderRankingCard = (title, icon, topList, countKey, color) => {
+        if (topList.length === 0 || topList[0][countKey] === 0) {
+          return `
+        <div style="flex:1;min-width:250px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:16px;">
+          <div style="font-size:14px;font-weight:700;color:#666;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+            <span>${icon}</span> ${title}
+          </div>
+          <div style="text-align:center;color:#999;padding:20px 0;">データなし</div>
+        </div>
+      `;
+        }
+
+        return `
+      <div style="flex:1;min-width:250px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:16px;">
+        <div style="font-size:14px;font-weight:700;color:#666;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+          <span>${icon}</span> ${title}
+        </div>
+        ${topList.map((m, idx) => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;${idx === 0 ? 'background:' + color + ';border-radius:8px;' : ''}">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:18px;">${getTrophy(idx)}</span>
+              <span style="font-weight:600;${idx === 0 ? 'color:#fff;' : 'color:#333;'}">${m.mentorName}</span>
+            </div>
+            <span style="font-weight:700;font-size:16px;${idx === 0 ? 'color:#fff;' : 'color:' + color + ';'}">${m[countKey]}名</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+      };
+
+      // テーブル用トロフィー取得
+      const getHomeroomTrophy = (count) => {
+        if (count === 0) return '';
+        const rank = homeroomTop3Counts.indexOf(count);
+        if (rank === 0) return '🥇';
+        if (rank === 1) return '🥈';
+        if (rank === 2) return '🥉';
+        return '';
+      };
+
+      const getMentorTrophy = (count) => {
+        if (count === 0) return '';
+        const rank = mentorTop3Counts.indexOf(count);
+        if (rank === 0) return '🥇';
+        if (rank === 1) return '🥈';
+        if (rank === 2) return '🥉';
+        return '';
       };
 
       statsBody.innerHTML = `
@@ -4027,40 +3994,24 @@
       </button>
     </div>
     
-    <div class="stats-summary" style="margin-bottom:24px;">
-      <div class="stats-summary-item" style="background:#ede9fe;border-radius:10px;padding:16px;">
-        <div style="font-size:12px;color:#7c3aed;font-weight:600;margin-bottom:8px;">👑 担任数1位</div>
-        <div style="font-size:18px;font-weight:700;color:#333;">${topHomeroom.mentorName}</div>
-        <div style="font-size:24px;font-weight:700;color:#7c3aed;">${topHomeroom.homeroomCount}名</div>
-      </div>
-      <div class="stats-summary-item" style="background:#dbeafe;border-radius:10px;padding:16px;">
-        <div style="font-size:12px;color:#2563eb;font-weight:600;margin-bottom:8px;">👑 担当数1位</div>
-        <div style="font-size:18px;font-weight:700;color:#333;">${topMentor.mentorName}</div>
-        <div style="font-size:24px;font-weight:700;color:#2563eb;">${topMentor.mentorCount}名</div>
-      </div>
-      <div class="stats-summary-item" style="background:#dcfce7;border-radius:10px;padding:16px;">
-        <div style="font-size:12px;color:#16a34a;font-weight:600;margin-bottom:8px;">👑 合計1位</div>
-        <div style="font-size:18px;font-weight:700;color:#333;">${topTotal.mentorName}</div>
-        <div style="font-size:24px;font-weight:700;color:#16a34a;">${topTotal.total}名</div>
-      </div>
+    <!-- TOP3ランキング -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+      ${renderRankingCard('担任数 TOP3', '👨‍🏫', homeroomTop3, 'homeroomCount', '#7c3aed')}
+      ${renderRankingCard('担当数 TOP3', '📚', mentorTop3, 'mentorCount', '#0ea5e9')}
     </div>
     
     <table class="mentor-stats-table">
       <thead>
         <tr>
-          <th style="width:60px;text-align:center;">順位</th>
           <th>メンター</th>
-          <th style="text-align:center;">担任</th>
-          <th style="text-align:center;">担当</th>
+          <th style="text-align:center;">担任数</th>
+          <th style="text-align:center;">担当数</th>
           <th style="text-align:center;">合計</th>
         </tr>
       </thead>
       <tbody>
         ${data.map(m => `
           <tr>
-            <td style="text-align:center;">
-              ${getRankBadge(m.rank)}
-            </td>
             <td>
               <div class="mentor-name-cell">
                 <div class="avatar">${m.mentorName.charAt(0)}</div>
@@ -4071,9 +4022,11 @@
               </div>
             </td>
             <td style="text-align:center;">
+              ${getHomeroomTrophy(m.homeroomCount)}
               <span class="count-badge homeroom ${m.homeroomCount === 0 ? 'zero' : ''}">${m.homeroomCount}</span>
             </td>
             <td style="text-align:center;">
+              ${getMentorTrophy(m.mentorCount)}
               <span class="count-badge mentor ${m.mentorCount === 0 ? 'zero' : ''}">${m.mentorCount}</span>
             </td>
             <td style="text-align:center;">
